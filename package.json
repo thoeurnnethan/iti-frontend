@@ -1,0 +1,38 @@
+{
+  "name": "project-sample-vue3",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 8080 ",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "json-server-user": "json-server --watch public/data/user.json --port=8090",
+    "todos": "json-server --watch public/data/todo.json --port=8091",
+    "db": "npm-run-all -p -r json-server-user todos"
+  },
+  "dependencies": {
+    "@vuepic/vue-datepicker": "^7.2.0",
+    "axios": "^1.5.0",
+    "bootstrap": "^5.3.2",
+    "jquery": "^3.7.1",
+    "json-server": "^0.17.3",
+    "moment": "^2.29.4",
+    "npm-run-all": "^4.1.5",
+    "pinia": "^2.1.6",
+    "popper.js": "^1.16.1",
+    "qrcode-vue3": "^1.6.8",
+    "url": "^0.11.3",
+    "vue": "^3.3.4",
+    "vue-axios": "^3.5.2",
+    "vue-i18n": "^9.2.2",
+    "vue-router": "^4.2.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "sass": "^1.69.5",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vue-tsc": "^1.8.5"
+  }
+}
