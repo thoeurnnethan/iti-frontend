@@ -1,11 +1,13 @@
-<template src="./dashboard.html"></template>
+<template>
+    <h2>Hello</h2>
+</template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
     /** Option Misc */
-    name: "Dashboard",
+    name: "app",
     inheritAttrs: false,
     components: {
         // 
@@ -39,19 +41,19 @@ export default defineComponent({
 
     /** Option LifeCycle */
     beforeCreate() {
-        this.data = "Hello Baby"
+        // this.data = "Hello Baby"
     },
     created() {
-        console.log(this.data)
+        // console.log(this.data)
     },
     beforeMount() {
-        this.data = "Hello Papa"
+        // this.data = "Hello Papa"
     },
     mounted() {
         console.log(this.data)
     },
     beforeUpdate() {
-        console.log("Before Update")
+        // console.log("Before Update")
     },
     updated() {
         // 
@@ -89,10 +91,9 @@ export default defineComponent({
         //
     },
     mixins: [],
-    extends: [""]
+    // extends:[""]
 })
 </script>
 
-<style scoped>
-@import "./dashboard.css";
+<style>
 </style>

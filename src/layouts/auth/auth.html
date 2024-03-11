@@ -1,52 +1,50 @@
-<div class="container">
-    <div class="card p-5 bg-warning text-success my-5">
-        <div class="card-body">Basic card</div>
+<div class="container flex flex-column">
+    <div class="card flex flex-column w-900">
+        <InputText v-model="studentInfo.studentName" placeholder="Student Name" />
+        <div class="flex flex-row align-items-center">
+            <RadioButton v-model="studentInfo.gender" inputId="ingredient1" name="pizza" value="Male" />
+            <label for="ingredient1" class="ml-2">Male</label>
+        </div>
+        <div class="flex flex-row align-items-center">
+            <RadioButton v-model="studentInfo.gender" inputId="ingredient2" name="pizza" value="Female" />
+            <label for="ingredient2" class="ml-2">Female</label>
+        </div>
+        <Calendar v-model="studentInfo.dateOfBirth" showIcon :showOnFocus="false" inputId="buttondisplay" dateFormat="dd-mm-yy" />
+        <InputText v-model="studentInfo.placeOfBirth" placeholder="Place Of Birth" />
+        <InputText v-model="studentInfo.positionDesc" placeholder="Position" />
+        <InputText v-model="studentInfo.bankAccountNo" placeholder="Bank Account Number" />
     </div>
-     <div v-for="item in responseData">
-        <p>{{ item }}</p>
-     </div>
-    <!-- <form class="row g-3">
-        <div class="col-md-6">
-            <label for="inputEmail4" class="form-label">Email</label>
-            <input type="email" class="form-control" id="inputEmail4">
-        </div>
-        <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputPassword4">
-        </div>
-        <div class="col-12">
-            <label for="inputAddress" class="form-label">Address</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-        </div>
-        <div class="col-12">
-            <label for="inputAddress2" class="form-label">Address 2</label>
-            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-        </div>
-        <div class="col-md-6">
-            <label for="inputCity" class="form-label">City</label>
-            <input type="text" class="form-control" id="inputCity">
-        </div>
-        <div class="col-md-4">
-            <label for="inputState" class="form-label">State</label>
-            <select id="inputState" class="form-select">
-                <option selected>Choose...</option>
-                <option>...</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label for="inputZip" class="form-label">Zip</label>
-            <input type="text" class="form-control" id="inputZip">
-        </div>
-        <div class="col-12">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">
-                    Check me out
-                </label>
+
+    <ConfirmDialog group="templating">
+        <template #message="slotProps">
+            <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+                <i :class="slotProps.message.icon" class="text-5xl text-primary-500"></i>
+                <p>{{ slotProps.message.message }}</p>
             </div>
-        </div>
-        <div class="col-12">
-            <button type="submit" class="btn btn-primary">Sign in</button>
-        </div>
-    </form> -->
+        </template>
+    </ConfirmDialog>
+    
+    <Button type="button" class="btn btn-success m-2 p-1" @click="showTemplate">Submit</Button>
+    <Button type="button" class="btn btn-primary m-2 p-1" @click="fetchDataFromApi">Click to See Student List</Button>
+    <Button type="button" class="btn btn-danger m-2 p-1" @click="clearList">Click to Clear Student List</Button>
+    
+    <div class="card">
+        <DataTable v-model:selection="selectedStudent" :value="studentList" dataKey="studentID">
+            <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+            <Column field="studentID" header="StudentID"></Column>
+            <Column field="studentName" header="Student Name"></Column>
+            <Column field="gender" header="Gender"></Column>
+            <Column field="dateOfBirth" header="Date Of Birth"></Column>
+            <Column field="placeOfBirth" header="Place Of Birth"></Column>
+            <Column field="positionDesc" header="Position"></Column>
+            <Column field="bankAccountNo" header="Account Number"></Column>
+        </DataTable> 
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">Previous</a></li>
+            <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">1</a></li>
+            <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">2</a></li>
+            <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">3</a></li>
+            <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">Next</a></li>
+        </ul>
+    </div>
 </div>

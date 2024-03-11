@@ -1,91 +1,120 @@
-<!-- <template src="./auth.html"></template> -->
-<template>
-    <div>
-        <p>{{ totalCount }}</p>
-        <button v-on:click="pageSize=100">Click page size =100</button>
-        <p>{{ pageSize }} - {{ pageNumber }}</p>
-       <table>
-        <tr>
-            <th style="padding-right: 100px;" >ID</th>
-            <th style="padding-right: 100px;">Name</th>
-            <th style="padding-right: 100px;">position</th>
-            <th style="padding-right: 100px;">gender</th>
-        </tr>
-        <tr v-for="(item) in responseData" :key="item.studentID">
-            <td>{{ item.studentID }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.position }}</td>
-            <td>{{ item.gender }}</td>
-        </tr>
-       </table>
-    </div>
-</template>
+<template src="./auth.html"></template>
 
 <script lang="ts">
-import type { EmployeeList, EmployeeList_Res } from '@/shared/types/employeeList';
-import axios from 'axios';
+import { EmployeeList, EmployeeList_Res } from '@/shared/types/employeeList';
 import { defineComponent } from 'vue';
+import axios from 'axios';
+import ConfirmDialog from 'primevue/confirmdialog';
+import Button from 'primevue/button';
+import RadioButton from 'primevue/radiobutton';
+import InputText from 'primevue/inputtext';
+import Calendar from 'primevue/calendar';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 
 export default defineComponent({
     name: "Auth",
     components: {
-        // 
+        ConfirmDialog,
+        Button,
+        RadioButton,
+        InputText,
+        Calendar,
+        DataTable,
+        Column
     },
     data() {
         return {
-            responseData : [] as EmployeeList[],
+            studentInfo: {} as EmployeeList,
+            products: null as any,
+            studentList: [] as EmployeeList[],
             totalCount: 0 as Number,
-            pageSize:12 as Number,
-            pageNumber: 1 as Number
+            pageSize: 10 as Number,
+            pageNumber: 1 as Number,
+            selectedStudent: null
         }
     },
-    computed:{
-    },
-    watch: {
-        // 
-    },
-    
-    methods: {
-       async fetchDataFromApi() {
-            const requestBody = {
-                pageSize: this.pageSize,
-                pageNumber: this.pageNumber,
-            };
 
+    methods:{
+
+        async onClickSumbit() {
+            if(this.validateInput()){
+                const requestBody = {
+                    body:this.studentInfo
+                };
+                try {
+                    //======================================================
+                    // await axios.post(`${import.meta.env.VITE_APP_SERVER_URL}/employee/register`, requestBody).then(res =>{
+                    //     this.studentList = res.data.body.studentList;
+                    //     this.totalCount = res.data.body.totalCount;
+                    // });
+                    //======================================================
+                    const response = (await axios.post(`${import.meta.env.VITE_APP_SERVER_URL}/employee/register`, requestBody));
+                    const result = response.data.body as EmployeeList_Res;
+                    this.studentList = result.employeeList
+                    this.totalCount = result?.totalCount
+                } catch (error) {
+                    console.error('Error fetching todos:', error);
+                }
+                this.fetchDataFromApi();
+            }else{
+                alert("error")
+            }
+        },
+
+        validateInput(): boolean {
+            if(this.studentInfo.studentName == null || this.studentInfo.studentName == ""){
+                return false;
+            }
+            return true;
+        },
+
+        async fetchDataFromApi() {
+            const requestBody = {
+                "body": {
+                    pageSize: this.pageSize,
+                    pageNumber: this.pageNumber,
+                }
+            };
             try {
-                const response = (await axios.post("http://localhost:8081/employee/employeeList",requestBody)).data as EmployeeList_Res;
-                console.log(response)
-                this.responseData = response.employeeList
-                this.totalCount = response?.totalCount
+                const response = (await axios.post(`${import.meta.env.VITE_APP_SERVER_URL}/employee/list`, requestBody));
+                const result = response.data.body as EmployeeList_Res;
+                this.studentList = result.employeeList
+                this.totalCount = result?.totalCount
             } catch (error) {
                 console.error('Error fetching todos:', error);
             }
         },
-    },
 
-    /** Option LifeCycle */
-    beforeCreate() {
-        console.log("Before Create")
-    },
-    created() {
-        console.log("Created")
-    },
-    beforeMount() {
-        console.log("Before Mount");
-    },
-    mounted() {
-        console.log("Page Mounted")
-        this.fetchDataFromApi();
-    },
-    beforeUnmount() {
-        console.log("Page Before Unmount")
-    },
-    unmounted() {
-        console.log("Unmounted")
-    },
+        clearList(){
+            this.studentList = [];
+        },
+
+        showTemplate() {
+            this.$confirm.require({
+                group: 'templating',
+                header: 'Confirmation',
+                message: 'Please confirm to proceed moving forward.',
+                icon: 'pi pi-exclamation-circle',
+                acceptIcon: 'pi pi-check',
+                rejectIcon: 'pi pi-times',
+                rejectClass: 'p-button-outlined p-button-sm',
+                acceptClass: 'p-button-sm',
+                rejectLabel: 'Cancel',
+                acceptLabel: 'Save',
+                accept: this.onClickSumbit,
+                reject: this.clearForm
+            });
+        },
+
+        clearForm(){
+            this.studentInfo.studentName = ""
+        }
+
+    }
 })
 </script>
 
 <style scoped>
-@import "./auth.css";
+@import "./auth.scss";
 </style>

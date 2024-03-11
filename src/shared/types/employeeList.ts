@@ -2,11 +2,11 @@
 
 interface EmployeeList {
     studentID: number
-    name: string
-    gender: number
-    dob: string
-    pob: string
-    position: string
+    studentName: string
+    gender: string
+    dateOfBirth: string
+    placeOfBirth: string
+    positionDesc: string
     bankAccountNo: string
   }
 

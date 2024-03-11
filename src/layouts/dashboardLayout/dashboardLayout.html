@@ -1,0 +1,91 @@
+<div class="wrapper">
+    <div class="wrapperWrap">
+        <div :class="['sidebar', isCollapse ? 'collapse' : '']">
+            <div  class="logo-box">
+                <img src="iti-logo.svg" @click="$router.push('/')">
+                <div class="logo-name pl-2">Industrial Technical Institute</div>
+            </div>
+            <ul class="sidebar-list">
+                <li>
+                    <div class="title">
+                        <router-link to="/student" class="link">
+                            <i><font-awesome-icon icon="fa-solid fa-user" /></i>
+                            <span class="name">Dashboard</span>
+                        </router-link>
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        <router-link to="/customer" class="link">
+                            <i><font-awesome-icon icon="fa-solid fa-user" /></i>
+                            <span class="name">Dashboard</span>
+                        </router-link>
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        <router-link to="/student" class="link">
+                            <i><font-awesome-icon icon="fa-solid fa-user" /></i>
+                            <span class="name">Dashboard</span>
+                        </router-link>
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        <router-link to="/student" class="link">
+                            <i><font-awesome-icon icon="fa-solid fa-user" /></i>
+                            <span class="name">Dashboard</span>
+                        </router-link>
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        <router-link to="/login" class="link">
+                            <i><font-awesome-icon icon="fa-solid fa-user" /></i>
+                            <span class="name">Login Screen</span>
+                        </router-link>
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        <router-link to="/student" class="link">
+                            <i><font-awesome-icon icon="fa-solid fa-user" /></i>
+                            <span class="name">Dashboard</span>
+                        </router-link>
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        <router-link to="/student" class="link">
+                            <i><font-awesome-icon icon="fa-solid fa-user" /></i>
+                            <span class="name">Dashboard</span>
+                        </router-link>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <div class="title">
+                        <router-link to="/student" class="link">
+                            <i><font-awesome-icon icon="fa-solid fa-user" /></i>
+                            <span class="name">Dashboard</span>
+                        </router-link>
+                        <i class="pr-2"><font-awesome-icon icon="fa-solid fa-chevron-right" /></i>
+                    </div>
+                    <div class="submenu">
+                        <a href="#" class="link submenu-title">Category</a>
+                        <a href="#" class="link">HTML & CSS</a>
+                        <a href="#" class="link">JavaScript</a>
+                        <a href="#" class="link">PHP & MySQL</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="main_side">
+            <div class="headerWrap">
+                <button @click="toggleSidebar">
+                    <font-awesome-icon icon="fa-solid fa-bars" />
+                </button>
+            </div>
+            <router-view></router-view>
+        </div>
+    </div>
+</div>
