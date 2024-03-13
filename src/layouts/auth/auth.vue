@@ -80,7 +80,7 @@ export default defineComponent({
                 const response = (await axios.post(`${import.meta.env.VITE_APP_SERVER_URL}/employee/list`, requestBody));
                 const result = response.data.body as EmployeeList_Res;
                 this.studentList = result.employeeList
-                this.totalCount = result?.totalCount
+                this.totalCount = result.totalCount
             } catch (error) {
                 console.error('Error fetching todos:', error);
             }
@@ -109,9 +109,33 @@ export default defineComponent({
 
         clearForm(){
             this.studentInfo.studentName = ""
-        }
+        },
 
+        onSelectRow(student: EmployeeList){
+            this.studentInfo = student;
+            this.$confirm.require({
+                group: 'templating',
+                header: 'Confirmation',
+                message: this.studentInfo.studentName,
+                icon: 'pi pi-exclamation-circle',
+                acceptIcon: 'pi pi-check',
+                rejectIcon: 'pi pi-times',
+                rejectClass: 'p-button-outlined p-button-sm',
+                acceptClass: 'p-button-sm',
+                rejectLabel: 'Cancel',
+                acceptLabel: 'Save',
+                accept: () =>{
+                    this.$confirm.close
+                    this.selectedStudent= null
+                },
+                reject: () =>{
+                    this.$confirm.close
+                    this.selectedStudent= null
+                }
+            })
+        }
     }
+
 })
 </script>
 

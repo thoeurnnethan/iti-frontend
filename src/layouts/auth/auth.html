@@ -1,4 +1,5 @@
-<div class="container flex flex-column">
+<div class="card container flex flex-column pl-3 pt-2 pr-4">
+
     <div class="card flex flex-column w-900">
         <InputText v-model="studentInfo.studentName" placeholder="Student Name" />
         <div class="flex flex-row align-items-center">
@@ -24,27 +25,38 @@
         </template>
     </ConfirmDialog>
     
-    <Button type="button" class="btn btn-success m-2 p-1" @click="showTemplate">Submit</Button>
-    <Button type="button" class="btn btn-primary m-2 p-1" @click="fetchDataFromApi">Click to See Student List</Button>
-    <Button type="button" class="btn btn-danger m-2 p-1" @click="clearList">Click to Clear Student List</Button>
+    <div class="card flex flex-row justify-content-center">
+        <Button type="button" class="btn btn-success m-2 p-1" @click="showTemplate">Submit</Button>
+        <Button type="button" class="btn btn-primary m-2 p-1" @click="fetchDataFromApi">Student List</Button>
+        <Button type="button" class="btn btn-danger m-2 p-1" @click="clearList">Clear</Button>
+    </div>
     
     <div class="card">
-        <DataTable v-model:selection="selectedStudent" :value="studentList" dataKey="studentID">
-            <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+        <DataTable 
+            v-model:selection="selectedStudent" 
+            :value="studentList"
+            selectionMode="single" 
+            dataKey="studentID" 
+            :metaKeySelection="false"
+            @click="onSelectRow(selectedStudent)">
+            <Column headerStyle="width: 3rem"></Column>
             <Column field="studentID" header="StudentID"></Column>
             <Column field="studentName" header="Student Name"></Column>
             <Column field="gender" header="Gender"></Column>
-            <Column field="dateOfBirth" header="Date Of Birth"></Column>
+            <Column field="dateOfBirth" header="Date Of Birth">
+                <template #body="slotProps">{{ $format.formatDateTime(slotProps.data.dateOfBirth,'dd-mm-yyyy') }}</template>
+            </Column>
             <Column field="placeOfBirth" header="Place Of Birth"></Column>
             <Column field="positionDesc" header="Position"></Column>
             <Column field="bankAccountNo" header="Account Number"></Column>
         </DataTable> 
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">Previous</a></li>
-            <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">1</a></li>
-            <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">2</a></li>
-            <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">3</a></li>
-            <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">Next</a></li>
+        <ul class="flex justify-content-center pagination">
+            <div class="flex flex-row justify-content-space-between">
+                <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">1</a></li>
+                <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">2</a></li>
+                <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">3</a></li>
+            </div>
         </ul>
     </div>
+
 </div>

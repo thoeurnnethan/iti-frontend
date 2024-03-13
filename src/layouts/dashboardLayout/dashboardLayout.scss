@@ -55,7 +55,7 @@ $color_Light2: #c4c4c4;
     left: 0;
     height: 100%;
     width: 260px;
-    background-color: $color_Blue;
+    background-color: var(--ion-color-secondary-tint);;
     transition: all .5s ease;
     z-index: 100;
 }
@@ -68,7 +68,7 @@ $color_Light2: #c4c4c4;
         width: 100%;
         display: flex;
         align-items: center;
-        background-color: $color_Dark1;
+        background-color: var(--ion-color-secondary-tint);;
         transition: all .5s ease-in;
     }
 
@@ -134,13 +134,13 @@ $color_Light2: #c4c4c4;
     min-width: 78px;
     text-align: center;
     line-height: 50px;
-    color: $color_Light1;
+    color: white;
     font-size: 20px;
 }
 .sidebar-list li .title .name{
     font-size: 18px;
     font-weight: 400;
-    color: $color_Light1;
+    color: white;
 }
 
 /* ---------------- Submenu ------------- */
@@ -226,7 +226,7 @@ $color_Light2: #c4c4c4;
         height: 60px;
         display: flex;
         align-items: center;
-        background-color: $color_Dark1;
+        background-color: var(--ion-color-secondary-tint);
         cursor: pointer;
         &::before{
             padding-left: #1e1e1e;

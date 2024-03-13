@@ -6,6 +6,16 @@
                 <div class="logo-name pl-2">Industrial Technical Institute</div>
             </div>
             <ul class="sidebar-list">
+                <li v-for="(item, index) in menuList" :key="index">
+                    <div class="title">
+                        <router-link :to="item.path" class="link">
+                            <i><font-awesome-icon :icon="item.iconClass" /></i>
+                            <span class="name">{{ item.name }}</span>
+                        </router-link>
+                    </div>
+                </li>
+            </ul>
+            <!-- <ul class="sidebar-list">
                 <li>
                     <div class="title">
                         <router-link to="/student" class="link">
@@ -77,7 +87,7 @@
                         <a href="#" class="link">PHP & MySQL</a>
                     </div>
                 </li>
-            </ul>
+            </ul> -->
         </div>
         <div class="main_side">
             <div class="headerWrap">

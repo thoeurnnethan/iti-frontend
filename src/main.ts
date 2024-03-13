@@ -36,6 +36,7 @@ import { faPhone
         ,faListOl
         ,faChevronRight
         ,faBars } from '@fortawesome/free-solid-svg-icons';
+import { DateFormat } from './shared/services/date-time';
 
 library.add(faPhone); 
 library.add(faHouseUser); 
@@ -55,6 +56,8 @@ library.add(faBars);
 const app = createApp(App);
 const pinia = createPinia();
 const primeVue = PrimeVue;
+
+app.config.globalProperties.$format = new DateFormat();
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 
