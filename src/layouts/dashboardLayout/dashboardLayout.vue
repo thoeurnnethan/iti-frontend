@@ -2,9 +2,11 @@
 
 <script lang="ts">
 import type { EmployeeList, EmployeeList_Res } from '@/shared/types/employeeList';
+import type { MenuItem } from '@/shared/types/menuList';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import axios from 'axios';
 import { defineComponent } from 'vue';
+import { DahsboardService } from './DashboardService';
 
 export default defineComponent({
     name: "Dashboard",
@@ -20,12 +22,14 @@ export default defineComponent({
             pageNumber: 1 as Number,
             message: "" as String,
             isCollapse: false,
-            telegramURL: "https://google.com"
+            telegramURL: "https://t.me/Thoeurn_Nethan",
+            menuList:[] as MenuItem[]
         }
     },
 
     mounted() {
         this.isCollapse = localStorage.getItem('collapse') === "true";
+        this.getMenuList();
     },
 
     methods: {
@@ -51,6 +55,14 @@ export default defineComponent({
             this.isCollapse = !this.isCollapse
             localStorage.setItem('collapse', String(this.isCollapse))
         },
+
+        getMenuList(){
+            this.menuList = DahsboardService.getMenuList();
+        },
+
+        isActive(item:any) {
+            return this.$route.path.startsWith(item.path);
+        }
     },
 })
 </script>
