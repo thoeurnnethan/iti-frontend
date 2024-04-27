@@ -1,0 +1,12 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="ico_alarm_24" clip-path="url(#clip0_746_33328)">
+<path id="Vector" d="M20.6284 15.8484V9.53844C20.6284 4.76844 16.7684 0.898438 11.9984 0.898438C7.22844 0.898438 3.36844 4.76844 3.36844 9.52844V15.8384L0.898438 20.0284H23.0984L20.6284 15.8484Z" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M9.82031 20.6328C9.82031 21.9928 10.9203 23.1028 12.2903 23.1028C13.6603 23.1028 14.7603 22.0028 14.7603 20.6328" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle id="Ellipse 5" cx="19.5" cy="4.5" r="3.5" fill="#FF0000" stroke="#F5F4FC" stroke-width="2"/>
+</g>
+<defs>
+<clipPath id="clip0_746_33328">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>

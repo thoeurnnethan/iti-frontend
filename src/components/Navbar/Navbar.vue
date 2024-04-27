@@ -22,7 +22,7 @@
                 <span class="material-icons">visibility</span>
                 <!-- <span class="text">About</span> -->
             </router-link>
-            <router-link class="button" to="/dashboard">
+            <router-link class="button" to="/">
                 <span class="material-icons">group</span>
                 <!-- <span class="text">Team</span> -->
             </router-link>
@@ -33,7 +33,7 @@
         </div>
         <div class="flex"></div>
         <div class="menu">
-            <router-link class="button" to="/settings" @click="toggleMenu">
+            <router-link class="button" to="/" @click="toggleMenu">
                 <span class="material-icons">settings</span>
                 <!-- <span class="text">Settings</span> -->
             </router-link>
