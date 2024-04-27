@@ -1,9 +1,16 @@
 <template src="./horizontal.html"></template>
 
 <script lang="ts">
+import DataTable from 'primevue/datatable';
 import { CustomerService } from './CustmersService';
+import Column from 'primevue/column';
 
 export default {
+
+    components:{
+        DataTable,Column
+    },
+
     data() {
         return {
             customers: null as any

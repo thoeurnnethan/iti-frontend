@@ -12,7 +12,6 @@ import "primevue/resources/themes/aura-light-green/theme.css";
 
 /* Global Style */
 // import "../src/assets/css/global.scss";
-/* Theme variables */
 import './theme/variable.scss';
 
 /* Bootstrap */
@@ -22,6 +21,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 /* Font awesome */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { DateFormat } from './shared/services/date-time';
 import { faPhone
         ,faHouseUser
         ,faUser
@@ -35,8 +35,12 @@ import { faPhone
         ,faLayerGroup
         ,faListOl
         ,faChevronRight
-        ,faBars } from '@fortawesome/free-solid-svg-icons';
-import { DateFormat } from './shared/services/date-time';
+        ,faBars
+        ,faMessage } from '@fortawesome/free-solid-svg-icons';
+
+const app = createApp(App);
+const pinia = createPinia();
+const primeVue = PrimeVue;
 
 library.add(faPhone); 
 library.add(faHouseUser); 
@@ -52,17 +56,15 @@ library.add(faLayerGroup);
 library.add(faListOl); 
 library.add(faChevronRight); 
 library.add(faBars); 
+library.add(faMessage); 
 
-const app = createApp(App);
-const pinia = createPinia();
-const primeVue = PrimeVue;
+app.component("font-awesome-icon", FontAwesomeIcon)
 
 app.config.globalProperties.$format = new DateFormat();
 
-app.component("font-awesome-icon", FontAwesomeIcon);
-
 app.use(router)
 app.use(pinia)
+// app.use(primeVue, {unstyled: true});
 app.use(primeVue);
 app.use(ConfirmationService);
 

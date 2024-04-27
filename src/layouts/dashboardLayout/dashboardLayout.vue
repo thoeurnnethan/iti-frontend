@@ -22,7 +22,7 @@ export default defineComponent({
             pageNumber: 1 as Number,
             message: "" as String,
             isCollapse: false,
-            telegramURL: "https://google.com",
+            telegramURL: "https://t.me/Thoeurn_Nethan",
             menuList:[] as MenuItem[]
         }
     },
@@ -58,6 +58,10 @@ export default defineComponent({
 
         getMenuList(){
             this.menuList = DahsboardService.getMenuList();
+        },
+
+        isActive(item:any) {
+            return this.$route.path.startsWith(item.path);
         }
     },
 })

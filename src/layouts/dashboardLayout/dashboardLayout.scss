@@ -9,6 +9,7 @@
     box-sizing: border-box;
     list-style: none;
     text-decoration: none;
+    overflow-x: visible;
 }
 ::-webkit-scrollbar { 
     width: 8px; height: 8px;
@@ -108,9 +109,6 @@ $color_Light2: #c4c4c4;
 .sidebar-list li{
     transition: all .5s ease;
 }
-.sidebar-list li:hover{
-    background-color: $color_Dark2;
-}
 .sidebar-list li .title{
     display: flex;
     justify-content: space-between;
@@ -118,29 +116,36 @@ $color_Light2: #c4c4c4;
     transition: all .5s ease;
     cursor: pointer;
 }
-.sidebar-list li.active .title{
-    background-color: $color_Blue;
-}
-.sidebar-list li.active .bxs-chevron-down{
-    transition: all .5s ease;
-    transform: rotate(180deg);
-}
-.sidebar-list li .title .link{
-    display: flex;
-    align-items: center;
-}
 .sidebar-list li .title i{
     height: 50px;
     min-width: 78px;
     text-align: center;
     line-height: 50px;
-    color: white;
+    color: rgb(22, 255, 45);
+    opacity: 0.8;
     font-size: 20px;
+}
+.sidebar-list li.active .title{
+    background-color: $color_Blue;
+}
+.sidebar-list li .title .link{
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 .sidebar-list li .title .name{
     font-size: 18px;
     font-weight: 400;
     color: white;
+}
+.sidebar-list li .title .link:hover{
+    background-color: $color_Dark2;
+}
+.sidebar-list li .title .sub-title{
+    padding-left: 30px;
+}
+.sidebar-list li .title li .sub-title:hover{
+    background-color: $color_Dark2;
 }
 
 /* ---------------- Submenu ------------- */
@@ -221,6 +226,7 @@ $color_Light2: #c4c4c4;
     width: calc(100% - 260px);
     height: 100vh;
     transition: all .5s ease;
+    background: transparent;
 
     .headerWrap{
         height: 60px;
@@ -228,11 +234,11 @@ $color_Light2: #c4c4c4;
         align-items: center;
         background-color: var(--ion-color-secondary-tint);
         cursor: pointer;
-        &::before{
-            padding-left: #1e1e1e;
-            width: 1px;
-            height: 100%;
-        }
+    }
+    .main_content{
+        position: sticky;
+        top: 0;
+        background: transparent;
     }
 }
 

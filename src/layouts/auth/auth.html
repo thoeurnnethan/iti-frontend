@@ -1,6 +1,6 @@
 <div class="card container flex flex-column pl-3 pt-2 pr-4">
 
-    <div class="card flex flex-column w-900">
+    <div class="form flex flex-column">
         <InputText v-model="studentInfo.studentName" placeholder="Student Name" />
         <div class="flex flex-row align-items-center">
             <RadioButton v-model="studentInfo.gender" inputId="ingredient1" name="pizza" value="Male" />
@@ -25,38 +25,34 @@
         </template>
     </ConfirmDialog>
     
-    <div class="card flex flex-row justify-content-center">
-        <Button type="button" class="btn btn-success m-2 p-1" @click="showTemplate">Submit</Button>
+    <div class="flex flex-row justify-content-center">
+        <Button type="button" class="btn btn-warning m-2 p-1" @click="showTemplate">Submit</Button>
         <Button type="button" class="btn btn-primary m-2 p-1" @click="fetchDataFromApi">Student List</Button>
         <Button type="button" class="btn btn-danger m-2 p-1" @click="clearList">Clear</Button>
     </div>
     
-    <div class="card">
+    <div class="card rounded">
         <DataTable 
             v-model:selection="selectedStudent" 
             :value="studentList"
             selectionMode="single" 
             dataKey="studentID" 
             :metaKeySelection="false"
-            @click="onSelectRow(selectedStudent)">
-            <Column headerStyle="width: 3rem"></Column>
+            @click="onSelectRow(selectedStudent)"
+            :pt="{
+            table: 'table table-bordered'
+            }">
+            <Column field="studentID" header="No" headerStyle="width: 3rem"></Column>
             <Column field="studentID" header="StudentID"></Column>
             <Column field="studentName" header="Student Name"></Column>
             <Column field="gender" header="Gender"></Column>
             <Column field="dateOfBirth" header="Date Of Birth">
-                <template #body="slotProps">{{ $format.formatDateTime(slotProps.data.dateOfBirth,'dd-mm-yyyy') }}</template>
+                <template #body="slotProps">{{ $format.formatDateTime(slotProps.data.dateOfBirth,'dd-MM-yyyy') }}</template>
             </Column>
             <Column field="placeOfBirth" header="Place Of Birth"></Column>
             <Column field="positionDesc" header="Position"></Column>
             <Column field="bankAccountNo" header="Account Number"></Column>
         </DataTable> 
-        <ul class="flex justify-content-center pagination">
-            <div class="flex flex-row justify-content-space-between">
-                <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">1</a></li>
-                <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">2</a></li>
-                <li class="page-item"><a class="page-link" @click="fetchDataFromApi()">3</a></li>
-            </div>
-        </ul>
     </div>
 
 </div>

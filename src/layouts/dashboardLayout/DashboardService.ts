@@ -5,12 +5,24 @@ export const DahsboardService = {
             {
                 "path": "/",
                 "iconClass": "fa-solid fa-user",
-                "name": "Dashboard"
+                "name": "DashboardLayout"
             },
             {
                 "path": "/student",
                 "iconClass": "fa-solid fa-user",
-                "name": "Student"
+                "name": "Student",
+                "subMenuList":[
+                    {
+                        "path": "/register",
+                        "iconClass": "fa-solid fa-user",
+                        "name": "StudentRegister",
+                    },
+                    {
+                        "path": "/list",
+                        "iconClass": "fa-solid fa-user",
+                        "name": "StudentList",
+                    }
+                ]
             },
             {
                 "path": "/customer",
@@ -23,9 +35,9 @@ export const DahsboardService = {
                 "name": "Login"
             },
             {
-                "path": "/navbar",
+                "path": "https://t.me/Thoeurn_Nethan",
                 "iconClass": "fa-solid fa-user",
-                "name": "Navbar"
+                "name": "Telegram"
             }
         ]
     }
