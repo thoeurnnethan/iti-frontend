@@ -1,11 +1,11 @@
-export const DahsboardService = {
+export const LoginService = {
 
     getMenuList() {
         return [
             {
-                "path": "/",
+                "path": "/register",
                 "iconClass": "fa-solid fa-user",
-                "name": "ថ្នាក់កំពុងបង្រៀន"
+                "name": "Register Account"
             },
             
         ]

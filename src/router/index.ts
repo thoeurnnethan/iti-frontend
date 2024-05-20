@@ -5,13 +5,13 @@ const router = createRouter({
     routes: [
         {
             path: "/",
-            name: "dashboardLayout",
+            name: "login",
             component: () => import("../layouts/dashboardLayout/dashboardLayout.vue"),
             children:[
                 {
-                    path: "/login",
-                    name: "login",
-                    component: () => import("../layouts/auth/auth.vue")
+                    path: "/register",
+                    name: "register",
+                    component: () => import("../layouts/registerLayout/registerLayout.vue")
                 },
                 {
                     path: "/student",

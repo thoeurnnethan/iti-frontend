@@ -7,9 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    Column: typeof import('primevue/column')['default']
     DashboardCard: typeof import('./src/components/dashboardCard/dashboardCard.vue')['default']
-    DataTable: typeof import('primevue/datatable')['default']
     DatePicker: typeof import('./src/components/datePicker/date-picker.vue')['default']
     Navbar: typeof import('./src/components/Navbar/Navbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
