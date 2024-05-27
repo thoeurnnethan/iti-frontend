@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: none; display: block; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-    <circle cx="30" cy="55" r="4" fill="#FFFFFF">
-      <animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="55;45;55;55" keyTimes="0;0.3;0.6;1" dur="1s" begin="-0.6s"></animate>
-    </circle> <circle cx="50" cy="55" r="4" fill="#FFFFFF">
-      <animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="55;45;55;55" keyTimes="0;0.3;0.6;1" dur="1s" begin="-0.39999999999999997s"></animate>
-    </circle> <circle cx="70" cy="55" r="4" fill="#FFFFFF">
-      <animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="55;45;55;55" keyTimes="0;0.3;0.6;1" dur="1s" begin="-0.19999999999999998s"></animate>
-    </circle>
-  </svg>
