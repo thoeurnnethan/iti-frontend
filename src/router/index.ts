@@ -9,9 +9,14 @@ const router = createRouter({
             component: () => import("../layouts/dashboardLayout/dashboardLayout.vue"),
             children:[
                 {
-                    path: "/register",
-                    name: "register",
-                    component: () => import("../layouts/registerLayout/registerLayout.vue")
+                    path: "/teaching-class",
+                    name: "teaching-class",
+                    component: () => import("../layouts/teachingClass/teachingClass.vue")
+                },
+                {
+                    path: "/student-list",
+                    name: "student-list",
+                    component: () => import("../layouts/studentList/studentList.vue")
                 },
                 {
                     path: "/student",
@@ -27,7 +32,7 @@ const router = createRouter({
                     path: "/navbar",
                     name: "navbar",
                     component: () => import("../components/Navbar/Navbar.vue")
-                }
+                },
             ]
         },
     ]

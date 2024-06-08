@@ -1,0 +1,31 @@
+<div class="container-fluid mb-2">
+    <h4 class="font-light">Student List</h4>
+</div><hr color="#000" class="mb-5">
+
+<table class="table border-1">
+    <thead>
+        <tr class="p-3 font-medium">
+            <td class="text-capitalize">full name</td>
+            <td class="text-capitalize">gender</td>
+            <td class="text-capitalize">Web Development</td>
+            <td class="text-capitalize">DBMS</td>
+            <td class="text-capitalize">Java</td>
+            <td class="text-capitalize">action</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-capitalize">Ngoytry Lyhuor</td>
+            <td class="text-capitalize">male</td>
+            <td>80</td>
+            <td>90</td>
+            <td>50</td>
+            <td>    
+                <router-link :to="{ name: 'student-list' }" class="btn btn-danger m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">
+                    Edit Data
+                </router-link>
+                
+            </td>
+        </tr>
+    </tbody>
+</table>

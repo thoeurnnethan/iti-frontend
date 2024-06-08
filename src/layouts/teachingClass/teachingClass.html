@@ -1,0 +1,121 @@
+<div class="container-fluid mb-2">
+    <h4 class="font-light">Teaching</h4>
+</div><hr color="#000" class="mb-5">
+
+<!-- search_place -->
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="container" style="width: 80%;">
+                    <label for="" class="form-label">Generation</label>
+                    <select class="form-select p-1" aria-label="Default select example">
+                        <option selected>All Generation</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>   
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="container" style="width: 80%;">
+                    <label for="" class="form-label">Time</label>
+                    <select class="form-select p-1" aria-label="Default select example">
+                        <option selected>All Time</option>
+                        <option value="1">Weekend</option>
+                        <option value="2">Monday - Friday 7:30AM - 11:00AM</option>
+                        <option value="3">Monday - Friday 2:00PM - 5:00PM</option>
+                    </select>   
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="container" style="width: 80%;">
+                    <label for="" class="form-label">Subject</label>
+                    <select class="form-select p-1" aria-label="Default select example">
+                        <option selected>All Subject</option>
+                        <option value="1">Web Development</option>
+                        <option value="1">DBMS</option>
+                        <option value="1">Math</option>
+                    </select>   
+                </div>
+            </div>
+            <div class="col-md-3 d-flex justify-content-end">
+                <div class="container">
+                    <label for="" class="form-label"></label><br>
+                    <button class="btn btn-success p-1 px-2 w-100">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- search_place -->
+
+
+<table class="table border-1">
+    <thead>
+        <tr class="p-3 font-medium">
+            <td class="text-capitalize">subject</td>
+            <td class="text-capitalize">class room</td>
+            <td class="text-capitalize">generation</td>
+            <td class="text-capitalize">time</td>
+            <td class="text-capitalize">semester</td>
+            <td class="text-capitalize">student year</td>
+            <td class="text-capitalize">action</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-capitalize">web development</td>
+            <td class="text-uppercase">b1</td>
+            <td>13</td>
+            <td class="text-capitalize">monday - friday 7:30AM - 11:00AM</td>
+            <td>2</td>
+            <td>4</td>
+            <td>    
+                <router-link :to="{ name: 'student-list' }" class="btn btn-danger m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">
+                    Input Mark
+                </router-link>
+                
+                <button style="font-size: 14px;" class="btn m-1 btn-warning p-1 form-control-md text-capitalize">student list</button><br>
+                <button style="font-size: 14px;" class="btn m-1 btn-primary p-1 form-control-md text-capitalize">student list</button>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-capitalize">web development</td>
+            <td class="text-uppercase">b1</td>
+            <td>13</td>
+            <td class="text-capitalize">Weekend</td>
+            <td>2</td>
+            <td>4</td>
+            <td>    
+                <button style="font-size: 14px;" class="btn m-1 btn-danger p-1 form-control-md text-capitalize">input mark</button>
+                <button style="font-size: 14px;" class="btn m-1 btn-warning p-1 form-control-md text-capitalize">student list</button><br>
+                <button style="font-size: 14px;" class="btn m-1 btn-primary p-1 form-control-md text-capitalize">student list</button>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-capitalize">web development</td>
+            <td class="text-uppercase">b1</td>
+            <td>13</td>
+            <td class="text-capitalize">monday - friday 7:30AM - 11:00AM</td>
+            <td>2</td>
+            <td>4</td>
+            <td>    
+                <button style="font-size: 14px;" class="btn m-1 btn-danger p-1 form-control-md text-capitalize">input mark</button>
+                <button style="font-size: 14px;" class="btn m-1 btn-warning p-1 form-control-md text-capitalize">student list</button><br>
+                <button style="font-size: 14px;" class="btn m-1 btn-primary p-1 form-control-md text-capitalize">student list</button>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-capitalize">web development</td>
+            <td class="text-uppercase">b1</td>
+            <td>13</td>
+            <td class="text-capitalize">Weekend</td>
+            <td>2</td>
+            <td>4</td>
+            <td>    
+                <button style="font-size: 14px;" class="btn m-1 btn-danger p-1 form-control-md text-capitalize">input mark</button>
+                <button style="font-size: 14px;" class="btn m-1 btn-warning p-1 form-control-md text-capitalize">student list</button><br>
+                <button style="font-size: 14px;" class="btn m-1 btn-primary p-1 form-control-md text-capitalize">student list</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
