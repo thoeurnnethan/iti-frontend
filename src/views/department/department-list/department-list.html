@@ -1,0 +1,39 @@
+<div class="container-fluid d-flex flex-column p-3">
+  <div class="header card bg-primary">
+    <p class="text-center m-auto p-3">Industrial Technecal Institute</p>
+  </div>
+  <div class="d-flex flex-row justify-content-between p-3">
+    <div class="left">
+      <label for="search"></label>
+      <input type="search" v-model="searchKey" id="search" placeholder="Search here...">
+      <button type="button" class="btn btn_search btn-lg btn-primary m-1" @click.prevent="onClickSearch(searchKey)">Search</button>
+    </div>
+    <div class="right">
+      <button type="button" class="btn btn_search btn-lg btn-success ml-2" @click.once="onClickRegister">+Register</button>
+    </div>
+  </div>
+  <hr>
+  <table class="table table-hover table-sm mt-5">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Department ID</th>
+        <th>Department Name</th>
+        <th>Department Description</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(item, index) in departmentList" :key="index"  @click="onClickRow(item)">
+        <td>{{ (index+1) }}</td>
+        <td>{{ item.departmentID }}</td>
+        <td>{{ item.departmentName }}</td>
+        <td>{{ item.departmentDesc }}</td>
+        <td :class="getStatusClass(item.statusCode)">
+          {{ $codeConverter.codeToString(statusCodeList, item.statusCode) }}
+        </td>
+        <!-- <td class="text-start text-danger pointer" @click="onClickRow(item)">Edit</td> -->
+      </tr>
+    </tbody>
+  </table>
+</div>

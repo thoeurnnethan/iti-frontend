@@ -1,0 +1,64 @@
+<div class="container-fluid w-100 h-100">
+    <div class="card flex-1 d-flex flex-row justify-content-around bg-primary">
+        <div class="dlist03">
+            <dl>
+                <dt>Department ID</dt>
+                <dd>
+                    <input v-model="departmentInfo.departmentID" type="text"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt>Department Name</dt>
+                <dd>
+                    <input v-model="departmentInfo.departmentName" type="text" />
+                </dd>
+            </dl>
+            <dl>
+                <dt>Department Description</dt>
+                <dd>
+                    <input v-model="departmentInfo.departmentDesc" type="text" />
+                </dd>
+            </dl>
+            <dl>
+                <dt>Department Status</dt>
+                <dd>
+                    <select v-model="departmentInfo.statusCode">
+                        <option class="custom-select" v-for="item in statusCodeList" :key="item.codeValue" :value="item.codeValue">
+                            {{ item.codeValueDesc }}
+                        </option>
+                    </select>
+                </dd>
+            </dl>
+        </div>
+        <div class="dlist03">
+            <dl class="type02">
+                <dt>Department ID</dt>
+                <dd>
+                    <input v-model="departmentInfo.departmentID" type="text"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt>Department Name</dt>
+                <dd>
+                    <input v-model="departmentInfo.departmentName" type="text" />
+                </dd>
+            </dl>
+            <dl>
+                <dt>Department Description</dt>
+                <dd>
+                    <input v-model="departmentInfo.departmentDesc" type="text" />
+                </dd>
+            </dl>
+            <dl>
+                <dt>Department Status</dt>
+                <dd>
+                    <select v-model="departmentInfo.statusCode">
+                        <option class="custom-select" v-for="item in statusCodeList" :key="item.codeValue" :value="item.codeValue">
+                            {{ item.codeValueDesc }}
+                        </option>
+                    </select>
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>

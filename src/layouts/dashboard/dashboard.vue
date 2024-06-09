@@ -1,4 +1,4 @@
-<template src="./dashboardLayout.html"></template>
+<template src="./dashboard.html"></template>
 
 <script lang="ts">
 import type { EmployeeList, EmployeeList_Res } from '@/shared/types/employeeList';
@@ -69,5 +69,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-    @import "./dashboardLayout.scss";
+    @import "./dashboard.scss";
 </style>

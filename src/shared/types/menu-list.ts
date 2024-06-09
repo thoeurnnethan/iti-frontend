@@ -1,12 +1,8 @@
 
 export interface MenuItem {
-  channelCategoryCode: string
-  menuID: string
-  menuName: string
-  menuLevel: string
-  screenID: string
-  menuStatusCode: string
-  parentMenuID: string
+  path: string
+  iconClass: string
+  name: string
 }
 
 export interface COM10500111_REQ {
@@ -19,4 +15,3 @@ export interface COM10500111_RES {
     totalCount : number 
   }
 }
-
