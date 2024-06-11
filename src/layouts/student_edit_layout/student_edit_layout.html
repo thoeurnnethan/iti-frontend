@@ -1,0 +1,68 @@
+<div class="container-fluid mb-2">
+    <h4 class="font-light">Student Edit</h4>
+</div>
+<hr color="#000" class="mb-5">
+
+<div class="container-fluid p-0">
+    <div class="row">
+        <div class="col-12">
+            <fieldset class="border rounded-3 p-3">
+                <legend class="float-none px-3" >Student Information</legend>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="">Name <span class="text-danger">*</span></label>
+                            <input type="text" name="" id="" class="form-control" value="Ngoytry Lyhuor">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="">Gender</label>
+                            <select class="form-select" name="" id="">
+                                <option selected value="">Male</option>
+                                <option value="">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        
+        <div class="col-12">
+            <fieldset class="border rounded-3 p-3">
+                <legend class="float-none px-3" >Student Mark</legend>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="">Web Development</label>
+                            <input type="number" name="" id="" class="form-control" value="80">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="">DBMS</label>
+                            <input type="number" name="" id="" class="form-control" value="90">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="">Java</label>
+                            <input type="number" name="" id="" class="form-control" value="50">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="">C#</label>
+                            <input type="number" name="" id="" class="form-control" value="70">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <router-link :to="{ name: 'student-list' }" class="btn btn-success mt-4" style="font-size: 14px;">
+        Update Data
+    </router-link>
+</div>
+
+

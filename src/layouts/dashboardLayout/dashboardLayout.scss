@@ -276,7 +276,6 @@ $black: #0a1832;
 .header{
     height: 70px;
     background-color: $header_color;
-
     .header_left{
         width: 255.7px;
         height: 100%;
@@ -302,8 +301,7 @@ $black: #0a1832;
         padding-bottom: 30px;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         .link{
-            padding: 6px 0px;
-            transition: 0.2s;
+            padding: 5px 0px;
         }
         .link:hover{
             background-color: #CCCCCC;
@@ -313,11 +311,14 @@ $black: #0a1832;
             font-size: 14px;
         }
         .link i{
-            padding-right: 10px;
+            padding-right: 7px;
         }
         .sidebar{
             width: 190px;
         }
+    }
+    .main_right{
+        float: right;
     }
 }
 

@@ -1,27 +1,167 @@
 <div class="container-fluid mb-2">
     <h4 class="font-light">Student List</h4>
-</div><hr color="#000" class="mb-5">
+</div>
+<hr color="#000" class="mb-5">
 
 <table class="table border-1">
     <thead>
         <tr class="p-3 font-medium">
+            <td class="text-capitalize">number</td>
             <td class="text-capitalize">full name</td>
             <td class="text-capitalize">gender</td>
             <td class="text-capitalize">Web Development</td>
             <td class="text-capitalize">DBMS</td>
             <td class="text-capitalize">Java</td>
+            <td class="text-capitalize">C#</td>
             <td class="text-capitalize">action</td>
         </tr>
     </thead>
     <tbody>
         <tr>
+            <td>1</td>
             <td class="text-capitalize">Ngoytry Lyhuor</td>
             <td class="text-capitalize">male</td>
             <td>80</td>
             <td>90</td>
             <td>50</td>
+            <td>70</td>
             <td>    
-                <router-link :to="{ name: 'student-list' }" class="btn btn-primary m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">
+                <router-link :to="{ name: 'student-edit' }" class="btn btn-primary m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">
+                    Edit Data
+                </router-link>
+                <div class="btn btn-danger m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">Delete</div>
+            </td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td class="text-capitalize">Ava Smith</td>
+            <td class="text-capitalize">female</td>
+            <td>85</td>
+            <td>88</td>
+            <td>92</td>
+            <td>89</td>
+            <td>    
+                <router-link :to="{ name: 'student-edit' }" class="btn btn-primary m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">
+                    Edit Data
+                </router-link>
+                <div class="btn btn-danger m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">Delete</div>
+            </td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td class="text-capitalize">Liam Johnson</td>
+            <td class="text-capitalize">male</td>
+            <td>78</td>
+            <td>84</td>
+            <td>75</td>
+            <td>82</td>
+            <td>    
+                <router-link :to="{ name: 'student-edit' }" class="btn btn-primary m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">
+                    Edit Data
+                </router-link>
+                <div class="btn btn-danger m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">Delete</div>
+            </td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td class="text-capitalize">Emma Williams</td>
+            <td class="text-capitalize">female</td>
+            <td>92</td>
+            <td>81</td>
+            <td>89</td>
+            <td>87</td>
+            <td>    
+                <router-link :to="{ name: 'student-edit' }" class="btn btn-primary m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">
+                    Edit Data
+                </router-link>
+                <div class="btn btn-danger m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">Delete</div>
+            </td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td class="text-capitalize">Noah Brown</td>
+            <td class="text-capitalize">male</td>
+            <td>74</td>
+            <td>79</td>
+            <td>83</td>
+            <td>85</td>
+            <td>    
+                <router-link :to="{ name: 'student-edit' }" class="btn btn-primary m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">
+                    Edit Data
+                </router-link>
+                <div class="btn btn-danger m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">Delete</div>
+            </td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td class="text-capitalize">Olivia Jones</td>
+            <td class="text-capitalize">female</td>
+            <td>88</td>
+            <td>90</td>
+            <td>85</td>
+            <td>88</td>
+            <td>    
+                <router-link :to="{ name: 'student-edit' }" class="btn btn-primary m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">
+                    Edit Data
+                </router-link>
+                <div class="btn btn-danger m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">Delete</div>
+            </td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td class="text-capitalize">Elijah Garcia</td>
+            <td class="text-capitalize">male</td>
+            <td>90</td>
+            <td>87</td>
+            <td>78</td>
+            <td>83</td>
+            <td>    
+                <router-link :to="{ name: 'student-edit' }" class="btn btn-primary m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">
+                    Edit Data
+                </router-link>
+                <div class="btn btn-danger m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">Delete</div>
+            </td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td class="text-capitalize">Sophia Martinez</td>
+            <td class="text-capitalize">female</td>
+            <td>85</td>
+            <td>82</td>
+            <td>91</td>
+            <td>90</td>
+            <td>    
+                <router-link :to="{ name: 'student-edit' }" class="btn btn-primary m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">
+                    Edit Data
+                </router-link>
+                <div class="btn btn-danger m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">Delete</div>
+            </td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td class="text-capitalize">James Anderson</td>
+            <td class="text-capitalize">male</td>
+            <td>77</td>
+            <td>85</td>
+            <td>88</td>
+            <td>79</td>
+            <td>    
+                <router-link :to="{ name: 'student-edit' }" class="btn btn-primary m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">
+                    Edit Data
+                </router-link>
+                <div class="btn btn-danger m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">Delete</div>
+            </td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td class="text-capitalize">Charlotte Lee</td>
+            <td class="text-capitalize">female</td>
+            <td>80</td>
+            <td>89</td>
+            <td>77</td>
+            <td>85</td>
+            <td>    
+                <router-link :to="{ name: 'student-edit' }" class="btn btn-primary m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">
                     Edit Data
                 </router-link>
                 <div class="btn btn-danger m-1 p-1 form-control-md text-capitalize" style="font-size: 14px;">Delete</div>

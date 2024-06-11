@@ -6,6 +6,16 @@ const router = createRouter({
         {
             path: "/",
             name: "login",
+            component: () => import("../layouts/loginLayout/loginLayout.vue"),
+        },
+        {
+            path: "/register",
+            name: "register",
+            component: () => import("../layouts/registerLayout/registerLayout.vue"),
+        },
+        {
+            path: "/dashboard",
+            name: "dashboard",
             component: () => import("../layouts/dashboardLayout/dashboardLayout.vue"),
             children:[
                 {
@@ -19,9 +29,9 @@ const router = createRouter({
                     component: () => import("../layouts/studentList/studentList.vue")
                 },
                 {
-                    path: "/student",
-                    name: "student",
-                    component: () => import("../views/student/student list/student-list.vue")
+                    path: "/student-edit",
+                    name: "student-edit",
+                    component: () => import("../layouts/student_edit_layout/student_edit_layout.vue")
                 },
                 {
                     path: "/customer",
@@ -35,6 +45,7 @@ const router = createRouter({
                 },
             ]
         },
+        
     ]
 });
 
