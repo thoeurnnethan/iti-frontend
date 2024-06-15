@@ -17,7 +17,7 @@ legend { position:absolute; left:-1000px; top:-1000px; height:0; font-size:0; li
 a { margin:0; color:#231f20; text-decoration:none; outline:none; cursor:pointer; }
 table { width:100%; border-collapse:collapse; font-size:16px; }
 table caption { display:none;position:absolute; left:-999px; height:0; font-size:0; line-height:0; visibility:hidden; overflow:hidden; }
-table td, table th { padding:0; }
+table td, table th { padding:10px; }
 button { margin:0; padding:0; font:normal 1em "Inter", Noto Sans Khmer, sans-serif; color:#000000; vertical-align:middle; background:0; border:none; overflow:visible; cursor:pointer; box-shadow: none; }
 button:focus { outline:none; -webkit-tap-highlight-color:rgba(0,0,0,0.2); }
 
@@ -162,14 +162,14 @@ ion-content { --background: #FFFFFF; background: #FFFFFF; --padding-start: 0; --
 		}
 	}
 }
-.side_bar + .main_side { width: calc(100% - 280px); 
-	.headerWrap, .footerWrap { width: calc(100% - 280px); transition: 500ms width ease-in-out; -webkit-transition: 500ms width ease-in-out; -moz-transition: 500ms width ease-in-out; -ms-transition: 500ms width ease-in-out; -o-transition: 500ms width ease-in-out; }
+.side_bar + .main_side { width: calc(100% - 250px); 
+	.headerWrap { width: calc(100% - 250px); transition: 500ms width ease-in-out; -webkit-transition: 500ms width ease-in-out; -moz-transition: 500ms width ease-in-out; -ms-transition: 500ms width ease-in-out; -o-transition: 500ms width ease-in-out; }
 }
 .side_bar.collapse + .main_side { width: calc(100% - 80px); transition: 300ms max-width ease-in-out; -webkit-transition: 300ms max-width ease-in-out; -moz-transition: 300ms max-width ease-in-out; -ms-transition: 300ms max-width ease-in-out; -o-transition: 300ms max-width ease-in-out;
-	.headerWrap, .footerWrap { width: calc(100% - 80px); transition: 500ms width ease-in-out; -webkit-transition: 500ms width ease-in-out; -moz-transition: 500ms width ease-in-out; -ms-transition: 500ms width ease-in-out; -o-transition: 500ms width ease-in-out; }
+	.headerWrap { width: calc(100% - 80px); transition: 500ms width ease-in-out; -webkit-transition: 500ms width ease-in-out; -moz-transition: 500ms width ease-in-out; -ms-transition: 500ms width ease-in-out; -o-transition: 500ms width ease-in-out; }
 }
 .main_side { /* display: flex; */ flex-direction: column; flex: 1 auto; background-color: #F5F4FC; overflow: auto; padding: 80px 0 0;
-	.headerWrap {  background-color: #F5F4FB; position: fixed; top: 0; right: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; column-gap: 20px; z-index: 9999999;
+	.headerWrap {  background-color: #3112e6; position: fixed; top: 0; right: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; column-gap: 20px; z-index: 9999999;
 		> div { display: flex;  align-items: center;
 			&.option { margin-left: auto; column-gap: 20px; }
 		}
@@ -177,9 +177,9 @@ ion-content { --background: #FFFFFF; background: #FFFFFF; --padding-start: 0; --
 			&.btn_cal { background-image: url("../images/ico_calculator_24.svg"); }
 			&.btn_noti { background-image: url("../images/ico_alarm_24.svg"); }
 			&.btn_lang.en { background-image: url("../images/ico_lang_en.svg"); }
-			&.btn_lang.km { background-image: url("../images/ico_lang_kh.svg"); }            
-			&.btn_lang.ko { background-image: url("../images/ico_lang_ko.svg"); }            
-			&.btn_logout{ background-image: url("../images/btn_ico_logout.svg"); }            
+			&.btn_lang.km { background-image: url("../images/ico_lang_kh.svg"); }
+			&.btn_lang.ko { background-image: url("../images/ico_lang_ko.svg"); }
+			&.btn_logout{ background-image: url("../images/btn_ico_logout.svg"); }
 		}
 	}
 	.noticeWrap { display: flex; justify-content: space-between; border: 0.5px solid #EBEBEB; background: #FFFFFF; padding: 20px 40px;

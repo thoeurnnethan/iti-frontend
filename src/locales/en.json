@@ -1,4 +1,19 @@
 {
-  "Home": "Home",
-  "About": "About"
+  "common":{
+    "itiName": "Industrial Technecal Institute",
+    "Home": "Home"
+  },
+  "department":{
+    "depID": "Department ID",
+    "depName": "Department Name",
+    "depDesc": "Department Description",
+    "statusCode": "Status Code"
+  },
+  "menu":{
+    "home": "Home",
+    "studentList": "Student List",
+    "studentRegister": "Student Register",
+    "departmentList": "Department List",
+    "departmentRegister": "Department Register"
+  }
 }

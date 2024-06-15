@@ -1,4 +1,19 @@
 {
-  "Home": "Home",
-  "About": "About"
+  "common":{
+    "itiName": "វិទ្យាស្ថានបច្ចេកទេសឧស្សាហកម្ម",
+    "Home": "ទំព័រដើម"
+  },
+  "department":{
+    "depID": "លេខសម្គាល់ដេប៉ាតឺម៉ង់",
+    "depName": "ឈ្មោះដេប៉ាតឺម៉ង់",
+    "depDesc": "ដេប៉ាតឺម៉ង់លម្អិត",
+    "statusCode": "ស្ថានភាពដេប៉ាតឺម៉ង់"
+  },
+  "menu":{
+    "home": "ទំព័រដើម",
+    "studentList": "បញ្ជីសិស្ស",
+    "studentRegister": "ចុះឈ្មោះសិស្ស",
+    "departmentList": "បញ្ជីដេប៉ាតឺម៉ង់",
+    "departmentRegister": "ចុះបញ្ជីដេប៉ាតឺម៉ង់"
+  }
 }

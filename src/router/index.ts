@@ -6,7 +6,7 @@ const router = createRouter({
         {
             path: "/",
             name: "dashboardLayout",
-            component: () => import("../layouts/dashboardLayout/dashboardLayout.vue"),
+            component: () => import("../layouts/AdminDashboardLayout/dashboardLayout.vue"),
             children:[
                 {
                     path: "/student-list",

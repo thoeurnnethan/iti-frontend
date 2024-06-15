@@ -1,6 +1,7 @@
 
 import axios, { AxiosRequestConfig } from 'axios';
 
+
 export class RequestService {
     baseUrl = import.meta.env.VITE_APP_SERVER_URL;
     private defaultHeaders: any;
@@ -33,6 +34,10 @@ export class RequestService {
         };
         try {
             const response = await axios.post(url, fullReqBody, config);
+            if(!response.data.header.result){
+                console.log(response.data.header.error_code)
+                console.log(response.data.header.error_text)
+            }
             return response.data;
         } catch (error) {
             console.error('API request failed:', error);
