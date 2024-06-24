@@ -1,4 +1,4 @@
-<template src="./department-register.html"></template>
+<template src="./department-detail.html"></template>
 
 <script lang="ts">
 import { modalController } from '@ionic/vue';
@@ -11,7 +11,13 @@ import { RequestService } from '@/shared/services/request-service';
 const requestService = new RequestService();
 
 export default defineComponent({
-  name: "department-register",
+  name: "department-detail",
+  props: {
+    department: {
+      type: Object as PropType<DEPARTMENT_LIST>,
+      required: true
+    }
+  },
 
   data() {
     return {
@@ -24,12 +30,7 @@ export default defineComponent({
   },
 
   mounted() {
-    console.log("Mounted")
-  },
-
-  unmounted() {
-    console.log("UnMounted")
-      this.departmentInfo = {} as DEPARTMENT_LIST
+    this.departmentInfo = this.department;
   },
 
   computed: {
@@ -46,6 +47,8 @@ export default defineComponent({
 
     onClickUpdate(item: DEPARTMENT_LIST){
       const reqBody: DEPARTMENT_LIST= item
+        requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody)
+        this.handleClose();
     }
   },
 
@@ -53,5 +56,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-@import url('./department-register.scss');
+@import url('./department-detail.scss');
 </style>

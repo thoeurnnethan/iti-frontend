@@ -15,16 +15,14 @@ export class RequestService {
 
     public async request(apiPath: string, requestBody: any): Promise<any> {
         const fullReqBody = {
-            META: {
-                header: {
-                    error_code: "",
-                    error_text: "",
-                    id_token: "",
-                    info_text: "",
-                    result: false
-                },
-                body: requestBody
-            }
+            header: {
+                error_code: "",
+                error_text: "",
+                id_token: "",
+                info_text: "",
+                result: false
+            },
+            body: requestBody
         }
 
 

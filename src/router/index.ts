@@ -22,11 +22,6 @@ const router = createRouter({
                     path: "/department-list",
                     name: "department-list",
                     component: () => import("../views/department/department-list/department-list.vue")
-                },
-                {
-                    path: "/department-register",
-                    name: "department-register",
-                    component: () => import("../views/department/department-register/department-register.vue")
                 }
             ]
         },

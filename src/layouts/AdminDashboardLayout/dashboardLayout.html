@@ -15,16 +15,14 @@
                     </div>
                 </li>
             </ul>
-            <button class="btn btn-primary p-3 d-flex justify-content-center" @click="toggleSidebar">
+            <!-- <button class="btn btn-primary p-3 d-flex justify-content-center" @click="toggleSidebar">
                 <font-awesome-icon icon="fa-solid fa-bars" />
-            </button>
+            </button> -->
         </div>
 
         <div class="main_side">
             <div class="sticky_head d-flex flex-row justify-content-center align-center">
                 <SelectButton v-model="currentLanguage" :options="languageList" aria-labelledby="basic" />
-                <!-- <button class="btn btn-dark" @click="changeLanguage('en')">English</button>
-                <button class="btn btn-dark" @click="changeLanguage('km')">Khmer</button> -->
             </div>
             <div class="main_content m-2">
                 <Toast />

@@ -6,7 +6,7 @@ import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { StandardCodeData } from '@/shared/types/standard-code';
-import department_update from '../department-update/department-update.vue';
+import department_detail from '../department-detail/department-detail.vue';
 
 const requestService = new RequestService();
 
@@ -20,7 +20,8 @@ export default defineComponent({
     return {
       departmentList: [] as DEPARTMENT_LIST[],
       departmentInfo: {} as DEPARTMENT_LIST,
-      searchKey: '' as any,
+      departmentInfoUpdate: {} as DEPARTMENT_LIST,
+      searchKey: '' as string,
       statusCodeList: [
         { codeValue: '01', codeValueDesc: 'Active' },
         { codeValue: '02', codeValueDesc: 'Inactive' },
@@ -54,21 +55,16 @@ export default defineComponent({
 
     onClickRow(item: DEPARTMENT_LIST) {
       this.$popupService.onOpen({
-        component: department_update,
+        component: department_detail,
         dataProp: {
           department: item
         }
       })
     },
 
-    onClickRegister(){
-      this.$router.push('/department-register')
-    },
-
-    onClickSearch(){
-      this.getDepartmentList();
+    onClickSave(item: DEPARTMENT_LIST){
+      console.log(item)
     }
-
   },
 })
 </script>

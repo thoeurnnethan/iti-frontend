@@ -21,11 +21,6 @@ export const DahsboardService = {
                 "path": "/department-list",
                 "iconClass": "fa-solid fa-bars",
                 "name": "departmentList"
-            },
-            {
-                "path": "/department-register",
-                "iconClass": "fa-solid fa-bars",
-                "name": "departmentRegister"
             }
         ]
     }

@@ -8,12 +8,14 @@ import axios from 'axios';
 import { defineComponent } from 'vue';
 import { DahsboardService } from './DashboardService';
 import Toast from 'primevue/toast';
+import SelectButton from 'primevue/selectbutton';
 
 export default defineComponent({
     name: "Dashboard",
     components: {
         FontAwesomeIcon,
-        Toast
+        Toast,
+        SelectButton
     },
 
     data() {
