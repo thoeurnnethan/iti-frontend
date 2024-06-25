@@ -23,6 +23,7 @@
                     <InputGroupAddon>{{ $t('department.depManager') }}</InputGroupAddon>
                     <Dropdown :options="statusCodeList" 
                     v-model="departmentInfoUpdate.statusCode" 
+                    optionValue="codeValue"
                     optionLabel="codeValueDesc" />
                 </InputGroup>
             </div>
@@ -31,6 +32,7 @@
                     <InputGroupAddon>{{ $t('department.statusCode') }}</InputGroupAddon>
                     <Dropdown :options="statusCodeList" 
                     v-model="departmentInfoUpdate.statusCode" 
+                    optionValue="codeValue"
                     optionLabel="codeValueDesc" />
                 </InputGroup>
             </div>

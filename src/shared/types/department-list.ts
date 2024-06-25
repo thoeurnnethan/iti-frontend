@@ -4,14 +4,14 @@ export interface DEPARTMENT_LIST {
   departmentName: string
   departmentDesc: string
   statusCode: string
-  teacherID: string
-  firstName: string
-  lastName: string
-  departmentRoleCode: string
-  departmentRoleName: string
-  departmentRoleDesc: string
-  firstRegisterDate: string
-  lastChangeDate: string
+  teacherID?: string
+  firstName?: string
+  lastName?: string
+  departmentRoleCode?: string
+  departmentRoleName?: string
+  departmentRoleDesc?: string
+  firstRegisterDate?: string
+  lastChangeDate?: string
 }
 
 export interface DEPARTMENT_LIST_REQ {

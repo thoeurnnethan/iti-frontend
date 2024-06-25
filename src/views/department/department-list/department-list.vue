@@ -62,8 +62,12 @@ export default defineComponent({
       })
     },
 
-    onClickSave(item: DEPARTMENT_LIST){
+    async onClickSave(item: DEPARTMENT_LIST){
       console.log(item)
+      const reqBody: DEPARTMENT_LIST = item
+      const response = (await requestService.request(API_PATH.DEPARTMENT_REGISTER, reqBody)) as DEPARTMENT_LIST_RES;
+      console.log(response)
+      this.getDepartmentList();
     }
   },
 })
