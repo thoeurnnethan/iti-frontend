@@ -10,7 +10,7 @@ $color_Light2: #c4c4c4;
 
 /* Globals  */
 *{
-    font-family: 'Poppins', sans-serif;
+    font-family: hanuman !important;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -57,7 +57,7 @@ $color_Light2: #c4c4c4;
         }
         .logo-name {
             text-wrap: nowrap;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 200;
             color: var( --ion-color-primary-contrast);
             overflow: hidden;
