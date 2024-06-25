@@ -4,7 +4,8 @@
     "Home": "Home",
     "search": "Search",
     "searchKey": "Search Here...",
-    "save": "Save"
+    "save": "Save",
+    "ok": "Okay"
   },
   "department":{
     "depID": "Department ID",
