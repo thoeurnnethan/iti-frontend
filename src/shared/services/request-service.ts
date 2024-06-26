@@ -1,19 +1,18 @@
 
 import axios, { AxiosRequestConfig } from 'axios';
-
+import { RequestErrorHandlingService } from './RequestErrorHandlingService';
 
 export class RequestService {
     baseUrl = import.meta.env.VITE_APP_SERVER_URL;
     private defaultHeaders: any;
 
     constructor() {
-        // this.baseURL = baseURL;
         this.defaultHeaders = {
             'Content-Type': 'application/json',
         };
     }
 
-    public async request(apiPath: string, requestBody: any): Promise<any> {
+    public async request(apiPath: string, requestBody: any, isShowMessage = true): Promise<any> {
         const fullReqBody = {
             header: {
                 error_code: "",
@@ -25,18 +24,14 @@ export class RequestService {
             body: requestBody
         }
 
-
         const url = `${this.baseUrl}/${apiPath}`;
         const config: AxiosRequestConfig = {
             headers: this.defaultHeaders,
         };
         try {
-            const response = await axios.post(url, fullReqBody, config);
-            if(!response.data.header.result){
-                console.log(response.data.header.error_code)
-                console.log(response.data.header.error_text)
-            }
-            return response.data;
+            const res = await axios.post(url, fullReqBody, config);
+            if(isShowMessage) RequestErrorHandlingService.requestErrorHandler(res)
+            return res.data;
         } catch (error) {
             console.error('API request failed:', error);
             throw error;
