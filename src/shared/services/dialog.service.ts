@@ -32,12 +32,6 @@ class DialogService {
                 backdropDismiss: false
             });
             await modal.present();
-            /* const { role, data } = await modal.onWillDismiss() || await modal.onDidDismiss();
-            if (role === "ok" && callback) {
-                callback(data)
-            } else if (onDidDismiss) {
-                onDidDismiss('close')
-            } */
         }, onSetTimeout);
     }
 }

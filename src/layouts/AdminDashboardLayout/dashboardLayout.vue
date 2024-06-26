@@ -9,6 +9,7 @@ import { defineComponent } from 'vue';
 import { DahsboardService } from './DashboardService';
 import Toast from 'primevue/toast';
 import SelectButton from 'primevue/selectbutton';
+import { LanguageCode } from '@/shared/types/language-code';
 
 export default defineComponent({
     name: "Dashboard",

@@ -27,8 +27,9 @@ export default defineComponent({
         { codeValue: '02', codeValueDesc: 'Inactive' },
       ] as StandardCodeData[],
       totalCount: 0,
-      pageSize: 15,
-      pageNumber: 1
+      pageSize: 10,
+      pageNumber: 0,
+      isLazy: true
     }
   },
 
@@ -42,11 +43,18 @@ export default defineComponent({
         userID: "",
         departmentName: this.searchKey,
         pageSize: this.pageSize,
-        pageNumber: this.pageNumber
+        pageNumber: this.pageNumber + 1
       }
-      const response = (await requestService.request(API_PATH.DEPARTMENT_LIST, reqBody)) as DEPARTMENT_LIST_RES;
+      const response = (await requestService.request(API_PATH.DEPARTMENT_LIST,reqBody,false)) as DEPARTMENT_LIST_RES;
       this.totalCount = response.body?.totalCount;
       this.departmentList = response.body?.departmentList;
+      this.isLazy= false;
+    },
+
+    onPage(event: { page: number; rows: number; }) {
+      this.pageNumber = event.page;
+      this.pageSize = event.rows;
+      this.getDepartmentList();
     },
 
     getStatusClass(statusCode: string): string {
@@ -63,12 +71,10 @@ export default defineComponent({
     },
 
     async onClickSave(item: DEPARTMENT_LIST){
-      console.log(item)
-      const reqBody: DEPARTMENT_LIST = item
-      const response = (await requestService.request(API_PATH.DEPARTMENT_REGISTER, reqBody)) as DEPARTMENT_LIST_RES;
+      const reqBody: DEPARTMENT_LIST = item;
+      const response = (await requestService.request(API_PATH.DEPARTMENT_REGISTER,reqBody,true)) as DEPARTMENT_LIST_RES;
       console.log(response)
-      this.getDepartmentList();
-    }
+    },
   },
 })
 </script>

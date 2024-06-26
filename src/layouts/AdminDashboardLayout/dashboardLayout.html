@@ -21,11 +21,15 @@
         </div>
 
         <div class="main_side">
-            <div class="sticky_head d-flex flex-row justify-content-center align-center">
-                <SelectButton v-model="currentLanguage" :options="languageList" aria-labelledby="basic" />
+            <div class="sticky_head d-flex flex-row">
+                <SelectButton class="lang" v-model="currentLanguage" :options="languageList" aria-labelledby="basic" />
+                <div class="user_profile">
+                    <div class="profile">
+                        <p>Nethan</p>
+                    </div>
+                </div>
             </div>
             <div class="main_content m-2">
-                <Toast />
                 <router-view></router-view>
             </div>
         </div>

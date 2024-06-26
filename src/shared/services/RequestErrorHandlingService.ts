@@ -28,6 +28,17 @@ export class RequestErrorHandlingService {
 					}
 				});
 			}, 300);
+		}else {
+			setTimeout(async () => {
+				await dialog.onOpen({
+					showCancel: false,
+					title: 'Success',
+					content: 'successfully',
+					callback: () => {
+						modalController.dismiss()
+					}
+				});
+			}, 300);
 		}
 	}
 }

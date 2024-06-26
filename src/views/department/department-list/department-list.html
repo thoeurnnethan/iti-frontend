@@ -57,12 +57,24 @@
     </div>
     <div class="space"></div>
     <div class="card">
-        <DataTable v-model:selection="departmentInfo" :value="departmentList" scrollable
-            @row-dblclick="onClickRow(departmentInfo)" :metaKeySelection="true" tableStyle="min-width: 50rem"
-            selectionMode="single" scrollHeight="100vh">
-            <Column field="departmentID" :header="$t('department.depID')" style="min-width:100px" sortable></Column>
-            <Column field="departmentName" :header="$t('department.depName')" style="min-width: 150px" sortable></Column>
-            <Column field="departmentDesc" :header="$t('department.depDesc')" style="min-width: 150px" sortable></Column>
+        <DataTable 
+            v-model:selection="departmentInfo" 
+            @row-dblclick="onClickRow(departmentInfo)" 
+            tableStyle="min-width: 50rem"
+            selectionMode="single" 
+            scrollable
+            :value="departmentList" 
+            :metaKeySelection="true" 
+            :rows="pageSize"
+            :lazy="true"
+            :paginator="true"
+            :totalRecords="totalCount"
+            :rowsPerPageOptions="[10, 20, 50]" 
+            scrollHeight="50vh"
+            @page="onPage">
+            <Column field="departmentID" :header="$t('department.depID')" style="min-width:100px"></Column>
+            <Column field="departmentName" :header="$t('department.depName')" style="min-width: 150px"></Column>
+            <Column field="departmentDesc" :header="$t('department.depDesc')" style="min-width: 150px"></Column>
             <Column field="statusCode" :header="$t('department.statusCode')" style="min-width: 100px">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
@@ -74,22 +86,6 @@
                 </template>
             </Column>
         </DataTable>
-        <!-- <DataTable v-model:selection="departmentInfo" :value="departmentList" scrollable
-            @row-dblclick="onClickRow(departmentInfo)" :metaKeySelection="true" tableStyle="min-width: 50rem"
-            selectionMode="single" scrollHeight="100vh">
-            <Column field="departmentID" :header="$t('department.depID')" style="min-width:100px" sortable></Column>
-            <Column field="departmentName" :header="$t('department.depName')" style="min-width: 150px" sortable></Column>
-            <Column field="departmentDesc" :header="$t('department.depDesc')" style="min-width: 150px" sortable></Column>
-            <Column field="statusCode" :header="$t('department.statusCode')" style="min-width: 100px">
-                <template #body="{ data }">
-                    {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
-                </template>
-            </Column>
-            <Column :header="$t('department.edit')" style="min-width: 10px">
-                <template #body="{ data }">
-                    <Button icon="pi pi-pencil" @click="editDepartment(data)" class="p-button-rounded p-button-success" />
-                </template>
-            </Column>
-        </DataTable> -->
     </div>
+    <div class="space"></div>
 </div>
