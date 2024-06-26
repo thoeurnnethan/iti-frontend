@@ -1,44 +1,18 @@
-<div class="container-fluid">
-    <table class="table table-hover table-sm">
-        <thead class="table-dark">
-            <tr>
-                <th>No</th>
-                <th>studentID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Nick Name</th>
-                <th>Gender</th>
-                <th>DOB</th>
-                <th>POB</th>
-                <th>Address</th>
-                <th>Phone Number</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Image Url</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(item, index) in studentList" :key="index" @click="onClickRow(item)">
-                <td>{{ (index+1) }}</td>
-                <td>{{ item.studentID }}</td>
-                <td>{{ item.firstName }}</td>
-                <td>{{ item.lastName }}</td>
-                <td>{{ item.nickName}}</td>
-                <td>{{ item.gender }}</td>
-                <td>{{ item.dateOfBirth }}</td>
-                <td>{{ item.placeOfBirth }}</td>
-                <td>{{ item.address }}</td>
-                <td>{{ item.phone }}</td>
-                <td>{{ item.email }}</td>
-                <td>{{ item.passwd }}</td>
-                <td>{{ item.imageUrl }}</td>
-            </tr>
-        </tbody>
-    </table>
-    <!-- <ul class="pagination justify-content-center">
-        <li class="page-item"><a class="page-link">Previous</a></li>
-        <li class="page-item"><a class="page-link">1</a></li>
-        <li class="page-item"><a class="page-link">2</a></li>
-        <li class="page-item"><a class="page-link">Next</a></li>
-    </ul> -->
+<p class="we_title">Student List</p>
+
+<div class="we_shadow">
+    <DataTable :value="studentList" removableSort tableStyle="min-width: 50rem">
+        <Column field="studentID" header="Student ID" sortable style="width: 10%"></Column>
+        <Column field="firstName" header="First Name" sortable style="width: 10%"></Column>
+        <Column field="lastName" header="Last Name" sortable style="width: 10%"></Column>
+        <Column field="nickName" header="Nick Name" sortable style="width: 10%"></Column>
+        <Column field="gender" header="Gender" sortable style="width: 10%"></Column>
+        <Column field="dateOfBirth" header="DOB" sortable style="width: 10%"></Column>
+        <Column field="placeOfBirth" header="POB" sortable style="width: 10%"></Column>
+        <Column field="address" header="Address" sortable style="width: 10%"></Column>
+        <Column field="phone" header="Phone Number" sortable style="width: 10%"></Column>
+        <Column field="email" header="Email" sortable style="width: 10%"></Column>
+        <Column field="passwd" header="Password" sortable style="width: 10%"></Column>
+        <Column field="imageUrl" header="Image URL" sortable style="width: 10%"></Column>
+    </DataTable>
 </div>

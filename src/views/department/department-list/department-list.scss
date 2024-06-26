@@ -1,6 +1,8 @@
-th{
-  color: rgb(51, 0, 255);
-  font-weight: normal;
+tr{
+  th,td{
+      font-size: 14px !important; 
+      white-space: nowrap;
+  }
 }
 .active-text {
   text-shadow: 2px 2px 15px rgba(251, 34, 15, 0.9);

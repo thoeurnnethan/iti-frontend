@@ -1,0 +1,17 @@
+<div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;background-color: cornflowerblue;">
+    <div class="container shadow p-4 py-5 mb-5 bg-body rounded" style="width: 600px;">
+        <h3 class="text-center mt-2">Login</h3>
+        
+        <div class="d-flex flex-column gap-2 mt-3">
+            <label for="username">Username</label>
+            <InputText id="username" v-model="value" aria-describedby="username-help" />
+        </div>
+
+        <div class="d-flex flex-column gap-2 mt-3">
+            <label for="password">Password</label>
+            <InputText id="password" v-model="value" aria-describedby="password-help" />
+        </div>
+        <button class="btn btn-primary mt-4 float-end">Login</button>
+
+    </div>
+</div>
