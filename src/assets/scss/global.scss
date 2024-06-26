@@ -6,6 +6,24 @@
 	box-sizing: border-box;
 }
 
+//-custom_css----------------
+
+.we_shadow{
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	border-radius: 10px;
+}
+
+.we_title{
+	font-size: 15px;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+
+
+
+//-custom_css----------------
+
 ::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;

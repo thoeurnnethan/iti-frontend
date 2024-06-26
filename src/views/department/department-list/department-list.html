@@ -56,6 +56,7 @@
         </div>
     </div>
     <div class="space"></div>
+<<<<<<< HEAD
     <div class="card">
         <DataTable 
             v-model:selection="departmentInfo" 
@@ -75,6 +76,15 @@
             <Column field="departmentID" :header="$t('department.depID')" style="min-width:100px"></Column>
             <Column field="departmentName" :header="$t('department.depName')" style="min-width: 150px"></Column>
             <Column field="departmentDesc" :header="$t('department.depDesc')" style="min-width: 150px"></Column>
+=======
+    <div class="box_shadow">
+        <DataTable v-model:selection="departmentInfo" :value="departmentList" scrollable
+            @row-dblclick="onClickRow(departmentInfo)" :metaKeySelection="true" tableStyle="min-width: 50rem"
+            selectionMode="single" scrollHeight="100vh">
+            <Column field="departmentID" :header="$t('department.depID')" style="min-width:100px" sortable></Column>
+            <Column field="departmentName" :header="$t('department.depName')" style="min-width: 150px" sortable></Column>
+            <Column field="departmentDesc" :header="$t('department.depDesc')" style="min-width: 150px" sortable></Column>
+>>>>>>> 503583eee081d1b196cdc3da716f422ba0a1b722
             <Column field="statusCode" :header="$t('department.statusCode')" style="min-width: 100px">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}

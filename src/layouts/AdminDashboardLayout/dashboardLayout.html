@@ -2,7 +2,7 @@
     <div class="wrapperWrap">
         <div :class="['sidebar d-flex flex-column', isCollapse ? 'collapse' : '']">
             <div class="logo-box d-flex flex-row justify-content-around">
-                <img src="iti-logo.svg" @click="$router.push('/')">
+                <img src="iti-logo.svg" @click="$router.push('/admin-dashboard')">
                 <div class="logo-name">{{ $t('common.itiName') }}</div>
             </div> 
             <ul class="sidebar-list">
@@ -20,6 +20,7 @@
             </button> -->
         </div>
 
+<<<<<<< HEAD
         <div class="main_side">
             <div class="sticky_head d-flex flex-row">
                 <SelectButton class="lang" v-model="currentLanguage" :options="languageList" aria-labelledby="basic" />
@@ -31,6 +32,17 @@
             </div>
             <div class="main_content m-2">
                 <router-view></router-view>
+=======
+        <div class="main_side" style="background-color: #eff3f6;">
+            <div class="sticky_head d-flex flex-row justify-content-center align-center">
+                <SelectButton v-model="currentLanguage" :options="languageList" aria-labelledby="basic" />
+            </div>
+            <div class="main_content m-2">
+                <Toast />
+                <div class="p-3">
+                    <router-view></router-view>
+                </div>
+>>>>>>> 503583eee081d1b196cdc3da716f422ba0a1b722
             </div>
         </div>
     </div>

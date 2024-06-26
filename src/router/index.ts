@@ -6,6 +6,7 @@ const router = createRouter({
         {
             path: "/",
             name: "login",
+<<<<<<< HEAD
             component: () => import("../layouts/AdminDashboardLayout/dashboardLayout.vue"),
         },
         {
@@ -55,6 +56,13 @@ const router = createRouter({
         {
             path: "/student-dashboard",
             name: "Student-Dashboard",
+=======
+            component: () => import("../layouts/Login/login.vue"),
+        },
+        {
+            path: "/admin-dashboard",
+            name: "dashboardLayout",
+>>>>>>> 503583eee081d1b196cdc3da716f422ba0a1b722
             component: () => import("../layouts/AdminDashboardLayout/dashboardLayout.vue"),
             children:[
                 {
