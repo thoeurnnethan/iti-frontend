@@ -20,29 +20,14 @@
             </button> -->
         </div>
 
-<<<<<<< HEAD
-        <div class="main_side">
-            <div class="sticky_head d-flex flex-row">
-                <SelectButton class="lang" v-model="currentLanguage" :options="languageList" aria-labelledby="basic" />
-                <div class="user_profile">
-                    <div class="profile">
-                        <p>Nethan</p>
-                    </div>
-                </div>
-            </div>
-            <div class="main_content m-2">
-                <router-view></router-view>
-=======
         <div class="main_side" style="background-color: #eff3f6;">
             <div class="sticky_head d-flex flex-row justify-content-center align-center">
                 <SelectButton v-model="currentLanguage" :options="languageList" aria-labelledby="basic" />
             </div>
             <div class="main_content m-2">
-                <Toast />
                 <div class="p-3">
                     <router-view></router-view>
                 </div>
->>>>>>> 503583eee081d1b196cdc3da716f422ba0a1b722
             </div>
         </div>
     </div>

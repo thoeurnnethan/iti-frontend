@@ -6,79 +6,27 @@ const router = createRouter({
         {
             path: "/",
             name: "login",
-<<<<<<< HEAD
-            component: () => import("../layouts/AdminDashboardLayout/dashboardLayout.vue"),
-        },
-        {
-            path: "/admin-dashboard",
-            name: "Admin-Dashbaord",
-            component: () => import("../layouts/AdminDashboardLayout/dashboardLayout.vue"),
-            children:[
-                {
-                    path: "/student-list",
-                    name: "student-list",
-                    component: () => import("../views/student/student-list/student-list.vue")
-                },
-                {
-                    path: "/student-register",
-                    name: "student-register",
-                    component: () => import("../views/student/student-register/student-register.vue")
-                },
-                {
-                    path: "/department-list",
-                    name: "department-list",
-                    component: () => import("../views/department/department-list/department-list.vue")
-                }
-            ]
-        },
-        {
-            path: "/teacher-dashboard",
-            name: "Teacher-Dashboard",
-            component: () => import("../layouts/AdminDashboardLayout/dashboardLayout.vue"),
-            children:[
-                {
-                    path: "/student-list",
-                    name: "student-list",
-                    component: () => import("../views/student/student-list/student-list.vue")
-                },
-                {
-                    path: "/student-register",
-                    name: "student-register",
-                    component: () => import("../views/student/student-register/student-register.vue")
-                },
-                {
-                    path: "/department-list",
-                    name: "department-list",
-                    component: () => import("../views/department/department-list/department-list.vue")
-                }
-            ]
-        },
-        {
-            path: "/student-dashboard",
-            name: "Student-Dashboard",
-=======
-            component: () => import("../layouts/Login/login.vue"),
+            component: () => import("@/layouts/Login/login.vue"),
         },
         {
             path: "/admin-dashboard",
             name: "dashboardLayout",
->>>>>>> 503583eee081d1b196cdc3da716f422ba0a1b722
-            component: () => import("../layouts/AdminDashboardLayout/dashboardLayout.vue"),
+            component: () => import("@/layouts/AdminDashboardLayout/dashboardLayout.vue"),
             children:[
                 {
                     path: "/student-list",
                     name: "student-list",
-                    component: () => import("../views/student/student-list/student-list.vue")
+                    component: () => import("@/views/student/student-list/student-list.vue")
                 },
                 {
                     path: "/student-register",
                     name: "student-register",
-                    component: () => import("../views/student/student-register/student-register.vue")
+                    component: () => import("@/views/student/student-register/student-register.vue")
                 },
                 {
                     path: "/department-list",
                     name: "department-list",
-                    component: () => import("../views/department/department-list/department-list.vue")
+                    component: () => import("@/views/department/department-list/department-list.vue")
                 }
             ]
         },
