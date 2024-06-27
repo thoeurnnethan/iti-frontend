@@ -64,23 +64,11 @@ class Utils {
     let myKey: string;
     switch (key) {
       case 'userInfo':
-        myKey = 'SEC10100121'
+        myKey = 'SECITI'
         break;
 
       case 'id_token':
         myKey = 'LSID'
-        break;
-
-      case 'cryAuthToken':
-        myKey = 'CAT'
-        break;
-
-      case 'cryAuthTokenExpTime':
-        myKey = 'CATEXT'
-        break;
-
-      case 'cryRefreshToken':
-        myKey = 'CRT'
         break;
       
       default:

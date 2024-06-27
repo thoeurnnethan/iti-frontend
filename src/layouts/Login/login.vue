@@ -1,12 +1,10 @@
 <template src="./login.html"></template>
 
 <script lang="ts">
-import type { EmployeeList, EmployeeList_Res } from '@/shared/types/employeeList';
-import type { MenuItem } from '@/shared/types/menu-list';
+import { UserInfo } from '@/shared/types/user-type';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import axios from 'axios';
 import { defineComponent } from 'vue';
-import { DahsboardService } from './LoginService';
+import { LoginService } from './LoginService';
 
 export default defineComponent({
     name: "Dashboard",
@@ -16,53 +14,51 @@ export default defineComponent({
 
     data() {
         return {
-            responseData: [] as EmployeeList[],
-            totalCount: 0 as Number,
-            pageSize: 100 as Number,
-            pageNumber: 1 as Number,
-            message: "" as String,
-            isCollapse: false,
-            telegramURL: "https://t.me/Thoeurn_Nethan",
-            menuList:[] as MenuItem[]
+            userLogin: {
+                roleID: '',
+                username: '',
+                password: ''
+            } as UserInfo,
+            userMockList: [] as UserInfo[]
+        }
+    },
+
+    computed:{
+        isValidForm() : boolean {
+            return this.userLogin.username !== ''
+                && this.userLogin.password !== ''
         }
     },
 
     mounted() {
-        this.isCollapse = localStorage.getItem('collapse') === "true";
-        this.getMenuList();
+        this.getUserMockList();
     },
 
     methods: {
-        async getStudentList() {
-            const requestBody = {
-                "body": {
-                    pageSize: this.pageSize,
-                    pageNumber: this.pageNumber,
+        getUserMockList(){
+            this.userMockList = LoginService.getUserMockList();
+        },
+
+        onClickLogin(){
+            let isAuthenticated = false;
+            let role= '' as string;
+            this.userMockList.forEach(user => {
+                if (user.username === this.userLogin.username && user.password === this.userLogin.password) {
+                    isAuthenticated = true;
+                    role = user?.roleID
+                    this.$util.setDataStorage('userInfo',this.userLogin,true)
                 }
-            };
-            try {
-                const response = (await axios.post(`${import.meta.env.VITE_APP_SERVER_URL}/employee/list`, requestBody));
-                const result = response.data.body as EmployeeList_Res;
-                this.responseData = result.employeeList
-                this.totalCount = result?.totalCount
-            } catch (error) {
-                console.error('Error fetching todos:', error);
+            });
+
+            if(isAuthenticated){
+                if(role === 'admin'){
+                    this.$router.push('/admin-dashboard');
+                }else if(role === 'teacher'){
+                    this.$router.push('/teacher-dashboard');
+                }else{
+                    this.$router.push('/student-dashboard');
+                }
             }
-        },
-        
-        toggleSidebar() {
-            this.isCollapse = localStorage.getItem('collapse') === "true";
-            this.isCollapse = !this.isCollapse
-            localStorage.setItem('collapse', String(this.isCollapse))
-        },
-
-        getMenuList(){
-            this.menuList = DahsboardService.getMenuList();
-        },
-
-        isActive(item:any) {
-            return this.$route.path.startsWith(item.path);
-            // return item;
         }
     },
 })

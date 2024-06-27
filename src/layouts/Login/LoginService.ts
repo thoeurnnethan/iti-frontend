@@ -1,38 +1,21 @@
-export const DahsboardService = {
+export const LoginService = {
 
-    getMenuList() {
+    getUserMockList() {
         return [
             {
-                "path": "/",
-                "iconClass": "fa-solid fa-house-user",
-                "name": "Home"
+                "username": "admin",
+                "password": "admin",
+                "roleID": "admin"
             },
             {
-                "path": "/student",
-                "iconClass": "fa-solid fa-school",
-                "name": "Student Management",
-                "subMenuList":[
-                    {
-                        "path": "/student-list",
-                        "iconClass": "fa-solid fa-school",
-                        "name": "Student List"
-                    },
-                    {
-                        "path": "/student-register",
-                        "iconClass": "fa-solid fa-school",
-                        "name": "Student Register"
-                    }
-                ]
+                "username": "teacher",
+                "password": "teacher",
+                "roleID": "teacher"
             },
             {
-                "path": "/department-list",
-                "iconClass": "fa-solid fa-bars",
-                "name": "Department Management"
-            },
-            {
-                "path": "/department-register",
-                "iconClass": "fa-solid fa-bars",
-                "name": "Department Register"
+                "username": "student",
+                "password": "teacher",
+                "roleID": "student"
             }
         ]
     }

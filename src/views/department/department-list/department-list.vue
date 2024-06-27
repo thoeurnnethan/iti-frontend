@@ -38,11 +38,12 @@ export default defineComponent({
   },
 
   mounted() {
+    // Call get department on mount
     this.getDepartmentList();
-    console.log(this.isValidForm)
   },
 
   computed:{
+    // Check is input form is valid to Save
     isValidForm(): boolean{
       return this.departmentInfoUpdate.departmentID !== '' &&
         this.departmentInfoUpdate.departmentName !== '' &&
@@ -52,6 +53,7 @@ export default defineComponent({
   },
 
   methods: {
+    // Get Department List
     async getDepartmentList() {
       const reqBody: DEPARTMENT_LIST_REQ = {
         userID: "",
@@ -64,16 +66,19 @@ export default defineComponent({
       this.departmentList = response.body?.departmentList;
     },
 
+    // Handle page size page number
     onPage(event: { page: number; rows: number; }) {
       this.pageNumber = event.page;
       this.pageSize = event.rows;
       this.getDepartmentList();
     },
 
+    // Get Status text
     getStatusClass(statusCode: string): string {
       return statusCode === '01' ? 'active-text' : 'inactive-text';
     },
 
+    // On click any row
     onClickRow(item: DEPARTMENT_LIST) {
       this.$popupService.onOpen({
         component: department_detail,
@@ -83,6 +88,7 @@ export default defineComponent({
       })
     },
 
+    // On click save
     async onClickSave(item: DEPARTMENT_LIST){
       const reqBody: DEPARTMENT_LIST = item;
       const response = (await requestService.request(API_PATH.DEPARTMENT_REGISTER,reqBody,true)) as DEPARTMENT_LIST_RES;
