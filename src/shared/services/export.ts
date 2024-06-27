@@ -4,11 +4,11 @@ import * as XLSX from 'xlsx-js-style';
 // import '../../../public/fonts/NotoSansKhmer-VariableFont_wdth,wght-normal.js'
 export const exportExcel = (exportData: any) => {
     const newList = [] as any[];
-    const headerList = exportData.columns.map((data) => data.title);
-    const keyList = exportData.columns.map((data) => data.key);
-    exportData.body.forEach((data) => {
+    const headerList = exportData.columns.map((data: { title: any; }) => data.title);
+    const keyList = exportData.columns.map((data: { key: any; }) => data.key);
+    exportData.body.forEach((data: { [x: string]: any; }) => {
         const newObject = {} as any;
-        keyList.forEach((key) => {
+        keyList.forEach((key: string | number) => {
             newObject[key] = data[key] ? data[key] : "";
         });
         newList.push(newObject);

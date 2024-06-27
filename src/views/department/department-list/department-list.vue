@@ -1,14 +1,16 @@
 <template src="./department-list.html"></template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { StandardCodeData } from '@/shared/types/standard-code';
 import department_detail from '../department-detail/department-detail.vue';
+import { ExportExcel } from '@/shared/services/export-excel-class';
 
 const requestService = new RequestService();
+const exportExcel = new ExportExcel();
 
 export default defineComponent({
   name: "department-list",
@@ -17,23 +19,26 @@ export default defineComponent({
     // 
   },
   data() {
+    const dataTable = ref<DEPARTMENT_LIST[]>([]);
     return {
       departmentList: [] as DEPARTMENT_LIST[],
       departmentInfo: {} as DEPARTMENT_LIST,
+      searchKey: '',
+      totalCount: 0,
+      pageSize: 10,
+      pageNumber: 0,
+      startingIndex: 1,
+      dataTable,
       departmentInfoUpdate: {
         departmentID: '',
         departmentName: '',
         departmentDesc: '',
         statusCode: ''
       } as DEPARTMENT_LIST,
-      searchKey: '' as string,
       statusCodeList: [
         { codeValue: '01', codeValueDesc: 'Active' },
         { codeValue: '02', codeValueDesc: 'Inactive' },
-      ] as StandardCodeData[],
-      totalCount: 0,
-      pageSize: 10,
-      pageNumber: 0
+      ] as StandardCodeData[]
     }
   },
 
@@ -64,6 +69,12 @@ export default defineComponent({
       const response = (await requestService.request(API_PATH.DEPARTMENT_LIST,reqBody,false)) as DEPARTMENT_LIST_RES;
       this.totalCount = response.body?.totalCount;
       this.departmentList = response.body?.departmentList;
+      this.dataTable = response.body?.departmentList.map((data,index)=>{
+            return {
+                ...data,
+                no: this.startingIndex + index, 
+            }
+      });
     },
 
     // Handle page size page number
@@ -94,6 +105,25 @@ export default defineComponent({
       const response = (await requestService.request(API_PATH.DEPARTMENT_REGISTER,reqBody,true)) as DEPARTMENT_LIST_RES;
       console.log(response)
     },
+
+    //downlaod excel
+    onDownloadExcel(){
+      const excelData = this.dataTable.map((data, index) => {
+        return {
+          "No": index + 1,
+          "Department ID": data.departmentID,
+          "Department Name": data.departmentName,
+          "Department Desc": data.departmentDesc,
+          "Department Status": this.$codeConverter.codeToString(this.statusCodeList,data.statusCode)
+        };
+      })
+      const exportExcelData = [
+        {
+          data: excelData
+        },
+      ];
+      exportExcel.exportSheet(exportExcelData, 'Department info')
+    }
   },
 })
 </script>

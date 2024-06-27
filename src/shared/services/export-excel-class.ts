@@ -1,5 +1,5 @@
 import * as XLSX from "xlsx-js-style";
-import { ExportSheet } from "../type/export-excel.type";
+import { ExportSheet } from "@/shared/types/export-excel.type";
 
 export class ExportExcel {
   exportSheet(exportData: ExportSheet[], fileName?: string) {

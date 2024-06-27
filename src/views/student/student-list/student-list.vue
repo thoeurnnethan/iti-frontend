@@ -36,7 +36,7 @@ export default defineComponent({
                 pageNumber: this.pageNumber
             }
             
-            const response = (await requestService.request(API_PATH.STUDENT_LIST,body) ) as STUDENT_LIST_RES;
+            const response = (await requestService.request(API_PATH.STUDENT_LIST,body, false) ) as STUDENT_LIST_RES;
             this.totalCount = response.body.totalCount;
             this.studentList = response.body.studentList;
         },
