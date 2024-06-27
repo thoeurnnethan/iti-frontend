@@ -8,10 +8,6 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BaseDialog: typeof import('./src/components/base-dialog/base-dialog.vue')['default']
-    DashboardCard: typeof import('./src/components/dashboardCard/dashboardCard.vue')['default']
-    DatePicker: typeof import('./src/components/datePicker/date-picker.vue')['default']
-    Navbar: typeof import('./src/components/Navbar/Navbar.vue')['default']
-    Popup: typeof import('./src/components/popupDialog/popup.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

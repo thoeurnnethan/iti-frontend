@@ -82,7 +82,7 @@
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
                 </template>
             </Column>
-            <Column :header="$t('department.edit')" style="min-width: 10px">
+            <Column :header="$t('department.edit')" style="min-width: 10px" class="d-flex justify-content-center">
                 <template #body="{ data }">
                     <Button icon="pi pi-pencil" @click="editDepartment(data)" class="p-button-rounded p-button-success" />
                 </template>

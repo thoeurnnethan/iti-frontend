@@ -4,7 +4,7 @@ export const DahsboardService = {
         return [
             {
                 "path": "/",
-                "iconClass": "fa-solid fa-house-user",
+                "iconClass": "fa-solid fa-house",
                 "name": "Home"
             },
             {
