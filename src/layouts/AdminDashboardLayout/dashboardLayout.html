@@ -1,27 +1,28 @@
 <div class="wrapper">
-    <div class="wrapperWrap">
+    <div class="wrapperWrap ">
         <div :class="['sidebar d-flex flex-column', isCollapse ? 'collapse' : '']">
-            <div class="logo-box d-flex flex-row justify-content-around">
+            <div class="logo-box we_black d-flex flex-row justify-content-around">
                 <img src="iti-logo.svg" @click="$router.push('/admin-dashboard')">
                 <div class="logo-name">{{ $t('common.itiName') }}</div>
             </div> 
-            <ul class="sidebar-list">
-                <li v-for="(item, index) in menuList" :key="index">
-                    <div class="title">
-                        <router-link :to="item.path" class="link">
-                            <i><font-awesome-icon :icon="item.iconClass" /></i>
-                            <span class="name">{{ $t(`menu.${item.name}`) }}</span>
-                        </router-link>
-                    </div>
-                </li>
+            <ul class="sidebar-list we_shadow">
+                <div class="mt-5">
+                    <li v-for="(item, index) in menuList" :key="index">
+                        <div class="title">
+                            <router-link :to="item.path" class="link">
+                                <i>
+                                    <font-awesome-icon :icon="item.iconClass" />
+                                </i>
+                                <span class="name text-dark font-bold">{{ $t(`menu.${item.name}`) }}</span>
+                            </router-link>
+                        </div>
+                    </li>
+                </div>
             </ul>
-            <!-- <button class="btn btn-primary p-3 d-flex justify-content-center" @click="toggleSidebar">
-                <font-awesome-icon icon="fa-solid fa-bars" />
-            </button> -->
         </div>
 
-        <div class="main_side" style="background-color: #eff3f6;">
-            <div class="sticky_head d-flex flex-row">
+        <div class="main_side" style="background-color: #edf1f4 !important;">
+            <div class="sticky_head d-flex flex-row we_black">
                 <SelectButton v-model="currentLanguage" :options="languageList" aria-labelledby="basic" />
             </div>
             <div class="main_content m-2">

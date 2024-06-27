@@ -37,7 +37,6 @@ $color_Light2: #c4c4c4;
     left: 0;
     height: 100%;
     width: 250px;
-    background-color: var(--ion-color-primary);
     transition: all .5s ease;
     z-index: 100;
     .logo-box {
@@ -87,7 +86,7 @@ $color_Light2: #c4c4c4;
                     min-width: 40px;
                     text-align: center;
                     line-height: 40px;
-                    color: var(--ion-color-danger);
+                    color: red !important;
                     opacity: 0.8;
                     font-size: 14px;
                 }
@@ -95,15 +94,15 @@ $color_Light2: #c4c4c4;
                     display: flex;
                     align-items: center;
                     width: 100%;
+                    transition: 0.1s;
                 }
                 .link:hover{
-                    background-color: $color_Dark2;
+                    background-color: #ededed;
                     opacity: 1;
                 }
                 .name{
                     font-size: 14px;
                     font-weight: 400;
-                    color: var(--ion-color-danger-contrast);
                     overflow: hidden;
                     text-wrap: nowrap;
                     text-overflow: ellipsis;
