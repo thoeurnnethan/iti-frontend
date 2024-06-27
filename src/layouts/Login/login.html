@@ -11,7 +11,7 @@
             <label for="password">Password</label>
             <InputText id="password" v-model="value" aria-describedby="password-help" />
         </div>
-        <button class="btn btn-primary mt-4 float-end">Login</button>
+        <button class="btn btn-primary mt-4 float-end" @click="$router.push('/admin-dashboard')">Login</button>
 
     </div>
 </div>

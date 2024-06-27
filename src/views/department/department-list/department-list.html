@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <!--   <div class="col-md-4">
                 <InputGroup>
                     <InputGroupAddon>{{ $t('department.depManager') }}</InputGroupAddon>
                     <Dropdown :options="statusCodeList" 
@@ -26,7 +26,7 @@
                     optionValue="codeValue"
                     optionLabel="codeValueDesc" />
                 </InputGroup>
-            </div>
+            </div> -->
             <div class="col-md-4">
                 <InputGroup>
                     <InputGroupAddon>{{ $t('department.statusCode') }}</InputGroupAddon>
@@ -37,7 +37,9 @@
                 </InputGroup>
             </div>
             <div class="col-md-4">
-                <button type="button" class="btn btn-success px-4" @click="onClickSave(departmentInfoUpdate)">{{ $t('common.save') }}</button>
+                <button type="button" class="btn btn-success px-4" 
+                :disabled="!isValidForm"
+                @click="onClickSave(departmentInfoUpdate)">{{ $t('common.save') }}</button>
             </div>
         </div>
     </div>

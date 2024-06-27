@@ -20,7 +20,12 @@ export default defineComponent({
     return {
       departmentList: [] as DEPARTMENT_LIST[],
       departmentInfo: {} as DEPARTMENT_LIST,
-      departmentInfoUpdate: {} as DEPARTMENT_LIST,
+      departmentInfoUpdate: {
+        departmentID: '',
+        departmentName: '',
+        departmentDesc: '',
+        statusCode: ''
+      } as DEPARTMENT_LIST,
       searchKey: '' as string,
       statusCodeList: [
         { codeValue: '01', codeValueDesc: 'Active' },
@@ -28,13 +33,22 @@ export default defineComponent({
       ] as StandardCodeData[],
       totalCount: 0,
       pageSize: 10,
-      pageNumber: 0,
-      isLazy: true
+      pageNumber: 0
     }
   },
 
   mounted() {
     this.getDepartmentList();
+    console.log(this.isValidForm)
+  },
+
+  computed:{
+    isValidForm(): boolean{
+      return this.departmentInfoUpdate.departmentID !== '' &&
+        this.departmentInfoUpdate.departmentName !== '' &&
+        this.departmentInfoUpdate.departmentDesc !== '' &&
+        this.departmentInfoUpdate.statusCode !== '';
+    }
   },
 
   methods: {
@@ -48,7 +62,6 @@ export default defineComponent({
       const response = (await requestService.request(API_PATH.DEPARTMENT_LIST,reqBody,false)) as DEPARTMENT_LIST_RES;
       this.totalCount = response.body?.totalCount;
       this.departmentList = response.body?.departmentList;
-      this.isLazy= false;
     },
 
     onPage(event: { page: number; rows: number; }) {
