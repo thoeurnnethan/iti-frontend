@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [vue(),
     Components({
       resolvers: [
-        PrimeVueResolver()
+        // PrimeVueResolver()
       ]
     })],
   resolve: {

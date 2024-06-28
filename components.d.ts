@@ -7,11 +7,16 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Button: typeof import('primevue/button')['default']
+    Calendar: typeof import('primevue/calendar')['default']
     Column: typeof import('primevue/column')['default']
     DashboardCard: typeof import('./src/components/dashboardCard/dashboardCard.vue')['default']
     DataTable: typeof import('primevue/datatable')['default']
     DatePicker: typeof import('./src/components/datePicker/date-picker.vue')['default']
+    InputNumber: typeof import('primevue/inputnumber')['default']
+    InputText: typeof import('primevue/inputtext')['default']
     Navbar: typeof import('./src/components/Navbar/Navbar.vue')['default']
+    RadioButton: typeof import('primevue/radiobutton')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

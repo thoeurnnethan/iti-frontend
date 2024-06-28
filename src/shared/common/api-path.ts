@@ -1,5 +1,10 @@
 
 export enum API_PATH {
+    //Department
+    DEPARTMENT_LIST = "api/department/list",
+    DEPARTMENT_DETAIL = "api/department/detail",
+    DEPARTMENT_REGISTER = "api/department/register",
+    DEPARTMENT_UPDATE = "api/department/update",
     //Employee
     STUDENT_LIST = "api/student/list",
     STUDENT_DETAIL = "api/student/detail",

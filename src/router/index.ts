@@ -5,28 +5,39 @@ const router = createRouter({
     routes: [
         {
             path: "/",
+            name: "login",
+            component: () => import("@/layouts/Login/login.vue"),
+        },
+        {
+            path: "/admin-dashboard",
             name: "dashboardLayout",
-            component: () => import("../layouts/dashboardLayout/dashboardLayout.vue"),
+            component: () => import("@/layouts/AdminDashboardLayout/dashboardLayout.vue"),
+            redirect: "/home",
             children:[
                 {
-                    path: "/login",
-                    name: "login",
-                    component: () => import("../layouts/auth/auth.vue")
+                    path: "/home",
+                    name: "home",
+                    component: () => import("@/views/home/home.vue")
                 },
                 {
-                    path: "/student",
-                    name: "student",
-                    component: () => import("../views/student/student list/student-list.vue")
+                    path: "/student-list",
+                    name: "student-list",
+                    component: () => import("@/views/student/student-list/student-list.vue")
                 },
                 {
-                    path: "/customer",
-                    name: "customer",
-                    component: () => import("../views/table/horizontal.vue")
+                    path: "/student-register",
+                    name: "student-register",
+                    component: () => import("@/views/student/student-register/student-register.vue")
                 },
                 {
-                    path: "/navbar",
-                    name: "navbar",
-                    component: () => import("../components/Navbar/Navbar.vue")
+                    path: "/department-list",
+                    name: "department-list",
+                    component: () => import("@/views/department/department-list/department-list.vue")
+                },
+                {
+                    path: "/department-insert",
+                    name: "department-insert",
+                    component: () => import("@/views/department/department-insert/department-insert.vue")
                 }
             ]
         },

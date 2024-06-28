@@ -1,0 +1,23 @@
+<div class="dialog backdrop" @click="handleClose">
+    <div class="dialogWrap">
+        <div class="dialog_head">
+            <h1>{{title}}</h1>
+        </div>
+        <div class="dialog_cont" v-if="content">
+            <div class="cont_term">
+                <div class="title_cont">
+                    <div>{{content}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="dialog_foot">
+            <div class="footer_btn">
+                <div class="right_side">
+                    <button class="btn03 btn_sm" type="button" @click="handleClose"
+                        v-if="showCancel"><span>{{cancelLabel ? cancelLabel : $t('common.cancel')}}</span></button>
+                    <button class="btn01 btn_sm" type="button" @click="onClickOK"><span>{{btnLabel}}</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

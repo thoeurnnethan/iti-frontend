@@ -1,6 +1,6 @@
 
 
-interface EmployeeList {
+  interface EmployeeList {
     studentID: number
     studentName: string
     gender: string
