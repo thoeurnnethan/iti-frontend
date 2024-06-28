@@ -38,7 +38,11 @@ export default defineComponent({
       statusCodeList: [
         { codeValue: '01', codeValueDesc: 'Active' },
         { codeValue: '02', codeValueDesc: 'Inactive' },
-      ] as StandardCodeData[]
+      ] as StandardCodeData[],
+      bulk_action: [
+        { codeValue: 'export_excel', codeValueDesc: 'Export Excel' },
+      ],
+      selectedAction: null,
     }
   },
 
@@ -106,8 +110,14 @@ export default defineComponent({
       console.log(response)
     },
 
+    onDownloadExcel() {
+      if (this.selectedAction === 'export_excel') {
+        this.exportToExcel();
+      }
+    },
+
     //downlaod excel
-    onDownloadExcel(){
+    exportToExcel(){
       const excelData = this.dataTable.map((data, index) => {
         return {
           "No": index + 1,

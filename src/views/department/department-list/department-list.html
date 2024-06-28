@@ -9,13 +9,27 @@
     </div>
 
     <div class="mt-3"></div>
+
         <div class="float-end">
-            <button type="button" class="btn btn-primary p-1 px-2 float-end" 
-            @click.prevent="getDepartmentList()">{{ $t('common.search') }}</button>
+            <button style="border-radius: 0px  0.375rem 0.375rem 0px;" type="button" class="btn btn-dark p-1 px-2 float-end we_font_size" @click.prevent="getDepartmentList()">{{ $t('common.search') }}</button>
             <InputGroup class="float-end w-25">
-                <InputText class="p-1" v-model="searchKey" :placeholder="$t('common.searchKey')" />
+                <InputText style="border-radius: 0.375rem 0px 0px 0.375rem;border: none;" class="p-1 we_font_size" v-model="searchKey" :placeholder="$t('common.searchKey')" />
             </InputGroup>
+            
+            <span class="we_shadow">
+                <button style="border-radius: 0px  0.375rem 0.375rem 0px;" type="button" class="btn btn-dark p-1 px-2 we_font_size" @click="onDownloadExcel">Apply</button>
+                <div class="float-start we_font_size">
+                    <select v-model="selectedAction" class="form-select" style="border-radius: 0.375rem 0px 0px 0.375rem;border: none;height: 32.1px;">
+                        <option selected value="" disabled>Bulk Actions</option>
+                        <option v-for="action in bulk_action" :key="action.codeValue" :value="action.codeValue">
+                            {{ action.codeValueDesc }}
+                        </option>
+                    </select>
+                </div>
+            </span>
+
         </div>
+
     <div class="mt-3"></div>
     <div class="box_shadow">
         <DataTable 
@@ -31,7 +45,6 @@
             :paginator="true"
             :totalRecords="totalCount"
             :rowsPerPageOptions="[10, 20, 50]" 
-            scrollHeight="50vh"
             @page="onPage">
             <Column field="departmentID" :header="$t('department.depID')" style="min-width:100px"></Column>
             <Column field="departmentName" :header="$t('department.depName')" style="min-width: 150px"></Column>
@@ -44,11 +57,9 @@
             <Column :header="$t('department.edit')" style="min-width: 10px" class="d-flex justify-content-center">
                 <template #body="{ data }">
                     <Button icon="pi pi-pencil" @click="editDepartment(data)" />
-                    <font-awesome-icon :icon="['fas', 'pencil']" />
                 </template>
             </Column>
         </DataTable>
         <div class="p-1"></div>
-        <button type="button" class="btn btn-dark" @click="onDownloadExcel">Download Excel</button>
     </div>
 </div>

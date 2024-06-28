@@ -1,3 +1,5 @@
+
+
 tr{
   th,td{
       font-size: 14px !important; 
@@ -13,4 +15,9 @@ tr{
 }
 .pointer{
   cursor: pointer;
+}
+
+.form-select:focus {
+  outline: none; 
+  box-shadow: none;
 }
