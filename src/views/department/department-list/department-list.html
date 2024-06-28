@@ -1,63 +1,22 @@
 <div class="container-fluid d-flex flex-column" style="overflow: hidden;">
-    <div class="d-flex flex-column md:flex-row gap-4">
-        <div class="row">
-            <div class="col-md-4">
-                <InputGroup>
-                    <InputText v-model="departmentInfoUpdate.departmentID" :placeholder="$t('department.depID')" />
-                </InputGroup>
-            </div>
-            <div class="col-md-4">
-                <InputGroup>
-                    <InputText v-model="departmentInfoUpdate.departmentName"  :placeholder="$t('department.depName')" />
-                </InputGroup>
-            </div>
-            <div class="col-md-4">
-                <InputGroup>
-                    <InputText v-model="departmentInfoUpdate.departmentDesc"  :placeholder="$t('department.depDesc')" />
-                </InputGroup>
-            </div>
-        </div>
-        <div class="row">
-            <!--   <div class="col-md-4">
-                <InputGroup>
-                    <InputGroupAddon>{{ $t('department.depManager') }}</InputGroupAddon>
-                    <Dropdown :options="statusCodeList" 
-                    v-model="departmentInfoUpdate.statusCode" 
-                    optionValue="codeValue"
-                    optionLabel="codeValueDesc" />
-                </InputGroup>
-            </div> -->
-            <div class="col-md-4">
-                <InputGroup>
-                    <InputGroupAddon>{{ $t('department.statusCode') }}</InputGroupAddon>
-                    <Dropdown :options="statusCodeList" 
-                    v-model="departmentInfoUpdate.statusCode" 
-                    optionValue="codeValue"
-                    optionLabel="codeValueDesc" />
-                </InputGroup>
-            </div>
-            <div class="col-md-4">
-                <button type="button" class="btn btn-success px-4" 
-                :disabled="!isValidForm"
-                @click="onClickSave(departmentInfoUpdate)">{{ $t('common.save') }}</button>
-            </div>
-        </div>
+
+    <div class="container-fluid p-0 d-flex justify-content-between">
+        <span class="we_title">Department List</span>
+        
+        <button class="btn btn-primary p-1 px-2" @click="$router.push('/department-insert')" >
+            Add
+        </button>
     </div>
-    <div class="space"></div>
-    <div class="row">
-        <div class="col-md-6">
-            <InputGroup>
-                <InputText v-model="searchKey" :placeholder="$t('common.searchKey')" />
+
+    <div class="mt-3"></div>
+        <div class="float-end">
+            <button type="button" class="btn btn-primary p-1 px-2 float-end" 
+            @click.prevent="getDepartmentList()">{{ $t('common.search') }}</button>
+            <InputGroup class="float-end w-25">
+                <InputText class="p-1" v-model="searchKey" :placeholder="$t('common.searchKey')" />
             </InputGroup>
         </div>
-        <div class="col-md-6">
-            <InputGroup>
-                <button type="button" class="btn btn-primary py-2 px-4" 
-                @click.prevent="getDepartmentList()">{{ $t('common.search') }}</button>
-            </InputGroup>
-        </div>
-    </div>
-    <div class="space"></div>
+    <div class="mt-3"></div>
     <div class="box_shadow">
         <DataTable 
             v-model:selection="departmentInfo" 
@@ -84,7 +43,8 @@
             </Column>
             <Column :header="$t('department.edit')" style="min-width: 10px" class="d-flex justify-content-center">
                 <template #body="{ data }">
-                    <Button icon="pi pi-pencil" @click="editDepartment(data)" class="p-button-rounded p-button-success" />
+                    <Button icon="pi pi-pencil" @click="editDepartment(data)" />
+                    <font-awesome-icon :icon="['fas', 'pencil']" />
                 </template>
             </Column>
         </DataTable>
