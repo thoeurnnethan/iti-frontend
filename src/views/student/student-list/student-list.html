@@ -1,18 +1,29 @@
-<p class="we_title">Student List</p>
+<p class="we_title">{{ $t('student.title') }}</p>
 
-<div class="we_shadow">
-    <DataTable :value="studentList" removableSort tableStyle="min-width: 50rem">
-        <Column field="studentID" header="Student ID" sortable></Column>
-        <Column field="firstName" header="First Name" sortable></Column>
-        <Column field="lastName" header="Last Name" sortable></Column>
-        <Column field="nickName" header="Nick Name" sortable></Column>
-        <Column field="gender" header="Gender" sortable></Column>
-        <Column field="dateOfBirth" header="DOB" sortable></Column>
-        <Column field="placeOfBirth" header="POB" sortable></Column>
-        <Column field="address" header="Address" sortable></Column>
-        <Column field="phone" header="Phone Number" sortable></Column>
-        <Column field="email" header="Email" sortable></Column>
-        <Column field="passwd" header="Password" sortable></Column>
-        <Column field="imageUrl" header="Image URL" sortable></Column>
-    </DataTable>
-</div>
+<DataTable 
+    v-model:selection="departmentInfo" 
+    @row-dblclick="onClickRow(departmentInfo)" 
+    tableStyle="min-width: 50rem"
+    selectionMode="single" 
+    scrollable
+    :value="studentList" 
+    :metaKeySelection="true" 
+    :rows="pageSize"
+    :lazy="true"
+    :paginator="true"
+    :totalRecords="totalCount"
+    :rowsPerPageOptions="[10, 20, 50]" 
+    @page="onPage">
+    <Column field="studentID" :header="$t('student.studentID')" style="min-width: 100px"></Column>
+    <Column field="firstName" :header="$t('student.firstName')" style="min-width: 150px"></Column>
+    <Column field="lastName" :header="$t('student.lastName')" style="min-width: 150px"></Column>
+    <Column field="nickName" :header="$t('student.nickName')" style="min-width: 100px"></Column>
+    <Column field="gender" :header="$t('student.gender')" style="min-width: 100px"></Column>
+    <Column field="dateOfBirth" :header="$t('student.dateOfBirth')" style="min-width: 150px"></Column>
+    <Column field="placeOfBirth" :header="$t('student.placeOfBirth')" style="min-width: 150px"></Column>
+    <Column field="address" :header="$t('student.address')" style="min-width: 200px"></Column>
+    <Column field="phone" :header="$t('student.phone')" style="min-width: 150px"></Column>
+    <Column field="email" :header="$t('student.email')" style="min-width: 200px"></Column>
+    <Column field="passwd" :header="$t('student.password')" style="min-width: 150px"></Column>
+    <Column field="imageUrl" :header="$t('student.imageUrl')" style="min-width: 150px"></Column>
+</DataTable>

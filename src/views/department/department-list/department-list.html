@@ -1,7 +1,7 @@
 <div class="container-fluid d-flex flex-column" style="overflow: hidden;">
 
     <div class="container-fluid p-0 d-flex justify-content-between">
-        <span class="we_title">Department List</span>
+        <span class="we_title">{{ $t('department.title') }}</span>
         
         <button class="btn btn-primary p-1 px-2" @click="$router.push('/department-insert')" >
             Add
@@ -13,7 +13,7 @@
         <div class="float-end">
             <button style="border-radius: 0px  0.375rem 0.375rem 0px;" type="button" class="btn btn-dark p-1 px-2 float-end we_font_size" @click.prevent="getDepartmentList()">{{ $t('common.search') }}</button>
             <InputGroup class="float-end w-25">
-                <InputText style="border-radius: 0.375rem 0px 0px 0.375rem;border: none;" class="p-1 we_font_size" v-model="searchKey" :placeholder="$t('common.searchKey')" />
+                <InputText style="border-radius: 0.375rem 0px 0px 0.375rem;border: none;height: 32.1px;" class="p-1 we_font_size" v-model="searchKey" :placeholder="$t('common.searchKey')" />
             </InputGroup>
             
             <span class="we_shadow">

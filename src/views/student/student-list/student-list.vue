@@ -20,7 +20,7 @@ export default defineComponent({
         return {
             studentList: [] as STUDENT_LIST[],
             totalCount: 0,
-            pageSize: 15 ,
+            pageSize: 10 ,
             pageNumber: 1 
         }
     },

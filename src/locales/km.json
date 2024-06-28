@@ -8,6 +8,7 @@
     "ok": "យល់ព្រម"
   },
   "department":{
+    "title": "បញ្ជីនាយកដ្ឋាន",
     "depID": "លេខសម្គាល់ដេប៉ាតឺម៉ង់",
     "depName": "ឈ្មោះដេប៉ាតឺម៉ង់",
     "depDesc": "ដេប៉ាតឺម៉ង់លម្អិត",
@@ -21,5 +22,21 @@
     "studentRegister": "ចុះឈ្មោះសិស្ស",
     "departmentList": "បញ្ជីដេប៉ាតឺម៉ង់",
     "departmentRegister": "ចុះបញ្ជីដេប៉ាតឺម៉ង់"
-  }
+  },
+  "student": {
+    "title": "បញ្ជីសិស្ស",
+    "studentID": "លេខសម្គាល់សិស្ស",
+    "firstName": "នាមខ្លួន",
+    "lastName": "នាមត្រកូល",
+    "nickName": "នាមក្រៅ",
+    "gender": "ភេទ",
+    "dateOfBirth": "កាលបរិច្ឆេទកំណើត",
+    "placeOfBirth": "ទីកន្លែងកំណើត",
+    "address": "អាសយដ្ឋាន",
+    "phone": "លេខទូរស័ព្ទ",
+    "email": "អ៊ីមែល",
+    "passwd": "ពាក្យសម្ងាត់",
+    "imageUrl": "URL រូបភាព"
+}
+
 }

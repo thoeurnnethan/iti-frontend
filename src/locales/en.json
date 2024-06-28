@@ -8,6 +8,7 @@
     "ok": "Okay"
   },
   "department":{
+    "title": "Department list",
     "depID": "Department ID",
     "depName": "Department Name",
     "depDesc": "Department Description",
@@ -21,5 +22,20 @@
     "studentRegister": "Student Register",
     "departmentList": "Department List",
     "departmentRegister": "Department Register"
+  },
+  "student": {
+    "title": "student list",
+    "studentID": "Student ID",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "nickName": "Nick Name",
+    "gender": "Gender",
+    "dateOfBirth": "Date of Birth",
+    "placeOfBirth": "Place of Birth",
+    "address": "Address",
+    "phone": "Phone Number",
+    "email": "Email",
+    "passwd": "Password",
+    "imageUrl": "Image URL"
   }
 }
