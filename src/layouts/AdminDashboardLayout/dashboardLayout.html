@@ -1,8 +1,8 @@
 <div class="wrapper">
     <div class="wrapperWrap">
         <div :class="['sidebar d-flex flex-column', isCollapse ? 'collapse' : '']">
-            <div class="logo-box we_black d-flex flex-row justify-content-around">
-                <img src="iti-logo.svg" @click="$router.push('/admin-dashboard')">
+            <div class="logo-box we_black d-flex flex-row justify-content-around" @click="$router.push('/admin-dashboard')">
+                <img src="iti-logo.svg" >
                 <div class="logo-name">{{ $t('common.itiName') }}</div>
             </div>
             <ul class="sidebar-list we_shadow">
