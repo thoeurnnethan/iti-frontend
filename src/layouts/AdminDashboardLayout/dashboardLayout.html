@@ -1,15 +1,15 @@
 <div class="wrapper">
-    <div class="wrapperWrap ">
+    <div class="wrapperWrap">
         <div :class="['sidebar d-flex flex-column', isCollapse ? 'collapse' : '']">
             <div class="logo-box we_black d-flex flex-row justify-content-around">
                 <img src="iti-logo.svg" @click="$router.push('/admin-dashboard')">
                 <div class="logo-name">{{ $t('common.itiName') }}</div>
-            </div> 
+            </div>
             <ul class="sidebar-list we_shadow">
                 <div class="mt-5">
                     <li v-for="(item, index) in menuList" :key="index">
                         <div class="title">
-                            <router-link :to="item.path" class="link">
+                            <router-link :to="item.path" class="link" :class="{ 'active-link': $route.path === item.path }">
                                 <i>
                                     <font-awesome-icon :icon="item.iconClass" />
                                 </i>
