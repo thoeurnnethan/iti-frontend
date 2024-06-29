@@ -38,6 +38,11 @@ const router = createRouter({
                     path: "/department-insert",
                     name: "department-insert",
                     component: () => import("@/views/department/department-insert/department-insert.vue")
+                },
+                {
+                    path: "/department-edit/:id", // Dynamic parameter :id
+                    name: "department-edit",
+                    component: () => import("@/views/department/department-edit/department-edit.vue")
                 }
             ]
         },

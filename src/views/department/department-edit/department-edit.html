@@ -1,0 +1,34 @@
+<div class="container-fluid p-0 mb-4">
+    <div class="container-fluid p-0 d-flex justify-content-between">
+        <span class="we_title">{{ $t('department.editDepartment') }}</span>
+    </div>
+
+    <div class="row g-3 mt-2">
+        <div class="col-md-4">
+            <InputGroup>
+                <InputText v-model="departmentInfoUpdate.departmentID" :placeholder="$t('department.depID')" />
+            </InputGroup>
+        </div>
+        <div class="col-md-4">
+            <InputGroup>
+                <InputText v-model="departmentInfoUpdate.departmentName" :placeholder="$t('department.depName')" />
+            </InputGroup>
+        </div>
+        <div class="col-md-4">
+            <InputGroup>
+                <InputText v-model="departmentInfoUpdate.departmentDesc" :placeholder="$t('department.depDesc')" />
+            </InputGroup>
+        </div>
+        <div class="col-md-4">
+            <InputGroup>
+                <InputGroupAddon>{{ $t('department.statusCode') }}</InputGroupAddon>
+                <Dropdown :options="statusCodeList" v-model="departmentInfoUpdate.statusCode" optionValue="codeValue"
+                    optionLabel="codeValueDesc" />
+            </InputGroup>
+        </div>
+    </div>
+    <button type="button" class="btn btn-success px-4 mt-3" :disabled="!isValidForm"
+        @click="onClickSave(departmentInfoUpdate)">
+        {{ $t('common.save') }}
+    </button>
+</div>

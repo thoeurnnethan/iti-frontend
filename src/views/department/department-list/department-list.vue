@@ -3,6 +3,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
+import { useRouter } from 'vue-router';
 import { RequestService } from '@/shared/services/request-service';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { StandardCodeData } from '@/shared/types/standard-code';
@@ -39,10 +40,7 @@ export default defineComponent({
         { codeValue: '01', codeValueDesc: 'Active' },
         { codeValue: '02', codeValueDesc: 'Inactive' },
       ] as StandardCodeData[],
-      bulk_action: [
-        { codeValue: 'export_excel', codeValueDesc: 'Export Excel' },
-      ],
-      selectedAction: null,
+      router: useRouter(), // Add this line
     }
   },
 
@@ -110,12 +108,6 @@ export default defineComponent({
       console.log(response)
     },
 
-    onDownloadExcel() {
-      if (this.selectedAction === 'export_excel') {
-        this.exportToExcel();
-      }
-    },
-
     //downlaod excel
     exportToExcel(){
       const excelData = this.dataTable.map((data, index) => {
@@ -133,6 +125,11 @@ export default defineComponent({
         },
       ];
       exportExcel.exportSheet(exportExcelData, 'Department info')
+    },
+
+    //-edit_department-
+    editDepartment(data: DEPARTMENT_LIST) {
+      this.router.push({ name: 'department-edit', params: { id: data.departmentID } });
     }
   },
 })

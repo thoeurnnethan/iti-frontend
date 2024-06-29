@@ -136,17 +136,23 @@ import {
         faBars,
         faBarsProgress,
         faBell,
+        faBuilding,
         faChevronRight,
+        faFileExcel,
         faGear,
+        faHouse,
         faHouseUser,
         faLayerGroup,
         faListOl,
         faMessage,
+        faPencil,
         faPhone,
+        faPlus,
         faRegistered,
         faRightToBracket,
         faSchool,
         faShieldHalved,
+        faTrash,
         faUser
 } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -162,8 +168,14 @@ import { library } from '@fortawesome/fontawesome-svg-core';
         library.add(faGear); 
         library.add(faArrowRightFromBracket); 
         library.add(faLayerGroup); 
+        library.add(faPlus); 
         library.add(faListOl); 
-        library.add(faChevronRight); 
+        library.add(faChevronRight);
+        library.add(faHouse); 
+        library.add(faFileExcel);
+        library.add(faBuilding);
+        library.add(faPencil);
+        library.add(faTrash);
         library.add(faBars); 
         library.add(faMessage); 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

@@ -1,0 +1,80 @@
+<template src="./department-edit.html"></template>
+
+<script lang="ts">
+import { defineComponent, ref, computed, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { RequestService } from '@/shared/services/request-service';
+import { API_PATH } from '@/shared/common/api-path';
+import { DEPARTMENT_LIST, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
+import { StandardCodeData } from '@/shared/types/standard-code';
+
+const requestService = new RequestService();
+
+export default defineComponent({
+  name: "department-edit",
+  components: {
+    // Import any necessary components
+  },
+  data() {
+    return {
+      departmentInfoUpdate: {
+        departmentID: '',
+        departmentName: '',
+        departmentDesc: '',
+        statusCode: ''
+      } as DEPARTMENT_LIST,
+      statusCodeList: [
+        { codeValue: '01', codeValueDesc: 'Active' },
+        { codeValue: '02', codeValueDesc: 'Inactive' },
+      ] as StandardCodeData[],
+    };
+  },
+  computed: {
+    isValidForm(): boolean {
+      return (
+        this.departmentInfoUpdate.departmentID !== '' &&
+        this.departmentInfoUpdate.departmentName !== '' &&
+        this.departmentInfoUpdate.departmentDesc !== '' &&
+        this.departmentInfoUpdate.statusCode !== ''
+      );
+    },
+  },
+  async mounted() {
+    await this.fetchDepartmentDetails();
+  },
+  methods: {
+    async fetchDepartmentDetails() {
+      try {
+        const route = useRoute();
+        const departmentID = route.params.id;
+        const response = await requestService.request(API_PATH.DEPARTMENT_DETAILS + `/${departmentID}`, null, false);
+        const departmentDetails: DEPARTMENT_LIST = response.body; // Adjust according to your API response structure
+        this.departmentInfoUpdate = {
+          departmentID: departmentDetails.departmentID,
+          departmentName: departmentDetails.departmentName,
+          departmentDesc: departmentDetails.departmentDesc,
+          statusCode: departmentDetails.statusCode,
+        };
+      } catch (error) {
+        console.error('Error fetching department details:', error);
+        // Handle error or show appropriate message
+      }
+    },
+    async onClickSave(departmentInfoUpdate: DEPARTMENT_LIST) {
+      try {
+        // Perform save/update operation with departmentInfoUpdate
+        const response = await requestService.request(API_PATH.DEPARTMENT_UPDATE, departmentInfoUpdate, true);
+        console.log('Save response:', response);
+        // Optionally, navigate back to the department list or perform other actions
+      } catch (error) {
+        console.error('Error saving department details:', error);
+        // Handle error or show appropriate message
+      }
+    },
+  },
+});
+</script>
+
+<style scoped>
+@import url('./department-edit.scss');
+</style>

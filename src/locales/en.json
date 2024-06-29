@@ -35,7 +35,7 @@
     "address": "Address",
     "phone": "Phone Number",
     "email": "Email",
-    "passwd": "Password",
+    "password": "Password",
     "imageUrl": "Image URL"
   }
 }
