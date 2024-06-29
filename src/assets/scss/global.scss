@@ -177,7 +177,7 @@ table caption {
 
 table td,
 table th {
-	padding: 10px;
+	padding: 10px;	
 }
 
 button {
@@ -2481,13 +2481,14 @@ ion-modal::part(backdrop) {
 	display: flex;
 	height: 100%;
 	width: 100%;
+	position: absolute;
 	flex-direction: column;
+	top: 10px;
 	align-items: center;
 	justify-content: center;
-
 	.popWrap {
 		position: relative;
-		max-height: calc(100% - 40px);
+		max-height: calc(100% - 50px);
 		display: flex;
 		flex-direction: column;
 		border-radius: 16px;
@@ -2566,7 +2567,8 @@ ion-modal::part(backdrop) {
 		.pop_cont {
 			flex: 1;
 			overflow: auto;
-			padding: 40px 40px 20px;
+			padding: 10px 40px;
+			// padding: 40px 40px 20px;
 
 			.gridWrap {
 				border: none;

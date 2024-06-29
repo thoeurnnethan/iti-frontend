@@ -15,13 +15,6 @@ class PopupService {
         });
 
         await popup.present();
-
-        // const { role, data } = await popup.onWillDismiss();
-        // if (role === "confirm" && callback) {
-        //     callback(data)
-        // } else if (role === "close" && onClose) {
-        //     onClose(data)
-        // }
     }
 
 }

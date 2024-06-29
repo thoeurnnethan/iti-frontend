@@ -5,7 +5,8 @@
     "search": "Search",
     "searchKey": "Search Here...",
     "save": "Save",
-    "ok": "Okay"
+    "ok": "Okay",
+    "addNew": "Add New"
   },
   "department":{
     "title": "Department list",

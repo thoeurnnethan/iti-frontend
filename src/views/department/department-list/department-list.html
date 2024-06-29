@@ -5,8 +5,8 @@
             <font-awesome-icon icon="fa-solid fa-building" />&nbsp;
             <span class="we_title">{{ $t('department.title') }}</span>
         </div>
-        <button class="btn btn-primary p-1 px-2" @click="$router.push('/department-insert')" >
-            Add
+        <button class="btn btn-primary p-1 px-2" @click="onClickAddNew" >
+            {{ $t('common.addNew') }}
             <font-awesome-icon :icon="['fas', 'plus']" />
         </button>
     </div>

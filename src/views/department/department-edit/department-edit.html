@@ -1,34 +1,53 @@
-<div class="container-fluid p-0 mb-4">
-    <div class="container-fluid p-0 d-flex justify-content-between">
-        <span class="we_title">{{ $t('department.editDepartment') }}</span>
+<div class="popup">
+    <div class="popWrap w920">
+        <div class="pop_head">
+            <h1 class="text-center text-dark">Register New Department</h1>
+        </div>
+        <div class="pop_cont">
+            <div class="cont">
+                <div class="dlist05 type02">
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-4 d-flex flex-row">
+                            <InputGroup>
+                                <InputText v-model="departmentInfoUpdate.departmentID" :placeholder="$t('department.depID')" />
+                            </InputGroup>
+                            <button class="btn btn-primary">Validate</button>
+                        </div>
+                        <div class="col-md-4">
+                            <InputGroup>
+                                <InputText v-model="departmentInfoUpdate.departmentName" :placeholder="$t('department.depName')" />
+                            </InputGroup>
+                        </div>
+                        <div class="col-md-4">
+                            <InputGroup>
+                                <InputText v-model="departmentInfoUpdate.departmentDesc" :placeholder="$t('department.depDesc')" />
+                            </InputGroup>
+                        </div>
+                        <div class="col-md-4">
+                            <InputGroup>
+                                <InputGroupAddon>{{ $t('department.depManager') }}</InputGroupAddon>
+                                <Dropdown :options="statusCodeList" v-model="departmentInfoUpdate.statusCode" optionValue="codeValue"
+                                    optionLabel="codeValueDesc" />
+                            </InputGroup>
+                        </div>
+                        <div class="col-md-4">
+                            <InputGroup>
+                                <InputGroupAddon>{{ $t('department.statusCode') }}</InputGroupAddon>
+                                <Dropdown :options="statusCodeList" v-model="departmentInfoUpdate.statusCode" optionValue="codeValue"
+                                    optionLabel="codeValueDesc" />
+                            </InputGroup>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pop_foot">
+            <div class="footer_btn">
+                <div class="right_side">
+                    <button class="btn03" @click="handleClose"><span>Cancel</span></button>
+                    <button class="btn01" @click="handleClose"><span>Save</span></button>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="row g-3 mt-2">
-        <div class="col-md-4">
-            <InputGroup>
-                <InputText v-model="departmentInfoUpdate.departmentID" :placeholder="$t('department.depID')" />
-            </InputGroup>
-        </div>
-        <div class="col-md-4">
-            <InputGroup>
-                <InputText v-model="departmentInfoUpdate.departmentName" :placeholder="$t('department.depName')" />
-            </InputGroup>
-        </div>
-        <div class="col-md-4">
-            <InputGroup>
-                <InputText v-model="departmentInfoUpdate.departmentDesc" :placeholder="$t('department.depDesc')" />
-            </InputGroup>
-        </div>
-        <div class="col-md-4">
-            <InputGroup>
-                <InputGroupAddon>{{ $t('department.statusCode') }}</InputGroupAddon>
-                <Dropdown :options="statusCodeList" v-model="departmentInfoUpdate.statusCode" optionValue="codeValue"
-                    optionLabel="codeValueDesc" />
-            </InputGroup>
-        </div>
-    </div>
-    <button type="button" class="btn btn-success px-4 mt-3" :disabled="!isValidForm"
-        @click="onClickSave(departmentInfoUpdate)">
-        {{ $t('common.save') }}
-    </button>
 </div>

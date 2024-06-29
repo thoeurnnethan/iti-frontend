@@ -1,12 +1,13 @@
 <template src="./department-edit.html"></template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, watch } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { defineComponent} from 'vue';
+import { useRoute } from 'vue-router';
 import { RequestService } from '@/shared/services/request-service';
 import { API_PATH } from '@/shared/common/api-path';
-import { DEPARTMENT_LIST, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
+import { DEPARTMENT_LIST } from '@/shared/types/department-list';
 import { StandardCodeData } from '@/shared/types/standard-code';
+import { modalController } from '@ionic/vue';
 
 const requestService = new RequestService();
 
@@ -47,7 +48,7 @@ export default defineComponent({
       try {
         const route = useRoute();
         const departmentID = route.params.id;
-        const response = await requestService.request(API_PATH.DEPARTMENT_DETAILS + `/${departmentID}`, null, false);
+        const response = await requestService.request(API_PATH.DEPARTMENT_DETAIL + `/${departmentID}`, null, false);
         const departmentDetails: DEPARTMENT_LIST = response.body; // Adjust according to your API response structure
         this.departmentInfoUpdate = {
           departmentID: departmentDetails.departmentID,
@@ -71,6 +72,10 @@ export default defineComponent({
         // Handle error or show appropriate message
       }
     },
+
+    handleClose(){
+      modalController.dismiss();
+    }
   },
 });
 </script>

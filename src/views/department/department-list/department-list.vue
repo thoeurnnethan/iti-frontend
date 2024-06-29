@@ -8,6 +8,7 @@ import { RequestService } from '@/shared/services/request-service';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { StandardCodeData } from '@/shared/types/standard-code';
 import department_detail from '../department-detail/department-detail.vue';
+import department_edit from '../department-edit/department-edit.vue';
 import { ExportExcel } from '@/shared/services/export-excel-class';
 
 const requestService = new RequestService();
@@ -15,7 +16,6 @@ const exportExcel = new ExportExcel();
 
 export default defineComponent({
   name: "department-list",
-  inheritAttrs: false,
   components: {
     // 
   },
@@ -92,7 +92,7 @@ export default defineComponent({
     },
 
     // On click any row
-    onClickRow(item: DEPARTMENT_LIST) {
+    async onClickRow(item: DEPARTMENT_LIST) {
       this.$popupService.onOpen({
         component: department_detail,
         dataProp: {
@@ -102,10 +102,10 @@ export default defineComponent({
     },
 
     // On click save
-    async onClickSave(item: DEPARTMENT_LIST){
-      const reqBody: DEPARTMENT_LIST = item;
-      const response = (await requestService.request(API_PATH.DEPARTMENT_REGISTER,reqBody,true)) as DEPARTMENT_LIST_RES;
-      console.log(response)
+    async onClickAddNew(){
+      this.$popupService.onOpen({
+        component: department_edit
+      })
     },
 
     //downlaod excel
