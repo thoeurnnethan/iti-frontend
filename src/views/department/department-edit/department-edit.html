@@ -1,6 +1,9 @@
 <div class="container-fluid p-0 mb-4">
     <div class="container-fluid p-0 d-flex justify-content-between">
-        <span class="we_title">{{ $t('department.editDepartment') }}</span>
+        <div>
+            <font-awesome-icon icon="fa-solid fa-building" />&nbsp;
+            <span class="we_title">edit department</span>
+        </div>
     </div>
 
     <div class="row g-3 mt-2">
@@ -27,8 +30,7 @@
             </InputGroup>
         </div>
     </div>
-    <button type="button" class="btn btn-success px-4 mt-3" :disabled="!isValidForm"
-        @click="onClickSave(departmentInfoUpdate)">
+    <button type="button" class="btn btn-success px-4 mt-3" :disabled="!isValidForm" @click="onClickSave">
         {{ $t('common.save') }}
     </button>
 </div>
