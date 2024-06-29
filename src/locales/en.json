@@ -22,7 +22,8 @@
     "studentList": "Student List",
     "studentRegister": "Student Register",
     "departmentList": "Department List",
-    "departmentRegister": "Department Register"
+    "departmentRegister": "Department Register",
+    "classList": "Class List"
   },
   "student": {
     "title": "student list",
@@ -38,5 +39,14 @@
     "email": "Email",
     "password": "Password",
     "imageUrl": "Image URL"
+  },
+  "class": {
+    "title": "Class List",
+    "cId": "Class ID",
+    "dId": "Department Name",
+    "cName": "Class Name",
+    "cDes": "Class Description",
+    "status": "Status",
+    "edit": "Edit"
   }
 }

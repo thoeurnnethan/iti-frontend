@@ -137,6 +137,7 @@ import {
         faBarsProgress,
         faBell,
         faBuilding,
+        faCalendarDays,
         faChevronRight,
         faFileExcel,
         faGear,
@@ -175,6 +176,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
         library.add(faFileExcel);
         library.add(faBuilding);
         library.add(faPencil);
+        library.add(faCalendarDays);
         library.add(faTrash);
         library.add(faBars); 
         library.add(faMessage); 
