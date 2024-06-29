@@ -8,6 +8,11 @@ export const DahsboardService = {
                 "name": "home"
             },
             {
+                "path": "/class-list",
+                "iconClass": "fa-calendar-days",
+                "name": "classList"
+            },
+            {
                 "path": "/student-list",
                 "iconClass": "fa-solid fa-school",
                 "name": "studentList"
