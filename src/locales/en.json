@@ -56,6 +56,8 @@
     "cName": "Class Name",
     "cDes": "Class Description",
     "status": "Status",
-    "edit": "Edit"
+    "edit": "Edit",
+    "editTitle": "Edit Department",
+    "yLevel": "Year Level"
   }
 }

@@ -6,7 +6,7 @@
             <font-awesome-icon :icon="['fa', 'calendar-days']" />&nbsp;
             <span class="we_title">{{ $t('class.title') }}</span>
         </div>
-        <button class="btn btn-primary p-1 px-2">
+        <button class="btn btn-primary p-1 px-2" @click="onClickAddNew">
             Add
             <font-awesome-icon :icon="['fas', 'plus']" />
         </button>
@@ -60,9 +60,10 @@
             :rowsPerPageOptions="[10, 20, 50]" 
             @page="onPage">
             <Column field="classID" :header="$t('class.cId')" style="min-width:100px"></Column>
-            <Column field="departmentID" :header="$t('class.dId')" style="min-width: 150px"></Column>
             <Column field="className" :header="$t('class.cName')" style="min-width: 150px"></Column>
+            <Column field="yearLevel" :header="$t('class.yLevel')" style="min-width: 150px"></Column>
             <Column field="classDesc" :header="$t('class.cDes')" style="min-width: 150px"></Column>
+            <Column field="departmentID" :header="$t('class.dId')" style="min-width: 150px"></Column>
             <Column field="statusCode" :header="$t('class.status')" style="min-width: 100px">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
@@ -70,8 +71,9 @@
             </Column>
             <Column :header="$t('class.edit')" class="text-center">
                 <template #body="{ data }">
-                    <font-awesome-icon icon="fa-solid fa-trash" class="text-danger"/>&nbsp;
-                    <font-awesome-icon @click="editDepartment(data)" class="text-primary" icon="fa-solid fa-pencil" />
+                    <font-awesome-icon @click="detailsClass()" icon="fa-solid fa-eye" class="text-success"/>&nbsp;
+                    <font-awesome-icon @click="deleteClass()" icon="fa-solid fa-trash" class="text-danger"/>&nbsp;
+                    <font-awesome-icon @click="editClass(data)" icon="fa-solid fa-pencil" class="text-primary"/>
                 </template>
             </Column>
         </DataTable>
