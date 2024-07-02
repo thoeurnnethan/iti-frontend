@@ -4,14 +4,15 @@
 import { PropType, defineComponent } from 'vue';
 import { DEPARTMENT_LIST } from '@/shared/types/department-list';
 import { modalController } from '@ionic/vue';
-import { StandardCodeData } from '@/shared/types/standard-code';
 import { globalStatusCodeList } from '@/shared/common/common';
-import Dropdown from 'primevue/dropdown';
+import { RequestService } from '@/shared/services/request-service';
+import { API_PATH } from '@/shared/common/api-path';
+
+const requestService = new RequestService();
 
 export default defineComponent({
   name: "department-edit",
   components:{
-    Dropdown
   },
 
   props: {
@@ -24,7 +25,7 @@ export default defineComponent({
   data() {
     return {
       departmentInfo: {} as DEPARTMENT_LIST,
-      statusCodeList: [] as StandardCodeData[],
+      statusCodeList: globalStatusCodeList,
       departmentInfoUpdate: {
         departmentID: '',
         departmentName: '',
@@ -47,10 +48,18 @@ export default defineComponent({
 
   mounted() {
     this.departmentInfo= this.department
-    this.statusCodeList= globalStatusCodeList;
   },
 
   methods: {
+    async onClickUpdate(){
+      const reqBody = this.departmentInfo;
+      const res = await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, true) as DEPARTMENT_LIST;
+      this.departmentInfo = res;
+      if(res){
+        modalController.dismiss();
+      }
+    },
+    
     handleClose(){
       modalController.dismiss();
     }

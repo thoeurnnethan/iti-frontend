@@ -17,7 +17,7 @@ const exportExcel = new ExportExcel();
 export default defineComponent({
   name: "department-list",
   components: {
-    // 
+    department_edit
   },
   data() {
     const dataTable = ref<DEPARTMENT_LIST[]>([]);
@@ -113,7 +113,13 @@ export default defineComponent({
         component: department_edit,
         dataProp:{
           department: item
-        }
+        },
+        callback: () => {
+          this.getDepartmentList();
+        },
+        onClose: () =>{
+          this.getDepartmentList();
+        } 
       })
     },
 
@@ -135,11 +141,6 @@ export default defineComponent({
       ];
       exportExcel.exportSheet(exportExcelData, 'Department info')
     },
-
-    //-edit_department-
-    editDepartment(data: DEPARTMENT_LIST) {
-      this.router.push({ name: 'department-edit', params: { id: data.departmentID } });
-    }
   },
 })
 </script>
