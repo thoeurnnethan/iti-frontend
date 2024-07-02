@@ -1,7 +1,7 @@
 <div class="popup">
     <div class="popWrap w920">
         <div class="pop_head">
-            <h1 class="text-center text-primary">Department Information</h1>
+            <h1 class="text-center text-dark">{{ $t('department.addNew') }}</h1>
             <!-- <button class="btn_pop_close" @click="handleClose">Close</button> -->
         </div>
         <div class="pop_cont">
@@ -9,31 +9,45 @@
                 <div class="row g-3 mt-2">
                     <div class="col-md-4">
                         <InputGroup>
-                            <InputText v-model="departmentInfoUpdate.departmentID" :placeholder="$t('department.depID')" />
+                            <InputText v-model="departmentInfo.departmentID" :placeholder="$t('department.depID')" disabled />
                         </InputGroup>
                     </div>
                     <div class="col-md-4">
                         <InputGroup>
-                            <InputText v-model="departmentInfoUpdate.departmentName" :placeholder="$t('department.depName')" />
+                            <InputText v-model="departmentInfo.departmentName" :placeholder="$t('department.depName')" />
                         </InputGroup>
                     </div>
                     <div class="col-md-4">
                         <InputGroup>
-                            <InputText v-model="departmentInfoUpdate.departmentDesc" :placeholder="$t('department.depDesc')" />
+                            <InputText v-model="departmentInfo.departmentDesc" :placeholder="$t('department.depDesc')" />
                         </InputGroup>
                     </div>
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <InputGroup>
                             <InputGroupAddon>{{ $t('department.depManager') }}</InputGroupAddon>
-                            <Dropdown :options="statusCodeList" v-model="departmentInfoUpdate.statusCode" optionValue="codeValue"
+                            <Dropdown :options="statusCodeList" v-model="departmentInfo.statusCode" 
+                                optionValue="codeValue"
                                 optionLabel="codeValueDesc" />
                         </InputGroup>
+                    </div> -->
+                    <div class="col-md-6">
+                        <InputGroup>
+                            <InputGroupAddon>{{ $t('department.depManager') }}</InputGroupAddon>
+                            <select class="select_box" v-model="departmentInfo.statusCode">
+                                <option v-for="status in statusCodeList" :key="status.codeValue" :value="status.codeValue">
+                                    {{ status.codeValueDesc }}
+                                </option>
+                            </select>
+                        </InputGroup>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <InputGroup>
                             <InputGroupAddon>{{ $t('department.statusCode') }}</InputGroupAddon>
-                            <Dropdown :options="statusCodeList" v-model="departmentInfoUpdate.statusCode" optionValue="codeValue"
-                                optionLabel="codeValueDesc" />
+                            <select class="select_box" v-model="departmentInfo.statusCode">
+                                <option v-for="status in statusCodeList" :key="status.codeValue" :value="status.codeValue">
+                                    {{ status.codeValueDesc }}
+                                </option>
+                            </select>
                         </InputGroup>
                     </div>
                 </div>

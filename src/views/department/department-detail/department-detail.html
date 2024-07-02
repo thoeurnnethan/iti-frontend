@@ -8,31 +8,31 @@
             <div class="cont">
                 <div class="dlist05 type02 p-2">
                     <dl>
-                        <dt>Department ID</dt>
+                        <dt>{{ $t('department.depID') }}</dt>
                         <dd>{{ departmentInfo.departmentID }}</dd>
                     </dl>
                     <dl>
-                        <dt>Department Name</dt>
+                        <dt>{{ $t('department.depName') }}</dt>
                         <dd>{{ departmentInfo.departmentName }}</dd>
                     </dl>
                     <dl>
-                        <dt>Department Description</dt>
+                        <dt>{{ $t('department.depDesc') }}</dt>
                         <dd>{{ departmentInfo.departmentDesc }}</dd>
                     </dl>
                     <dl>
-                        <dt>Department Manager</dt>
+                        <dt>{{ $t('department.depManager') }}</dt>
                         <dd>{{ departmentInfo.firstName }}-{{ departmentInfo.lastName}}</dd>
                     </dl>
                     <dl>
-                        <dt>Department Status</dt>
+                        <dt>{{ $t('department.statusCode') }}</dt>
                         <dd>{{ $codeConverter.codeToString(statusCodeList,departmentInfo.statusCode) }}</dd>
                     </dl>
                     <dl>
-                        <dt>First Register Date</dt>
+                        <dt>{{ $t('department.firstRegisterDate') }}</dt>
                         <dd>{{ $format.formatDateTime(department.firstRegisterDate,'yyyy-mm-dd') }}</dd>
                     </dl>
                     <dl>
-                        <dt>Last Change Date</dt>
+                        <dt>{{ $t('department.lastChangeDate') }}</dt>
                         <dd>{{ $format.formatDateTime(department.lastChangeDate,'yyyy-mm-dd') }}</dd>
                     </dl>
                 </div>

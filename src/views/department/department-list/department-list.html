@@ -1,5 +1,4 @@
 <div class="container-fluid d-flex flex-column" style="overflow: hidden;">
-
     <div class="container-fluid p-0 d-flex justify-content-between">
         <div>
             <font-awesome-icon icon="fa-solid fa-building" />&nbsp;
@@ -10,24 +9,22 @@
             <font-awesome-icon :icon="['fas', 'plus']" />
         </button>
     </div>
-
     <div class="mt-3"></div>
-
         <div class="float-end">
             <button type="button" class="we_radius_right btn btn-dark p-1 px-2 float-end we_font_size" @click.prevent="getDepartmentList()">{{ $t('common.search') }}</button>
             <InputGroup class="float-end w-25">
-                <InputText class="p-1 we_font_size we_radius_left c_input" v-model="searchKey" :placeholder="$t('common.searchKey')" />
+                <InputText class="p-1 we_font_size we_radius_left c_input" 
+                @keyup.enter="getDepartmentList()"
+                v-model="searchKey" 
+                :placeholder="$t('common.searchKey')" />
             </InputGroup>
-            
             <span class="we_shadow">
                 <button type="button" class="btn btn-dark p-1 px-2 we_font_size" @click="exportToExcel">
                     Export Excel &nbsp;
                     <font-awesome-icon :icon="['fas', 'file-excel']" />
                 </button> 
             </span>
-
         </div>
-
     <div class="mt-3"></div>
     <div class="box_shadow">
         <DataTable 
@@ -44,7 +41,7 @@
             :totalRecords="totalCount"
             :rowsPerPageOptions="[10, 20, 50]" 
             @page="onPage">
-            <Column field="departmentID" :header="$t('department.depID')" style="min-width:100px"></Column>
+            <Column field="departmentID" :header="$t('department.depID')" style="min-width:50px"></Column>
             <Column field="departmentName" :header="$t('department.depName')" style="min-width: 150px"></Column>
             <Column field="departmentDesc" :header="$t('department.depDesc')" style="min-width: 150px"></Column>
             <Column field="statusCode" :header="$t('department.statusCode')" style="min-width: 100px">
@@ -54,11 +51,16 @@
             </Column>
             <Column :header="$t('department.edit')" style="min-width: 10px" class="d-flex justify-content-center">
                 <template #body="{ data }">
-                    <font-awesome-icon icon="fa-solid fa-trash" class="text-danger"/>&nbsp;
-                    <font-awesome-icon @click="editDepartment(data)" class="text-primary" icon="fa-solid fa-pencil" />
+                    <div class="row">
+                        <div class="col-md-1">
+                            <font-awesome-icon icon="fa-solid fa-trash" class="text-danger" @click="onClickEdit(data)"/>
+                        </div>
+                        <div class="col-md-1">
+                            <font-awesome-icon @click="onClickEdit(departmentInfo)" class="text-primary" icon="fa-solid fa-pencil" />
+                        </div>
+                    </div>
                 </template>
             </Column>
         </DataTable>
-        <div class="p-1"></div>
     </div>
 </div>

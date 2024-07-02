@@ -1,16 +1,16 @@
 <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;background-color: cornflowerblue;">
     <div class="container shadow p-4 py-5 mb-5 bg-body rounded" style="width: 500px;">
-        <h3 class="text-center mt-2">Login</h3>
+        <h3 class="text-center mt-2">{{ $t('common.login') }}</h3>
         <div class="d-flex flex-column gap-2 mt-3">
-            <label>Username</label>
+            <label>{{ $t('common.username') }}</label>
             <InputText id="username" v-model="userLogin.username"/>
         </div>
         <div class="d-flex flex-column gap-2 mt-3">
-            <label>Password</label>
-            <InputText v-model="userLogin.password"/>
+            <label>{{ $t('common.password') }}</label>
+            <InputText v-model="userLogin.password" @keyup.enter="onClickLogin"/>
         </div>
         <button class="btn btn-primary mt-4 float-end" 
         :disabled="!isValidForm"
-        @click="onClickLogin">Login</button>
+        @click="onClickLogin">{{ $t('common.login') }}</button>
     </div>
 </div>

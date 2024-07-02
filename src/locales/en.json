@@ -6,16 +6,25 @@
     "searchKey": "Search Here...",
     "save": "Save",
     "ok": "Okay",
-    "addNew": "Add New"
+    "addNew": "Add New",
+    "username": "Username",
+    "password": "Password",
+    "login": "Login",
+    "goodMorning": "Good Morning",
+    "goodAfternoon": "Good Afternoon",
+    "goodEvening": "Good Evening"
   },
   "department":{
     "title": "Department list",
     "depID": "Department ID",
     "depName": "Department Name",
     "depDesc": "Department Description",
-    "statusCode": "Department Status",
+    "statusCode": "Status",
     "depManager": "Department Manager",
-    "edit": "Edit"
+    "edit": "Edit",
+    "addNew":"Register New Department",
+    "firstRegisterDate":"First Register Date",
+    "lastChangeDate":"Last Change Date"
   },
   "menu":{
     "home": "Home",

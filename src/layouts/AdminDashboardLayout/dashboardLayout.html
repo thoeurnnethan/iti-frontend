@@ -10,9 +10,7 @@
                     <li v-for="(item, index) in menuList" :key="index">
                         <div class="title">
                             <router-link :to="item.path" class="link" :class="{ 'active-link': $route.path === item.path }">
-                                <i>
-                                    <font-awesome-icon :icon="item.iconClass" />
-                                </i>
+                                <i><font-awesome-icon :icon="item.iconClass" /></i>
                                 <span class="name text-dark font-bold">{{ $t(`menu.${item.name}`) }}</span>
                             </router-link>
                         </div>
@@ -23,7 +21,15 @@
 
         <div class="main_side" style="background-color: #edf1f4 !important;">
             <div class="sticky_head d-flex flex-row we_black">
-                <SelectButton v-model="currentLanguage" :options="languageList" aria-labelledby="basic" />
+                <div class="wrap row">
+                    <div class="col-md-10 d-flex">
+                        <p class="text">{{ $t(greeting) }} -</p>
+                        <span class="username">{{ userInfo.username }}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <SelectButton v-model="currentLanguage" :options="languageList" aria-labelledby="basic" />
+                    </div>
+                </div>
             </div>
             <div class="main_content m-2">
                 <div class="p-3">

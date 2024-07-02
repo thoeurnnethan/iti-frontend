@@ -20,67 +20,65 @@ export default defineComponent({
 
     data() {
         return {
+            userInfo : this.$util.getDataStorage('userInfo',true),
             responseData: [] as EmployeeList[],
             totalCount: 0 as Number,
             pageSize: 100 as Number,
             pageNumber: 1 as Number,
+            greeting: '',
+            interval: 0,
             message: "" as String,
             isCollapse: false,
             telegramURL: "https://t.me/Thoeurn_Nethan",
             menuList:[] as MenuItem[],
             currentLanguage: this.$i18n.locale,
-            // language: this.$util.getDataStorage('lang'),
             languageList: ['en', 'km']
+        }
+    },
+
+    watch: {
+        currentLanguage(newLang: string) {
+            this.changeLanguage(newLang);
         }
     },
 
     mounted() {
         this.isCollapse = localStorage.getItem('collapse') === "true";
         this.getMenuList();
+        this.updateGreeting();
+        this.interval = setInterval(this.updateGreeting, 60000);
     },
 
     methods: {
-        async getStudentList() {
-            const requestBody = {
-                "body": {
-                    pageSize: this.pageSize,
-                    pageNumber: this.pageNumber,
-                }
-            };
-            try {
-                const response = (await axios.post(`${import.meta.env.VITE_APP_SERVER_URL}/employee/list`, requestBody));
-                const result = response.data.body as EmployeeList_Res;
-                this.responseData = result.employeeList
-                this.totalCount = result?.totalCount
-            } catch (error) {
-                console.error('Error fetching todos:', error);
-            }
-        },
-        
         toggleSidebar() {
             this.isCollapse = localStorage.getItem('collapse') === "true";
             this.isCollapse = !this.isCollapse
             localStorage.setItem('collapse', String(this.isCollapse))
         },
-
         getMenuList(){
             this.menuList = DahsboardService.getMenuList();
         },
-
         isActive(item:any) {
             return this.$route.path.startsWith(item.path);
         },
-
         changeLanguage(lang: string) {
             this.$util.setDataStorage('lang', lang)
             this.$i18n.locale = lang;
+        },
+        updateGreeting() {
+            const currentHour = new Date().getHours();
+            if (currentHour < 12) {
+                this.greeting = 'common.goodMorning';
+            } else if (currentHour < 18) {
+                this.greeting = 'common.goodAfternoon';
+            } else {
+                this.greeting = 'common.goodEvening';
+            }
         }
-
     },
-    watch: {
-        currentLanguage(newLang: string) {
-            this.changeLanguage(newLang);
-        }
+
+    beforeDestroy() {
+        clearInterval(this.interval);
     }
 })
 </script>

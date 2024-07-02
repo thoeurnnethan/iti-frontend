@@ -108,6 +108,15 @@ export default defineComponent({
       })
     },
 
+    async onClickEdit(item: DEPARTMENT_LIST){
+      this.$popupService.onOpen({
+        component: department_edit,
+        dataProp:{
+          department: item
+        }
+      })
+    },
+
     //downlaod excel
     exportToExcel(){
       const excelData = this.dataTable.map((data, index) => {
