@@ -139,6 +139,7 @@ import {
         faBuilding,
         faCalendarDays,
         faChevronRight,
+        faEye,
         faFileExcel,
         faGear,
         faHouse,
@@ -147,6 +148,7 @@ import {
         faListOl,
         faMessage,
         faPencil,
+        faPerson,
         faPhone,
         faPlus,
         faRegistered,
@@ -154,7 +156,8 @@ import {
         faSchool,
         faShieldHalved,
         faTrash,
-        faUser
+        faUser,
+        faXmark
 } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
         library.add(faPhone); 
@@ -180,6 +183,9 @@ import { library } from '@fortawesome/fontawesome-svg-core';
         library.add(faTrash);
         library.add(faBars); 
         library.add(faMessage); 
+        library.add(faXmark); 
+        library.add(faEye); 
+        library.add(faUser); 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 //ionic

@@ -1,4 +1,4 @@
-<template src="./class-list.html"></template>
+<template src="./class-edit.html"></template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
@@ -6,8 +6,8 @@ import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class-list';
 import { ExportExcel } from '@/shared/services/export-excel-class';
+import { modalController } from '@ionic/vue';
 import { StandardCodeData } from '@/shared/types/standard-code';
-import class_edit from '../class-edit/class-edit.vue';
 
 
 const requestService = new RequestService();
@@ -40,7 +40,7 @@ export default defineComponent({
       statusCodeList: [
         { codeValue: '01', codeValueDesc: 'Active' },
         { codeValue: '02', codeValueDesc: 'Inactive' },
-      ] as StandardCodeData[]
+      ] as StandardCodeData[],
     }
   },
 
@@ -72,12 +72,12 @@ export default defineComponent({
       const response = (await requestService.request(API_PATH.CLASS_LIST,reqBody,false)) as CLASS_LIST_RES;
       this.totalCount = response.body?.totalCount;
       this.classList = response.body?.classList;
-      this.dataTable = response.body?.classList.map((data,index)=>{
-            return {
-                ...data,
-                no: this.startingIndex + index, 
-            }
-      });
+      // this.dataTable = response.body?.classList.map((data,index)=>{
+      //       return {
+      //           ...data,
+      //           no: this.startingIndex + index, 
+      //       }
+      // });
     },
 
     // Handle page size page number
@@ -90,13 +90,6 @@ export default defineComponent({
     // Get Status text
     getStatusClass(statusCode: string): string {
       return statusCode === '01' ? 'active-text' : 'inactive-text';
-    },
-
-    // On click save
-    async onClickAddNew(){
-      this.$popupService.onOpen({
-        component: class_edit
-      })
     },
 
     //download excel
@@ -119,14 +112,13 @@ export default defineComponent({
       exportExcel.exportSheet(exportExcelData, 'Class info')
     },
 
-    //detailsClass
-    detailsClass(){
-      this.$router.push('/score-list');
+    handleClose(){
+      modalController.dismiss();
     }
   },
 })
 </script>
 
 <style scoped>
-@import url('./class-list.scss');
+@import url('./class-edit.scss');
 </style>

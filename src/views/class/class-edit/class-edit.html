@@ -1,0 +1,51 @@
+<div class="popup">
+    <div class="popWrap w920">
+        <div class="pop_head">
+            <h1 class="text-center text-primary">{{ $t('class.editTitle') }}</h1>
+            <font-awesome-icon icon="fa-solid fa-xmark" @click="handleClose" class="text-danger cursor-pointer" style="font-size: 30px;"/>
+        </div>
+        <div class="pop_cont">
+            <div class="cont">
+                <div class="row g-3 mt-2">
+                    <div class="col-md-4">
+                        <InputGroup>
+                            <InputText v-model="classInfoUpdate.departmentID" placeholder="dgfhj" />
+                        </InputGroup>
+                    </div>
+                    <div class="col-md-4">
+                        <InputGroup>
+                            <InputText v-model="classInfoUpdate.className" :placeholder="$t('department.depName')" />
+                        </InputGroup>
+                    </div>
+                    <div class="col-md-4">
+                        <InputGroup>
+                            <InputText v-model="classInfoUpdate.classDesc" :placeholder="$t('department.depDesc')" />
+                        </InputGroup>
+                    </div>
+                    <div class="col-md-4">
+                        <InputGroup>
+                            <InputGroupAddon>{{ $t('department.depManager') }}</InputGroupAddon>
+                            <Dropdown :options="statusCodeList" v-model="classInfoUpdate.statusCode" optionValue="codeValue"
+                                optionLabel="codeValueDesc" />
+                        </InputGroup>
+                    </div>
+                    <div class="col-md-4">
+                        <InputGroup>
+                            <InputGroupAddon>{{ $t('department.statusCode') }}</InputGroupAddon>
+                            <Dropdown :options="statusCodeList" v-model="classInfoUpdate.statusCode" optionValue="codeValue"
+                                optionLabel="codeValueDesc" />
+                        </InputGroup>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pop_foot">
+            <div class="footer_btn">
+                <div class="right_side">
+                    <button class="btn03" @click="handleClose"><span>Cancel</span></button>
+                    <button class="btn01" @click="handleClose"><span>Save</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
