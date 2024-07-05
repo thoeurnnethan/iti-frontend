@@ -32,10 +32,11 @@
                     </div> -->
                     <div class="col-md-6">
                         <InputGroup>
+                            {{ teacherID }}
                             <InputGroupAddon>{{ $t('department.depManager') }}</InputGroupAddon>
-                            <select class="select_box" v-model="departmentInfo.statusCode">
-                                <option v-for="status in statusCodeList" :key="status.codeValue" :value="status.codeValue">
-                                    {{ status.codeValueDesc }}
+                            <select class="select_box" v-model="teacherID">
+                                <option v-for="manager in managerList" :key="manager.specificID" :value="manager.specificID">
+                                    {{ manager.fullName }}
                                 </option>
                             </select>
                         </InputGroup>

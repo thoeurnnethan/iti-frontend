@@ -1,10 +1,9 @@
 <template src="./dashboardLayout.html"></template>
 
 <script lang="ts">
-import type { EmployeeList, EmployeeList_Res } from '@/shared/types/employeeList';
+import type { UserList } from '@/shared/types/user-list';
 import type { MenuItem } from '@/shared/types/menu-list';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import axios from 'axios';
 import { defineComponent } from 'vue';
 import { DahsboardService } from './DashboardService';
 import Toast from 'primevue/toast';
@@ -21,7 +20,7 @@ export default defineComponent({
     data() {
         return {
             userInfo : this.$util.getDataStorage('userInfo',true),
-            responseData: [] as EmployeeList[],
+            responseData: [] as UserList[],
             totalCount: 0 as Number,
             pageSize: 100 as Number,
             pageNumber: 1 as Number,

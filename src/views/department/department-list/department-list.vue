@@ -64,7 +64,7 @@ export default defineComponent({
     async getDepartmentList() {
       const reqBody: DEPARTMENT_LIST_REQ = {
         userID: "",
-        departmentName: this.searchKey,
+        searchKey: this.searchKey,
         pageSize: this.pageSize,
         pageNumber: this.pageNumber + 1
       }
