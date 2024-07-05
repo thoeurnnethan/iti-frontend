@@ -35,6 +35,11 @@ const router = createRouter({
                     component: () => import("@/views/class/class-list/class-list.vue")
                 },
                 {
+                    path: "/class-insert",
+                    name: "class-insert",
+                    component: () => import("@/views/class/class-insert/class-insert.vue")
+                },
+                {
                     path: "/department-list",
                     name: "department-list",
                     component: () => import("@/views/department/department-list/department-list.vue")
