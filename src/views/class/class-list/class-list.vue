@@ -7,8 +7,6 @@ import { RequestService } from '@/shared/services/request-service';
 import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class-list';
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import { StandardCodeData } from '@/shared/types/standard-code';
-import class_edit from '../class-edit/class-edit.vue';
-
 
 const requestService = new RequestService();
 const exportExcel = new ExportExcel();
@@ -40,7 +38,30 @@ export default defineComponent({
       statusCodeList: [
         { codeValue: '01', codeValueDesc: 'Active' },
         { codeValue: '02', codeValueDesc: 'Inactive' },
-      ] as StandardCodeData[]
+      ] as StandardCodeData[],
+      selectedYear: null,
+      year: [
+        { name: 'Year 1', year: '1' },
+        { name: 'Year 2', year: '2' },
+        { name: 'Year 3', year: '3' },
+        { name: 'Year 4', year: '4' },
+        { name: 'Year 5', year: '5' },
+        { name: 'Year 6', year: '6' }
+      ],
+      selectedTime: null,
+      time: [
+        { name: 'Monday 14:00-17:00' },
+        { name: 'Tuesday 14:00-17:00' },
+        { name: 'Wednesday 09:00-12:00' },
+        { name: 'Thursday 09:00-12:00' },
+        { name: 'Friday 09:00-12:00' },
+        { name: 'Weekend' }
+      ],
+      selectedSemester: null,
+      semester: [
+        { name: '1' },
+        { name: '2' },
+      ]
     }
   },
 
@@ -92,13 +113,6 @@ export default defineComponent({
       return statusCode === '01' ? 'active-text' : 'inactive-text';
     },
 
-    // On click save
-    async onClickAddNew(){
-      this.$popupService.onOpen({
-        component: class_edit
-      })
-    },
-
     //download excel
     exportToExcel(){
       const excelData = this.dataTable.map((data, index) => {
@@ -122,6 +136,17 @@ export default defineComponent({
     //detailsClass
     detailsClass(){
       this.$router.push('/score-list');
+    },
+
+    //delete
+    deleteClass(classID){
+      if(confirm('Are you sure you want to delete this ?')){
+          axios
+          .post(`http://127.0.0.1:8000/api/student/delete/${studentId}`)
+          .then(res => {
+              this.getStudent()
+          })
+      }
     }
   },
 })
