@@ -136,6 +136,17 @@ export default defineComponent({
     //detailsClass
     detailsClass(){
       this.$router.push('/score-list');
+    },
+
+    //delete
+    deleteClass(classID){
+      if(confirm('Are you sure you want to delete this ?')){
+          axios
+          .post(`http://127.0.0.1:8000/api/student/delete/${studentId}`)
+          .then(res => {
+              this.getStudent()
+          })
+      }
     }
   },
 })

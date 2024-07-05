@@ -16,6 +16,7 @@ export interface CLASS_LIST_REQ {
 
 export interface CLASS_LIST_RES {
   body : {
+departmentList: any
     classList: CLASS_LIST[]
     totalCount : number 
   }
