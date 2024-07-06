@@ -102,7 +102,9 @@
                 <template #body="{ data }">
                     <font-awesome-icon @click="detailsClass()" icon="fa-solid fa-eye" class="text-success"/>&nbsp;
                     <font-awesome-icon @click="deleteClass(classList.id)" icon="fa-solid fa-trash" class="text-danger"/>&nbsp;
-                    <font-awesome-icon @click="editClass(classList.id)" icon="fa-solid fa-pencil" class="text-primary"/>
+                    <RouterLink :to="'/class-edit/' + data.id">
+                        <font-awesome-icon icon="fas fa-pencil" class="text-primary"/>
+                    </RouterLink>
                 </template>
             </Column>
         </DataTable>

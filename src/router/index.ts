@@ -40,6 +40,11 @@ const router = createRouter({
                     component: () => import("@/views/class/class-insert/class-insert.vue")
                 },
                 {
+                    path: "/class-edit/:id",
+                    name: "class-edit",
+                    component: () => import("@/views/class/class-edit/class-edit.vue")
+                },
+                {
                     path: "/department-list",
                     name: "department-list",
                     component: () => import("@/views/department/department-list/department-list.vue")

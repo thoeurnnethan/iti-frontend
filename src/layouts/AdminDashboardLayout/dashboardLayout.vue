@@ -32,7 +32,8 @@ export default defineComponent({
             telegramURL: "https://t.me/Thoeurn_Nethan",
             menuList:[] as MenuItem[],
             currentLanguage: this.$i18n.locale,
-            languageList: ['en', 'km']
+            languageList: ['en', 'km'],
+            activeMenu: null
         }
     },
 
@@ -50,6 +51,12 @@ export default defineComponent({
     },
 
     methods: {
+        toggleMenu(menu) {
+            this.activeMenu = this.activeMenu === menu ? null : menu;
+        },
+        closeAllMenus() {
+            this.activeMenu = null;
+        },
         toggleSidebar() {
             this.isCollapse = localStorage.getItem('collapse') === "true";
             this.isCollapse = !this.isCollapse
