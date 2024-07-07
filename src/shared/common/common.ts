@@ -1,5 +1,4 @@
 import { StandardCodeData } from "../types/standard-code";
-import { userRoleList } from "../types/user-type";
 
 
 export const globalStatusCodeList: StandardCodeData[] = [
@@ -7,7 +6,9 @@ export const globalStatusCodeList: StandardCodeData[] = [
   { codeValue: '02', codeValueDesc: 'Inactive' }
 ];
 
-export const UserRoleList: userRoleList[] = [
-  { roleID: '01', roleName: 'Active' },
-  { roleID: '02', roleName: 'Inactive' }
+export const UserRoleList: StandardCodeData[] = [
+  { codeValue: '', codeValueDesc: 'All Role' },
+  { codeValue: '01', codeValueDesc: 'Admin' },
+  { codeValue: '02', codeValueDesc: 'Teacher' },
+  { codeValue: '03', codeValueDesc: 'Student' }
 ];
