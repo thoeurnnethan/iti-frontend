@@ -1,7 +1,7 @@
 
 export interface CLASS_LIST {
   classID: string
-  departmentID: string
+  departmentID?: string
   className: string
   classDesc: string
   statusCode?: string
@@ -16,7 +16,7 @@ export interface CLASS_LIST_REQ {
 
 export interface CLASS_LIST_RES {
   body : {
-departmentList: any
+  departmentList: any
     classList: CLASS_LIST[]
     totalCount : number 
   }

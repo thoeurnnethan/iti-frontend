@@ -73,15 +73,16 @@ export default defineComponent({
   computed:{
     // Check is input form is valid to Save
     isValidForm(): boolean{
-      return this.classInfoUpdate.classID !== '' &&
-        this.classInfoUpdate.departmentID !== '' &&
-        this.classInfoUpdate.className !== '' &&
-        this.classInfoUpdate.classDesc !== '' &&
-        this.classInfoUpdate.statusCode !== '';
+      return  this.classInfoUpdate.classID !== '' &&
+              this.classInfoUpdate.departmentID !== '' &&
+              this.classInfoUpdate.className !== '' &&
+              this.classInfoUpdate.classDesc !== '' &&
+              this.classInfoUpdate.statusCode !== '';
     }
   },
 
   methods: {
+
     // Get Department List
     async getClassList() {
       const reqBody: CLASS_LIST_REQ = {
@@ -138,16 +139,6 @@ export default defineComponent({
       this.$router.push('/score-list');
     },
 
-    //delete
-    deleteClass(classID){
-      if(confirm('Are you sure you want to delete this ?')){
-          axios
-          .post(`http://127.0.0.1:8000/api/student/delete/${studentId}`)
-          .then(res => {
-              this.getStudent()
-          })
-      }
-    }
   },
 })
 </script>

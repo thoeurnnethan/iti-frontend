@@ -32,23 +32,23 @@ export default defineComponent({
         }
     },
     computed: {
-        // Check if input form is valid to Save
         isValidForm(): boolean {
-            return this.classInfoUpdate.className !== '' &&
-                this.classInfoUpdate.classDesc !== '';
+            return  this.classInfoUpdate.className !== '' &&
+                    this.classInfoUpdate.classDesc !== '';
         }
     },
     methods: {
-        // On click save
         async classInsert(_item: CLASS_LIST) {
             if (!this.isValidForm) {
                 alert('Please fill out all required fields');
                 return;
             }
             const reqBody: CLASS_LIST = this.classInfoUpdate;
+            console.table(this.classInfoUpdate);
+            
             const response = (await new RequestService().request(API_PATH.CLASS_REGISTER, reqBody, true)) as CLASS_LIST_RES;
             this.$router.push('/class-list');
-            console.log(response)
+            console.log(response);
         }
     }
 });

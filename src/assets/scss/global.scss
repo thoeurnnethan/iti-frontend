@@ -28,15 +28,39 @@
 	.we_font_size{
 		font-size: 15px !important;
 	}
+	.we_font_size_14{
+		font-size: 14px;
+	}
 	.we_radius_left{
 		border-radius: 0.375rem 0px 0px 0.375rem !important;
 	}
 	.we_radius_right{
 	border-radius: 0px 0.375rem 0.375rem 0px !important;
 	}
-	
+	.we_none_select{
+		user-select: none; /* Standard syntax */
+		-webkit-user-select: none; /* Webkit (Safari, Chrome) */
+		-moz-user-select: none; /* Firefox */
+		-ms-user-select: none; /* Internet Explorer/Edge */
+	}
+	.we_font_weight{
+		font-weight: 800;
+	}
 
 //-custom_css----------------
+
+.p-selectbutton .p-button.p-highlight{
+	background: #fff;
+    border-color: #252b3b;
+	color: #252b3b;
+}
+
+.p-selectbutton .p-button {
+    background: #252b3b;
+    border: 0px solid #ced4da;
+    color: #fff;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
 
 .form-select:focus{
 	outline:none !important;

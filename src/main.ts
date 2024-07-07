@@ -138,6 +138,7 @@ import {
         faBell,
         faBuilding,
         faCalendarDays,
+        faCaretDown,
         faChevronRight,
         faEye,
         faFileExcel,
@@ -186,6 +187,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
         library.add(faXmark); 
         library.add(faEye); 
         library.add(faUser); 
+        library.add(faCaretDown); 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 //ionic
