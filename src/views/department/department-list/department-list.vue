@@ -104,7 +104,11 @@ export default defineComponent({
     // On click save
     async onClickAddNew(){
       this.$popupService.onOpen({
-        component: department_edit
+        component: department_edit,
+        dataProp:{
+          department: this.departmentInfo,
+          isRegister: true
+        }
       })
     },
 
@@ -112,7 +116,8 @@ export default defineComponent({
       this.$popupService.onOpen({
         component: department_edit,
         dataProp:{
-          department: item
+          department: item,
+          isRegister: false
         },
         callback: () => {
           this.getDepartmentList();

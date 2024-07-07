@@ -1,15 +1,16 @@
 <div class="popup">
     <div class="popWrap w920">
         <div class="pop_head">
-            <h1 class="text-center text-dark">{{ $t('department.addNew') }}</h1>
+            <h1 class="text-center text-dark">{{ $t('department.editDepartment') }}</h1>
             <!-- <button class="btn_pop_close" @click="handleClose">Close</button> -->
         </div>
         <div class="pop_cont">
             <div class="cont">
                 <div class="row g-3 mt-2">
+                    <!-- {{ isRegister }} -->
                     <div class="col-md-4">
                         <InputGroup>
-                            <InputText v-model="departmentInfo.departmentID" :placeholder="$t('department.depID')" disabled />
+                            <InputText v-model="departmentInfo.departmentID" :placeholder="$t('department.depID')" :disabled="!isRegister" />
                         </InputGroup>
                     </div>
                     <div class="col-md-4">
@@ -22,19 +23,11 @@
                             <InputText v-model="departmentInfo.departmentDesc" :placeholder="$t('department.depDesc')" />
                         </InputGroup>
                     </div>
-                    <!-- <div class="col-md-4">
-                        <InputGroup>
-                            <InputGroupAddon>{{ $t('department.depManager') }}</InputGroupAddon>
-                            <Dropdown :options="statusCodeList" v-model="departmentInfo.statusCode" 
-                                optionValue="codeValue"
-                                optionLabel="codeValueDesc" />
-                        </InputGroup>
-                    </div> -->
                     <div class="col-md-6">
                         <InputGroup>
-                            {{ teacherID }}
                             <InputGroupAddon>{{ $t('department.depManager') }}</InputGroupAddon>
                             <select class="select_box" v-model="teacherID">
+                                <!-- <option :value="teacherID" disabled>{{ teacherFullName }}</option> -->
                                 <option v-for="manager in managerList" :key="manager.specificID" :value="manager.specificID">
                                     {{ manager.fullName }}
                                 </option>
@@ -44,7 +37,7 @@
                     <div class="col-md-6">
                         <InputGroup>
                             <InputGroupAddon>{{ $t('department.statusCode') }}</InputGroupAddon>
-                            <select class="select_box" v-model="departmentInfo.statusCode">
+                            <select v-model="departmentInfo.statusCode" class="select_box">
                                 <option v-for="status in statusCodeList" :key="status.codeValue" :value="status.codeValue">
                                     {{ status.codeValueDesc }}
                                 </option>
