@@ -23,6 +23,7 @@
     "depManager": "Manager",
     "edit": "Edit",
     "addNew":"Register New Department",
+    "editDepartment":"Edit Department Information",
     "firstRegisterDate":"First Register Date",
     "lastChangeDate":"Last Change Date"
   },

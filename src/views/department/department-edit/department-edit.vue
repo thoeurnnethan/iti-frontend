@@ -20,7 +20,11 @@ export default defineComponent({
     department: {
       type: Object as PropType<DEPARTMENT_LIST>,
       required: true
-    } 
+    },
+    isRegister: {
+      type: Boolean,
+      required: true
+    }
   },
 
   data() {
@@ -28,6 +32,7 @@ export default defineComponent({
       departmentInfo: {} as DEPARTMENT_LIST,
       managerList: [] as ManagerList[],
       teacherID: '' as string,
+      teacherFullName: '' as string,
       statusCodeList: globalStatusCodeList,
     };
   },
@@ -36,12 +41,19 @@ export default defineComponent({
   },
 
   mounted() {
-    this.departmentInfo= this.department;
-    this.teacherID = this.department?.firstName?.concat(' - ', this.department?.lastName || '') || ''
-    this.onGetDepartmentManager();
+    this.onInitData();
   },
 
   methods: {
+    onInitData(){
+      if(!this.isRegister){
+        this.departmentInfo = this.department;
+      }
+      this.teacherID = this.department.teacherID
+      this.teacherFullName = this.department?.firstName?.concat(' - ', this.department?.lastName || '') || ''
+      this.onGetDepartmentManager();
+    },
+
     async onClickUpdate(){
       const reqBody = {
         ...this.departmentInfo,
