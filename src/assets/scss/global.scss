@@ -49,6 +49,19 @@
 
 //-custom_css----------------
 
+.p-selectbutton .p-button.p-highlight{
+	background: #fff;
+    border-color: #252b3b;
+	color: #252b3b;
+}
+
+.p-selectbutton .p-button {
+    background: #252b3b;
+    border: 0px solid #ced4da;
+    color: #fff;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
 .form-select:focus{
 	outline:none !important;
 }

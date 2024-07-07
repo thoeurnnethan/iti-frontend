@@ -44,6 +44,8 @@ export default defineComponent({
                 return;
             }
             const reqBody: CLASS_LIST = this.classInfoUpdate;
+            console.table(this.classInfoUpdate);
+            
             const response = (await new RequestService().request(API_PATH.CLASS_REGISTER, reqBody, true)) as CLASS_LIST_RES;
             this.$router.push('/class-list');
             console.log(response);
