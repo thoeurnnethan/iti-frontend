@@ -11,15 +11,15 @@
     </div>
     <div class="mt-3"></div>
         <div class="float-end">
-            <button type="button" class="we_radius_right btn btn-dark p-1 px-2 float-end we_font_size" @click.prevent="getDepartmentList()">{{ $t('common.search') }}</button>
+            <button type="button" class="we_radius_right btn btn-dark p-2 px-2 float-end we_font_size" @click.prevent="getDepartmentList()">{{ $t('common.search') }}</button>
             <InputGroup class="float-end w-25">
                 <InputText class="p-1 we_font_size we_radius_left c_input" 
                 @keyup.enter="getDepartmentList()"
                 v-model="searchKey" 
-                :placeholder="$t('common.searchKey')" />
+                :placeholder="$t('common.searchKey')" style="height: 40.1px;" />
             </InputGroup>
             <span class="we_shadow">
-                <button type="button" class="btn btn-dark p-1 px-2 we_font_size" @click="exportToExcel">
+                <button type="button" class="btn btn-dark p-2 px-2 we_font_size" @click="exportToExcel">
                     Export Excel &nbsp;
                     <font-awesome-icon :icon="['fas', 'file-excel']" />
                 </button> 

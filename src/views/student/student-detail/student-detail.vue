@@ -2,9 +2,10 @@
 
 <script lang="ts">
 import { modalController } from '@ionic/vue';
+import { ACADEMIC_LIST, PARENT_LIST, STUDENT_DETAILS_RES } from '@/shared/types/student-list';
 import { defineComponent, PropType } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
-import { STUDENT_DETAIL_REQ, STUDENT_DETAIL_RES } from '@/shared/types/student-detail';
+import { STUDENT_DETAIL_REQ } from '@/shared/types/student-detail';
 import { RequestService } from '@/shared/services/request-service';
 
 const requestService = new RequestService();
@@ -12,7 +13,7 @@ const requestService = new RequestService();
 export default defineComponent({
     name: "student-detail",
     props: {
-        notification: {
+        studentDetails: {
             type: Object as PropType<STUDENT_DETAIL_REQ>,
             required: true,
         },
@@ -20,26 +21,37 @@ export default defineComponent({
 
     data() {
         return {
-            studentDetail: {} as STUDENT_DETAIL_RES
+            parentList: [] as PARENT_LIST[],
+            academicList: [] as ACADEMIC_LIST[],
+            studentDetail: {} as STUDENT_DETAILS_RES
         }
     },
 
     mounted() {
-        this.getStudentDetailSummary()
+        this.getStudentDetailSummary();
     },
 
     methods: {
-        async getStudentDetailSummary(){
-            const body= {
-                studentID: this.notification.studentID
+        async getStudentDetailSummary() {
+            const body = {
+                studentID: this.studentDetails.studentID
+            };
+            try {
+                const response = (await requestService.request(API_PATH.STUDENT_DETAIL, body, false)) as STUDENT_DETAILS_RES;
+                this.studentDetail = response;
+                console.log(this.studentDetail);
+                
+                this.parentList = response.body.parentList;
+                this.academicList = response.body.academicList;
+                
+            } catch (error) {
+                console.error("Error fetching student details:", error);
             }
-            const response = this.studentDetail = (await requestService.request(API_PATH.STUDENT_DETAIL, body) ) as STUDENT_DETAIL_RES;
-            this.studentDetail = response
         },
 
-        handleClose(){
-            modalController.dismiss()
+        handleClose() {
+            modalController.dismiss();
         }
     },
-})
+});
 </script>

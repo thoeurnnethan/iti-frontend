@@ -19,11 +19,11 @@ export default defineComponent({
             pageNumber: 0,
             startingIndex: 1,
             classInfoUpdate: {
-                classID: '',
+                classID: '7',
                 className: '',
                 departmentID: '',
                 classDesc: '',
-                statusCode: ''
+                statusCode: '01'
             } as CLASS_LIST,
             statusCodeList: [
                 { codeValue: '01', codeValueDesc: 'Active' },
@@ -46,7 +46,7 @@ export default defineComponent({
             const reqBody: CLASS_LIST = this.classInfoUpdate;
             console.table(this.classInfoUpdate);
             
-            const response = (await new RequestService().request(API_PATH.CLASS_REGISTER, reqBody, true)) as CLASS_LIST_RES;
+            const response = (await new RequestService().request(API_PATH.CLASS_REGISTER, reqBody, false)) as CLASS_LIST_RES;
             this.$router.push('/class-list');
             console.log(response);
         }

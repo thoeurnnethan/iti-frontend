@@ -29,40 +29,50 @@
                             </span>
                         </div>
 
-                        <transition name="dropdown">
-                            <div v-if="activeMenu === 'classMenu'" style="margin-left: 40px;" class="class_menu">
-                                <ul class="p-0">
-                                    <li class="we_font_size py-1">
-                                        <router-link to="/class-list" class="cursor-pointer text-dark" :class=" {'we_font_weight': $route.path === '/class-list' }">
-                                            <p>Class List</p>
-                                        </router-link>
-                                    </li>
-                                    <li class="we_font_size py-1">
-                                        <router-link to="/class-insert" class="cursor-pointer text-dark" :class=" {'we_font_weight': $route.path === '/class-insert' }">
-                                            <p>Class Insert</p>
-                                        </router-link>
-                                    </li>
-                                </ul>
-                            </div>
-                        </transition>
-                    </li>
-                    <li>
-                        <div class="title">
-                            <router-link to="/student-list" class="link" @click="closeAllMenus"
-                                :class="{ 'active-link': $route.path === '/student-list' }">
-                                <i><font-awesome-icon icon="fa-solid fa-school" /></i>
-                                <span class="name text-dark font-bold">{{ $t('menu.studentList') }}</span>
-                            </router-link>
+                        <div v-if="activeMenu === 'classMenu'" style="margin-left: 40px;" class="class_menu">
+                            <ul class="p-0">
+                                <li class="we_font_size py-1">
+                                    <router-link to="/class-list" class="cursor-pointer text-dark" :class=" {'we_font_weight': $route.path === '/class-list' }">
+                                        <p>Class List</p>
+                                    </router-link>
+                                </li>
+                                <li class="we_font_size py-1">
+                                    <router-link to="/class-insert" class="cursor-pointer text-dark" :class=" {'we_font_weight': $route.path === '/class-insert' }">
+                                        <p>Class Register</p>
+                                    </router-link>
+                                </li>
+                            </ul>
                         </div>
                     </li>
                     <li>
+
                         <div class="title">
-                            <router-link to="/student-register" class="link" @click="closeAllMenus"
-                                :class="{ 'active-link': $route.path === '/student-register' }">
-                                <i><font-awesome-icon icon="fa-solid fa-school" /></i>
-                                <span class="name text-dark font-bold">{{ $t('menu.studentRegister') }}</span>
-                            </router-link>
+                            <span class="link we_none_select" @click="toggleMenu('studentMenu')"
+                                :class="{ 'active-link': $route.path === '/student-list' || $route.path === '/student-register'}"
+                                style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center;">
+                                    <i><font-awesome-icon icon="fa-calendar-days" /></i>
+                                    <span class="name text-dark font-bold">{{ $t('menu.studentList') }}</span>
+                                </div>
+                                <i class="d-block"><font-awesome-icon icon="fa fa-caret-down" /></i>
+                            </span>
                         </div>
+
+                        <div v-if="activeMenu === 'studentMenu'" style="margin-left: 40px;" class="class_menu">
+                            <ul class="p-0">
+                                <li class="we_font_size py-1">
+                                    <router-link to="/student-list" class="cursor-pointer text-dark" :class=" {'we_font_weight': $route.path === '/student-list' }">
+                                        <p>Student List</p>
+                                    </router-link>
+                                </li>
+                                <li class="we_font_size py-1">
+                                    <router-link to="/student-register" class="cursor-pointer text-dark" :class=" {'we_font_weight': $route.path === '/student-register' }">
+                                        <p>Student Register</p>
+                                    </router-link>
+                                </li>
+                            </ul>
+                        </div>
+
                     </li>
                     <li>
                         <div class="title">

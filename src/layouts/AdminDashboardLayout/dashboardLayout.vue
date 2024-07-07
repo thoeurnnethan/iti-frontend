@@ -32,7 +32,7 @@ export default defineComponent({
             menuList:[] as MenuItem[],
             currentLanguage: this.$i18n.locale,
             languageList: ['en', 'km'],
-            activeMenu: null
+            activeMenu: null,
         }
     },
 
