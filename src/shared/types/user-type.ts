@@ -1,9 +1,15 @@
-  interface UserInfo {
-    username: string
-    password: string
-    roleID: string
-  }
+interface UserInfo {
+  username: string
+  password: string
+  roleID: string
+}
 
-  export type{
-    UserInfo
-  }
+interface userRoleList {
+  roleID: string
+  roleName: string
+}
+
+export type {
+  UserInfo,
+  userRoleList
+}

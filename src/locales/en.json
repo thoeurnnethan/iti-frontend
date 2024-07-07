@@ -20,7 +20,7 @@
     "depName": "Department Name",
     "depDesc": "Department Description",
     "statusCode": "Status",
-    "depManager": "Department Manager",
+    "depManager": "Manager",
     "edit": "Edit",
     "addNew":"Register New Department",
     "firstRegisterDate":"First Register Date",

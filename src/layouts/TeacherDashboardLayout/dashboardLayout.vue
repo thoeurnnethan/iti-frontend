@@ -1,7 +1,7 @@
 <template src="./dashboardLayout.html"></template>
 
 <script lang="ts">
-import type { EmployeeList, EmployeeList_Res } from '@/shared/types/employeeList';
+import type { UserList, UserList_Res } from '@/shared/types/user-list';
 import type { MenuItem } from '@/shared/types/menu-list';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import axios from 'axios';
@@ -16,7 +16,7 @@ export default defineComponent({
 
     data() {
         return {
-            responseData: [] as EmployeeList[],
+            responseData: [] as UserList[],
             totalCount: 0 as Number,
             pageSize: 100 as Number,
             pageNumber: 1 as Number,
@@ -42,7 +42,7 @@ export default defineComponent({
             };
             try {
                 const response = (await axios.post(`${import.meta.env.VITE_APP_SERVER_URL}/employee/list`, requestBody));
-                const result = response.data.body as EmployeeList_Res;
+                const result = response.data.body as UserList_Res;
                 this.responseData = result.employeeList
                 this.totalCount = result?.totalCount
             } catch (error) {

@@ -3,6 +3,7 @@
 <script lang="ts">
 import { PropType, defineComponent } from 'vue';
 import { DEPARTMENT_LIST } from '@/shared/types/department-list';
+import { ManagerList, ManagerList_Req, ManagerList_Res } from '@/shared/types/user-list';
 import { modalController } from '@ionic/vue';
 import { globalStatusCodeList } from '@/shared/common/common';
 import { RequestService } from '@/shared/services/request-service';
@@ -25,39 +26,48 @@ export default defineComponent({
   data() {
     return {
       departmentInfo: {} as DEPARTMENT_LIST,
+      managerList: [] as ManagerList[],
+      teacherID: '' as string,
       statusCodeList: globalStatusCodeList,
-      departmentInfoUpdate: {
-        departmentID: '',
-        departmentName: '',
-        departmentDesc: '',
-        statusCode: ''
-      } as DEPARTMENT_LIST
     };
   },
 
   computed: {
-    isValidForm(): boolean {
-      return (
-        this.departmentInfoUpdate.departmentID !== '' &&
-        this.departmentInfoUpdate.departmentName !== '' &&
-        this.departmentInfoUpdate.departmentDesc !== '' &&
-        this.departmentInfoUpdate.statusCode !== ''
-      );
-    },
   },
 
   mounted() {
-    this.departmentInfo= this.department
+    this.departmentInfo= this.department;
+    this.teacherID = this.department?.firstName?.concat(' - ', this.department?.lastName || '') || ''
+    this.onGetDepartmentManager();
   },
 
   methods: {
     async onClickUpdate(){
-      const reqBody = this.departmentInfo;
+      const reqBody = {
+        ...this.departmentInfo,
+        teacherID: this.teacherID
+      }
       const res = await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, true) as DEPARTMENT_LIST;
       this.departmentInfo = res;
       if(res){
         modalController.dismiss();
       }
+    },
+
+    async onGetDepartmentManager(){
+      const reqBody: ManagerList_Req = {
+        userID: "",
+        roleID: "02",//02: Department Manager
+        pageSize: 50,
+        pageNumber: 0
+      }
+      const res = await requestService.request(API_PATH.USER_LIST, reqBody, false) as ManagerList_Res;
+      this.managerList = res?.body.userList.map((data) =>{
+        return{
+          ...data,
+          fullName: data.firstName.concat(' - ',data.lastName)
+        }
+      })
     },
     
     handleClose(){
