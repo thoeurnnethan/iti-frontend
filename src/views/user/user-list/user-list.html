@@ -6,10 +6,12 @@
             <font-awesome-icon :icon="['fa', 'school']" />&nbsp;
             <span class="we_title">{{ $t('student.title') }}</span>
         </div>
-        <button class="btn btn-primary p-1 px-2" @click="onClickAddNew">
-            Add
-            <font-awesome-icon :icon="['fas', 'plus']" />
-        </button>
+        <router-link to="/user-register">
+            <button class="btn btn-primary p-1 px-2">
+                Register
+                <font-awesome-icon :icon="['fas', 'plus']" />
+            </button>
+        </router-link>
     </div>
     <!-- header -->
 
@@ -17,10 +19,13 @@
     <div class="container-fluid px-0 py-4">
         <div class="row">
             <div class="col-md-3">
-                <label for="" class="form-label we_font_14">Class Name</label>
-                <InputGroup class="we_shadow">
-                    <InputText class="w-100 we_font_size c_input" v-model="searchKey" :placeholder="$t('common.searchKey')" />
-                </InputGroup>
+                <label for="" class="form-label we_font_14">Roles</label>
+                <select class="form-select" style="height: 37.6px !important;" v-model="roleID">
+                    <option value="">All</option>
+                    <option value="03">Student</option>
+                    <option value="01">Admin</option>
+                    <option value="02">Teacher</option>
+                </select>
             </div>
         </div>
     </div>
@@ -29,9 +34,9 @@
     <div class="mt-3"></div>
 
         <div class="float-end">
-            <button type="button" class="we_radius_right btn btn-dark we_shadow p-2 px-2 float-end we_font_size" @click.prevent="getClassList()">{{ $t('common.search') }}</button>
+            <button type="button" class="we_radius_right btn btn-dark we_shadow p-2 px-2 float-end we_font_size" @click.prevent="getStudentList()">{{ $t('common.search') }}</button>
             <InputGroup class="float-end w-25">
-                <InputText class="p-1 we_font_size we_radius_left we_shadow c_input" v-model="searchKey" :placeholder="$t('common.searchKey')" style="height: 40.1px;" />
+                <InputText class="p-1 we_font_size we_radius_left we_shadow c_input" @keyup.enter="getStudentList()" v-model="searchKey" :placeholder="$t('common.searchKey')" style="height: 40.1px;" />
             </InputGroup>
             
             <span class="we_shadow">
@@ -45,13 +50,16 @@
 
     <div class="mt-3"></div>
     <div class="box_shadow">
+        <div>
+            <h5>{{ $codeConverter.codeToString(userRoleList, roleTitle) }}</h5>
+        </div>
         <DataTable 
-            v-model:selection="departmentInfo" 
-            @row-dblclick="onClickRow(departmentInfo)" 
+            v-model:selection="studentInfo" 
+            @row-dblclick="onClickRow(studentInfo)" 
             tableStyle="min-width: 50rem"
             selectionMode="single" 
             scrollable
-            :value="studentList" 
+            :value="userList" 
             :metaKeySelection="true" 
             :rows="pageSize"
             :lazy="true"
@@ -59,7 +67,7 @@
             :totalRecords="totalCount"
             :rowsPerPageOptions="[10, 20, 50]" 
             @page="onPage">
-            <Column field="studentID" :header="$t('student.studentID')" style="min-width: 100px"></Column>
+            <Column field="specificID" header="User ID" style="min-width: 100px"></Column>
             <Column field="firstName" :header="$t('student.firstName')" style="min-width: 150px"></Column>
             <Column field="lastName" :header="$t('student.lastName')" style="min-width: 150px"></Column>
             <Column field="nickName" :header="$t('student.nickName')" style="min-width: 100px"></Column>

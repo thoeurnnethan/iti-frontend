@@ -9,6 +9,7 @@ interface USER_LIST {
   placeOfBirth: string
   address: string
   email: string
+  phone: string
   passwd: string
   imageUrl: string
   firstLoginDate: string
