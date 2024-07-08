@@ -48,11 +48,11 @@
 
                         <div class="title">
                             <span class="link we_none_select" @click="toggleMenu('studentMenu')"
-                                :class="{ 'active-link': $route.path === '/student-list' || $route.path === '/student-register'}"
+                                :class="{ 'active-link': $route.path === '/user-list' || $route.path === '/user-register'}"
                                 style="display: flex; justify-content: space-between; align-items: center;">
                                 <div style="display: flex; align-items: center;">
                                     <i><font-awesome-icon icon="fa-calendar-days" /></i>
-                                    <span class="name text-dark font-bold">{{ $t('menu.studentList') }}</span>
+                                    <span class="name text-dark font-bold">User</span>
                                 </div>
                                 <i class="d-block"><font-awesome-icon icon="fa fa-caret-down" /></i>
                             </span>
@@ -61,13 +61,13 @@
                         <div v-if="activeMenu === 'studentMenu'" style="margin-left: 40px;" class="class_menu">
                             <ul class="p-0">
                                 <li class="we_font_size py-1">
-                                    <router-link to="/student-list" class="cursor-pointer text-dark" :class=" {'we_font_weight': $route.path === '/student-list' }">
-                                        <p>Student List</p>
+                                    <router-link to="/user-list" class="cursor-pointer text-dark" :class=" {'we_font_weight': $route.path === '/user-list' }">
+                                        <p>User List</p>
                                     </router-link>
                                 </li>
                                 <li class="we_font_size py-1">
-                                    <router-link to="/student-register" class="cursor-pointer text-dark" :class=" {'we_font_weight': $route.path === '/student-register' }">
-                                        <p>Student Register</p>
+                                    <router-link to="/user-register" class="cursor-pointer text-dark" :class=" {'we_font_weight': $route.path === '/user-register' }">
+                                        <p>User Register</p>
                                     </router-link>
                                 </li>
                             </ul>

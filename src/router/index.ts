@@ -20,14 +20,14 @@ const router = createRouter({
                     component: () => import("@/views/home/home.vue")
                 },
                 {
-                    path: "/student-list",
-                    name: "student-list",
-                    component: () => import("@/views/student/student-list/student-list.vue")
+                    path: "/user-list",
+                    name: "user-list",
+                    component: () => import("@/views/user/user-list/user-list.vue")
                 },
                 {
-                    path: "/student-register",
-                    name: "student-register",
-                    component: () => import("@/views/student/student-register/student-register.vue")
+                    path: "/user-register",
+                    name: "user-register",
+                    component: () => import("@/views/user/user-register/user-register.vue")
                 },
                 {
                     path: "/class-list",

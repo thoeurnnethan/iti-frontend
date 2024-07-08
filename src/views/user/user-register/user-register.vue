@@ -1,4 +1,4 @@
-<template src="./student-register.html"></template>
+<template src="./user-register.html"></template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -39,5 +39,5 @@ export default defineComponent({
 </script>
 
 <style>
-@import url('./student-register.scss');
+@import url('./user-register.scss');
 </style>

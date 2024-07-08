@@ -1,4 +1,4 @@
-<template src="./student-detail.html"></template>
+<template src="./user-detail.html"></template>
 
 <script lang="ts">
 import { modalController } from '@ionic/vue';
@@ -11,9 +11,9 @@ import { RequestService } from '@/shared/services/request-service';
 const requestService = new RequestService();
 
 export default defineComponent({
-    name: "student-detail",
+    name: "user-detail",
     props: {
-        studentDetails: {
+        userDetail: {
             type: Object as PropType<STUDENT_DETAIL_REQ>,
             required: true,
         },
@@ -34,7 +34,7 @@ export default defineComponent({
     methods: {
         async getStudentDetailSummary() {
             const body = {
-                studentID: this.studentDetails.studentID
+                studentID: this.userDetail.studentID
             };
             try {
                 const response = (await requestService.request(API_PATH.STUDENT_DETAIL, body, false)) as STUDENT_DETAILS_RES;
@@ -50,7 +50,7 @@ export default defineComponent({
         },
 
         handleClose() {
-            modalController.dismiss();
+            modalController.dismiss();  
         }
     },
 });
