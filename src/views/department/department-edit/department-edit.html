@@ -1,24 +1,23 @@
 <div class="popup">
-    <div class="popWrap w920">
+    <div class="popWrap w70p">
         <div class="pop_head">
-            <h1 class="text-center text-dark">{{ $t('department.editDepartment') }}</h1>
-            <!-- <button class="btn_pop_close" @click="handleClose">Close</button> -->
+            <h1 v-if="!isRegister" class="text-center text-dark">{{ $t('department.editDepartment') }}</h1>
+            <h1 v-else class="text-center text-dark">{{ $t('department.addNew') }}</h1>
         </div>
         <div class="pop_cont">
             <div class="cont">
                 <div class="row g-3 mt-2">
-                    <!-- {{ isRegister }} -->
-                    <div class="col-md-4">
+                    <div class="col-md-4" v-if="!isRegister">
                         <InputGroup>
                             <InputText v-model="departmentInfo.departmentID" :placeholder="$t('department.depID')" :disabled="!isRegister" />
                         </InputGroup>
                     </div>
-                    <div class="col-md-4">
+                    <div :class="isRegister ? 'col-md-6': 'col-md-4'">
                         <InputGroup>
                             <InputText v-model="departmentInfo.departmentName" :placeholder="$t('department.depName')" />
                         </InputGroup>
                     </div>
-                    <div class="col-md-4">
+                    <div :class="isRegister ? 'col-md-6': 'col-md-4'">
                         <InputGroup>
                             <InputText v-model="departmentInfo.departmentDesc" :placeholder="$t('department.depDesc')" />
                         </InputGroup>
@@ -26,8 +25,7 @@
                     <div class="col-md-6">
                         <InputGroup>
                             <InputGroupAddon>{{ $t('department.depManager') }}</InputGroupAddon>
-                            <select class="select_box" v-model="teacherID">
-                                <!-- <option :value="teacherID" disabled>{{ teacherFullName }}</option> -->
+                            <select class="select_box" v-model="departmentInfo.teacherID">
                                 <option v-for="manager in managerList" :key="manager.specificID" :value="manager.specificID">
                                     {{ manager.fullName }}
                                 </option>
@@ -50,8 +48,19 @@
         <div class="pop_foot">
             <div class="footer_btn">
                 <div class="right_side">
-                    <button class="btn03" @click="handleClose"><span>Cancel</span></button>
-                    <button class="btn01" @click="onClickUpdate"><span>Save</span></button>
+                    <button class="btn03" @click="handleClose">
+                        <span>{{ $t('common.cancel') }}</span>
+                    </button>
+                    <button v-if="isRegister" :class="isValidRegister ? 'btn01' : 'btn03'" 
+                        :disabled="!isValidRegister" 
+                        @click="onClickSave">
+                        <span>{{ $t('common.save') }}</span>
+                    </button>
+                    <button v-else :class="isValidUpdate ? 'btn01' : 'btn03'" 
+                        :disabled="!isValidUpdate" 
+                        @click="onClickUpdate">
+                        <span>{{ $t('common.update') }}</span>
+                    </button>
                 </div>
             </div>
         </div>
