@@ -37,7 +37,9 @@
     "departmentRegister": "Department Register",
     "classList": "Class List"
   },
-  "student": {
+  "user": {
+    "ID": "User ID",
+    "role": "Role",
     "title": "student list",
     "studentID": "Student ID",
     "firstName": "First Name",

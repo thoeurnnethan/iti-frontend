@@ -6,7 +6,7 @@ import { USER_LIST_RES, USER_LIST, USER_LIST_REQ } from '@/shared/types/user-lis
 import { defineComponent, ref } from 'vue';
 import { RequestService } from '@/shared/services/request-service';
 import { STUDENT_LIST } from '@/shared/types/student-list';
-import { UserRoleList } from '@/shared/common/common';
+import { UserRoleList, GenderCodeList } from '@/shared/common/common';
 import user_detail from "@/views/user/user-detail/user-detail.vue";
 import { ExportExcel } from '@/shared/services/export-excel-class';
 
@@ -27,6 +27,7 @@ export default defineComponent({
             userList: [] as USER_LIST[],
             studentInfo: {} as STUDENT_LIST,
             userRoleList: UserRoleList,
+            genderCodeList: GenderCodeList,
             dataTable,
             startingIndex: 1,
             searchKey: '',

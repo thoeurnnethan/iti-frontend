@@ -38,14 +38,16 @@
     "departmentRegister": "ចុះបញ្ជីដេប៉ាតឺម៉ង់",
     "classList": "បញ្ជីថ្នាក់រៀន"
   },
-  "student": {
+  "user": {
+    "ID": "លេខសម្គាល់អ្នកប្រើប្រាស់",
+    "role": "តួនាទី",
     "title": "បញ្ជីសិស្ស",
     "studentID": "លេខសម្គាល់សិស្ស",
-    "firstName": "នាមខ្លួន",
-    "lastName": "នាមត្រកូល",
+    "firstName": "នាមត្រកូល",
+    "lastName": "នាមខ្លួន",
     "nickName": "នាមក្រៅ",
     "gender": "ភេទ",
-    "dateOfBirth": "កាលបរិច្ឆេទកំណើត",
+    "dateOfBirth": "ថ្ងៃខែឆ្នាំកំណើត",
     "placeOfBirth": "ទីកន្លែងកំណើត",
     "address": "អាសយដ្ឋាន",
     "phone": "លេខទូរស័ព្ទ",
