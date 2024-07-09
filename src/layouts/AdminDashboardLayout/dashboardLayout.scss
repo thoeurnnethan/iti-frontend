@@ -234,8 +234,11 @@ $color_Light2: #c4c4c4;
         }
     }
     .main_content{
-        background: transparent;
         overflow-y: hidden !important;
+
+        div{
+            background-color: #fff;
+        }
     }
 }
 
