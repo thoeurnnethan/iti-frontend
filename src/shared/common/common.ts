@@ -9,6 +9,12 @@ export const globalStatusCodeList: StandardCodeData[] = [
 export const UserRoleList: StandardCodeData[] = [
   { codeValue: '', codeValueDesc: 'All Role' },
   { codeValue: '01', codeValueDesc: 'Admin' },
-  { codeValue: '02', codeValueDesc: 'Teacher' },
-  { codeValue: '03', codeValueDesc: 'Student' }
+  { codeValue: '02', codeValueDesc: 'Department Manager' },
+  { codeValue: '03', codeValueDesc: 'Teacher' },
+  { codeValue: '04', codeValueDesc: 'Student' }
+];
+
+export const GenderCodeList: StandardCodeData[] = [
+  { codeValue: '01', codeValueDesc: 'Male' },
+  { codeValue: '02', codeValueDesc: 'Female' }
 ];

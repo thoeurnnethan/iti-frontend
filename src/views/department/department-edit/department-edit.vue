@@ -29,15 +29,30 @@ export default defineComponent({
 
   data() {
     return {
-      departmentInfo: {} as DEPARTMENT_LIST,
-      managerList: [] as ManagerList[],
-      teacherID: '' as string,
+      departmentInfo: {
+        departmentName: '',
+        departmentDesc: '',
+        statusCode: '01',
+      } as DEPARTMENT_LIST,
       teacherFullName: '' as string,
+      departmentInfoUpdate: {} as DEPARTMENT_LIST,
+      managerList: [] as ManagerList[],
       statusCodeList: globalStatusCodeList,
     };
   },
 
   computed: {
+    isValidRegister(): boolean{
+      return this.departmentInfo.departmentName !== '' &&
+        this.departmentInfo.departmentDesc !== '' &&
+        this.departmentInfo.statusCode !== '';
+    },
+    isValidUpdate(): boolean {
+      return this.departmentInfo.departmentName !== this.departmentInfoUpdate.departmentName ||
+      this.departmentInfo.departmentDesc !== this.departmentInfoUpdate.departmentDesc ||
+      this.departmentInfo.statusCode !== this.departmentInfoUpdate.statusCode ||
+      this.departmentInfo.teacherID !== this.departmentInfoUpdate.teacherID;
+    }
   },
 
   mounted() {
@@ -47,9 +62,9 @@ export default defineComponent({
   methods: {
     onInitData(){
       if(!this.isRegister){
-        this.departmentInfo = this.department;
+        this.departmentInfo = {...this.department}
+        this.departmentInfoUpdate= {...this.departmentInfo}
       }
-      this.teacherID = this.department.teacherID
       this.teacherFullName = this.department?.firstName?.concat(' - ', this.department?.lastName || '') || ''
       this.onGetDepartmentManager();
     },
@@ -57,9 +72,19 @@ export default defineComponent({
     async onClickUpdate(){
       const reqBody = {
         ...this.departmentInfo,
-        teacherID: this.teacherID
       }
       const res = await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, true) as DEPARTMENT_LIST;
+      this.departmentInfo = res;
+      if(res){
+        modalController.dismiss();
+      }
+    },
+
+    async onClickSave(){
+      const reqBody = {
+        ...this.departmentInfo,
+      }
+      const res = await requestService.request(API_PATH.DEPARTMENT_REGISTER, reqBody, true) as DEPARTMENT_LIST;
       this.departmentInfo = res;
       if(res){
         modalController.dismiss();
@@ -77,7 +102,7 @@ export default defineComponent({
       this.managerList = res?.body.userList.map((data) =>{
         return{
           ...data,
-          fullName: data.firstName.concat(' - ',data.lastName)
+          fullName: data.firstName.concat(' - ', data.lastName)
         }
       })
     },

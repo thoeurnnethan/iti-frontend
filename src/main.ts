@@ -8,6 +8,7 @@ import router from './router';
 import PopupService from './shared/services/popup.service';
 import { DateFormat } from './shared/services/date-time';
 import { ConvertCode } from './shared/services/code-convert';
+import { PhoneNumberFormat } from './shared/services/phone-number';
 import Utils from './shared/util';
 
 /* Global Style */
@@ -219,6 +220,7 @@ app.component("font-awesome-icon", FontAwesomeIcon)
 app.config.globalProperties.$format = new DateFormat();
 app.config.globalProperties.$popupService = new PopupService();
 app.config.globalProperties.$codeConverter = new ConvertCode();
+app.config.globalProperties.$phoneNumberFormater = new PhoneNumberFormat();
 app.config.globalProperties.$util = new Utils();
 
 

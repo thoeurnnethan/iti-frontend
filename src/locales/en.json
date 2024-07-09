@@ -5,6 +5,8 @@
     "search": "Search",
     "searchKey": "Search Here...",
     "save": "Save",
+    "update": "Update",
+    "cancel": "Cancel",
     "ok": "Okay",
     "addNew": "Add New",
     "username": "Username",
@@ -35,7 +37,9 @@
     "departmentRegister": "Department Register",
     "classList": "Class List"
   },
-  "student": {
+  "user": {
+    "ID": "User ID",
+    "role": "Role",
     "title": "student list",
     "studentID": "Student ID",
     "firstName": "First Name",
