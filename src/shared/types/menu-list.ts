@@ -15,3 +15,9 @@ export interface COM10500111_RES {
     totalCount : number 
   }
 }
+
+export interface FormItem {
+  type: string
+  name: string
+  label: string
+}
