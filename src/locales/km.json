@@ -36,7 +36,8 @@
     "studentRegister": "ចុះឈ្មោះសិស្ស",
     "departmentList": "បញ្ជីដេប៉ាតឺម៉ង់",
     "departmentRegister": "ចុះបញ្ជីដេប៉ាតឺម៉ង់",
-    "classList": "បញ្ជីថ្នាក់រៀន"
+    "classList": "បញ្ជីថ្នាក់រៀន",
+    "userList": "បញ្ជីអ្នកប្រើប្រាស់"
   },
   "user": {
     "ID": "លេខសម្គាល់អ្នកប្រើប្រាស់",
