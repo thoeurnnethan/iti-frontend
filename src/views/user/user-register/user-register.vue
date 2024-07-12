@@ -3,7 +3,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import type { FormItem } from '@/shared/types/menu-list';
-import { USER_LIST, USER_LIST_RES } from '@/shared/types/user-list';
+import { USER_LIST, USER_LIST_REQ, USER_LIST_RES } from '@/shared/types/user-list';
 import { UserRegister } from './UserRegister';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
@@ -26,22 +26,18 @@ export default defineComponent({
             pageNumber: 0,
             startingIndex: 1,
             userInfoUpdate: {
-                userID: 123,
                 roleID: '03',
                 firstName: '',
                 lastName: '',
                 nickName: '',
                 gender: '',
                 dateOfBirth: '',
+                placeOfBirth: '',
+                address: '',
                 phone: '',
                 email: '',
                 passwd: '',
                 imageUrl: '',
-                placeOfBirth: '',
-                address: '',
-                firstLoginDate: '',
-                lastLoginDate: '',
-                statusCode: '',
             } as USER_LIST,
         }
     },

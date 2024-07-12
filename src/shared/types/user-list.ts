@@ -1,5 +1,4 @@
 interface USER_LIST {
-  userID: number
   roleID: string
   firstName: string
   lastName: string
@@ -8,13 +7,10 @@ interface USER_LIST {
   dateOfBirth: string
   placeOfBirth: string
   address: string
-  email: string
   phone: string
+  email: string
   passwd: string
   imageUrl: string
-  firstLoginDate: string
-  lastLoginDate: string
-  statusCode: string
 }
 
 interface ManagerList {
@@ -38,18 +34,12 @@ interface ManagerList_Res {
   }
 }
 interface USER_LIST_REQ {
-  searchKey: string
-  roleID: string
-  statusCode: string
-  pageSize: number
-  pageNumber: number
-}
-interface USER_LIST_RES {
   body:{
-    totalCount: number
     userList: Array<USER_LIST>
   }
-  
+}
+interface USER_LIST_RES {
+  userList: Array<USER_LIST>
 }
 
 export type {
