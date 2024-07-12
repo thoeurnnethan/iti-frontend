@@ -17,7 +17,7 @@
 
     <h5 class="mt-4">
         <h5>{{ $codeConverter.codeToString(userRoleList, select_Role) }}</h5>
-    </h5>    
+    </h5>
     <hr>
 
     <!-- default_form -->
@@ -36,7 +36,8 @@
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                 <label class="form-label we_font_size">Gender</label><br>
-                <input type="radio" v-model="userInfoUpdate.gender" class="form-check-input" value="m"> Male &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" v-model="userInfoUpdate.gender" class="form-check-input" value="m"> Male
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" v-model="userInfoUpdate.gender" class="form-check-input" value="f"> Female
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
@@ -61,11 +62,11 @@
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                 <label class="form-label we_font_size">Place of Birth</label><br>
-                <textarea v-model="userInfoUpdate.placeOfBirth" class="form-control"></textarea>
+                <textarea style="height: 38px;" v-model="userInfoUpdate.placeOfBirth" class="form-control"></textarea>
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                 <label class="form-label we_font_size">Address</label><br>
-                <textarea v-model="userInfoUpdate.address" class="form-control"></textarea>
+                <textarea style="height: 38px;" v-model="userInfoUpdate.address" class="form-control"></textarea>
             </div>
             <div class="row mt-4">
                 <div class="col-lg-4 col-sm-6 col-xl-3 col-md-3 mb-2">
@@ -139,7 +140,7 @@
                 <label class="form-label we_font_size">Address</label><br>
                 <textarea name="address" id="address" class="form-control">Phnom Penh</textarea>
             </div>
-        
+
             <!-- Parent List -->
             <div class="col-12">
                 <h5 class="mt-4">Parent List</h5>
@@ -169,11 +170,12 @@
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                             <label class="form-label we_font_size">Address</label><br>
-                            <textarea name="parent1Address" class="form-control">Rumlech Commune, Bakan District, Pursat Province</textarea>
+                            <textarea name="parent1Address"
+                                class="form-control">Rumlech Commune, Bakan District, Pursat Province</textarea>
                         </div>
                     </div>
                 </fieldset>
-    
+
                 <fieldset class="border rounded-3 mt-3">
                     <legend class="float-none w-auto we_margin_left_20 px-2 h5">Monther</legend>
                     <div class="row  m-0">
@@ -199,14 +201,15 @@
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                             <label class="form-label we_font_size">Address</label><br>
-                            <textarea name="parent1Address" class="form-control">Rumlech Commune, Bakan District, Pursat Province</textarea>
+                            <textarea name="parent1Address"
+                                class="form-control">Rumlech Commune, Bakan District, Pursat Province</textarea>
                         </div>
                     </div>
                 </fieldset>
             </div>
 
-            
-        
+
+
             <!-- Academic List -->
             <div class="col-12">
                 <h5 class="mt-4">Academic List</h5>
@@ -265,10 +268,10 @@
                     </div>
                 </fieldset>
             </div>
-            
+
         </div>
     <!-- student -->
 
 
-    
+
 </div>
