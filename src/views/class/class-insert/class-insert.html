@@ -16,11 +16,55 @@
 
             <div class="col-lg-3 col-md-4 mb-2">
                 <label class="form-label we_font_size">Department</label><br>
-                <select class="form-select" v-model="classInfoUpdate.departmentID" style="height: 37.6px !important;">
-                    <option value="">Choose Department</option>
-                    <option value="IT">IT</option>
+                <select class="form-select" v-model="classInfoUpdate.departmentID">
+                    <option value="DEP1002">IT</option>
                     <option value="Electronic">Electronic</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Marketing">Marketing</option>
                 </select>
+            </div>
+
+            <div class="col-lg-1 col-md-4 mb-2">
+                <label class="form-label we_font_size">Year</label><br>
+                <select class="form-select" v-model="classInfoUpdate.cyear">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+
+            <div class="col-lg-1 col-md-4 mb-2">
+                <label class="form-label we_font_size">Semester</label><br>
+                <select class="form-select" v-model="classInfoUpdate.semester">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+
+            <div class="col-lg-1 col-md-4 mb-2">
+                <label class="form-label we_font_size">Generation</label><br>
+                <select class="form-select" v-model="classInfoUpdate.generation">
+                    <option value="G_1">G_1</option>
+                    <option value="G_2">G_2</option>
+                    <option value="G_3">G_3</option>
+                    <option value="G_4">G_4</option>
+                    <option value="G_5">G_5</option>
+                </select>
+            </div>
+
+            <div class="col-lg-3 col-md-4 mb-2">
+                <label class="form-label we_font_size">Time</label><br>
+                <select class="form-select" v-model="classInfoUpdate.ctime">
+                    <option value="Monday 14:00-17:00">Monday 14:00-17:00</option>
+                    <option value="Tuesday 14:00-17:00">Tuesday 14:00-17:00</option>
+                    <option value="Wednesday 09:00-12:00">Wednesday 09:00-12:00</option>
+                    <option value="Thursday 09:00-12:00">Thursday 09:00-12:00</option>
+                    <option value="Friday 09:00-12:00">Friday 09:00-12:00</option>
+                    <option value="Weekend">Weekend</option>
+                </select>
+                
             </div>
 
             <div class="col-lg-12">
