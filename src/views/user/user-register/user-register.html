@@ -1,12 +1,12 @@
 <div class="container-fluid p-0 mb-4">
     <div class="container-fluid p-0 d-flex justify-content-between">
-        <span class="we_title">User Register</span>
+        <span class="text_title">User Register</span>
     </div>
 
     <div class="container-fluid px-0 py-3">
         <div class="row">
             <div class="col-md-2">
-                <label class="form-label we_font_14">Select Roles for Register</label>
+                <label class="form-label font_14">Select Roles for Register</label>
                 <select class="form-select" v-model="select_Role" @change="selectRole">
                     <option value="03" selected>Teacher</option>
                     <option value="04">Student</option>
@@ -23,15 +23,15 @@
     <!-- default_form -->
         <div class="row mt-4" v-if="select_Role === '03'">
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">First Name</label><br>
+                <label class="form-label font_15">First Name</label><br>
                 <input type="text" v-model="userInfoUpdate.firstName" class="form-control">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Last Name</label><br>
+                <label class="form-label font_15">Last Name</label><br>
                 <input type="text" v-model="userInfoUpdate.lastName" class="form-control">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Nick Name</label><br>
+                <label class="form-label font_15">Nick Name</label><br>
                 <input type="text" v-model="userInfoUpdate.nickName" class="form-control">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
@@ -41,23 +41,23 @@
                 <input type="radio" v-model="userInfoUpdate.gender" class="form-check-input" value="f"> Female
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Date of Birth</label><br>
+                <label class="form-label font_15">Date of Birth</label><br>
                 <input type="date" v-model="userInfoUpdate.dateOfBirth" class="form-control">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Phone</label><br>
+                <label class="form-label font_15">Phone</label><br>
                 <input type="text" v-model="userInfoUpdate.phone" class="form-control">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Email</label><br>
+                <label class="form-label font_15">Email</label><br>
                 <input type="email" v-model="userInfoUpdate.email" class="form-control">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Password</label><br>
+                <label class="form-label font_15">Password</label><br>
                 <input type="text" v-model="userInfoUpdate.passwd" class="form-control">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Image URL</label><br>
+                <label class="form-label font_15">Image URL</label><br>
                 <input type="file" @change="handleFileUpload" class="form-control">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
@@ -79,11 +79,11 @@
     <!-- Student -->
         <div class="row mt-4" v-else>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">User ID</label><br>
+                <label class="form-label font_15">User ID</label><br>
                 <input type="text" name="userID" disabled class="form-control" value="RR2Usjh5QA">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Role ID</label><br>
+                <label class="form-label font_15">Role ID</label><br>
                 <select name="roleID" id="roleID" class="form-select">
                     <option value="01">Admin</option>
                     <option value="02">Department Manager</option>
@@ -92,52 +92,52 @@
                 </select>
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Specific ID</label><br>
+                <label class="form-label font_15">Specific ID</label><br>
                 <input type="text" name="specificID" class="form-control" value="1003">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">First Name</label><br>
+                <label class="form-label font_15">First Name</label><br>
                 <input type="text" name="firstName" class="form-control" value="Thoeurn">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Last Name</label><br>
+                <label class="form-label font_15">Last Name</label><br>
                 <input type="text" name="lastName" class="form-control" value="Nethan157">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Nick Name</label><br>
+                <label class="form-label font_15">Nick Name</label><br>
                 <input type="text" name="nickName" class="form-control" value="mango">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Gender</label><br>
+                <label class="form-label font_15">Gender</label><br>
                 <input type="radio" name="gender" class="form-check-input" value="M"> Male &nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="gender" class="form-check-input" value="F" checked> Female
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Date of Birth</label><br>
+                <label class="form-label font_15">Date of Birth</label><br>
                 <input type="date" name="dateOfBirth" class="form-control" value="2002-03-18">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Phone</label><br>
+                <label class="form-label font_15">Phone</label><br>
                 <input type="text" name="phone" class="form-control" value="69514210">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Email</label><br>
+                <label class="form-label font_15">Email</label><br>
                 <input type="email" name="email" class="form-control" value="nethanthoeurn@gmail.com">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Password</label><br>
+                <label class="form-label font_15">Password</label><br>
                 <input type="text" name="passwd" class="form-control" value="U3Vwd5LiiuLP">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Image URL</label><br>
+                <label class="form-label font_15">Image URL</label><br>
                 <input type="file" name="imageUrl" class="form-control">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Place of Birth</label><br>
+                <label class="form-label font_15">Place of Birth</label><br>
                 <textarea name="placeOfBirth" id="placeOfBirth" class="form-control">Pursat Province</textarea>
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label we_font_size">Address</label><br>
+                <label class="form-label font_15">Address</label><br>
                 <textarea name="address" id="address" class="form-control">Phnom Penh</textarea>
             </div>
 
@@ -146,26 +146,26 @@
                 <h5 class="mt-4">Parent List</h5>
                 <hr>
                 <fieldset class="border rounded-3">
-                    <legend class="float-none w-auto we_margin_left_20 px-2 h5">Father</legend>
+                    <legend class="float-none w-auto m_left20 px-2 h5">Father</legend>
                     <div class="row  m-0">
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2 ">
-                            <label class="form-label we_font_size">First Name</label><br>
+                            <label class="form-label font_15">First Name</label><br>
                             <input type="text" name="parent1FirstName" class="form-control" value="Nget">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Last Name</label><br>
+                            <label class="form-label font_15">Last Name</label><br>
                             <input type="text" name="parent1LastName" class="form-control" value="Bun Thoeurn">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Gender</label><br>
+                            <label class="form-label font_15">Gender</label><br>
                             <input type="text" name="parent1Gender" class="form-control" value="Male">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Job</label><br>
+                            <label class="form-label font_15">Job</label><br>
                             <input type="text" name="parent1Job" class="form-control" value="Farmer">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Phone</label><br>
+                            <label class="form-label font_15">Phone</label><br>
                             <input type="text" name="parent1Phone" class="form-control" value="69514210">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
@@ -177,26 +177,26 @@
                 </fieldset>
 
                 <fieldset class="border rounded-3 mt-3">
-                    <legend class="float-none w-auto we_margin_left_20 px-2 h5">Monther</legend>
+                    <legend class="float-none w-auto m_left20 px-2 h5">Monther</legend>
                     <div class="row  m-0">
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2 ">
-                            <label class="form-label we_font_size">First Name</label><br>
+                            <label class="form-label font_15">First Name</label><br>
                             <input type="text" name="parent1FirstName" class="form-control" value="Nget">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Last Name</label><br>
+                            <label class="form-label font_15">Last Name</label><br>
                             <input type="text" name="parent1LastName" class="form-control" value="Bun Thoeurn">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Gender</label><br>
+                            <label class="form-label font_15">Gender</label><br>
                             <input type="text" name="parent1Gender" class="form-control" value="Male">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Job</label><br>
+                            <label class="form-label font_15">Job</label><br>
                             <input type="text" name="parent1Job" class="form-control" value="Farmer">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Phone</label><br>
+                            <label class="form-label font_15">Phone</label><br>
                             <input type="text" name="parent1Phone" class="form-control" value="69514210">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
@@ -216,26 +216,26 @@
                 <hr>
                 <!-- Academic List - Academic 1 -->
                 <fieldset class="border rounded-3">
-                    <legend class="float-none w-auto we_margin_left_20 px-2 h5">Academic 1</legend>
+                    <legend class="float-none w-auto m_left20 px-2 h5">Academic 1</legend>
                     <div class="row m-0">
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Academic Name</label><br>
+                            <label class="form-label font_15">Academic Name</label><br>
                             <input type="text" name="academicName1" class="form-control" value="BaccII">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Academic Description</label><br>
+                            <label class="form-label font_15">Academic Description</label><br>
                             <input type="text" name="academicDesc1" class="form-control" value="High School">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Start Date</label><br>
+                            <label class="form-label font_15">Start Date</label><br>
                             <input type="date" name="startDate1" class="form-control" value="2018-10-31">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">End Date</label><br>
+                            <label class="form-label font_15">End Date</label><br>
                             <input type="date" name="endDate1" class="form-control" value="2019-08-01">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Certificated Date</label><br>
+                            <label class="form-label font_15">Certificated Date</label><br>
                             <input type="text" name="certificatedDate1" class="form-control" value="2020">
                         </div>
                     </div>
@@ -243,26 +243,26 @@
 
                 <!-- Academic List - Academic 2 -->
                 <fieldset class="border rounded-3 mt-3">
-                    <legend class="float-none w-auto we_margin_left_20 px-2 h5">Academic 2</legend>
+                    <legend class="float-none w-auto m_left20 px-2 h5">Academic 2</legend>
                     <div class="row m-0">
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Academic Name</label><br>
+                            <label class="form-label font_15">Academic Name</label><br>
                             <input type="text" name="academicName2" class="form-control" value="Secondary">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Academic Description</label><br>
+                            <label class="form-label font_15">Academic Description</label><br>
                             <input type="text" name="academicDesc2" class="form-control" value="Secondary School">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Start Date</label><br>
+                            <label class="form-label font_15">Start Date</label><br>
                             <input type="date" name="startDate2" class="form-control" value="2016-10-31">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">End Date</label><br>
+                            <label class="form-label font_15">End Date</label><br>
                             <input type="date" name="endDate2" class="form-control" value="2018-10-31">
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label we_font_size">Certificated Date</label><br>
+                            <label class="form-label font_15">Certificated Date</label><br>
                             <input type="text" name="certificatedDate2" class="form-control" value="2019">
                         </div>
                     </div>
