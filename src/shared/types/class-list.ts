@@ -1,10 +1,14 @@
 
 export interface CLASS_LIST {
   classID: string
-  departmentID?: string
-  className: string
-  classDesc: string
-  statusCode?: string
+  departmentID: string 
+  className: string 
+  classDesc: string 
+  cyear: string 
+  generation: string 
+  ctime: string 
+  semester: number 
+  statusCode: string 
 }
 
 export interface CLASS_LIST_REQ {
@@ -12,13 +16,14 @@ export interface CLASS_LIST_REQ {
   departmentID: string
   pageNumber: number
   pageSize: number
+  body : {
+    departmentList: any
+      classList: CLASS_LIST[]
+      totalCount : number 
+    }
 }
 
 export interface CLASS_LIST_RES {
-  body : {
-  departmentList: any
-    classList: CLASS_LIST[]
-    totalCount : number 
-  }
+  classList: CLASS_LIST[]
 }
 

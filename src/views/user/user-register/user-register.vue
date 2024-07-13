@@ -3,7 +3,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import type { FormItem } from '@/shared/types/menu-list';
-import { USER_LIST, USER_LIST_REQ, USER_LIST_RES } from '@/shared/types/user-list';
+import { USER_LIST, USER_LIST_RES } from '@/shared/types/user-list';
 import { UserRegister } from './UserRegister';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
