@@ -23,18 +23,17 @@
                         <div class="col-lg-2 col-md-4 mb-2">
                             <label class="form-label we_font_size">Year</label><br>
                             <select class="form-select" v-model="classInfoUpdate.year">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                                <option v-for="status in year" :value="status.codeValue">
+                                    {{ status.codeValueDesc }}
+                                </option>
                             </select>
                         </div>
                         <div class="col-lg-2 col-md-4 mb-2">
                             <label class="form-label we_font_size">Semester</label><br>
-                            <select class="form-select" v-model="classInfoUpdate.semester">
-                                <option :value="1">1</option>
-                                <option :value="2">2</option>
+                            <select class="form-select" v-model="classInfoUpdate.semester" @change="semesterChangeType">
+                                <option v-for="status in semester" :value="status.codeValue">
+                                    {{ status.codeValueDesc }}
+                                </option>
                             </select>
                         </div>
                         <div class="col-lg-2 col-md-4 mb-2">
@@ -49,7 +48,7 @@
                         </div>
                         <div class="col-lg-3 col-md-4 mb-2">
                             <label class="form-label we_font_size">Time</label><br>
-                            <select class="form-select" v-model="classInfoUpdate.ctime">
+                            <select class="form-select" v-model="classInfoUpdate.time">
                                 <option value="Monday 14:00-17:00">Monday 14:00-17:00</option>
                                 <option value="Tuesday 14:00-17:00">Tuesday 14:00-17:00</option>
                                 <option value="Wednesday 09:00-12:00">Wednesday 09:00-12:00</option>
@@ -61,8 +60,9 @@
                         <div class="col-lg-2 col-md-4 mb-2">
                             <label class="form-label we_font_size">Status</label><br>
                             <select class="form-select" v-model="classInfoUpdate.statusCode">
-                                <option value="01">Active</option>
-                                <option value="09">Inactive</option>
+                                <option v-for="status in statusCodeList" :value="status.codeValue">
+                                    {{ status.codeValueDesc }}
+                                </option>
                             </select>
                         </div>
                         <div class="col-lg-12">

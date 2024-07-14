@@ -5,7 +5,7 @@ export interface CLASS_LIST {
   classDesc: string 
   year: string 
   generation: string 
-  ctime: string 
+  time: string 
   semester: number 
   statusCode: string 
 }
