@@ -1,4 +1,6 @@
 <MyLoading v-if="Loading" />
+<Toast />
+<ConfirmDialog></ConfirmDialog>
 <div class="container-fluid d-flex flex-column" style="overflow: hidden;">
 
     <!-- header -->
@@ -63,22 +65,26 @@
     </div>
     <div class="mt-3"></div>
     <div class="b_shadow">
-        <DataTable v-model:selection="calssInfo" 
-            @row-dblclick="onClickRow(calssInfo)"
-            tableStyle="min-width: 50rem" 
+        <DataTable 
+            v-model:selection="classInfo" 
+            tableStyle="min-width: 50rem"
             selectionMode="single" 
-            scrollable :value="classList" 
-            :metaKeySelection="true"
-            :rows="pageSize" :lazy="true" 
+            scrollable 
+            :value="classList" 
+            :metaKeySelection="true" 
+            :rows="pageSize" 
+            :lazy="true"
             :paginator="true" 
-            :totalRecords="totalCount"
+            :totalRecords="totalCount" 
             :rowsPerPageOptions="[10, 20, 50]" 
-            @page="onPage">
+            @page="onPage"
+            :rowClass="rowClass"
+        >
             <Column field="classID" header="ID"></Column>
             <Column field="className" :header="$t('class.cName')"></Column>
-            <Column field="cyear" header="Year"></Column>
+            <Column field="year" header="Year"></Column>
             <Column field="generation" header="Generation"></Column>
-            <Column field="ctime" header="Time"></Column>
+            <Column field="time" header="Time"></Column>
             <Column field="semester" header="Semester"></Column>
             <Column field="statusCode" :header="$t('class.status')" style="min-width: 100px">
                 <template #body="{ data }">
@@ -87,9 +93,15 @@
             </Column>
             <Column :header="$t('class.edit')" class="text-center">
                 <template #body="{ data }">
-                    <!-- <font-awesome-icon @click="detailsClass(data)" icon="fa-solid fa-eye" class="text-success" />&nbsp; -->
-                    <font-awesome-icon @click="onClickEdit(data)" icon="fas fa-pencil" class="text-success" />&nbsp;
-                    <!-- <font-awesome-icon @click="deleteClass(data)" icon="fa-solid fa-trash" class="text-danger" /> -->
+                    <div class="d-flex align-items-center justify-content-evenly">
+                        <div v-if="data.statusCode === '01'">
+                            <font-awesome-icon @click="onClickEdit(data)" icon="fas fa-pencil" class="text-primary" />&nbsp;
+                            <font-awesome-icon @click="deleteClass(data)" icon="fa-solid fa-trash" class="text-danger" />
+                        </div>
+                        <div v-else>
+                            <font-awesome-icon @click="setActive(data)" :icon="['fas', 'rotate-left']" />
+                        </div>
+                    </div>
                 </template>
             </Column>
         </DataTable>

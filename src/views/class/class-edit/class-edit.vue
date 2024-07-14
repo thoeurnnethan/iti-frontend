@@ -5,7 +5,11 @@ import { PropType, defineComponent } from 'vue';
 // import { API_PATH } from '@/shared/common/api-path';
 // import { RequestService } from '@/shared/services/request-service';
 import { CLASS_LIST } from '@/shared/types/class-list';
+import { API_PATH } from '@/shared/common/api-path';
+import { RequestService } from '@/shared/services/request-service';
 import { modalController } from '@ionic/vue';
+
+const requestService = new RequestService();
 
 export default defineComponent({
   name: "class-edit",
@@ -31,6 +35,23 @@ export default defineComponent({
   },
   
   methods:{
+
+    async classEdit(){
+      const reqBody = {
+        cyear: this.classInfoUpdate.year,
+        ...this.classInfoUpdate,
+      }
+
+      console.log(reqBody);
+      
+
+      const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, true) as CLASS_LIST;
+      this.classInfoUpdate = res;
+      if(res){
+        modalController.dismiss();
+      }
+    },
+
     onClose(){
       modalController.dismiss();
     }

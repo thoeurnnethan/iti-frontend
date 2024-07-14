@@ -5,7 +5,7 @@ import type { USER_LIST } from '@/shared/types/user-list';
 import type { MenuItem } from '@/shared/types/menu-list';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { defineComponent } from 'vue';
-import { DahsboardService } from './DashboardService';
+import { DashboardService } from './DashboardService';
 import Toast from 'primevue/toast';
 import SelectButton from 'primevue/selectbutton';
 
@@ -75,10 +75,11 @@ export default defineComponent({
         },
 
         getMenuList() {
-            this.menuList = DahsboardService.getMenuList();
+            this.menuList = DashboardService.getMenuList();
         },
 
-        isActive(item: any) {
+        isActive(item: { path: string; }) {
+            // Check if the current route matches the item's path
             return this.$route.path.startsWith(item.path);
         },
 
@@ -107,4 +108,5 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "./dashboardLayout.scss";
+
 </style>

@@ -4,7 +4,7 @@
 import { defineComponent, ref } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
-import { CLASS_LIST, CLASS_LIST_REQ,CLASS_LIST_RES } from '@/shared/types/class-list';
+import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class-list';
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import { StandardCodeData } from '@/shared/types/standard-code';
 import class_edit from '../class-edit/class-edit.vue';
@@ -23,7 +23,7 @@ export default defineComponent({
     const dataTable = ref<CLASS_LIST[]>([]);
     return {
       classList: [] as CLASS_LIST[],
-      calssInfo: {} as CLASS_LIST,
+      classInfo: {} as CLASS_LIST,
       searchKey: '',
       Loading: false,
       totalCount: 0,
@@ -32,11 +32,11 @@ export default defineComponent({
       startingIndex: 1,
       dataTable,
       classInfoUpdate: {
-        classID:'',
+        classID: '',
         departmentID: '',
         className: '',
         classDesc: '',
-        cyear: '',
+        year: '',
         generation: '',
         ctime: '',
         semester: 0,
@@ -44,7 +44,7 @@ export default defineComponent({
       } as CLASS_LIST,
       statusCodeList: [
         { codeValue: '01', codeValueDesc: 'Active' },
-        { codeValue: '02', codeValueDesc: 'Inactive' },
+        { codeValue: '09', codeValueDesc: 'Inactive' },
       ] as StandardCodeData[],
       selectedYear: null,
       year: [
@@ -99,6 +99,46 @@ export default defineComponent({
       this.Loading = false;
     },
 
+    rowClass(data: { statusCode: string; }) {
+      if (data.statusCode === '09') {
+        return 'we_bg_row';
+      }
+      return '';
+    },
+
+    async deleteClass(_item: CLASS_LIST) {
+      this.$confirm.require({
+        message: 'Do you want to hide this record?',
+        header: 'Danger Zone',
+        accept: async () => {
+          console.table(_item);
+          const reqBody = {
+            classID: _item.classID,
+            departmentID: _item.departmentID,
+            statusCode: '09'
+          }
+          await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false) as CLASS_LIST;
+          this.getClassList();
+          this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+        },
+        reject: () => {
+          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+      });
+
+    },
+
+    async setActive(_item: CLASS_LIST) {
+      console.table(_item);
+      const reqBody = {
+        classID: _item.classID,
+        departmentID: _item.departmentID,
+        statusCode: '01'
+      }
+      await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false) as CLASS_LIST;
+      this.getClassList();
+    },
+
     // Handle page size page number
     onPage(event: { page: number; rows: number; }) {
       this.pageNumber = event.page;
@@ -112,18 +152,18 @@ export default defineComponent({
     },
 
     // Edit class method
-    async onClickEdit(item: CLASS_LIST){
+    async onClickEdit(item: CLASS_LIST) {
       this.$popupService.onOpen({
         component: class_edit,
-        dataProp:{
+        dataProp: {
           classInfo: item,
         },
         callback: () => {
           this.getClassList();
         },
-        onClose: () =>{
+        onClose: () => {
           this.getClassList();
-        } 
+        }
       })
     },
 

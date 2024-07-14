@@ -134,6 +134,7 @@ import VirtualScroller from 'primevue/virtualscroller';
 /* Font awesome */
 import {
         faArrowRightFromBracket,
+        faArrowRotateLeft,
         faBars,
         faBarsProgress,
         faBell,
@@ -143,6 +144,7 @@ import {
         faChevronDown,
         faChevronRight,
         faEye,
+        faEyeSlash,
         faFileExcel,
         faGear,
         faHouse,
@@ -156,6 +158,8 @@ import {
         faPlus,
         faRegistered,
         faRightToBracket,
+        faRotateBack,
+        faRotateLeft,
         faSchool,
         faShieldHalved,
         faTrash,
@@ -190,6 +194,10 @@ import { library } from '@fortawesome/fontawesome-svg-core';
         library.add(faEye); 
         library.add(faUser); 
         library.add(faChevronDown); 
+        library.add(faEyeSlash); 
+        library.add(faRotateBack); 
+        library.add(faArrowRotateLeft); 
+        library.add(faRotateLeft); 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 //ionic

@@ -3,7 +3,7 @@ export interface CLASS_LIST {
   departmentID: string 
   className: string 
   classDesc: string 
-  cyear: string 
+  year: string 
   generation: string 
   ctime: string 
   semester: number 
