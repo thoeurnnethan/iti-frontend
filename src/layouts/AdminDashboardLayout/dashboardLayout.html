@@ -7,7 +7,7 @@
                 <img src="iti-logo.svg">
                 <div class="logo-name">{{ $t('common.itiName') }}</div>
             </div>
-            <ul class="sidebar-list we_shadow p-0 cursor-pointer">
+            <ul class="sidebar-list p-0 cursor-pointer">
                 <li v-for="(item, index) in menuList" :key="index">
                     <div class="title">
                         <router-link v-if="!item.subMenuList" :to="item.path" class="link">
