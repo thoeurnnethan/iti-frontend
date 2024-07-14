@@ -10,17 +10,38 @@ export const DahsboardService = {
             {
                 "path": "/class-list",
                 "iconClass": "fa-calendar-days",
-                "name": "classList"
+                "name": "classList",
+                "open": false,
+                "subMenuList":[
+                    {
+                        "path": "/class-list",
+                        "iconClass": "fa-calendar-days",
+                        "name": "classList",
+                    },
+                    {
+                        "path": "/class-register",
+                        "iconClass": "fa-calendar-days",
+                        "name": "classRegister",
+                    },
+                ]
             },
             {
-                "path": "/student-list",
+                "path": "/user-list",
                 "iconClass": "fa-solid fa-school",
-                "name": "studentList"
-            },
-            {
-                "path": "/student-register",
-                "iconClass": "fa-solid fa-school",
-                "name": "studentRegister"
+                "name": "userList",
+                "open": false,
+                "subMenuList":[
+                    {
+                        "path": "/user-list",
+                        "iconClass": "fa-calendar-days",
+                        "name": "userList",
+                    },
+                    {
+                        "path": "/user-register",
+                        "iconClass": "fa-calendar-days",
+                        "name": "userRegister",
+                    },
+                ]
             },
             {
                 "path": "/department-list",

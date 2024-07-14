@@ -2,12 +2,12 @@
     <div class="wrapperWrap ">
         <!-- Sidebar -->
         <div :class="['sidebar d-flex flex-column', isCollapse ? 'collapse' : '']">
-            <div style="cursor: pointer;" class="logo-box bg_black d-flex flex-row justify-content-around"
+            <div class="logo-box bg_black d-flex flex-row justify-content-around"
                 @click="$router.push('/admin-dashboard')">
                 <img src="iti-logo.svg">
                 <div class="logo-name">{{ $t('common.itiName') }}</div>
             </div>
-            <ul class="sidebar-list">
+            <ul class="sidebar-list we_shadow p-0 cursor-pointer">
                 <li v-for="(item, index) in menuList" :key="index">
                     <div class="title">
                         <router-link v-if="!item.subMenuList" :to="item.path" class="link">
@@ -34,7 +34,7 @@
             </ul>
         </div>
         <!-- Main side  -->
-        <div class="main_side" style="background-color: #edf1f4 !important;">
+        <div class="main_side">
             <div class="sticky_head d-flex flex-row bg_black">
                 <div class="wrap row">
                     <div class="col-md-10 d-flex">
@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="main_content m-3">
-                <div class="p-3 rad" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+                <div class="p-3 rad">
                     <router-view></router-view>
                 </div>
             </div>

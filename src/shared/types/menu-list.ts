@@ -3,6 +3,7 @@ export interface MenuItem {
   path: string
   iconClass: string
   name: string
+  open?: boolean
 }
 
 export interface COM10500111_REQ {

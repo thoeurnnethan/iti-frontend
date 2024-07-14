@@ -1,7 +1,7 @@
-<template src="./dashboardLayout.html"></template>
+<template src="./dashboardLayout-copy.html"></template>
 
 <script lang="ts">
-import type { UserList } from '@/shared/types/user-list';
+import type { USER_LIST } from '@/shared/types/user-list';
 import type { MenuItem } from '@/shared/types/menu-list';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { defineComponent } from 'vue';
@@ -19,8 +19,8 @@ export default defineComponent({
 
     data() {
         return {
-            userInfo : this.$util.getDataStorage('userInfo',true),
-            responseData: [] as UserList[],
+            userInfo: this.$util.getDataStorage('userInfo', true),
+            responseData: [] as USER_LIST[],
             totalCount: 0 as Number,
             pageSize: 100 as Number,
             pageNumber: 1 as Number,
@@ -29,10 +29,9 @@ export default defineComponent({
             message: "" as String,
             isCollapse: false,
             telegramURL: "https://t.me/Thoeurn_Nethan",
-            menuList:[] as MenuItem[],
+            menuList: [] as MenuItem[],
             currentLanguage: this.$i18n.locale,
-            languageList: ['en', 'km'],
-            activeMenu: null,
+            languageList: ['en', 'km']
         }
     },
 
@@ -50,27 +49,44 @@ export default defineComponent({
     },
 
     methods: {
-        toggleMenu(menu) {
-            this.activeMenu = this.activeMenu === menu ? null : menu;
+        // toggleMenu(menu) {
+        //     this.activeMenu = this.activeMenu === menu ? null : menu;
+        // },
+
+        // closeAllMenus() {
+        //     this.activeMenu = null;
+        // },
+
+        toggleSubMenu(name: string) {
+            this.menuList = this.menuList.map(item => {
+                if (item.name === name) {
+                    item.open = !item.open;
+                } else {
+                    item.open = false;
+                }
+                return item;
+            });
         },
-        closeAllMenus() {
-            this.activeMenu = null;
-        },
+
         toggleSidebar() {
             this.isCollapse = localStorage.getItem('collapse') === "true";
             this.isCollapse = !this.isCollapse
             localStorage.setItem('collapse', String(this.isCollapse))
         },
-        getMenuList(){
+
+        getMenuList() {
             this.menuList = DahsboardService.getMenuList();
         },
-        isActive(item:any) {
+
+        isActive(item: any) {
             return this.$route.path.startsWith(item.path);
         },
+
         changeLanguage(lang: string) {
             this.$util.setDataStorage('lang', lang)
             this.$i18n.locale = lang;
         },
+
         updateGreeting() {
             const currentHour = new Date().getHours();
             if (currentHour < 12) {
@@ -90,5 +106,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-    @import "./dashboardLayout.scss";
+@import "./dashboardLayout.scss";
 </style>

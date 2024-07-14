@@ -7,7 +7,7 @@ export const globalStatusCodeList: StandardCodeData[] = [
 ];
 
 export const UserRoleList: StandardCodeData[] = [
-  { codeValue: '', codeValueDesc: 'All Role' },
+  { codeValue: '', codeValueDesc: 'All' },
   { codeValue: '01', codeValueDesc: 'Admin' },
   { codeValue: '02', codeValueDesc: 'Department Manager' },
   { codeValue: '03', codeValueDesc: 'Teacher' },
