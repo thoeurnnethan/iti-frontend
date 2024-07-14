@@ -8,6 +8,7 @@ import { UserRegister } from './UserRegister';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { UserRoleList, GenderCodeList } from '@/shared/common/common';
+import { USER_LIST_REQ } from '@/shared/types/user-list';
 
 export default defineComponent({
 
@@ -25,7 +26,7 @@ export default defineComponent({
             pageSize: 10,
             pageNumber: 0,
             startingIndex: 1,
-            userInfoUpdate: {
+            userInfoUpdate:{
                 roleID: '03',
                 firstName: '',
                 lastName: '',
@@ -38,7 +39,12 @@ export default defineComponent({
                 email: '',
                 passwd: '',
                 imageUrl: '',
+                studentInfo: {
+                    parentList: [],
+                    academicList: []
+                }
             } as USER_LIST,
+            userList: [] as USER_LIST[]
         }
     },
 
@@ -55,14 +61,16 @@ export default defineComponent({
 
     methods: {
 
-        async teacherSubmit(_item: USER_LIST) {
+        async teacherSubmit() {
             if (!this.isValidForm) {
                 alert('Please fill out all required fields');
                 return;
             }
-            console.table(this.userInfoUpdate);
-            
-            const reqBody: USER_LIST = this.userInfoUpdate;
+            this.userList.push({...this.userInfoUpdate})
+            const reqBody: USER_LIST_REQ = {
+                userList: this.userList
+            }
+
             const response = (await new RequestService().request(API_PATH.USER_REGISTER, reqBody, false)) as USER_LIST_RES;
             this.$router.push('/user-list');
             console.log(response);

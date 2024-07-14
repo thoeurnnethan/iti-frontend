@@ -1,106 +1,56 @@
 <div class="wrapper">
     <div class="wrapperWrap ">
+        <!-- Sidebar -->
         <div :class="['sidebar d-flex flex-column', isCollapse ? 'collapse' : '']">
-            <div style="cursor: pointer;" class="logo-box we_black d-flex flex-row justify-content-around"
+            <div style="cursor: pointer;" class="logo-box bg_black d-flex flex-row justify-content-around"
                 @click="$router.push('/admin-dashboard')">
                 <img src="iti-logo.svg">
                 <div class="logo-name">{{ $t('common.itiName') }}</div>
             </div>
-            <ul class="sidebar-list we_shadow p-0 cursor-pointer" style="z-index: 1000 !important;">
-                <div class="mt-5">
-                    <li>
-                        <div class="title">
-                            <router-link to="/home" @click="closeAllMenus" class="link" :class="{ 'active-link': $route.path === '/home' }">
-                                <i><font-awesome-icon icon="fa fa-house" /></i>
-                                <span class="name text-dark font-bold">{{ $t('menu.home') }}</span>
-                            </router-link>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="title">
-                            <span class="link we_none_select" @click="toggleMenu('classMenu')"
-                                :class="{ 'active-link': $route.path === '/class-list' || $route.path === '/class-insert' }"
-                                style="display: flex; justify-content: space-between; align-items: center;">
-                                <div style="display: flex; align-items: center;">
-                                    <i><font-awesome-icon icon="fa-calendar-days" /></i>
-                                    <span class="name text-dark font-bold">{{ $t('menu.classList') }}</span>
-                                </div>
-                                <i class="d-block"><font-awesome-icon icon="fa fa-caret-down" /></i>
-                            </span>
-                        </div>
-
-                        <div v-if="activeMenu === 'classMenu'" style="margin-left: 40px;" class="class_menu">
-                            <ul class="p-0">
-                                <li class="we_font_size py-1">
-                                    <router-link to="/class-list" class="cursor-pointer text-dark" :class=" {'we_font_weight': $route.path === '/class-list' }">
-                                        <p>Class List</p>
-                                    </router-link>
-                                </li>
-                                <li class="we_font_size py-1">
-                                    <router-link to="/class-insert" class="cursor-pointer text-dark" :class=" {'we_font_weight': $route.path === '/class-insert' }">
-                                        <p>Class Register</p>
-                                    </router-link>
+            <ul class="sidebar-list">
+                <li v-for="(item, index) in menuList" :key="index">
+                    <div class="title">
+                        <router-link v-if="!item.subMenuList" :to="item.path" class="link">
+                            <i><font-awesome-icon :icon="item.iconClass" /></i>
+                            <span class="name">{{ $t(`menu.${item.name}`) }}</span>
+                        </router-link>
+                        <div class="container-fluid" v-else>
+                            <div class="link">
+                                <i><font-awesome-icon :icon="item.iconClass" /></i>
+                                <span class="name">{{ $t(`menu.${item.name}`) }}</span>
+                            </div>
+                            <ul class="sub-list">
+                                <li v-for="(subItem, subIndex) in item.subMenuList" :key="subIndex">
+                                    <div class="sub-title">
+                                        <router-link :to="subItem.path" class="sub-link">
+                                            <span class="sub-name">{{ $t(`menu.${subItem.name}`)}}</span>
+                                        </router-link>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
-                    </li>
-                    <li>
-
-                        <div class="title">
-                            <span class="link we_none_select" @click="toggleMenu('studentMenu')"
-                                :class="{ 'active-link': $route.path === '/user-list' || $route.path === '/user-register'}"
-                                style="display: flex; justify-content: space-between; align-items: center;">
-                                <div style="display: flex; align-items: center;">
-                                    <i><font-awesome-icon icon="fa-calendar-days" /></i>
-                                    <span class="name text-dark font-bold">User</span>
-                                </div>
-                                <i class="d-block"><font-awesome-icon icon="fa fa-caret-down" /></i>
-                            </span>
-                        </div>
-
-                        <div v-if="activeMenu === 'studentMenu'" style="margin-left: 40px;" class="class_menu">
-                            <ul class="p-0">
-                                <li class="we_font_size py-1">
-                                    <router-link to="/user-list" class="cursor-pointer text-dark" :class=" {'we_font_weight': $route.path === '/user-list' }">
-                                        <p>User List</p>
-                                    </router-link>
-                                </li>
-                                <li class="we_font_size py-1">
-                                    <router-link to="/user-register" class="cursor-pointer text-dark" :class=" {'we_font_weight': $route.path === '/user-register' }">
-                                        <p>User Register</p>
-                                    </router-link>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </li>
-                    <li>
-                        <div class="title">
-                            <router-link to="/department-list" class="link" @click="closeAllMenus"
-                                :class="{ 'active-link': $route.path === '/department-list' }">
-                                <i><font-awesome-icon icon="fa-building" /></i>
-                                <span class="name text-dark font-bold">{{ $t('menu.departmentList') }}</span>
-                            </router-link>
-                        </div>
-                    </li>
-                </div>
+                    </div>
+                </li>
             </ul>
         </div>
-
+        <!-- Main side  -->
         <div class="main_side" style="background-color: #edf1f4 !important;">
-            <div class="sticky_head d-flex flex-row we_black">
+            <div class="sticky_head d-flex flex-row bg_black">
                 <div class="wrap row">
                     <div class="col-md-10 d-flex">
                         <p class="text">{{ $t(greeting) }} -</p>
                         <span class="username">{{ userInfo.username }}</span>
                     </div>
                     <div class="col-md-2">
-                        <SelectButton class="float-end" style="margin-right: 24px;" v-model="currentLanguage" :options="languageList" aria-labelledby="basic" />
+                        <SelectButton class="float-end" style="margin-right: 24px;" 
+                        v-model="currentLanguage" 
+                        :options="languageList" 
+                        aria-labelledby="basic" />
                     </div>
                 </div>
             </div>
             <div class="main_content m-3">
-                <div class="p-3 we_radius" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+                <div class="p-3 rad" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
                     <router-view></router-view>
                 </div>
             </div>

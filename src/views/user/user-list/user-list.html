@@ -3,7 +3,7 @@
     <div class="container-fluid p-0 d-flex justify-content-between">
         <div>
             <font-awesome-icon :icon="['fa', 'school']" />&nbsp;
-            <span class="we_title">{{ $t('user.title') }}</span>
+            <span class="text_title">{{ $t('user.title') }}</span>
         </div>
         <router-link to="/user-register">
             <button class="btn btn-primary p-1 px-2">
@@ -64,8 +64,8 @@
             :lazy="true"
             :paginator="true"
             :totalRecords="totalCount"
-            :rowsPerPageOptions="[10, 20, 50]" 
-            @page="onPage">
+            :rowsPerPageOptions="[10, 20, 50]" >
+            <!-- @page="onPage"> -->
             <Column field="specificID" :header="$t('user.ID')" style="min-width: 100px"></Column>
             <Column :header="$t('user.role')" style="min-width: 100px">
                 <template #body="{ data }">
