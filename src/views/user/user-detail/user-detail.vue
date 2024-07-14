@@ -2,11 +2,11 @@
 
 <script lang="ts">
 import { modalController } from '@ionic/vue';
-import { ACADEMIC_LIST, PARENT_LIST, STUDENT_DETAILS_RES } from '@/shared/types/student-list';
 import { defineComponent, PropType } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
-import { STUDENT_DETAIL_REQ } from '@/shared/types/student-detail';
+import { USER_DETAIL_REQ,USER_DETAIL_RES, USER_LIST } from '@/shared/types/user-list';
 import { RequestService } from '@/shared/services/request-service';
+import { GenderCodeList } from '@/shared/common/common';
 
 const requestService = new RequestService();
 
@@ -14,16 +14,15 @@ export default defineComponent({
     name: "user-detail",
     props: {
         userDetail: {
-            type: Object as PropType<STUDENT_DETAIL_REQ>,
+            type: Object as PropType<USER_DETAIL_REQ>,
             required: true,
         },
     },
 
     data() {
         return {
-            parentList: [] as PARENT_LIST[],
-            academicList: [] as ACADEMIC_LIST[],
-            studentDetail: {} as STUDENT_DETAILS_RES
+            userInfo: {} as USER_LIST,
+            genderCodeList: GenderCodeList
         }
     },
 
@@ -34,23 +33,18 @@ export default defineComponent({
     methods: {
         async getStudentDetailSummary() {
             const body = {
-                studentID: this.userDetail.studentID
+                userID:this.userDetail.userID,
+                studentID: this.userDetail.specificID
             };
-            try {
-                const response = (await requestService.request(API_PATH.STUDENT_DETAIL, body, false)) as STUDENT_DETAILS_RES;
-                this.studentDetail = response;
-                console.log(this.studentDetail);
-                
-                this.parentList = response.body.parentList;
-                this.academicList = response.body.academicList;
-                
-            } catch (error) {
-                console.error("Error fetching student details:", error);
+            const response = (await requestService.request(API_PATH.USER_DETAIL, body, false)) as USER_DETAIL_RES;
+            this.userInfo = {
+                formatDateOfBirth: this.$format.formatDateTime(response.body.dateOfBirth, 'yyyy-mm-dd'),
+                ...response.body
             }
         },
 
         handleClose() {
-            modalController.dismiss();  
+            modalController.dismiss();
         }
     },
 });
