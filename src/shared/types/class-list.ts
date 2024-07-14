@@ -1,4 +1,3 @@
-
 export interface CLASS_LIST {
   classID: string
   departmentID: string 
@@ -16,14 +15,13 @@ export interface CLASS_LIST_REQ {
   departmentID: string
   pageNumber: number
   pageSize: number
-  body : {
-    departmentList: any
-      classList: CLASS_LIST[]
-      totalCount : number 
-    }
 }
 
 export interface CLASS_LIST_RES {
-  classList: CLASS_LIST[]
+  body : {
+    classList: CLASS_LIST[]
+    totalCount : number 
+  }
 }
+
 

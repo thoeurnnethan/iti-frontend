@@ -48,26 +48,32 @@
 
     <div class="mt-3"></div>
     <div class="float-end">
-        <button type="button" class="we_radius_right btn btn-dark we_shadow p-2 px-2 float-end we_font_size"
+        <button type="button" class="rad_right btn btn-dark b_shadow p-2 px-2 float-end font_15"
             @click.prevent="getClassList()">{{ $t('common.search') }}</button>
         <InputGroup class="float-end w-25">
-            <InputText class="p-1 we_font_size we_radius_left we_shadow c_input" v-model="searchKey"
+            <InputText class="p-1 font_15 rad_left b_shadow c_input" v-model="searchKey"
                 :placeholder="$t('common.searchKey')" />
         </InputGroup>
         <span class="we_shadow">
-            <button type="button" class="btn btn-dark p-2 px-2 we_font_size" @click="exportToExcel">
+            <button type="button" class="btn btn-dark p-2 px-2 font_15" @click="exportToExcel">
                 Export Excel &nbsp;
                 <font-awesome-icon :icon="['fas', 'file-excel']" />
             </button>
         </span>
     </div>
     <div class="mt-3"></div>
-
-    <div class="box_shadow">
-        <DataTable v-model:selection="departmentInfo" @row-dblclick="onClickRow(departmentInfo)"
-            tableStyle="min-width: 50rem" selectionMode="single" scrollable :value="classList" :metaKeySelection="true"
-            :rows="pageSize" :lazy="true" :paginator="true" :totalRecords="totalCount"
-            :rowsPerPageOptions="[10, 20, 50]" @page="onPage">
+    <div class="b_shadow">
+        <DataTable v-model:selection="calssInfo" 
+            @row-dblclick="onClickRow(calssInfo)"
+            tableStyle="min-width: 50rem" 
+            selectionMode="single" 
+            scrollable :value="classList" 
+            :metaKeySelection="true"
+            :rows="pageSize" :lazy="true" 
+            :paginator="true" 
+            :totalRecords="totalCount"
+            :rowsPerPageOptions="[10, 20, 50]" 
+            @page="onPage">
             <Column field="classID" header="ID"></Column>
             <Column field="className" :header="$t('class.cName')"></Column>
             <Column field="cyear" header="Year"></Column>
@@ -79,16 +85,14 @@
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
                 </template>
             </Column>
-
             <Column :header="$t('class.edit')" class="text-center">
                 <template #body="{ data }">
-                    <font-awesome-icon @click="detailsClass(data)" icon="fa-solid fa-eye" class="text-success" />&nbsp;
+                    <!-- <font-awesome-icon @click="detailsClass(data)" icon="fa-solid fa-eye" class="text-success" />&nbsp; -->
                     <font-awesome-icon @click="onClickEdit(data)" icon="fas fa-pencil" class="text-success" />&nbsp;
-                    <font-awesome-icon @click="deleteClass(data)" icon="fa-solid fa-trash" class="text-danger" />
+                    <!-- <font-awesome-icon @click="deleteClass(data)" icon="fa-solid fa-trash" class="text-danger" /> -->
                 </template>
             </Column>
         </DataTable>
-
         <div class="p-1"></div>
     </div>
 </div>
