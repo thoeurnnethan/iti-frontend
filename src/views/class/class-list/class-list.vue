@@ -7,6 +7,7 @@ import { RequestService } from '@/shared/services/request-service';
 import { CLASS_LIST, CLASS_LIST_REQ } from '@/shared/types/class-list';
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import { StandardCodeData } from '@/shared/types/standard-code';
+import class_edit from '../class-edit/class-edit.vue';
 import MyLoading from '../../MyLoading.vue';
 
 const requestService = new RequestService();
@@ -77,7 +78,6 @@ export default defineComponent({
   },
 
   methods: {
-
     // Get Department List
     async getClassList() {
       this.Loading = true;
@@ -116,6 +116,24 @@ export default defineComponent({
       return statusCode === '01' ? 'active-text' : 'inactive-text';
     },
 
+    // Edit class method
+    async onClickEdit(item: CLASS_LIST){
+      console.log(item);
+      
+      this.$popupService.onOpen({
+        component: class_edit,
+        dataProp:{
+          class: item,
+        },
+        callback: () => {
+          this.getClassList();
+        },
+        onClose: () =>{
+          this.getClassList();
+        } 
+      })
+    },
+
     //download excel
     exportToExcel() {
       const excelData = this.dataTable.map((data, index) => {
@@ -137,7 +155,7 @@ export default defineComponent({
     },
 
     //detailsClass
-    detailsClass() {
+    detailsClass(_data: { id: any; }) {
       this.$router.push('/score-list');
     },
 

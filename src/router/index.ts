@@ -55,11 +55,6 @@ const router = createRouter({
                     component: () => import("@/views/department/department-insert/department-insert.vue")
                 },
                 {
-                    path: "/department-edit/:id",
-                    name: "department-edit",
-                    component: () => import("@/views/department/department-edit/department-edit.vue")
-                },
-                {
                     path: "/score-list",
                     name: "score-list",
                     component: () => import("@/views/score/score-list/score-list.vue")
