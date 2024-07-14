@@ -1,10 +1,12 @@
 interface USER_LIST {
   roleID: string
+  specID: string
   firstName: string
   lastName: string
   nickName: string
   gender: string
   dateOfBirth: string
+  formatDateOfBirth?: string
   placeOfBirth: string
   address: string
   phone: string
@@ -15,6 +17,7 @@ interface USER_LIST {
 }
 
 interface PARENT_LIST{
+  seqNo: number
   firstName: string;
   lastName: string;
   nickName: string;
@@ -25,6 +28,7 @@ interface PARENT_LIST{
 }
 
 interface ACADEMIC_LIST {
+  seqNo: number
   academicID: number;
   academicName: string;
   academicDesc: string;
@@ -48,8 +52,25 @@ interface ManagerList_Req {
   pageNumber: number
 }
 
+interface ManagerList_Res {
+  body:{
+    userList: Array<ManagerList>
+  }
+}
+
 interface USER_LIST_REQ {
-  userList: Array<USER_LIST>
+  searchKey: string
+  roleID: string
+  statusCode: string
+  pageSize: number
+  pageNumber: number
+}
+
+interface USER_LIST_RES {
+  body:{
+    totalCount: number,
+    userList: Array<USER_LIST>
+  }
 }
 
 interface STUDENT_INFO{
@@ -57,23 +78,24 @@ interface STUDENT_INFO{
   parentList: Array<PARENT_LIST>
 }
 
-interface ManagerList_Res {
-  body:{
-    userList: Array<ManagerList>
-  }
+interface USER_DETAIL_REQ {
+  userID: string,
+  specificID: string
 }
 
-interface USER_LIST_RES {
-  userList: Array<USER_LIST>
+interface USER_DETAIL_RES {
+  body: USER_LIST
 }
 
 export type {
-  USER_LIST,
   PARENT_LIST,
   ACADEMIC_LIST,
-  USER_LIST_RES,
+  USER_DETAIL_REQ,
+  USER_DETAIL_RES,
+  USER_LIST,
   USER_LIST_REQ,
+  USER_LIST_RES,
+  ManagerList,
   ManagerList_Req,
   ManagerList_Res,
-  ManagerList,
 }

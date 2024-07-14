@@ -5,110 +5,108 @@
         </div>
         <div class="pop_cont">
             <div class="cont">
-
                 <div class="dlist05 ">
                     <div class="dlist05 type02">
                         <dl>
                             <dt class="text-capitalize">Full Name</dt>
-                            <dd>{{ studentDetail.body?.firstName }} {{ studentDetail.body?.lastName }}</dd>
+                            <dd>{{ userInfo.firstName }} {{ userInfo.lastName }}</dd>
                         </dl>
                         <dl>
                             <dt class="text-capitalize">Nick Name</dt>
-                            <dd>{{ studentDetail.body?.nickName }}</dd>
+                            <dd>{{ userInfo.nickName }}</dd>
                         </dl>
                         <dl>
                             <dt class="text-capitalize">Gender</dt>
-                            <dd>{{ studentDetail.body?.gender }}</dd>
+                            <dd>{{ userInfo.gender }}</dd>
                         </dl>
                         <dl>
                             <dt class="text-capitalize">Date OF Birth</dt>
-                            <dd>{{ studentDetail.body?.dateOfBirth }}</dd>
+                            <dd>{{ userInfo.formatDateOfBirth }}</dd>
                         </dl>
                         <dl>
                             <dt class="text-capitalize">place of birth</dt>
-                            <dd>{{ studentDetail.body?.placeOfBirth }}</dd>
+                            <dd>{{ userInfo.placeOfBirth }}</dd>
                         </dl>
                         <dl>
                             <dt class="text-capitalize">address</dt>
-                            <dd>{{ studentDetail.body?.address }}</dd>
-                        </dl>
+                            <dd>{{ userInfo.address }}</dd>
+                        </dl>~
                         <dl>
                             <dt class="text-capitalize">phone</dt>
-                            <dd>{{ studentDetail.body?.phone }}</dd>
+                            <dd>{{ userInfo.phone }}</dd>
                         </dl>
                         <dl>
                             <dt class="text-capitalize">email</dt>
-                            <dd>{{ studentDetail.body?.email }}</dd>
+                            <dd>{{ userInfo.email }}</dd>
                         </dl>
                         <dl>
                             <dt class="text-capitalize">password</dt>
-                            <dd>{{ studentDetail.body?.password }}</dd>
+                            <dd>{{ userInfo.password }}</dd>
                         </dl>
                         <dl>
                             <dt class="text-capitalize">Image</dt>
-                            <dd>{{ studentDetail.body?.imageUrl }}</dd>
+                            <dd>{{ userInfo.imageUrl }}</dd>
                         </dl>
                     </div>
                 </div>
-
                 <div class="mt-5">
                     <p class="h5 text-capitalize">Parent Details</p>
                     <table>
                         <thead>
-                            <tr>
-                                <th class="text-capitalize">First Name</th>
-                                <th class="text-capitalize">Last Name</th>
-                                <th class="text-capitalize">Gender</th>
-                                <th class="text-capitalize">Job</th>
-                                <th class="text-capitalize">Address</th>
-                                <th class="text-capitalize">Phone</th>
+                            <tr class="text-capitalize">
+                                <th>No</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Gender</th>
+                                <th>Job</th>
+                                <th>Address</th>
+                                <th>Phone</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="parentInfo in parentList" :key="parentInfo.seqNo">
+                            <tr v-for="parentInfo in userInfo?.parentList" :key="parentInfo.seqNo">
+                                <td>{{ parentInfo.seqNo }}</td>
                                 <td>{{ parentInfo.firstName }}</td>
                                 <td>{{ parentInfo.lastName }}</td>
-                                <td>{{ parentInfo.gender }}</td>
+                                <td>{{ $codeConverter.codeToString(genderCodeList, parentInfo.gender) }}</td>
                                 <td>{{ parentInfo.job }}</td>
                                 <td>{{ parentInfo.address }}</td>
                                 <td>{{ parentInfo.phone }}</td>
                             </tr>
-                            <tr v-if="parentList.length === 0">
-                                <td colspan="6">No parent records available.</td>
+                            <tr v-if="!userInfo?.parentList">
+                                <td colspan="6" class="text-danger">No parent records available.</td>
                             </tr>
                         </tbody>
                     </table>
-                    
                 </div>
-
                 <div class="mt-5">
                     <p class="h5 text-capitalize">academic Details</p>
                     <table>
                         <thead>
-                            <tr>
-                                <th class="text-capitalize">Academic Name</th>
-                                <th class="text-capitalize">Academic Description</th>
-                                <th class="text-capitalize">Start Date</th>
-                                <th class="text-capitalize">End Date</th>
-                                <th class="text-capitalize">Certificate Date</th>
+                            <tr class="text-capitalize">
+                                <th>No</th>
+                                <th>Academic Name</th>
+                                <th>Academic Description</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Certificated Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="academicInfo in academicList" :key="academicInfo.seqNo">
-                                <td>{{ academicInfo.academicName }}</td>
-                                <td>{{ academicInfo.academicDesc }}</td>
-                                <td>{{ academicInfo.startDate }}</td>
-                                <td>{{ academicInfo.endDate }}</td>
-                                <td>{{ academicInfo.certificatedDate }}</td>
+                            <tr v-for="academic in userInfo?.academicList" :key="academic.seqNo">
+                                <td>{{ academic.seqNo }}</td>
+                                <td>{{ academic.academicName }}</td>
+                                <td>{{ academic.academicDesc }}</td>
+                                <td>{{ academic.startDate }}</td>
+                                <td>{{ academic.endDate }}</td>
+                                <td>{{ academic.certificatedDate }}</td>
                             </tr>
-                            <tr v-if="academicList.length === 0">
-                                <td colspan="5">No academic records available.</td>
+                            <tr v-if="!userInfo?.academicList">
+                                <td colspan="6" class="text-danger">No parent records available.</td>
                             </tr>
                         </tbody>
                     </table>
-                    
                 </div>
-
             </div>
         </div>
         <div class="pop_foot">

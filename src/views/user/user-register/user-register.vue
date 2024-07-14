@@ -84,6 +84,10 @@ export default defineComponent({
             this.select_Role
         },
 
+        backToList(){
+            this.$router.push('/user-list')
+        },
+
         handleFileUpload(event: Event) {
             const target = event.target as HTMLInputElement;
             const file = target.files ? target.files[0] : null;

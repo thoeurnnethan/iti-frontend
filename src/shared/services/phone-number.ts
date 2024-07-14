@@ -14,7 +14,6 @@ export class PhoneNumberFormat {
       }
       return phoneNumber;
     } catch (error) {
-      console.log('Cannot format this phone number: ', error)
       console.log('Cannot format this phone number: ', phoneNumber)
       return phoneNumber;
     }

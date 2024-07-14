@@ -2,7 +2,7 @@
 
 <script lang="ts">
 import { API_PATH } from '@/shared/common/api-path';
-import { USER_LIST_RES, USER_LIST, USER_LIST_REQ } from '@/shared/types/user-list';
+import { USER_LIST_RES, USER_LIST, USER_LIST_REQ, ACADEMIC_LIST, PARENT_LIST } from '@/shared/types/user-list';
 import { defineComponent, ref } from 'vue';
 import { RequestService } from '@/shared/services/request-service';
 import { STUDENT_LIST } from '@/shared/types/student-list';
@@ -15,7 +15,7 @@ const requestService = new RequestService();
 const exportExcel = new ExportExcel();
 
 export default defineComponent({
-    name: "student-list",
+    name: "user-list",
     inheritAttrs: false,
     components: {
         // 
@@ -25,7 +25,7 @@ export default defineComponent({
         const dataTable = ref<USER_LIST[]>([]);
         return {
             userList: [] as USER_LIST[],
-            studentInfo: {} as STUDENT_LIST,
+            userInfo: {} as USER_LIST,
             userRoleList: UserRoleList,
             genderCodeList: GenderCodeList,
             dataTable,
@@ -33,9 +33,9 @@ export default defineComponent({
             searchKey: '',
             roleID: '',
             roleTitle: '',
-            // studentList: [] as STUDENT_LIST[],
-            // parentList: [] as PARENT_LIST[],
-            // academicList: [] as ACADEMIC_LIST[],
+            studentList: [] as STUDENT_LIST[],
+            parentList: [] as PARENT_LIST[],
+            academicList: [] as ACADEMIC_LIST[],
             totalCount: 0,
             pageSize: 10,
             pageNumber: 1
@@ -66,18 +66,7 @@ export default defineComponent({
                 }
             });
         },
-        // async getStudentDetail(){
-        //     const body={
-        //         userID: "",
-        //         studentID: this.studentInfo.studentID,
-        //     }
-
-        //     const response = (await requestService.request(API_PATH.STUDENT_DETAIL,body, false) ) as STUDENT_DETAILS_RES;
-        //     this.studentInfo  = response.body.studentInfo,
-        //     this.academicList =  response.body.academicList,
-        //     this.parentList =  response.body.parentList
-        // },
-
+        
         onClickRow(data: STUDENT_LIST) {
             this.$popupService.onOpen({
                 component: user_detail,
