@@ -68,13 +68,12 @@
             tableStyle="min-width: 50rem" selectionMode="single" scrollable :value="classList" :metaKeySelection="true"
             :rows="pageSize" :lazy="true" :paginator="true" :totalRecords="totalCount"
             :rowsPerPageOptions="[10, 20, 50]" @page="onPage">
-
-            <Column field="classID" header="ID" style="min-width: 150px"></Column>
-            <Column field="className" :header="$t('class.cName')" style="min-width: 150px"></Column>
-            <Column field="cyear" header="Year" style="min-width: 150px"></Column>
-            <Column field="generation" header="Generation" style="min-width: 150px"></Column>
-            <Column field="ctime" header="Time" style="min-width: 150px"></Column>
-            <Column field="semester" header="Semester" style="min-width: 150px"></Column>
+            <Column field="classID" header="ID"></Column>
+            <Column field="className" :header="$t('class.cName')"></Column>
+            <Column field="cyear" header="Year"></Column>
+            <Column field="generation" header="Generation"></Column>
+            <Column field="ctime" header="Time"></Column>
+            <Column field="semester" header="Semester"></Column>
             <Column field="statusCode" :header="$t('class.status')" style="min-width: 100px">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
@@ -84,10 +83,8 @@
             <Column :header="$t('class.edit')" class="text-center">
                 <template #body="{ data }">
                     <font-awesome-icon @click="detailsClass(data)" icon="fa-solid fa-eye" class="text-success" />&nbsp;
-                    <RouterLink :to="'/class-edit/' + data.classID">
-                        <font-awesome-icon icon="fas fa-pencil" class="text-primary" />
-                    </RouterLink>&nbsp;
-                    <font-awesome-icon @click="deleteClass(data.id)" icon="fa-solid fa-trash" class="text-danger" />
+                    <font-awesome-icon @click="onClickEdit(data)" icon="fas fa-pencil" class="text-success" />&nbsp;
+                    <font-awesome-icon @click="deleteClass(data)" icon="fa-solid fa-trash" class="text-danger" />
                 </template>
             </Column>
         </DataTable>
