@@ -4,7 +4,7 @@
 import { defineComponent, ref } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
-import { CLASS_LIST, CLASS_LIST_REQ } from '@/shared/types/class-list';
+import { CLASS_LIST, CLASS_LIST_REQ,CLASS_LIST_RES } from '@/shared/types/class-list';
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import { StandardCodeData } from '@/shared/types/standard-code';
 import class_edit from '../class-edit/class-edit.vue';
@@ -23,7 +23,7 @@ export default defineComponent({
     const dataTable = ref<CLASS_LIST[]>([]);
     return {
       classList: [] as CLASS_LIST[],
-      departmentInfo: {} as CLASS_LIST,
+      calssInfo: {} as CLASS_LIST,
       searchKey: '',
       Loading: false,
       totalCount: 0,
@@ -78,23 +78,18 @@ export default defineComponent({
   },
 
   methods: {
-    // Get Department List
+    // Get Class List
     async getClassList() {
       this.Loading = true;
       const reqBody: CLASS_LIST_REQ = {
         classID: "",
         departmentID: this.searchKey,
         pageSize: this.pageSize,
-        pageNumber: this.pageNumber,
-        body: {
-          departmentList: undefined,
-          classList: [],
-          totalCount: 0
-        }
+        pageNumber: this.pageNumber
       }
-      const response = (await requestService.request(API_PATH.CLASS_LIST, reqBody, false)) as CLASS_LIST_REQ;
-      this.totalCount = response.body?.totalCount;
+      const response = (await requestService.request(API_PATH.CLASS_LIST, reqBody, false)) as CLASS_LIST_RES;
       this.classList = response.body?.classList;
+      this.totalCount = response.body?.totalCount;
       this.dataTable = response.body?.classList.map((data, index) => {
         return {
           ...data,
@@ -118,12 +113,10 @@ export default defineComponent({
 
     // Edit class method
     async onClickEdit(item: CLASS_LIST){
-      console.log(item);
-      
       this.$popupService.onOpen({
         component: class_edit,
         dataProp:{
-          class: item,
+          classInfo: item,
         },
         callback: () => {
           this.getClassList();

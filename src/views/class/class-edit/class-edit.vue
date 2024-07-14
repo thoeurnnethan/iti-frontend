@@ -2,10 +2,10 @@
 
 <script lang="ts">
 import { PropType, defineComponent } from 'vue';
-import { API_PATH } from '@/shared/common/api-path';
-import { RequestService } from '@/shared/services/request-service';
-import { CLASS_LIST, CLASS_LIST_RES } from '@/shared/types/class-list';
-import { ManagerList, ManagerList_Req, ManagerList_Res } from '@/shared/types/user-list';
+// import { API_PATH } from '@/shared/common/api-path';
+// import { RequestService } from '@/shared/services/request-service';
+import { CLASS_LIST } from '@/shared/types/class-list';
+import { modalController } from '@ionic/vue';
 
 export default defineComponent({
   name: "class-edit",
@@ -13,7 +13,7 @@ export default defineComponent({
   },
 
   props: {
-    class: {
+    classInfo: {
       type: Object as PropType<CLASS_LIST>,
       required: true
     }
@@ -22,23 +22,19 @@ export default defineComponent({
   data() {
     return {
       classInfoUpdate: {} as CLASS_LIST,
-      teacherFullName: '' as string,
       departmentInfoUpdate: {} as CLASS_LIST,
     };
   },
 
   mounted() {
-    console.table(this.class);
-    
-    this.classInfoUpdate = {...this.class}
+    this.classInfoUpdate = {...this.classInfo}
   },
-
-
-
-
-
-
-
+  
+  methods:{
+    onClose(){
+      modalController.dismiss();
+    }
+  }
 
 });
 </script>

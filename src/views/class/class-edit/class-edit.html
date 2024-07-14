@@ -11,7 +11,6 @@
                             <label class="form-label we_font_size">Class Name</label><br>
                             <InputText class="form-control" v-model="classInfoUpdate.className" />
                         </div>
-            
                         <div class="col-lg-3 col-md-4 mb-2">
                             <label class="form-label we_font_size">Department</label><br>
                             <select class="form-select" v-model="classInfoUpdate.departmentID">
@@ -21,7 +20,6 @@
                                 <option value="Marketing">Marketing</option>
                             </select>
                         </div>
-            
                         <div class="col-lg-1 col-md-4 mb-2">
                             <label class="form-label we_font_size">Year</label><br>
                             <select class="form-select" v-model="classInfoUpdate.cyear">
@@ -32,7 +30,6 @@
                                 <option value="5">5</option>
                             </select>
                         </div>
-            
                         <div class="col-lg-1 col-md-4 mb-2">
                             <label class="form-label we_font_size">Semester</label><br>
                             <select class="form-select" v-model="classInfoUpdate.semester">
@@ -40,7 +37,6 @@
                                 <option value="2">2</option>
                             </select>
                         </div>
-            
                         <div class="col-lg-1 col-md-4 mb-2">
                             <label class="form-label we_font_size">Generation</label><br>
                             <select class="form-select" v-model="classInfoUpdate.generation">
@@ -51,7 +47,6 @@
                                 <option value="G_5">G_5</option>
                             </select>
                         </div>
-            
                         <div class="col-lg-3 col-md-4 mb-2">
                             <label class="form-label we_font_size">Time</label><br>
                             <select class="form-select" v-model="classInfoUpdate.ctime">
@@ -64,23 +59,19 @@
                             </select>
                             
                         </div>
-            
                         <div class="col-lg-12">
                             <label class="form-label we_font_size">Description</label><br>
                             <textarea class="form-control" v-model="classInfoUpdate.classDesc" rows="5" cols="30"></textarea>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
         <div class="pop_foot">
             <div class="footer_btn">
                 <div class="right_side">
-                    <div class="col-lg-3 col-md-4 mb-2">
-                        <label class="form-label we_font_size"></label><br>
-                        <button class="btn btn-success" style="width:185px" @click="classEdit(classInfoUpdate)">Add</button>
-                    </div>
+                    <button class="btn03" style="width:185px" @click="onClose">Close</button>
+                    <button class="btn01" style="width:185px" @click="classEdit(classInfoUpdate)">Add</button>
                 </div>
             </div>
         </div>
