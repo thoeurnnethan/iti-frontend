@@ -35,8 +35,8 @@ const router = createRouter({
                     component: () => import("@/views/class/class-list/class-list.vue")
                 },
                 {
-                    path: "/class-insert",
-                    name: "class-insert",
+                    path: "/class-register",
+                    name: "class-register",
                     component: () => import("@/views/class/class-insert/class-insert.vue")
                 },
                 {
