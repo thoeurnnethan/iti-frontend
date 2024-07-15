@@ -32,7 +32,7 @@
         <div class="float-end">
             <button type="button" class="btn btn-dark p-2 px-2 float-end rad_right b_shadow font_15" @click.prevent="getStudentList()">{{ $t('common.search') }}</button>
             <InputGroup class="float-end w-25">
-                <InputText class="p-1 font_15 rad_left b_shadow c_input" @keyup.enter="getStudentList()" v-model="searchKey" :placeholder="$t('common.searchKey')" style="height: 40.1px;" />
+                <InputText class="p-1 font_15 rad_left b_shadow c_input" @keyup.enter="getStudentList()" v-model="searchKey" :placeholder="$t('common.searchKey')" style="height: 40.5px;padding-left: 15px !important;" />
             </InputGroup>
             <span class="b_shadow">
                 <button type="button" class="btn btn-dark p-2 px-2 font_15" @click="exportToExcel">
@@ -66,39 +66,39 @@
             :totalRecords="totalCount"
             :rowsPerPageOptions="[10, 20, 50]" 
             @page="onPage">
-            <Column field="specificID" :header="$t('user.ID')" style="min-width: 100px"></Column>
-            <Column :header="$t('user.role')" style="min-width: 100px">
+            <Column field="specificID" :header="$t('user.ID')"></Column>
+            <Column :header="$t('user.role')">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(userRoleList, data.roleID) }}
                 </template>
             </Column>
-            <Column field="firstName" :header="$t('user.firstName')" style="min-width: 150px"></Column>
-            <Column field="lastName" :header="$t('user.lastName')" style="min-width: 150px"></Column>
-            <Column field="nickName" :header="$t('user.nickName')" style="min-width: 100px"></Column>
-            <Column field="gender" :header="$t('user.gender')" style="min-width: 100px">
+            <Column field="firstName" :header="$t('user.firstName')"></Column>
+            <Column field="lastName" :header="$t('user.lastName')"></Column>
+            <Column field="nickName" :header="$t('user.nickName')"></Column>
+            <Column field="gender" :header="$t('user.gender')">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(genderCodeList, data.gender) }}
                 </template>
             </Column>
-            <Column :header="$t('user.dateOfBirth')" style="min-width: 150px">
+            <Column :header="$t('user.dateOfBirth')">
                 <template #body="{ data }">
                     {{ $format.formatDateTime(data.dateOfBirth,'yyyy-mm-dd') }}
                 </template>
             </Column>
-            <Column field="placeOfBirth" :header="$t('user.placeOfBirth')" style="min-width: 150px"></Column>
-            <Column field="address" :header="$t('user.address')" style="min-width: 200px"></Column>
-            <Column :header="$t('user.phone')" style="min-width: 150px">
+            <Column field="placeOfBirth" :header="$t('user.placeOfBirth')"></Column>
+            <Column field="address" :header="$t('user.address')"></Column>
+            <Column :header="$t('user.phone')">
                 <template #body="{ data }">
                     {{ $phoneNumberFormater.formatPhoneNumber(data.phone) }}
                 </template>
             </Column>
-            <Column field="email" :header="$t('user.email')" style="min-width: 200px"></Column>
-            <Column field="passwd" :header="$t('user.password')" style="min-width: 150px"></Column>
-            <Column field="imageUrl" :header="$t('user.imageUrl')" style="min-width: 150px"></Column>
+            <Column field="email" :header="$t('user.email')"></Column>
+            <Column field="passwd" :header="$t('user.password')"></Column>
+            <Column field="imageUrl" :header="$t('user.imageUrl')"></Column>
             <Column :header="$t('class.edit')" class="text-center">
                 <template #body="{ data }">
-                    <font-awesome-icon icon="fa-solid fa-trash" class="text-danger"/>&nbsp;
-                    <font-awesome-icon @click="editDepartment(data)" class="text-primary" icon="fa-solid fa-pencil" />
+                    <font-awesome-icon @click="onClickEdit(data)" icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;
+                    <font-awesome-icon @click="onClickDelete(data)" icon="fa-solid fa-trash" class="text-danger" title="Delete" />
                 </template>
             </Column>
         </DataTable>
