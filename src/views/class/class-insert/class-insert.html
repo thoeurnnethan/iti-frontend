@@ -1,3 +1,4 @@
+<MyLoading v-if="Loading" />
 <div class="container-fluid d-flex flex-column" style="overflow: hidden;">
     <!-- header -->
     <div class="container-fluid p-0 d-flex justify-content-between">
@@ -18,15 +19,15 @@
                 <label class="form-label we_font_size">Department</label><br>
                 <select class="form-select" v-model="classInfoUpdate.departmentID">
                     <option value="DEP1002">IT</option>
-                    <option value="Electronic">Electronic</option>
-                    <option value="Finance">Finance</option>
-                    <option value="Marketing">Marketing</option>
+                    <option value="DEP1001">Electronic</option>
+                    <option value="DEP1003">Finance</option>
+                    <option value="DEP1004">Marketing</option>
                 </select>
             </div>
 
             <div class="col-lg-1 col-md-4 mb-2">
                 <label class="form-label we_font_size">Year</label><br>
-                <select class="form-select" v-model="classInfoUpdate.cyear">
+                <select class="form-select" v-model="classInfoUpdate.year">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -56,7 +57,7 @@
 
             <div class="col-lg-3 col-md-4 mb-2">
                 <label class="form-label we_font_size">Time</label><br>
-                <select class="form-select" v-model="classInfoUpdate.ctime">
+                <select class="form-select" v-model="classInfoUpdate.time">
                     <option value="Monday 14:00-17:00">Monday 14:00-17:00</option>
                     <option value="Tuesday 14:00-17:00">Tuesday 14:00-17:00</option>
                     <option value="Wednesday 09:00-12:00">Wednesday 09:00-12:00</option>

@@ -1,3 +1,6 @@
+<MyLoading v-if="Loading" />
+<Toast />
+<ConfirmDialog></ConfirmDialog>
 <div class="container-fluid d-flex flex-column" style="overflow: hidden;">
     <div class="container-fluid p-0 d-flex justify-content-between">
         <div>
@@ -41,20 +44,26 @@
             :paginator="true"
             :totalRecords="totalCount"
             :rowsPerPageOptions="[10, 20, 50]" 
-            @page="onPage">
+            @page="onPage"
+            :rowClass="rowClass"
+        >
             <Column field="departmentID" :header="$t('department.depID')" style="min-width:50px"></Column>
             <Column field="departmentName" :header="$t('department.depName')" style="min-width: 150px"></Column>
             <Column field="departmentDesc" :header="$t('department.depDesc')" style="min-width: 150px"></Column>
-            <Column field="statusCode" :header="$t('department.statusCode')" style="min-width: 100px">
+            <Column field="statusCode" :header="$t('department.status')" style="min-width: 100px">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
                 </template>
             </Column>
             <Column :header="$t('department.edit')" style="min-width: 10px" class="d-flex justify-content-center">
                 <template #body="{ data }">
-                    <div class="row">
-                        <div class="col-md-1">
-                            <font-awesome-icon  icon="fa-solid fa-pencil" class="text-danger" @click="onClickEdit(data)"/>
+                    <div class="d-flex align-items-center justify-content-evenly">
+                        <div v-if="data.statusCode === '01'">
+                            <font-awesome-icon @click="onClickEdit(data)" icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;
+                            <font-awesome-icon @click="deleteDepartment(data)" icon="fa-solid fa-trash" class="text-danger" title="Delete" />
+                        </div>
+                        <div v-else>
+                            <font-awesome-icon @click="setActive(data)" :icon="['fas', 'rotate-left']" title="Recover" />
                         </div>
                     </div>
                 </template>
