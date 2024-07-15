@@ -2,10 +2,9 @@
 
 <script lang="ts">
 import { API_PATH } from '@/shared/common/api-path';
-import { USER_LIST_RES, USER_LIST, USER_LIST_REQ, ACADEMIC_LIST, PARENT_LIST } from '@/shared/types/user-list';
+import { USER_LIST_RES, USER_LIST, USER_LIST_REQ, USER_DETAIL_RES } from '@/shared/types/user-list';
 import { defineComponent, ref } from 'vue';
 import { RequestService } from '@/shared/services/request-service';
-import { STUDENT_LIST } from '@/shared/types/student-list';
 import { UserRoleList, GenderCodeList } from '@/shared/common/common';
 import user_detail from "@/views/user/user-detail/user-detail.vue";
 import { ExportExcel } from '@/shared/services/export-excel-class';
@@ -33,14 +32,12 @@ export default defineComponent({
             searchKey: '',
             roleID: '',
             roleTitle: '',
-            studentList: [] as STUDENT_LIST[],
-            parentList: [] as PARENT_LIST[],
-            academicList: [] as ACADEMIC_LIST[],
             totalCount: 0,
             pageSize: 10,
-            pageNumber: 1
+            pageNumber: 0
         }
     },
+
     mounted() {
         this.getStudentList()
     },
@@ -52,9 +49,8 @@ export default defineComponent({
                 roleID: this.roleID,
                 statusCode: "",
                 pageSize: this.pageSize,
-                pageNumber: this.pageNumber
+                pageNumber: this.pageNumber + 1
             }
-
             const response = (await requestService.request(API_PATH.USER_LIST, body, false)) as USER_LIST_RES;
             this.totalCount = response.body.totalCount;
             this.userList = response.body.userList;
@@ -67,13 +63,25 @@ export default defineComponent({
             });
         },
         
-        onClickRow(data: STUDENT_LIST) {
+        async onClickRow() {
+            const body = {
+                userID: this.userInfo?.userID,
+                studentID: this.userInfo?.specID
+            };
+            const response = (await requestService.request(API_PATH.USER_DETAIL, body, false)) as USER_DETAIL_RES;
             this.$popupService.onOpen({
                 component: user_detail,
                 dataProp: {
-                    userDetail: data
+                    userDetail: response.body
                 }
             })
+        },
+        
+        // Handle page size page number
+        onPage(event: { page: number; rows: number; }) {
+            this.pageNumber = event.page;
+            this.pageSize = event.rows;
+            this.getStudentList();
         },
 
         //download excel

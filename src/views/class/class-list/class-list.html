@@ -7,15 +7,12 @@
     <div class="container-fluid p-0 d-flex justify-content-between">
         <div>
             <font-awesome-icon :icon="['fa', 'calendar-days']" />&nbsp;
-            <span class="we_title">{{ $t('class.title') }}</span>
+            <span class="text_title">{{ $t('class.title') }}</span>
         </div>
-        <router-link to="/class-insert">
-            <button class="btn btn-primary p-1 px-2">
-                Add
-                <font-awesome-icon :icon="['fas', 'plus']" />
-            </button>
-        </router-link>
-
+        <button class="btn btn-primary p-1 px-2" @click="$router.push('/class-register')">
+            <span>Add New</span>
+            <font-awesome-icon :icon="['fas', 'plus']" />
+        </button>
     </div>
     <!-- header -->
 

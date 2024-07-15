@@ -1,4 +1,5 @@
 interface USER_LIST {
+  userID: string
   roleID: string
   specID: string
   firstName: string
@@ -6,7 +7,6 @@ interface USER_LIST {
   nickName: string
   gender: string
   dateOfBirth: string
-  formatDateOfBirth?: string
   placeOfBirth: string
   address: string
   phone: string

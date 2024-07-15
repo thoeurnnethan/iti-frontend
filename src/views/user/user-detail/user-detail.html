@@ -17,11 +17,11 @@
                         </dl>
                         <dl>
                             <dt class="text-capitalize">Gender</dt>
-                            <dd>{{ userInfo.gender }}</dd>
+                            <dd>{{ $codeConverter.codeToString(genderCodeList,userInfo.gender)}}</dd>
                         </dl>
                         <dl>
-                            <dt class="text-capitalize">Date OF Birth</dt>
-                            <dd>{{ userInfo.formatDateOfBirth }}</dd>
+                            <dt class="text-capitalize">Date Of Birth</dt>
+                            <dd>{{ userInfo.formatDOB }}</dd>
                         </dl>
                         <dl>
                             <dt class="text-capitalize">place of birth</dt>
@@ -30,10 +30,10 @@
                         <dl>
                             <dt class="text-capitalize">address</dt>
                             <dd>{{ userInfo.address }}</dd>
-                        </dl>~
+                        </dl>
                         <dl>
                             <dt class="text-capitalize">phone</dt>
-                            <dd>{{ userInfo.phone }}</dd>
+                            <dd>{{ $phoneNumberFormater.formatPhoneNumber(userInfo.phone) }}</dd>
                         </dl>
                         <dl>
                             <dt class="text-capitalize">email</dt>
@@ -71,7 +71,7 @@
                                 <td>{{ $codeConverter.codeToString(genderCodeList, parentInfo.gender) }}</td>
                                 <td>{{ parentInfo.job }}</td>
                                 <td>{{ parentInfo.address }}</td>
-                                <td>{{ parentInfo.phone }}</td>
+                                <td>{{ $phoneNumberFormater.formatPhoneNumber(parentInfo.phone) }}</td>
                             </tr>
                             <tr v-if="!userInfo?.parentList">
                                 <td colspan="6" class="text-danger">No parent records available.</td>
@@ -97,8 +97,8 @@
                                 <td>{{ academic.seqNo }}</td>
                                 <td>{{ academic.academicName }}</td>
                                 <td>{{ academic.academicDesc }}</td>
-                                <td>{{ academic.startDate }}</td>
-                                <td>{{ academic.endDate }}</td>
+                                <td>{{ $format.formatDateTime(academic.startDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
+                                <td>{{ $format.formatDateTime(academic.endDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
                                 <td>{{ academic.certificatedDate }}</td>
                             </tr>
                             <tr v-if="!userInfo?.academicList">

@@ -54,7 +54,7 @@
         </div>
         <DataTable 
             v-model:selection="userInfo" 
-            @row-dblclick="onClickRow(userInfo)" 
+            @row-dblclick="onClickRow" 
             tableStyle="min-width: 50rem"
             selectionMode="single" 
             scrollable
@@ -64,8 +64,8 @@
             :lazy="true"
             :paginator="true"
             :totalRecords="totalCount"
-            :rowsPerPageOptions="[10, 20, 50]" >
-            <!-- @page="onPage"> -->
+            :rowsPerPageOptions="[10, 20, 50]" 
+            @page="onPage">
             <Column field="specificID" :header="$t('user.ID')" style="min-width: 100px"></Column>
             <Column :header="$t('user.role')" style="min-width: 100px">
                 <template #body="{ data }">
