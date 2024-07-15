@@ -4,7 +4,7 @@
 import { defineComponent, ref } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
-import { CLASS_LIST } from '@/shared/types/class-list';
+import { CLASS_LIST, CLASS_LIST_RES } from '@/shared/types/class-list';
 import MyLoading from '../../MyLoading.vue';
 import { DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { year , semester , generation , time } from '@/shared/common/common';
@@ -61,10 +61,7 @@ export default defineComponent({
                 ctime: this.classInfoUpdate.time,
                 ...this.classInfoUpdate,
             }
-            console.table(this.classInfoUpdate);
-
             const response = (await new RequestService().request(API_PATH.CLASS_REGISTER, reqBody, false)) as CLASS_LIST_RES;
-            this.$router.push('/class-list');
             console.log(response);
             this.Loading = false;
         },
