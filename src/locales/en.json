@@ -66,6 +66,12 @@
     "status": "Status",
     "edit": "Edit",
     "editTitle": "Edit Department",
-    "year": "Year"
+    "time": "Time",
+    "year": "Year",
+    "generation": "Generation",
+    "semester": "Semester",
+    "selectTime": "Select Time",
+    "selectYear": "Select Year",
+    "selectSemester": "Select Semester"
   }
 }

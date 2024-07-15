@@ -4,14 +4,17 @@
 import { defineComponent, ref } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
-import { CLASS_LIST, CLASS_LIST_RES } from '@/shared/types/class-list';
+import { CLASS_LIST } from '@/shared/types/class-list';
 import MyLoading from '../../MyLoading.vue';
+import { DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 
+const requestService = new RequestService();
 export default defineComponent({
+    name: 'ClassInsert',
     components: {
         MyLoading
     },
-    name: 'ClassInsert',
+    
     data() {
         const dataTable = ref<CLASS_LIST[]>([]);
         return {
@@ -48,19 +51,25 @@ export default defineComponent({
                 alert('Please fill out all required fields');
                 return;
             }
-            // const reqBody: CLASS_LIST = this.classInfoUpdate;
             const reqBody = {
                 cyear: this.classInfoUpdate.year,
                 ctime: this.classInfoUpdate.time,
                 ...this.classInfoUpdate,
-            }
-            console.table(this.classInfoUpdate);
-
-            const response = (await new RequestService().request(API_PATH.CLASS_REGISTER, reqBody, false)) as CLASS_LIST_RES;
-            // this.$router.push('/class-list');
-            console.log(response);
+            };
+            (await new RequestService().request(API_PATH.CLASS_REGISTER, reqBody, false));
             this.Loading = false;
-        }
+        },
+
+        async getDepartmentList() {
+            const reqBody: DEPARTMENT_LIST_REQ = {
+                userID: "",
+                searchKey: this.searchKey,
+                pageSize: this.pageSize,
+                pageNumber: this.pageNumber + 1
+            }
+            const response = (await requestService.request(API_PATH.DEPARTMENT_LIST, reqBody, false)) as DEPARTMENT_LIST_RES;
+            this.totalCount = response.body?.totalCount;
+        },
     }
 });
 </script>

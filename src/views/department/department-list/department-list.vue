@@ -82,7 +82,6 @@ export default defineComponent({
         }
       });
       this.Loading = false;
-
     },
 
     rowClass(data: { statusCode: string; }) {

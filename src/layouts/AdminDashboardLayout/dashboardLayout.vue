@@ -1,4 +1,4 @@
-<template src="./dashboardLayout-copy.html"></template>
+<template src="./dashboardLayout.html"></template>
 
 <script lang="ts">
 import type { USER_LIST } from '@/shared/types/user-list';
