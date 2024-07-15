@@ -8,6 +8,7 @@ import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import { StandardCodeData } from '@/shared/types/standard-code';
 import class_edit from '../class-edit/class-edit.vue';
+import { year , semester } from '@/shared/common/common';
 import MyLoading from '../../MyLoading.vue';
 
 const requestService = new RequestService();
@@ -22,6 +23,12 @@ export default defineComponent({
   data() {
     const dataTable = ref<CLASS_LIST[]>([]);
     return {
+      year: year,
+      selectYear: '',
+      selectedStatus: null,
+      semester:semester,
+      selectSemester:'',
+      selectTime:'',
       classList: [] as CLASS_LIST[],
       classInfo: {} as CLASS_LIST,
       searchKey: '',
@@ -38,7 +45,7 @@ export default defineComponent({
         classDesc: '',
         year: '',
         generation: '',
-        ctime: '',
+        time: '',
         semester: 0,
         statusCode: '',
       } as CLASS_LIST,
@@ -46,29 +53,6 @@ export default defineComponent({
         { codeValue: '01', codeValueDesc: 'Active' },
         { codeValue: '09', codeValueDesc: 'Inactive' },
       ] as StandardCodeData[],
-      selectedYear: null,
-      year: [
-        { name: 'Year 1', year: '1' },
-        { name: 'Year 2', year: '2' },
-        { name: 'Year 3', year: '3' },
-        { name: 'Year 4', year: '4' },
-        { name: 'Year 5', year: '5' },
-        { name: 'Year 6', year: '6' }
-      ],
-      selectedTime: null,
-      time: [
-        { name: 'Monday 14:00-17:00' },
-        { name: 'Tuesday 14:00-17:00' },
-        { name: 'Wednesday 09:00-12:00' },
-        { name: 'Thursday 09:00-12:00' },
-        { name: 'Friday 09:00-12:00' },
-        { name: 'Weekend' }
-      ],
-      selectedSemester: null,
-      semester: [
-        { name: '1' },
-        { name: '2' },
-      ]
     }
   },
 
@@ -100,10 +84,7 @@ export default defineComponent({
     },
 
     rowClass(data: { statusCode: string; }) {
-      if (data.statusCode === '09') {
-        return 'we_bg_row';
-      }
-      return '';
+      return data.statusCode === '09' ? 'we_bg_row' : '';
     },
 
     async deleteClass(_item: CLASS_LIST) {
@@ -125,7 +106,6 @@ export default defineComponent({
           this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
         }
       });
-
     },
 
     async setActive(_item: CLASS_LIST) {
@@ -172,11 +152,13 @@ export default defineComponent({
       const excelData = this.dataTable.map((data, index) => {
         return {
           "No": index + 1,
-          "Class ID": data.classID,
-          "Department ID": data.departmentID,
+          "ID": data.classID,
           "Class Name": data.className,
-          "Class Desc": data.classDesc,
-          "Class Status": this.$codeConverter.codeToString(this.statusCodeList, data.statusCode)
+          "Year": data.year,
+          "Generation": data.generation,
+          "Time": data.time,
+          "Semester": data.semester,
+          "Status": this.$codeConverter.codeToString(this.statusCodeList, data.statusCode)
         };
       })
       const exportExcelData = [

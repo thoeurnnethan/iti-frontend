@@ -10,6 +10,7 @@ import { StandardCodeData } from '@/shared/types/standard-code';
 import department_detail from '../department-detail/department-detail.vue';
 import department_edit from '../department-edit/department-edit.vue';
 import { ExportExcel } from '@/shared/services/export-excel-class';
+import MyLoading from '../../MyLoading.vue';
 
 const requestService = new RequestService();
 const exportExcel = new ExportExcel();
@@ -17,13 +18,15 @@ const exportExcel = new ExportExcel();
 export default defineComponent({
   name: "department-list",
   components: {
-    department_edit
+    department_edit,
+    MyLoading
   },
   data() {
     const dataTable = ref<DEPARTMENT_LIST[]>([]);
     return {
       departmentList: [] as DEPARTMENT_LIST[],
       departmentInfo: {} as DEPARTMENT_LIST,
+      Loading: false,
       searchKey: '',
       totalCount: 0,
       pageSize: 10,
@@ -38,7 +41,7 @@ export default defineComponent({
       } as DEPARTMENT_LIST,
       statusCodeList: [
         { codeValue: '01', codeValueDesc: 'Active' },
-        { codeValue: '02', codeValueDesc: 'Inactive' },
+        { codeValue: '09', codeValueDesc: 'Inactive' },
       ] as StandardCodeData[],
       router: useRouter(), // Add this line
     }
@@ -62,6 +65,7 @@ export default defineComponent({
   methods: {
     // Get Department List
     async getDepartmentList() {
+      this.Loading = true;
       const reqBody: DEPARTMENT_LIST_REQ = {
         userID: "",
         searchKey: this.searchKey,
@@ -72,11 +76,17 @@ export default defineComponent({
       this.totalCount = response.body?.totalCount;
       this.departmentList = response.body?.departmentList;
       this.dataTable = response.body?.departmentList.map((data,index)=>{
-            return {
-                ...data,
-                no: this.startingIndex + index, 
-            }
+        return {
+            ...data,
+            no: this.startingIndex + index, 
+        }
       });
+      this.Loading = false;
+
+    },
+
+    rowClass(data: { statusCode: string; }) {
+      return data.statusCode === '09' ? 'we_bg_row' : '';
     },
 
     // Handle page size page number
@@ -99,6 +109,36 @@ export default defineComponent({
           department: item
         }
       })
+    },
+
+    async deleteDepartment(_item: DEPARTMENT_LIST) {
+      this.$confirm.require({
+        message: 'Do you want to hide this record?',
+        header: 'Danger Zone',
+        accept: async () => {
+          console.table(_item);
+          const reqBody = {
+            departmentID: _item.departmentID,
+            statusCode: '09'
+          }
+          await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, false) as DEPARTMENT_LIST;
+          this.getDepartmentList();
+          this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+        },
+        reject: () => {
+          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+      });
+    },
+
+    async setActive(_item: DEPARTMENT_LIST) {
+      console.table(_item);
+      const reqBody = {
+        departmentID: _item.departmentID,
+        statusCode: '01'
+      }
+      await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, false) as DEPARTMENT_LIST;
+      this.getDepartmentList();
     },
 
     // On click save
@@ -133,10 +173,10 @@ export default defineComponent({
       const excelData = this.dataTable.map((data, index) => {
         return {
           "No": index + 1,
-          "Department ID": data.departmentID,
-          "Department Name": data.departmentName,
-          "Department Desc": data.departmentDesc,
-          "Department Status": this.$codeConverter.codeToString(this.statusCodeList,data.statusCode)
+          "ID": data.departmentID,
+          "Name": data.departmentName,
+          "Description": data.departmentDesc,
+          "Status": this.$codeConverter.codeToString(this.statusCodeList,data.statusCode)
         };
       })
       const exportExcelData = [
