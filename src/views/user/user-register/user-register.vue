@@ -1,32 +1,17 @@
 <template src="./user-register.html"></template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import type { FormItem } from '@/shared/types/menu-list';
-import { USER_LIST, USER_LIST_RES } from '@/shared/types/user-list';
-import { UserRegister } from './UserRegister';
-import { API_PATH } from '@/shared/common/api-path';
+import { defineComponent } from 'vue';
 import { RequestService } from '@/shared/services/request-service';
-import { UserRoleList, GenderCodeList } from '@/shared/common/common';
-import { USER_LIST_REQ } from '@/shared/types/user-list';
+import { API_PATH } from '@/shared/common/api-path';
+import { USER_LIST, USER_LIST_REQ, USER_LIST_RES } from '@/shared/types/user-list';
 
 export default defineComponent({
-
     name: 'UserRegister',
     data() {
-        const dataTable = ref<USER_LIST[]>([]);
         return {
-            formList: [] as FormItem[],
-            userRoleList: UserRoleList,
-            genderCodeList: GenderCodeList,
             select_Role: '03',
-            dataTable,
-            searchKey: '',
-            totalCount: 0,
-            pageSize: 10,
-            pageNumber: 0,
-            startingIndex: 1,
-            userInfoUpdate:{
+            userInfoUpdate: {
                 roleID: '03',
                 firstName: '',
                 lastName: '',
@@ -38,65 +23,77 @@ export default defineComponent({
                 phone: '',
                 email: '',
                 passwd: '',
-                imageUrl: '',
-                studentInfo: {
-                    parentList: [],
-                    academicList: []
-                }
+                imageUrl: '', // This will store the file name for upload
             } as USER_LIST,
-            userList: [] as USER_LIST[]
-        }
+        };
     },
-
-    mounted() {
-        this.getFormList();
-    },
-
-    computed: {
-        isValidForm(): boolean {
-            return  this.userInfoUpdate.firstName !== '' &&
-                    this.userInfoUpdate.lastName !== '';
-        }
-    },
-
     methods: {
-
         async teacherSubmit() {
-            if (!this.isValidForm) {
+            // Validate form fields (you can implement as needed)
+            if (!this.isValidForm()) {
                 alert('Please fill out all required fields');
                 return;
             }
-            this.userList.push({...this.userInfoUpdate})
-            const reqBody: USER_LIST_REQ = {
-                userList: this.userList
+
+            // Push user info to userList array (or handle as needed)
+            const userList: USER_LIST[] = [{ ...this.userInfoUpdate }];
+
+            // Prepare request body
+            const reqBody: USER_LIST_REQ = { userList };
+
+            try {
+                // Make API request to save user data (adjust API_PATH.USER_REGISTER accordingly)
+                const response = await new RequestService().request(API_PATH.USER_REGISTER, reqBody, false) as USER_LIST_RES;
+                console.log('User registered successfully:', response);
+                this.$router.push('/user-list'); // Redirect to user list page after successful registration
+            } catch (error) {
+                console.error('Error registering user:', error);
+                // Handle error (show error message, etc.)
             }
-
-            const response = (await new RequestService().request(API_PATH.USER_REGISTER, reqBody, false)) as USER_LIST_RES;
-            this.$router.push('/user-list');
-            console.log(response);
-        },
-
-        getFormList() {
-            this.formList = UserRegister.getFormList();
-        },
-
-        selectRole(){
-            this.select_Role
-        },
-
-        backToList(){
-            this.$router.push('/user-list')
         },
 
         handleFileUpload(event: Event) {
             const target = event.target as HTMLInputElement;
             const file = target.files ? target.files[0] : null;
-            this.userInfoUpdate.imageUrl = file ? file.name : '';
-            console.log(this.userInfoUpdate.imageUrl);
-        }
+
+            if (file) {
+                this.uploadFile(file); // Call method to upload file to server
+            }
+        },
+
+        async uploadFile(file: File) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                // Make a POST request to your backend endpoint for file upload
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    const fileName = await response.text(); // Assuming backend responds with file name
+                    this.userInfoUpdate.imageUrl = fileName; // Store file name in userInfoUpdate
+                    console.log('File uploaded successfully:', fileName);
+                } else {
+                    console.error('Failed to upload file');
+                    // Handle failure to upload file (show error message, etc.)
+                }
+            } catch (error) {
+                console.error('Error uploading file:', error);
+                // Handle error (show error message, etc.)
+            }
+        },
+
+        isValidForm(): boolean {
+            // Implement form validation logic as needed
+            return this.userInfoUpdate.firstName !== '' && this.userInfoUpdate.lastName !== '';
+        },
     },
 });
 </script>
+
 
 <style>
 @import url('./user-register.scss');

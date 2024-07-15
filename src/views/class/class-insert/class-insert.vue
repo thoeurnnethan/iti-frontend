@@ -6,6 +6,7 @@ import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { CLASS_LIST, CLASS_LIST_RES } from '@/shared/types/class-list';
 import MyLoading from '../../MyLoading.vue';
+import { year , semester , generation , time } from '@/shared/common/common';
 
 export default defineComponent({
     components: {
@@ -15,6 +16,10 @@ export default defineComponent({
     data() {
         const dataTable = ref<CLASS_LIST[]>([]);
         return {
+            year: year,
+            semester:semester,
+            generation:generation,
+            time:time,
             Loading: false,
             dataTable,
             searchKey: '',
@@ -57,10 +62,13 @@ export default defineComponent({
             console.table(this.classInfoUpdate);
 
             const response = (await new RequestService().request(API_PATH.CLASS_REGISTER, reqBody, false)) as CLASS_LIST_RES;
-            // this.$router.push('/class-list');
+            this.$router.push('/class-list');
             console.log(response);
             this.Loading = false;
-        }
+        },
+        semesterChangeType() {
+            this.classInfoUpdate.semester = Number(this.classInfoUpdate.semester);
+        },
     }
 });
 </script>

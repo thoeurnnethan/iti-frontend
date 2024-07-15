@@ -7,7 +7,7 @@ import { PropType, defineComponent } from 'vue';
 import { CLASS_LIST } from '@/shared/types/class-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
-import { globalStatusCodeList , year , semester } from '@/shared/common/common';
+import { globalStatusCodeList , year , semester , generation , time } from '@/shared/common/common';
 import { modalController } from '@ionic/vue';
 
 const requestService = new RequestService();
@@ -28,10 +28,12 @@ export default defineComponent({
     return {
       classInfoUpdate: {} as CLASS_LIST,
       departmentInfoUpdate: {} as CLASS_LIST,
+      selectedStatus: null,
       statusCodeList: globalStatusCodeList,
       year: year,
-      selectedStatus: null,
-      semester:semester
+      semester:semester,
+      generation:generation,
+      time:time
     };
   },
 
