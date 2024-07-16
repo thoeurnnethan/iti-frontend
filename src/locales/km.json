@@ -67,7 +67,13 @@
     "status": "ស្ថានភាព",
     "edit": "កែប្រែ",
     "editTitle": "កែប្រែទិន្នន័យដេប៉ាតឺម៉ង់",
-    "year": "ឆ្នាំ"
+    "time": "ម៉ោង",
+    "year": "ឆ្នាំ",
+    "generation": "ជំនាន់",
+    "semester": "ឆមាស",
+    "selectTime": "ជ្រើសរើសម៉ោង",
+    "selectYear": "ជ្រើសរើសឆ្នាំ",
+    "selectSemester": "ជ្រើសរើសឆមាស"
   }
 
 }

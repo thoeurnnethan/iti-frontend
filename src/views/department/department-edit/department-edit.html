@@ -25,7 +25,7 @@
                     <div class="col-md-6">
                         <InputGroup>
                             <InputGroupAddon>{{ $t('department.depManager') }}</InputGroupAddon>
-                            <select class="select_box" v-model="departmentInfo.teacherID">
+                            <select class="select_box custom_select" v-model="departmentInfo.teacherID">
                                 <option v-for="manager in managerList" :key="manager.specificID" :value="manager.specificID">
                                     {{ manager.fullName }}
                                 </option>
@@ -35,7 +35,7 @@
                     <div class="col-md-6">
                         <InputGroup>
                             <InputGroupAddon>{{ $t('department.statusCode') }}</InputGroupAddon>
-                            <select v-model="departmentInfo.statusCode" class="select_box">
+                            <select class="select_box custom_select" v-model="departmentInfo.statusCode">
                                 <option v-for="status in statusCodeList" :key="status.codeValue" :value="status.codeValue">
                                     {{ status.codeValueDesc }}
                                 </option>

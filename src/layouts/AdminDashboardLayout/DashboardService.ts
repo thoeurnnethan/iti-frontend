@@ -3,7 +3,7 @@ export const DashboardService = {
     getMenuList() {
         return [
             {
-                "path": "/home",
+                "path": "/admin-home",
                 "iconClass": "fa fa-house",
                 "name": "home"
             },

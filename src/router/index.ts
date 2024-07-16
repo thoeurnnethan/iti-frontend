@@ -12,10 +12,10 @@ const router = createRouter({
             path: "/admin-dashboard",
             name: "dashboardLayout",
             component: () => import("@/layouts/AdminDashboardLayout/dashboardLayout.vue"),
-            redirect: "/home",
+            // redirect: "/home",
             children:[
                 {
-                    path: "/home",
+                    path: "/admin-home",
                     name: "home",
                     component: () => import("@/views/home/home.vue")
                 },

@@ -28,8 +28,8 @@ export const year: StandardCodeData[] = [
 ];
 
 export const semester: StandardCodeData[] = [
-  { codeValue: '1', codeValueDesc: '1' },
-  { codeValue: '2', codeValueDesc: '2' },
+  { codeValue: 1, codeValueDesc: '1' },
+  { codeValue: 2, codeValueDesc: '2' },
 ];
 
 export const generation: StandardCodeData[] = [

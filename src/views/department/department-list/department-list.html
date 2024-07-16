@@ -50,7 +50,7 @@
             <Column field="departmentID" :header="$t('department.depID')" style="min-width:50px"></Column>
             <Column field="departmentName" :header="$t('department.depName')" style="min-width: 150px"></Column>
             <Column field="departmentDesc" :header="$t('department.depDesc')" style="min-width: 150px"></Column>
-            <Column field="statusCode" :header="$t('department.status')" style="min-width: 100px">
+            <Column field="statusCode" :header="$t('department.statusCode')" style="min-width: 100px">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
                 </template>

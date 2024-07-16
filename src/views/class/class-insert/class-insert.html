@@ -2,21 +2,21 @@
 <div class="container-fluid d-flex flex-column" style="overflow: hidden;">
     <!-- header -->
     <div class="container-fluid p-0 d-flex justify-content-between">
-        <div>
-            <font-awesome-icon :icon="['fa', 'plus']" />&nbsp;
-            <span class="we_title">Register New Class</span>
+        <div class="breadcrumb">
+            <font-awesome-icon :icon="['fa', 'plus']" />
+            <span class="mx-2">Register New Class</span>
         </div>
     </div>
 
     <div class="container-fluid p-0 mt-4">
         <div class="row">
             <div class="col-lg-3 col-md-4 mb-2">
-                <label class="form-label we_font_size">Class Name</label><br>
+                <label class="form-label font_15">Class Name</label><br>
                 <InputText class="form-control" v-model="classInfoUpdate.className" />
             </div>
 
             <div class="col-lg-3 col-md-4 mb-2">
-                <label class="form-label we_font_size">Department</label><br>
+                <label class="form-label font_15">Department</label><br>
                 <select class="form-select" v-model="classInfoUpdate.departmentID">
                     <option value="DEP1002">IT</option>
                     <option value="DEP1001">Electronic</option>
@@ -26,7 +26,7 @@
             </div>
 
             <div class="col-lg-1 col-md-4 mb-2">
-                <label class="form-label we_font_size">Year</label><br>
+                <label class="form-label font_15">Year</label><br>
                 <select class="form-select" v-model="classInfoUpdate.year">
                     <option v-for="status in year" :value="status.codeValue">
                         {{ status.codeValueDesc }}
@@ -35,7 +35,7 @@
             </div>
 
             <div class="col-lg-1 col-md-4 mb-2">
-                <label class="form-label we_font_size">Semester</label><br>
+                <label class="form-label font_15">Semester</label><br>
                 <select class="form-select" v-model="classInfoUpdate.semester" @change="semesterChangeType">
                     <option v-for="status in semester" :value="status.codeValue">
                         {{ status.codeValueDesc }}
@@ -44,7 +44,7 @@
             </div>
 
             <div class="col-lg-1 col-md-4 mb-2">
-                <label class="form-label we_font_size">Generation</label><br>
+                <label class="form-label font_15">Generation</label><br>
                 <select class="form-select" v-model="classInfoUpdate.generation">
                     <option v-for="status in generation" :value="status.codeValue">
                         {{ status.codeValueDesc }}
@@ -53,7 +53,7 @@
             </div>
 
             <div class="col-lg-3 col-md-4 mb-2">
-                <label class="form-label we_font_size">Time</label><br>
+                <label class="form-label font_15">Time</label><br>
                 <select class="form-select" v-model="classInfoUpdate.time">
                     <option v-for="status in time" :value="status.codeValue">
                         {{ status.codeValueDesc }}
@@ -63,13 +63,13 @@
             </div>
 
             <div class="col-lg-12">
-                <label class="form-label we_font_size">Description</label><br>
+                <label class="form-label font_15">Description</label><br>
                 <textarea class="form-control" v-model="classInfoUpdate.classDesc" rows="5" cols="30"></textarea>
             </div>
         </div>
 
         <div class="col-lg-3 col-md-4 mb-2">
-            <label class="form-label we_font_size"></label><br>
+            <label class="form-label font_15"></label><br>
             <button class="btn btn-success" style="width:185px" @click="classInsert(classInfoUpdate)">Add</button>
         </div>
     </div>
