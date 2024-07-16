@@ -5,8 +5,8 @@
     <!-- header -->
     <div class="container-fluid p-0 d-flex justify-content-between">
         <div class="breadcrumb">
-            <font-awesome-icon :icon="['fa', 'calendar-days']" />
-            <span class="mx-2">{{ $t('class.title') }}</span>
+            <font-awesome-icon :icon="['fa', 'calendar-days']" />&nbsp;
+            <span class="text_title">{{ $t('class.title') }}</span>
         </div>
         <button class="btn btn-primary p-1 px-2" @click="$router.push('/class-register')">
             <span>{{ $t('common.addNew') }}</span>
