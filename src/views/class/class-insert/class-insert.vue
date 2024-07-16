@@ -62,7 +62,6 @@ export default defineComponent({
                 ...this.classInfoUpdate,
             }
             const response = (await new RequestService().request(API_PATH.CLASS_REGISTER, reqBody, true)) as CLASS_LIST_RES;
-            console.table(response);
             this.Loading = false;
         },
 
