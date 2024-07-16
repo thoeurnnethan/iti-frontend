@@ -61,7 +61,7 @@ export default defineComponent({
                 ctime: this.classInfoUpdate.time,
                 ...this.classInfoUpdate,
             }
-            const response = (await new RequestService().request(API_PATH.CLASS_REGISTER, reqBody, true)) as CLASS_LIST_RES;
+            await new RequestService().request(API_PATH.CLASS_REGISTER, reqBody, true) as CLASS_LIST_RES;
             this.Loading = false;
         },
 
