@@ -27,7 +27,8 @@ export default defineComponent({
       selectYear: '',
       selectedStatus: null,
       semester:semester,
-      selectSemester:'',
+      selectSemester:null,
+      searchKeyword:'',
       selectTime:'',
       classList: [] as CLASS_LIST[],
       classInfo: {} as CLASS_LIST,
@@ -69,7 +70,10 @@ export default defineComponent({
         classID: "",
         departmentID: this.searchKey,
         pageSize: this.pageSize,
-        pageNumber: this.pageNumber
+        pageNumber: this.pageNumber,
+        searchKeyword: this.searchKeyword,
+        year: this.selectYear,
+        semester: this.selectSemester
       }
       const response = (await requestService.request(API_PATH.CLASS_LIST, reqBody, false)) as CLASS_LIST_RES;
       this.classList = response.body?.classList;

@@ -16,7 +16,8 @@
     </div>
 
     <h5 class="mt-4">
-        <h5>{{ $codeConverter.codeToString(userRoleList, select_Role) }}</h5>
+        <h5 v-if="select_Role === '03'">Teacher</h5>
+        <h5 v-else>Student</h5>
     </h5>
     <hr>
 

@@ -15,6 +15,9 @@ export interface CLASS_LIST_REQ {
   departmentID: string
   pageNumber: number
   pageSize: number
+  searchKeyword: string
+  year: string 
+  semester: number 
 }
 
 export interface CLASS_LIST_RES {

@@ -23,7 +23,7 @@ export default defineComponent({
                 phone: '',
                 email: '',
                 passwd: '',
-                imageUrl: '', // This will store the file name for upload
+                imageUrl: '',
             } as USER_LIST,
         };
     },
