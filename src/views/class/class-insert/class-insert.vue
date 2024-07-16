@@ -6,10 +6,8 @@ import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { CLASS_LIST, CLASS_LIST_RES } from '@/shared/types/class-list';
 import MyLoading from '../../MyLoading.vue';
-import { DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { year , semester , generation , time } from '@/shared/common/common';
 
-const requestService = new RequestService();
 export default defineComponent({
     name: 'ClassInsert',
     components: {
