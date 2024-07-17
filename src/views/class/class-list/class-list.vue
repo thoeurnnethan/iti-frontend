@@ -140,8 +140,14 @@ export default defineComponent({
       this.$popupService.onOpen({
         component: class_edit,
         dataProp:{
-          classInfo: this.classInfo,
+          classInfoData: this.classInfo,
           isInsert: true
+        },
+        callback: () => {
+          this.getClassList();
+        },
+        onClose: () => {
+          this.getClassList();
         }
       })
     },
@@ -151,7 +157,7 @@ export default defineComponent({
       this.$popupService.onOpen({
         component: class_edit,
         dataProp: {
-          classInfo: item,
+          classInfoData: item,
           isInsert: false
         },
         callback: () => {

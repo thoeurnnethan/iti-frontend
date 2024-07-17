@@ -31,14 +31,16 @@
   },
   "menu":{
     "home": "Home",
-    "studentList": "Student List",
-    "studentRegister": "Student Register",
     "departmentList": "Department List",
     "departmentRegister": "Department Register",
     "classList": "Class List",
     "classRegister": "Register Class",
+    "subjectList": "Subject List",
+    "scheduleManagement": "Schedule Management",
     "userList": "User List",
-    "userRegister": "User Register"
+    "userRegister": "User Register",
+    "studentList": "Student List",
+    "studentRegister": "Student Register"
   },
   "user": {
     "ID": "User ID",

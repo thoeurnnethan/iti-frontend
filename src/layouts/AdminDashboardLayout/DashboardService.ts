@@ -8,6 +8,11 @@ export const DashboardService = {
                 "name": "home"
             },
             {
+                "path": "/department-list",
+                "iconClass": "fa-building",
+                "name": "departmentList"
+            },
+            {
                 "path": "/class-list",
                 "iconClass": "fa-calendar-days",
                 "name": "classList",
@@ -30,11 +35,6 @@ export const DashboardService = {
                     },
                 ]
             },
-            {
-                "path": "/department-list",
-                "iconClass": "fa-building",
-                "name": "departmentList"
-            }
         ]
     }
 

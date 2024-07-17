@@ -8,6 +8,10 @@
             <div class="cont">
                 <div class="container-fluid p-0 mt-4">
                     <div class="row">
+                        <div class="col-lg-3 col-md-4 mb-2" v-if="!isInsert">
+                            <label class="form-label font_15">Class ID</label><br>
+                            <input type="text" class="form-control" v-model="classInfo.classID" disabled />
+                        </div>
                         <div class="col-lg-3 col-md-4 mb-2">
                             <label class="form-label font_15">Class Name</label><br>
                             <input type="text" class="form-control" v-model="classInfo.className" />

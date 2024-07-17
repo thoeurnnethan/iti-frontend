@@ -32,12 +32,14 @@
   },
   "menu":{
     "home": "ទំព័រដើម",
-    "studentList": "បញ្ជីសិស្ស",
-    "studentRegister": "ចុះឈ្មោះសិស្ស",
     "departmentList": "បញ្ជីដេប៉ាតឺម៉ង់",
     "departmentRegister": "ចុះបញ្ជីដេប៉ាតឺម៉ង់",
     "classList": "បញ្ជីថ្នាក់រៀន",
     "classRegister": "ចុះបញ្ជីថ្នាក់រៀនថ្មី",
+    "subjectList": "Subject List",
+    "scheduleManagement": "Schedule Management",
+    "studentList": "បញ្ជីសិស្ស",
+    "studentRegister": "ចុះឈ្មោះសិស្ស",
     "userList": "បញ្ជីអ្នកប្រើប្រាស់",
     "userRegister": "ចុះឈ្មោះអ្នកប្រើប្រាស់"
   },

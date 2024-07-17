@@ -13,7 +13,7 @@ const requestService = new RequestService();
 export default defineComponent({
   name: 'class-edit',
   props: {
-    class: {
+    classInfoData: {
       type: Object as PropType<CLASS_LIST>,
       required: true
     },
@@ -75,7 +75,7 @@ export default defineComponent({
   methods: {
     onDataLoad() {
       if (!this.isInsert) {
-        this.classInfo = { ...this.class };
+        this.classInfo = { ...this.classInfoData };
         this.classInfoUpdate = { ...this.classInfo };
       }
     },
@@ -86,7 +86,7 @@ export default defineComponent({
         ...this.classInfo,
       };
 
-      const res = await requestService.request(API_PATH.USER_REGISTER, reqBody, true) as CLASS_LIST;
+      const res = await requestService.request(API_PATH.CLASS_REGISTER, reqBody, true) as CLASS_LIST;
       this.classInfo = res;
       if (res) {
         modalController.dismiss();
