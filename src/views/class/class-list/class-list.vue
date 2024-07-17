@@ -135,12 +135,24 @@ export default defineComponent({
       return statusCode === '01' ? 'active-text' : 'inactive-text';
     },
 
+    // Insert class method
+    async onClickInsert(){
+      this.$popupService.onOpen({
+        component: class_edit,
+        dataProp:{
+          classInfo: this.classInfo,
+          isInsert: true
+        }
+      })
+    },
+
     // Edit class method
     async onClickEdit(item: CLASS_LIST) {
       this.$popupService.onOpen({
         component: class_edit,
         dataProp: {
           classInfo: item,
+          isInsert: false
         },
         callback: () => {
           this.getClassList();

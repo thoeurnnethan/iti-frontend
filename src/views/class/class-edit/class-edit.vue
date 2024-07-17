@@ -2,70 +2,116 @@
 
 <script lang="ts">
 import { PropType, defineComponent } from 'vue';
-// import { API_PATH } from '@/shared/common/api-path';
-// import { RequestService } from '@/shared/services/request-service';
 import { CLASS_LIST } from '@/shared/types/class-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
-import { globalStatusCodeList , year , semester , generation , time } from '@/shared/common/common';
+import { globalStatusCodeList, year, semester, generation, time } from '@/shared/common/common';
 import { modalController } from '@ionic/vue';
 
 const requestService = new RequestService();
 
 export default defineComponent({
-  name: "class-edit",
-  components:{
-  },
-
+  name: 'class-edit',
   props: {
-    classInfo: {
+    class: {
       type: Object as PropType<CLASS_LIST>,
+      required: true
+    },
+    isInsert: {
+      type: Boolean,
       required: true
     }
   },
-
   data() {
     return {
+      classInfo: {
+        departmentID: '',
+        className: '',
+        classDesc: '',
+        year: '',
+        generation: '',
+        time: '',
+        semester: 0,
+        statusCode: '01',
+      } as CLASS_LIST,
       classInfoUpdate: {} as CLASS_LIST,
-      departmentInfoUpdate: {} as CLASS_LIST,
       selectedStatus: null,
       statusCodeList: globalStatusCodeList,
       year: year,
-      semester:semester,
-      generation:generation,
-      time:time
+      semester: semester,
+      generation: generation,
+      time: time
     };
   },
-
-  mounted() {
-    this.classInfoUpdate = {...this.classInfo}
+  computed: {
+    isValidInsert(): boolean {
+      return (
+        this.classInfo.className !== '' &&
+        this.classInfo.departmentID !== '' &&
+        this.classInfo.year !== '' &&
+        this.classInfo.semester !== null &&
+        this.classInfo.generation !== '' &&
+        this.classInfo.time !== '' &&
+        this.classInfo.classDesc !== '' &&
+        this.classInfo.statusCode !== ''
+      );
+    },
+    isValidUpdate(): boolean {
+      return (
+        this.classInfo.className !== this.classInfoUpdate.className ||
+        this.classInfo.departmentID !== this.classInfoUpdate.departmentID ||
+        this.classInfo.year !== this.classInfoUpdate.year ||
+        this.classInfo.semester !== this.classInfoUpdate.semester ||
+        this.classInfo.generation !== this.classInfoUpdate.generation ||
+        this.classInfo.time !== this.classInfoUpdate.time ||
+        this.classInfo.classDesc !== this.classInfoUpdate.classDesc ||
+        this.classInfo.statusCode !== this.classInfoUpdate.statusCode
+      );
+    }
   },
-  
-  methods:{
-
-    async classEdit(){
-      const reqBody = {
-        cyear: this.classInfoUpdate.year,
-        ctime: this.classInfoUpdate.time,
-        ...this.classInfoUpdate,
+  mounted() {
+    this.onDataLoad();
+  },
+  methods: {
+    onDataLoad() {
+      if (!this.isInsert) {
+        this.classInfo = { ...this.class };
+        this.classInfoUpdate = { ...this.classInfo };
       }
+    },
+    async classInsert() {
+      const reqBody = {
+        cyear: this.classInfo.year,
+        ctime: this.classInfo.time,
+        ...this.classInfo,
+      };
 
-      const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, true) as CLASS_LIST;
-      this.classInfoUpdate = res;
-      if(res){
+      const res = await requestService.request(API_PATH.USER_REGISTER, reqBody, true) as CLASS_LIST;
+      this.classInfo = res;
+      if (res) {
         modalController.dismiss();
       }
     },
+    async classEdit() {
+      const reqBody = {
+        cyear: this.classInfo.year,
+        ctime: this.classInfo.time,
+        ...this.classInfo,
+      };
 
-    semesterChangeType() {
-      this.classInfoUpdate.semester = Number(this.classInfoUpdate.semester);
+      const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, true) as CLASS_LIST;
+      this.classInfo = res;
+      if (res) {
+        modalController.dismiss();
+      }
     },
-
-    onClose(){
+    semesterChangeType() {
+      this.classInfo.semester = Number(this.classInfo.semester);
+    },
+    onClose() {
       modalController.dismiss();
     }
   }
-
 });
 </script>
 

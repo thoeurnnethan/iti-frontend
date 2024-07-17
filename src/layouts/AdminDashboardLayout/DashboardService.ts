@@ -3,7 +3,7 @@ export const DashboardService = {
     getMenuList() {
         return [
             {
-                "path": "/admin-home",
+                "path": "/admin-dashboard",
                 "iconClass": "fa fa-house",
                 "name": "home"
             },
@@ -11,19 +11,6 @@ export const DashboardService = {
                 "path": "/class-list",
                 "iconClass": "fa-calendar-days",
                 "name": "classList",
-                "open": false,
-                "subMenuList":[
-                    {
-                        "path": "/class-list",
-                        "iconClass": "fa-calendar-days",
-                        "name": "classList",
-                    },
-                    {
-                        "path": "/class-register",
-                        "iconClass": "fa-calendar-days",
-                        "name": "classRegister",
-                    },
-                ]
             },
             {
                 "path": "/user-list",

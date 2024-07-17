@@ -93,7 +93,6 @@
             </Column>
             <Column field="email" :header="$t('user.email')"></Column>
             <Column field="passwd" :header="$t('user.password')"></Column>
-            <Column field="imageUrl" :header="$t('user.imageUrl')"></Column>
             <Column :header="$t('class.edit')" class="text-center">
                 <template #body="{ data }">
                     <font-awesome-icon @click="onClickEdit(data)" icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;

@@ -43,15 +43,15 @@ export default defineComponent({
 
   computed: {
     isValidRegister(): boolean{
-      return this.departmentInfo.departmentName !== '' &&
-        this.departmentInfo.departmentDesc !== '' &&
-        this.departmentInfo.statusCode !== '';
+      return  this.departmentInfo.departmentName !== '' &&
+              this.departmentInfo.departmentDesc !== '' &&
+              this.departmentInfo.statusCode !== '';
     },
     isValidUpdate(): boolean {
-      return this.departmentInfo.departmentName !== this.departmentInfoUpdate.departmentName ||
-      this.departmentInfo.departmentDesc !== this.departmentInfoUpdate.departmentDesc ||
-      this.departmentInfo.statusCode !== this.departmentInfoUpdate.statusCode ||
-      this.departmentInfo.teacherID !== this.departmentInfoUpdate.teacherID;
+      return  this.departmentInfo.departmentName !== this.departmentInfoUpdate.departmentName ||
+              this.departmentInfo.departmentDesc !== this.departmentInfoUpdate.departmentDesc ||
+              this.departmentInfo.statusCode !== this.departmentInfoUpdate.statusCode ||
+              this.departmentInfo.teacherID !== this.departmentInfoUpdate.teacherID;
     }
   },
 
