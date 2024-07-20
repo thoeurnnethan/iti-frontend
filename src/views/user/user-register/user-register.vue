@@ -3,7 +3,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
-import { USER_LIST, USER_LIST_REQ, USER_LIST_RES } from '@/shared/types/user-list';
+import { USER_LIST, USER_LIST_RES, QUALIFICATION_LIST } from '@/shared/types/user-list';
 import { RequestService } from '@/shared/services/request-service';
 import { modalController } from '@ionic/vue';
 
@@ -25,12 +25,105 @@ export default defineComponent({
                 email: '',
                 passwd: '',
             } as USER_LIST,
+
+            qualificationList: {
+                qualificationName: '',
+                qualificationDesc: '',
+                startDate: '',
+                endDate: '',
+                certificatedDate: ''
+            } as QUALIFICATION_LIST,
+            teacherQualification: [] as QUALIFICATION_LIST[],
+            fieldQualificationName: false,
+            fieldStartDate: false,
+            fieldEndDate: false,
+            fieldCertificatedDate: false,
+            a: 1
+
         };
     },
+
     methods: {
+
+        saveQualification() {
+            this.fieldQualificationName = false,
+            this.fieldStartDate = false,
+            this.fieldEndDate = false,
+            this.fieldCertificatedDate = false
+
+            const newQualification: any = {
+                qualificationName: this.qualificationList.qualificationName,
+                qualificationDesc: this.qualificationList.qualificationDesc,
+                startDate: this.formatDate(this.qualificationList.startDate),
+                endDate: this.formatDate(this.qualificationList.endDate),
+                certificatedDate: this.qualificationList.certificatedDate,
+                no: this.teacherQualification.length + 1
+            };
+
+            if (this.qualificationList.qualificationName == '') {
+                this.fieldQualificationName = true;
+                this.a = 0
+            }
+            if (this.qualificationList.startDate == '') {
+                this.fieldStartDate = true;
+                this.a = 0
+            }
+            if (this.qualificationList.endDate == '') {
+                this.fieldEndDate = true;
+                this.a = 0
+            }
+            if (this.qualificationList.certificatedDate == '') {
+                this.fieldCertificatedDate = true;
+                this.a = 0
+            }
+            if (this.a == 1) {
+                this.teacherQualification.push(newQualification);
+                this.resetQualificationForm();
+            }
+        },
+        resetQualificationForm() {
+            this.qualificationList = {
+                qualificationName: '',
+                qualificationDesc: '',
+                startDate: '',
+                endDate: '',
+                certificatedDate: ''
+            };
+        },
+
+        formatDate(dateString: string): string {
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
+
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+
+            return `${year}-${month}-${day}`;
+        },
+
+        // apple(){
+        //     if(!this.isValidRegister){
+        //         this.fieldValidate = true;
+
+        //         if(this.qualificationList.qualificationName !== ''){
+        //             this.fieldValidate = false;
+        //         }
+        //     }
+        // }
+
+
+
+
+
+
+
+
+
+
         async teacherSubmit() {
-            const reqBody = { 
-                ...this.userInfoUpdate 
+            const reqBody = {
+                ...this.userInfoUpdate
             };
 
             const res = await RequestService.request(API_PATH.USER_REGISTER, false, true) as USER_LIST_RES;

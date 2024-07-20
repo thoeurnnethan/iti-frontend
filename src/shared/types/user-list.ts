@@ -35,6 +35,14 @@ interface ACADEMIC_LIST {
   certificatedDate: string;
 }
 
+interface QUALIFICATION_LIST {
+  qualificationName: string;
+  qualificationDesc: string;
+  startDate: string;
+  endDate: string;
+  certificatedDate: string;
+}
+
 interface ManagerList {
   userID: string
   roleID: string
@@ -88,6 +96,7 @@ interface USER_DETAIL_RES {
 export type {
   PARENT_LIST,
   ACADEMIC_LIST,
+  QUALIFICATION_LIST,
   USER_DETAIL_REQ,
   USER_DETAIL_RES,
   USER_LIST,

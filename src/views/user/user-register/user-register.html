@@ -22,282 +22,342 @@
     <hr>
 
     <!-- default_form -->
-        <div class="row mt-4" v-if="select_Role === '03'">
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">First Name</label><br>
-                <input type="text" v-model="userInfoUpdate.firstName" class="form-control">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Last Name</label><br>
-                <input type="text" v-model="userInfoUpdate.lastName" class="form-control">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Nick Name</label><br>
-                <input type="text" v-model="userInfoUpdate.nickName" class="form-control">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Gender</label><br>
-                <input type="radio" v-model="userInfoUpdate.gender" class="form-check-input" value="m"> Male
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" v-model="userInfoUpdate.gender" class="form-check-input" value="f"> Female
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Date of Birth</label><br>
-                <input type="date" v-model="userInfoUpdate.dateOfBirth" class="form-control">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Phone</label><br>
-                <input type="text" v-model="userInfoUpdate.phone" class="form-control">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Email</label><br>
-                <input type="email" v-model="userInfoUpdate.email" class="form-control">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Password</label><br>
-                <input type="text" v-model="userInfoUpdate.passwd" class="form-control">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Place of Birth</label><br>
-                <textarea style="height: 38px;" v-model="userInfoUpdate.placeOfBirth" class="form-control"></textarea>
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Address</label><br>
-                <textarea style="height: 38px;" v-model="userInfoUpdate.address" class="form-control"></textarea>
-            </div>
-            
-            <!-- Academic List -->
-            <div class="col-12">
-                <h5 class="mt-4">Academic List</h5>
-                <hr>
-                <!-- Academic List - Academic 1 -->
-                <fieldset class="border rounded-3">
-                    <legend class="float-none w-auto m_left20 px-2 h5">Academic 1</legend>
-                    <div class="row m-0">
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Qualification Name</label><br>
-                            <input type="text" name="academicName1" class="form-control" value="BaccII">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Qualification Description</label><br>
-                            <input type="text" name="academicDesc1" class="form-control" value="High School">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Start Date</label><br>
-                            <input type="date" name="startDate1" class="form-control" value="2018-10-31">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">End Date</label><br>
-                            <input type="date" name="endDate1" class="form-control" value="2019-08-01">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Certificated Date</label><br>
-                            <input type="text" name="certificatedDate1" class="form-control" value="2020">
-                        </div>
+    <div class="row mt-4" v-if="select_Role === '03'">
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">First Name</label><br>
+            <input type="text" v-model="userInfoUpdate.firstName" class="form-control">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Last Name</label><br>
+            <input type="text" v-model="userInfoUpdate.lastName" class="form-control">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Nick Name</label><br>
+            <input type="text" v-model="userInfoUpdate.nickName" class="form-control">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Gender</label><br>
+            <input type="radio" v-model="userInfoUpdate.gender" class="form-check-input" value="m"> Male
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" v-model="userInfoUpdate.gender" class="form-check-input" value="f"> Female
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Date of Birth</label><br>
+            <input type="date" v-model="userInfoUpdate.dateOfBirth" class="form-control">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Phone</label><br>
+            <input type="text" v-model="userInfoUpdate.phone" class="form-control">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Email</label><br>
+            <input type="email" v-model="userInfoUpdate.email" class="form-control">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Password</label><br>
+            <input type="text" v-model="userInfoUpdate.passwd" class="form-control">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Place of Birth</label><br>
+            <textarea style="height: 38px;" v-model="userInfoUpdate.placeOfBirth" class="form-control"></textarea>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Address</label><br>
+            <textarea style="height: 38px;" v-model="userInfoUpdate.address" class="form-control"></textarea>
+        </div>
+
+        <!-- Academic List -->
+        <div class="col-12">
+            <h5 class="mt-4">Qualification List</h5>
+            <hr>
+            <!-- Academic List - Academic 1 -->
+
+            <fieldset class="border rounded-3">
+                <legend class="float-none w-auto m_left20 px-2 h5">Qualification</legend>
+                <div class="row m-0">
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Qualification Name</label><br>
+                        <InputText v-model="qualificationList.qualificationName" :invalid="fieldQualificationName" />
+
                     </div>
-                </fieldset>
-                
-            </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Qualification Description</label><br>
+                        <InputText v-model="qualificationList.qualificationDesc" />
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Start Date</label><br>
+                        <Calendar v-model="qualificationList.startDate" dateFormat="yy-mm-dd" :invalid="fieldStartDate" />
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">End Date</label><br>
+                        <Calendar v-model="qualificationList.endDate" dateFormat="yy-mm-dd" :invalid="fieldEndDate" />
+
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Certificated Date</label><br>
+                        <InputText v-model="qualificationList.certificatedDate" :invalid="fieldCertificatedDate" />
+
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3">
+                        <label class="form-label font_15" style="margin-top: 22px;"></label><br>
+                        <button class="btn btn-info" @click="saveQualification">
+                            <font-awesome-icon :icon="['fa', 'plus']" />&nbsp;
+                            Add Qualification
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
 
             <div class="row mt-4">
-                <div class="col-lg-4 col-sm-6 col-xl-3 col-md-3 mb-2">
-                    <button class="btn btn-success w-100" @click="teacherSubmit()">Submit</button>
+                <div class="col-12">
+                    <div class="we_shadow">
+                        <DataTable 
+                            v-if="teacherQualification != ''" 
+                            v-model:selection="userInfo"
+                            @row-dblclick="onClickRow" 
+                            :value="teacherQualification"
+                        >
+                            <Column field="no" header="No" :class="customNoClass"></Column>
+                            <Column field="qualificationName" header="Qualification Name"></Column>
+                            <Column field="qualificationDesc" header="Qualification Description"></Column>
+                            <Column field="startDate" header="Start Date"></Column>
+                            <Column field="endDate" header="End Date"></Column>
+                            <Column field="certificatedDate" header="Certificated Date"></Column>
+                            <Column header="Edit" class="text-center">
+                                <template #body="{ data }">
+                                    <font-awesome-icon @click="onClickEdit(data)" icon="fas fa-pencil"
+                                        class="text-primary" title="Edit" />&nbsp;
+                                    <font-awesome-icon @click="onClickDelete(data)" icon="fa-solid fa-trash"
+                                        class="text-danger" title="Delete" />
+                                </template>
+                            </Column>
+                        </DataTable>
+
+                        <table v-else>
+                            <thead>
+                                <tr class="text-capitalize">
+                                    <th class="we_text_color">No</th>
+                                    <th class="we_text_color">Qualification Name</th>
+                                    <th class="we_text_color">Qualification Description</th>
+                                    <th class="we_text_color">Start Date</th>
+                                    <th class="we_text_color">End Date</th>
+                                    <th class="we_text_color">Certificated Date</th>
+                                    <th class="we_text_color">Edit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="text-danger">No data records available.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
                 </div>
             </div>
+
+
         </div>
+
+        <div class="row mt-5">
+            <div class="col-lg-4 col-sm-6 col-xl-3 col-md-3">
+                <button class="btn btn-success w-100" @click="teacherSubmit()">Submit</button>
+            </div>
+        </div>
+    </div>
     <!-- default_form -->
 
     <!-- Student -->
-        <div class="row mt-4" v-else>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">User ID</label><br>
-                <input type="text" name="userID" disabled class="form-control" value="RR2Usjh5QA">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Role ID</label><br>
-                <select name="roleID" id="roleID" class="form-select">
-                    <option value="01">Admin</option>
-                    <option value="02">Department Manager</option>
-                    <option value="03">Teacher</option>
-                    <option value="04" selected>Student</option>
-                </select>
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Specific ID</label><br>
-                <input type="text" name="specificID" class="form-control" value="1003">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">First Name</label><br>
-                <input type="text" name="firstName" class="form-control" value="Thoeurn">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Last Name</label><br>
-                <input type="text" name="lastName" class="form-control" value="Nethan157">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Nick Name</label><br>
-                <input type="text" name="nickName" class="form-control" value="mango">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Gender</label><br>
-                <input type="radio" name="gender" class="form-check-input" value="M"> Male &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="gender" class="form-check-input" value="F" checked> Female
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Date of Birth</label><br>
-                <input type="date" name="dateOfBirth" class="form-control" value="2002-03-18">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Phone</label><br>
-                <input type="text" name="phone" class="form-control" value="69514210">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Email</label><br>
-                <input type="email" name="email" class="form-control" value="nethanthoeurn@gmail.com">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Password</label><br>
-                <input type="text" name="passwd" class="form-control" value="U3Vwd5LiiuLP">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Image URL</label><br>
-                <input type="file" name="imageUrl" class="form-control">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Place of Birth</label><br>
-                <textarea name="placeOfBirth" id="placeOfBirth" class="form-control">Pursat Province</textarea>
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Address</label><br>
-                <textarea name="address" id="address" class="form-control">Phnom Penh</textarea>
-            </div>
-
-            <!-- Parent List -->
-            <div class="col-12">
-                <h5 class="mt-4">Parent List</h5>
-                <hr>
-                <fieldset class="border rounded-3">
-                    <legend class="float-none w-auto m_left20 px-2 h5">Father</legend>
-                    <div class="row  m-0">
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2 ">
-                            <label class="form-label font_15">First Name</label><br>
-                            <input type="text" name="parent1FirstName" class="form-control" value="Nget">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Last Name</label><br>
-                            <input type="text" name="parent1LastName" class="form-control" value="Bun Thoeurn">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Gender</label><br>
-                            <input type="text" name="parent1Gender" class="form-control" value="Male">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Job</label><br>
-                            <input type="text" name="parent1Job" class="form-control" value="Farmer">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Phone</label><br>
-                            <input type="text" name="parent1Phone" class="form-control" value="69514210">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Address</label><br>
-                            <textarea name="parent1Address"
-                                class="form-control">Rumlech Commune, Bakan District, Pursat Province</textarea>
-                        </div>
-                    </div>
-                </fieldset>
-
-                <fieldset class="border rounded-3 mt-3">
-                    <legend class="float-none w-auto m_left20 px-2 h5">Monther</legend>
-                    <div class="row  m-0">
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2 ">
-                            <label class="form-label font_15">First Name</label><br>
-                            <input type="text" name="parent1FirstName" class="form-control" value="Nget">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Last Name</label><br>
-                            <input type="text" name="parent1LastName" class="form-control" value="Bun Thoeurn">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Gender</label><br>
-                            <input type="text" name="parent1Gender" class="form-control" value="Male">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Job</label><br>
-                            <input type="text" name="parent1Job" class="form-control" value="Farmer">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Phone</label><br>
-                            <input type="text" name="parent1Phone" class="form-control" value="69514210">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Address</label><br>
-                            <textarea name="parent1Address"
-                                class="form-control">Rumlech Commune, Bakan District, Pursat Province</textarea>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <!-- Academic List -->
-            <div class="col-12">
-                <h5 class="mt-4">Academic List</h5>
-                <hr>
-                <!-- Academic List - Academic 1 -->
-                <fieldset class="border rounded-3">
-                    <legend class="float-none w-auto m_left20 px-2 h5">Academic 1</legend>
-                    <div class="row m-0">
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Academic Name</label><br>
-                            <input type="text" name="academicName1" class="form-control" value="BaccII">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Academic Description</label><br>
-                            <input type="text" name="academicDesc1" class="form-control" value="High School">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Start Date</label><br>
-                            <input type="date" name="startDate1" class="form-control" value="2018-10-31">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">End Date</label><br>
-                            <input type="date" name="endDate1" class="form-control" value="2019-08-01">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Certificated Date</label><br>
-                            <input type="text" name="certificatedDate1" class="form-control" value="2020">
-                        </div>
-                    </div>
-                </fieldset>
-
-                <!-- Academic List - Academic 2 -->
-                <fieldset class="border rounded-3 mt-3">
-                    <legend class="float-none w-auto m_left20 px-2 h5">Academic 2</legend>
-                    <div class="row m-0">
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Academic Name</label><br>
-                            <input type="text" name="academicName2" class="form-control" value="Secondary">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Academic Description</label><br>
-                            <input type="text" name="academicDesc2" class="form-control" value="Secondary School">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Start Date</label><br>
-                            <input type="date" name="startDate2" class="form-control" value="2016-10-31">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">End Date</label><br>
-                            <input type="date" name="endDate2" class="form-control" value="2018-10-31">
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                            <label class="form-label font_15">Certificated Date</label><br>
-                            <input type="text" name="certificatedDate2" class="form-control" value="2019">
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-
+    <div class="row mt-4" v-else>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">User ID</label><br>
+            <input type="text" name="userID" disabled class="form-control" value="RR2Usjh5QA">
         </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Role ID</label><br>
+            <select name="roleID" id="roleID" class="form-select">
+                <option value="01">Admin</option>
+                <option value="02">Department Manager</option>
+                <option value="03">Teacher</option>
+                <option value="04" selected>Student</option>
+            </select>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Specific ID</label><br>
+            <input type="text" name="specificID" class="form-control" value="1003">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">First Name</label><br>
+            <input type="text" name="firstName" class="form-control" value="Thoeurn">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Last Name</label><br>
+            <input type="text" name="lastName" class="form-control" value="Nethan157">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Nick Name</label><br>
+            <input type="text" name="nickName" class="form-control" value="mango">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Gender</label><br>
+            <input type="radio" name="gender" class="form-check-input" value="M"> Male &nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="gender" class="form-check-input" value="F" checked> Female
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Date of Birth</label><br>
+            <input type="date" name="dateOfBirth" class="form-control" value="2002-03-18">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Phone</label><br>
+            <input type="text" name="phone" class="form-control" value="69514210">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Email</label><br>
+            <input type="email" name="email" class="form-control" value="nethanthoeurn@gmail.com">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Password</label><br>
+            <input type="text" name="passwd" class="form-control" value="U3Vwd5LiiuLP">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Image URL</label><br>
+            <input type="file" name="imageUrl" class="form-control">
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Place of Birth</label><br>
+            <textarea name="placeOfBirth" id="placeOfBirth" class="form-control">Pursat Province</textarea>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Address</label><br>
+            <textarea name="address" id="address" class="form-control">Phnom Penh</textarea>
+        </div>
+
+        <!-- Parent List -->
+        <div class="col-12">
+            <h5 class="mt-4">Parent List</h5>
+            <hr>
+            <fieldset class="border rounded-3">
+                <legend class="float-none w-auto m_left20 px-2 h5">Father</legend>
+                <div class="row  m-0">
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2 ">
+                        <label class="form-label font_15">First Name</label><br>
+                        <input type="text" name="parent1FirstName" class="form-control" value="Nget">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Last Name</label><br>
+                        <input type="text" name="parent1LastName" class="form-control" value="Bun Thoeurn">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Gender</label><br>
+                        <input type="text" name="parent1Gender" class="form-control" value="Male">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Job</label><br>
+                        <input type="text" name="parent1Job" class="form-control" value="Farmer">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Phone</label><br>
+                        <input type="text" name="parent1Phone" class="form-control" value="69514210">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Address</label><br>
+                        <textarea name="parent1Address"
+                            class="form-control">Rumlech Commune, Bakan District, Pursat Province</textarea>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="border rounded-3 mt-3">
+                <legend class="float-none w-auto m_left20 px-2 h5">Monther</legend>
+                <div class="row  m-0">
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2 ">
+                        <label class="form-label font_15">First Name</label><br>
+                        <input type="text" name="parent1FirstName" class="form-control" value="Nget">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Last Name</label><br>
+                        <input type="text" name="parent1LastName" class="form-control" value="Bun Thoeurn">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Gender</label><br>
+                        <input type="text" name="parent1Gender" class="form-control" value="Male">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Job</label><br>
+                        <input type="text" name="parent1Job" class="form-control" value="Farmer">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Phone</label><br>
+                        <input type="text" name="parent1Phone" class="form-control" value="69514210">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Address</label><br>
+                        <textarea name="parent1Address"
+                            class="form-control">Rumlech Commune, Bakan District, Pursat Province</textarea>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <!-- Academic List -->
+        <div class="col-12">
+            <h5 class="mt-4">Academic List</h5>
+            <hr>
+            <!-- Academic List - Academic 1 -->
+            <fieldset class="border rounded-3">
+                <legend class="float-none w-auto m_left20 px-2 h5">Academic 1</legend>
+                <div class="row m-0">
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Academic Name</label><br>
+                        <input type="text" name="academicName1" class="form-control" value="BaccII">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Academic Description</label><br>
+                        <input type="text" name="academicDesc1" class="form-control" value="High School">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Start Date</label><br>
+                        <input type="date" name="startDate1" class="form-control" value="2018-10-31">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">End Date</label><br>
+                        <input type="date" name="endDate1" class="form-control" value="2019-08-01">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Certificated Date</label><br>
+                        <input type="text" name="certificatedDate1" class="form-control" value="2020">
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Academic List - Academic 2 -->
+            <fieldset class="border rounded-3 mt-3">
+                <legend class="float-none w-auto m_left20 px-2 h5">Academic 2</legend>
+                <div class="row m-0">
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Academic Name</label><br>
+                        <input type="text" name="academicName2" class="form-control" value="Secondary">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Academic Description</label><br>
+                        <input type="text" name="academicDesc2" class="form-control" value="Secondary School">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Start Date</label><br>
+                        <input type="date" name="startDate2" class="form-control" value="2016-10-31">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">End Date</label><br>
+                        <input type="date" name="endDate2" class="form-control" value="2018-10-31">
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Certificated Date</label><br>
+                        <input type="text" name="certificatedDate2" class="form-control" value="2019">
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+    </div>
     <!-- student -->
 
 </div>

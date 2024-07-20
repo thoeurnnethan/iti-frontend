@@ -2,83 +2,146 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Hanuman:wght@100;300;400;700;900&display=swap');
+
 * {
 	box-sizing: border-box;
-	font-family:  Nunito ,'Hanuman' !important;
+	font-family: Nunito, 'Hanuman' !important;
 
 }
 
 //-custom_css----------------
-	.b_shadow{
-		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-	}
-	.text_title{
-		font-size: 15px;
-		text-transform: uppercase;
-		font-weight: 800 !important;
-		font-family:  Nunito ,'Hanuman' !important;
-		color: #212529 !important;
-	}
-	.bg_black{
-		background-color: #252b3b !important;
-	}
-	.font_15{
-		font-size: 15px !important;
-	}
-	.font_14{
-		font-size: 14px;
-	}
-	.rad{
-		border-radius: 0.375rem !important;
-	}
-	.rad_left{
-		border-radius: 0.375rem 0px 0px 0.375rem !important;
-	}
-	.rad_right{
-		border-radius: 0px 0.375rem 0.375rem 0px !important;
-	}
-	.m_left20{
-		margin-left: 20px;
-	}
-	.we_no_select {
-		-webkit-user-select: none; 
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;  
-	}
-	.we_bg_row{
-		background-color: #8c8c8c !important;
-		color: #fff !important;
-	}
-	.we_shadow{
-		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-	}
+.b_shadow {
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.text_title {
+	font-size: 15px;
+	text-transform: uppercase;
+	font-weight: 800 !important;
+	font-family: Nunito, 'Hanuman' !important;
+	color: #212529 !important;
+}
+
+.bg_black {
+	background-color: #252b3b !important;
+}
+
+.font_15 {
+	font-size: 15px !important;
+}
+
+.font_14 {
+	font-size: 14px;
+}
+
+.rad {
+	border-radius: 0.375rem !important;
+}
+
+.rad_left {
+	border-radius: 0.375rem 0px 0px 0.375rem !important;
+}
+
+.rad_right {
+	border-radius: 0px 0.375rem 0.375rem 0px !important;
+}
+
+.m_left20 {
+	margin-left: 20px;
+}
+
+.we_no_select {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.we_bg_row {
+	background-color: #8c8c8c !important;
+	color: #fff !important;
+}
+
+.we_shadow {
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.we_text_color {
+	color: #495057;
+	font-weight: 500;
+}
 
 //-custom_css----------------
 
-.p-selectbutton .p-button.p-highlight{
+.p-invalid, .p-invalid {
+	border: 1px solid #f66a60 !important;
+
+}
+
+// date
+.p-datepicker-group-container {
+	width: 300px;
+	min-width: 314px !important;
+
+}
+
+.p-datepicker{
+	min-width: 314px !important;
+}
+
+.p-datepicker-calendar ,.p-calendar{
+	width: 100% !important;
+	border-radius: 6px;
+	th, td {
+		padding: 0 !important;
+	}
+}
+.p-datepicker-header {
+	padding: 0;
+}
+// date
+
+.p-inputtext {
+	display: inline-block;
+	height: 38px;
+	margin: 0;
+	font-weight: normal;
+	font-size: 16px;
+	font-family: "Inter", Noto Sans Khmer, sans-serif;
+	color: #231f20;
+	vertical-align: middle;
 	background: #fff;
-    border-color: #252b3b;
+	border: 1px solid rgba(35, 31, 32, 0.1);
+	width: 100%;
+	border-radius: 6px;
+}
+
+.p-selectbutton .p-button.p-highlight {
+	background: #fff;
+	border-color: #252b3b;
 	color: #252b3b;
 }
 
 .p-selectbutton .p-button {
-    background: #252b3b;
-    border: 0px solid #ced4da;
-    color: #fff;
-    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+	background: #252b3b;
+	border: 0px solid #ced4da;
+	color: #fff;
+	transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
-.form-select:focus{
-	outline:none !important;
+.form-select:focus {
+	outline: none !important;
 }
 
-ol, ul, dl {
+ol,
+ul,
+dl {
 	margin-top: 0px !important;
 	margin-bottom: 0px !important;
 }
 
-ol, ul {
+ol,
+ul {
 	padding-left: 10px !important;
 }
 
@@ -112,8 +175,9 @@ body {
 	-webkit-text-size-adjust: none;
 }
 
-body, .p-component {
-	font-family:  Nunito ,'Hanuman' !important;
+body,
+.p-component {
+	font-family: Nunito, 'Hanuman' !important;
 }
 
 body {
@@ -125,7 +189,7 @@ body {
 }
 
 *[data-v-d6825dde] {
-	font-family:  Nunito ,'Hanuman' !important;
+	font-family: Nunito, 'Hanuman' !important;
 }
 
 img {
@@ -195,7 +259,8 @@ table th {
 	padding: 10px;
 	border: 1.2px solid #e2e2e2;
 }
-table th{
+
+table th {
 	background-color: #f4f4f4;
 }
 
@@ -1372,7 +1437,8 @@ body {
 		}
 	}
 }
-.p-inputgroup-addon{
+
+.p-inputgroup-addon {
 	width: 50% !important;
 }
 
@@ -2512,6 +2578,7 @@ ion-modal::part(backdrop) {
 	top: 10px;
 	align-items: center;
 	justify-content: center;
+
 	.popWrap {
 		position: relative;
 		max-height: calc(100% - 50px);
