@@ -25,7 +25,7 @@
     <div class="row mt-4" v-if="select_Role === '03'">
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">First Name</label><br>
-            <input type="text" v-model="userInfoUpdate.firstName" class="form-control">
+            <input type="text" v-model="userInfoUpdate.firstName"  class="form-control">
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Last Name</label><br>
@@ -77,7 +77,7 @@
                 <div class="row m-0">
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Qualification Name</label><br>
-                        <InputText v-model="qualificationList.qualificationName" :invalid="fieldQualificationName" />
+                        <InputText v-model="qualificationList.qualificationName" @keyup="onChangeValidate" :invalid="fieldQualificationName" />
 
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
@@ -86,16 +86,16 @@
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Start Date</label><br>
-                        <Calendar v-model="qualificationList.startDate" dateFormat="yy-mm-dd" :invalid="fieldStartDate" />
+                        <Calendar v-model="qualificationList.startDate" @blur="onChangeValidate" dateFormat="yy-mm-dd" :invalid="fieldStartDate" />
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">End Date</label><br>
-                        <Calendar v-model="qualificationList.endDate" dateFormat="yy-mm-dd" :invalid="fieldEndDate" />
+                        <Calendar v-model="qualificationList.endDate" @blur="onChangeValidate" dateFormat="yy-mm-dd" :invalid="fieldEndDate" />
 
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Certificated Date</label><br>
-                        <InputText v-model="qualificationList.certificatedDate" :invalid="fieldCertificatedDate" />
+                        <InputText v-model="qualificationList.certificatedDate" @keyup="onChangeValidate" :invalid="fieldCertificatedDate" />
 
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3">
@@ -104,6 +104,7 @@
                             <font-awesome-icon :icon="['fa', 'plus']" />&nbsp;
                             Add Qualification
                         </button>
+                        <p>{{ qualificationValidate }}</p>
                     </div>
                 </div>
             </fieldset>

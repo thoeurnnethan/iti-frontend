@@ -38,7 +38,8 @@ export default defineComponent({
             fieldStartDate: false,
             fieldEndDate: false,
             fieldCertificatedDate: false,
-            a: 1
+            qualificationValidate: true,
+            appleButton: false
 
         };
     },
@@ -50,6 +51,7 @@ export default defineComponent({
             this.fieldStartDate = false,
             this.fieldEndDate = false,
             this.fieldCertificatedDate = false
+            this.appleButton = true
 
             const newQualification: any = {
                 qualificationName: this.qualificationList.qualificationName,
@@ -62,23 +64,45 @@ export default defineComponent({
 
             if (this.qualificationList.qualificationName == '') {
                 this.fieldQualificationName = true;
-                this.a = 0
+                this.qualificationValidate = false
             }
             if (this.qualificationList.startDate == '') {
                 this.fieldStartDate = true;
-                this.a = 0
+                this.qualificationValidate = false
             }
             if (this.qualificationList.endDate == '') {
                 this.fieldEndDate = true;
-                this.a = 0
+                this.qualificationValidate = false
             }
             if (this.qualificationList.certificatedDate == '') {
                 this.fieldCertificatedDate = true;
-                this.a = 0
+                this.qualificationValidate = false
             }
-            if (this.a == 1) {
+            if (this.qualificationValidate) {
                 this.teacherQualification.push(newQualification);
                 this.resetQualificationForm();
+                this.appleButton = false
+            }
+        },
+        onChangeValidate() {
+            if (this.appleButton) {
+                this.fieldQualificationName = false,
+                this.fieldStartDate = false,
+                this.fieldEndDate = false,
+                this.fieldCertificatedDate = false
+
+                if (this.qualificationList.qualificationName == '') {
+                    this.fieldQualificationName = true;
+                }
+                if (this.qualificationList.startDate == '') {
+                    this.fieldStartDate = true;
+                }
+                if (this.qualificationList.endDate == '') {
+                    this.fieldEndDate = true;
+                }
+                if (this.qualificationList.certificatedDate == '') {
+                    this.fieldCertificatedDate = true;
+                }
             }
         },
         resetQualificationForm() {
