@@ -28,6 +28,7 @@ export default defineComponent({
             userRoleList: UserRoleList,
             genderCodeList: GenderCodeList,
             dataTable,
+            customNoClass: 'table_no',
             startingIndex: 1,
             searchKey: '',
             roleID: '',
@@ -53,8 +54,13 @@ export default defineComponent({
             }
             const response = (await requestService.request(API_PATH.USER_LIST, body, false)) as USER_LIST_RES;
             this.totalCount = response.body.totalCount;
-            this.userList = response.body.userList;
             this.roleTitle = this.roleID
+            this.userList = response.body.userList.map((data,index) =>{
+                return{
+                    ...data,
+                    no: this.startingIndex + index
+                }
+            });
             this.dataTable = response.body?.userList.map((data, index) => {
                 return {
                     ...data,

@@ -5,8 +5,8 @@
     <!-- header -->
     <div class="container-fluid p-0 d-flex justify-content-between">
         <div class="breadcrumb">
-            <font-awesome-icon :icon="['fa', 'calendar-days']" />&nbsp;
-            <span class="text_title">{{ $t('class.title') }}</span>
+            <font-awesome-icon :icon="['fa', 'calendar-days']" />
+            <span class="text_title mx-1">{{ $t('class.title') }}</span>
         </div>
         <button class="btn btn-warning p-1 px-2" @click="onClickInsert()">
             <font-awesome-icon :icon="['fas', 'plus']" />
@@ -71,6 +71,7 @@
             :rowsPerPageOptions="[10, 20, 50, 100]" 
             @page="onPage"
             :rowClass="rowClass">
+            <Column field="no" :header="$t('common.no')" :class="customNoClass"></Column>
             <Column field="classID" :header="$t('class.cId')"></Column>
             <Column field="className" :header="$t('class.cName')"></Column>
             <Column field="year" :header="$t('class.year')"></Column>

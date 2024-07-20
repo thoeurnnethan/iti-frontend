@@ -65,6 +65,7 @@
             :totalRecords="totalCount"
             :rowsPerPageOptions="[10, 20, 50]" 
             @page="onPage">
+            <Column field="no" :header="$t('common.no')" :class="customNoClass"></Column>
             <Column field="specificID" :header="$t('user.ID')"></Column>
             <Column :header="$t('user.role')">
                 <template #body="{ data }">

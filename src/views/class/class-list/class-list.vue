@@ -39,6 +39,7 @@ export default defineComponent({
       pageNumber: 0,
       startingIndex: 1,
       dataTable,
+      customNoClass: 'table_no',
       classInfoUpdate: {
         classID: '',
         departmentID: '',
@@ -70,13 +71,18 @@ export default defineComponent({
         classID: "",
         departmentID: this.searchKey,
         pageSize: this.pageSize,
-        pageNumber: this.pageNumber,
+        pageNumber: this.pageNumber + 1,
         searchKeyword: this.searchKeyword,
         year: this.selectYear,
         semester: this.selectSemester
       }
       const response = (await requestService.request(API_PATH.CLASS_LIST, reqBody, false)) as CLASS_LIST_RES;
-      this.classList = response.body?.classList;
+      this.classList = response.body?.classList.map((data , index) => {
+        return {
+          ...data,
+          no: this.startingIndex + index
+        }
+      });
       this.totalCount = response.body?.totalCount;
       this.dataTable = response.body?.classList.map((data, index) => {
         return {

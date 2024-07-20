@@ -33,6 +33,7 @@ export default defineComponent({
       pageNumber: 0,
       startingIndex: 1,
       dataTable,
+      customNoClass: 'table_no',
       departmentInfoUpdate: {
         departmentID: '',
         departmentName: '',
@@ -74,7 +75,12 @@ export default defineComponent({
       }
       const response = (await requestService.request(API_PATH.DEPARTMENT_LIST,reqBody,false)) as DEPARTMENT_LIST_RES;
       this.totalCount = response.body?.totalCount;
-      this.departmentList = response.body?.departmentList;
+      this.departmentList = response.body?.departmentList.map((data,index) =>{
+        return{
+          ...data,
+          no: this.startingIndex + index
+        }
+      });
       this.dataTable = response.body?.departmentList.map((data,index)=>{
         return {
             ...data,
