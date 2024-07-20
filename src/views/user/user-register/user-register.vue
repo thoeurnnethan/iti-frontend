@@ -38,14 +38,25 @@ export default defineComponent({
             fieldStartDate: false,
             fieldEndDate: false,
             fieldCertificatedDate: false,
-            qualificationValidate: true,
+            qualificationValid: true,
             appleButton: false
 
         };
     },
 
-    methods: {
+    computed:{
+        isValid(){
+            if (this.qualificationList.qualificationName != ''
+                && this.qualificationList.startDate != ''
+                && this.qualificationList.endDate != ''
+                && this.qualificationList.certificatedDate != ''
+            ){
+                this.qualificationValid = true;
+            }
+        }
+    },
 
+    methods: {
         saveQualification() {
             this.fieldQualificationName = false,
             this.fieldStartDate = false,
@@ -64,21 +75,21 @@ export default defineComponent({
 
             if (this.qualificationList.qualificationName == '') {
                 this.fieldQualificationName = true;
-                this.qualificationValidate = false
+                this.qualificationValid = false
             }
             if (this.qualificationList.startDate == '') {
                 this.fieldStartDate = true;
-                this.qualificationValidate = false
+                this.qualificationValid = false
             }
             if (this.qualificationList.endDate == '') {
                 this.fieldEndDate = true;
-                this.qualificationValidate = false
+                this.qualificationValid = false
             }
             if (this.qualificationList.certificatedDate == '') {
                 this.fieldCertificatedDate = true;
-                this.qualificationValidate = false
+                this.qualificationValid = false
             }
-            if (this.qualificationValidate) {
+            if (this.qualificationValid) {
                 this.teacherQualification.push(newQualification);
                 this.resetQualificationForm();
                 this.appleButton = false
@@ -103,6 +114,7 @@ export default defineComponent({
                 if (this.qualificationList.certificatedDate == '') {
                     this.fieldCertificatedDate = true;
                 }
+                this.isValid
             }
         },
         resetQualificationForm() {
