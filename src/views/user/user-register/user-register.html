@@ -1,3 +1,5 @@
+<Toast />
+<ConfirmDialog></ConfirmDialog>
 <div class="container-fluid p-0 mb-4">
     <div class="container-fluid p-0 d-flex justify-content-between">
         <span class="text_title">User Register</span>
@@ -25,7 +27,7 @@
     <div class="row mt-4" v-if="select_Role === '03'">
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">First Name</label><br>
-            <input type="text" v-model="userInfoUpdate.firstName"  class="form-control">
+            <input type="text" v-model="userInfoUpdate.firstName" class="form-control">
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Last Name</label><br>
@@ -72,12 +74,13 @@
             <hr>
             <!-- Academic List - Academic 1 -->
 
-            <fieldset class="border rounded-3">
+            <fieldset class="border rounded-3 pb-3">
                 <legend class="float-none w-auto m_left20 px-2 h5">Qualification</legend>
                 <div class="row m-0">
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Qualification Name</label><br>
-                        <InputText v-model="qualificationList.qualificationName" @keyup="onChangeValidate" :invalid="fieldQualificationName" />
+                        <InputText v-model="qualificationList.qualificationName" @keyup="onChangeValidate"
+                            :invalid="fieldQualificationName" />
 
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
@@ -86,17 +89,19 @@
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Start Date</label><br>
-                        <Calendar v-model="qualificationList.startDate" @blur="onChangeValidate" dateFormat="yy-mm-dd" :invalid="fieldStartDate" />
+                        <Calendar v-model="qualificationList.startDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
+                            :invalid="fieldStartDate" />
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">End Date</label><br>
-                        <Calendar v-model="qualificationList.endDate" @blur="onChangeValidate" dateFormat="yy-mm-dd" :invalid="fieldEndDate" />
+                        <Calendar v-model="qualificationList.endDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
+                            :invalid="fieldEndDate" />
 
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Certificated Date</label><br>
-                        <InputText v-model="qualificationList.certificatedDate" @keyup="onChangeValidate" :invalid="fieldCertificatedDate" />
-
+                        <InputText v-model="qualificationList.certificatedDate" @keyup="onChangeValidate"
+                            :invalid="fieldCertificatedDate" />
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3">
                         <label class="form-label font_15" style="margin-top: 22px;"></label><br>
@@ -111,12 +116,8 @@
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="we_shadow">
-                        <DataTable 
-                            v-if="teacherQualification != ''" 
-                            v-model:selection="qualificationList"
-                            @row-dblclick="onClickRow" 
-                            :value="teacherQualification"
-                        >
+                        <DataTable v-if="teacherQualification != ''" v-model:selection="qualificationList"
+                            @row-dblclick="onClickRow" :value="teacherQualification">
                             <Column field="no" header="No" :class="customNoClass"></Column>
                             <Column field="qualificationName" header="Qualification Name"></Column>
                             <Column field="qualificationDesc" header="Qualification Description"></Column>
@@ -125,10 +126,10 @@
                             <Column field="certificatedDate" header="Certificated Date"></Column>
                             <Column header="Edit" class="text-center">
                                 <template #body="{ data }">
-                                    <font-awesome-icon @click="onClickEdit(data)" icon="fas fa-pencil"
-                                        class="text-primary" title="Edit" />&nbsp;
-                                    <font-awesome-icon @click="onClickDelete(data)" icon="fa-solid fa-trash"
-                                        class="text-danger" title="Delete" />
+                                    <font-awesome-icon style="cursor: pointer;" @click="onClickEdit(data)"
+                                        icon="fas fa-pencil" class=" text-primary" title="Edit" />&nbsp;
+                                    <font-awesome-icon style="cursor: pointer;" @click="onClickDelete(data)"
+                                        icon="fa-solid fa-trash" class=" text-danger" title="Delete" />
                                 </template>
                             </Column>
                         </DataTable>
@@ -151,12 +152,9 @@
                                 </tr>
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
-
-
         </div>
 
         <div class="row mt-5">

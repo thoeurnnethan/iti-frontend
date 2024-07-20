@@ -39,85 +39,73 @@ export default defineComponent({
             fieldEndDate: false,
             fieldCertificatedDate: false,
             qualificationValid: true,
-            appleButton: false
-
+            appleButton: false,
+            editingIndex: -1 // Track the index of the currently editing item
         };
     },
 
-    computed:{
-        isValid(){
-            if (this.qualificationList.qualificationName != ''
-                && this.qualificationList.startDate != ''
-                && this.qualificationList.endDate != ''
-                && this.qualificationList.certificatedDate != ''
-            ){
-                this.qualificationValid = true;
-            }
+    computed: {
+        isValid(): boolean {
+            return (
+                this.qualificationList.qualificationName !== '' &&
+                this.qualificationList.startDate !== '' &&
+                this.qualificationList.endDate !== '' &&
+                this.qualificationList.certificatedDate !== ''
+            );
         }
     },
 
     methods: {
         saveQualification() {
-            this.fieldQualificationName = false,
-            this.fieldStartDate = false,
-            this.fieldEndDate = false,
-            this.fieldCertificatedDate = false
-            this.appleButton = true
+            // Reset validation flags
+            this.fieldQualificationName = false;
+            this.fieldStartDate = false;
+            this.fieldEndDate = false;
+            this.fieldCertificatedDate = false;
+            this.appleButton = true;
 
-            const newQualification: any = {
-                qualificationName: this.qualificationList.qualificationName,
-                qualificationDesc: this.qualificationList.qualificationDesc,
+            // Validate form
+            if (!this.isValid) {
+                this.fieldQualificationName = this.qualificationList.qualificationName === '';
+                this.fieldStartDate = this.qualificationList.startDate === '';
+                this.fieldEndDate = this.qualificationList.endDate === '';
+                this.fieldCertificatedDate = this.qualificationList.certificatedDate === '';
+                return;
+            }
+
+            const updatedQualification: QUALIFICATION_LIST = {
+                ...this.qualificationList,
                 startDate: this.formatDate(this.qualificationList.startDate),
-                endDate: this.formatDate(this.qualificationList.endDate),
-                certificatedDate: this.qualificationList.certificatedDate,
-                no: this.teacherQualification.length + 1
+                endDate: this.formatDate(this.qualificationList.endDate)
             };
 
-            if (this.qualificationList.qualificationName == '') {
-                this.fieldQualificationName = true;
-                this.qualificationValid = false
+            if (this.editingIndex === -1) {
+                // New entry
+                updatedQualification.no = this.teacherQualification.length + 1;
+                this.teacherQualification.push(updatedQualification);
+            } else {
+                // Update existing entry
+                this.teacherQualification[this.editingIndex] = updatedQualification;
+                this.editingIndex = -1; // Reset editing index
             }
-            if (this.qualificationList.startDate == '') {
-                this.fieldStartDate = true;
-                this.qualificationValid = false
-            }
-            if (this.qualificationList.endDate == '') {
-                this.fieldEndDate = true;
-                this.qualificationValid = false
-            }
-            if (this.qualificationList.certificatedDate == '') {
-                this.fieldCertificatedDate = true;
-                this.qualificationValid = false
-            }
-            if (this.qualificationValid) {
-                this.teacherQualification.push(newQualification);
-                this.resetQualificationForm();
-                this.appleButton = false
-            }
-        },
-        onChangeValidate() {
-            if (this.appleButton) {
-                this.fieldQualificationName = false,
-                this.fieldStartDate = false,
-                this.fieldEndDate = false,
-                this.fieldCertificatedDate = false
 
-                if (this.qualificationList.qualificationName == '') {
-                    this.fieldQualificationName = true;
-                }
-                if (this.qualificationList.startDate == '') {
-                    this.fieldStartDate = true;
-                }
-                if (this.qualificationList.endDate == '') {
-                    this.fieldEndDate = true;
-                }
-                if (this.qualificationList.certificatedDate == '') {
-                    this.fieldCertificatedDate = true;
-                }
-                this.isValid
+            this.updateQualificationNumbers();
+            this.resetQualificationForm();
+            this.appleButton = false;
+        },
+
+        onChangeValidate() {
+            // Validate fields on input change
+            if (this.appleButton) {
+                this.fieldQualificationName = this.qualificationList.qualificationName === '';
+                this.fieldStartDate = this.qualificationList.startDate === '';
+                this.fieldEndDate = this.qualificationList.endDate === '';
+                this.fieldCertificatedDate = this.qualificationList.certificatedDate === '';
             }
         },
+
         resetQualificationForm() {
+            // Reset form fields
             this.qualificationList = {
                 qualificationName: '',
                 qualificationDesc: '',
@@ -127,12 +115,46 @@ export default defineComponent({
             };
         },
 
-        onClickEdit(data: any){
-            this.qualificationList = data
-            const index = this.teacherQualification.findIndex(item => item.no === data.no);
-            if (index !== -1) {
-                this.teacherQualification.splice(index, 1);
+        onClickEdit(data: QUALIFICATION_LIST) {
+            if (this.editingIndex !== -1) {
+                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
+                return;
             }
+
+            this.$confirm.require({
+                message: 'Do you want to edit this record?',
+                header: 'Danger Zone',
+                accept: () => {
+                    this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
+                    this.qualificationList = { ...data };
+                    this.editingIndex = this.teacherQualification.findIndex(item => item.no === data.no);
+                },
+                reject: () => {
+                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+                }
+            });
+        },
+
+        onClickDelete(item: QUALIFICATION_LIST) {
+            this.$confirm.require({
+                message: 'Do you want to delete this record?',
+                header: 'Danger Zone',
+                accept: () => {
+                    this.teacherQualification = this.teacherQualification.filter(qual => qual.no !== item.no);
+                    this.updateQualificationNumbers();
+                    this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+                },
+                reject: () => {
+                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+                }
+            });
+        },
+
+        updateQualificationNumbers() {
+            // Update the 'no' field for each qualification
+            this.teacherQualification.forEach((qual, index) => {
+                qual.no = index + 1;
+            });
         },
 
         formatDate(dateString: string): string {
@@ -144,80 +166,10 @@ export default defineComponent({
             const day = date.getDate().toString().padStart(2, '0');
 
             return `${year}-${month}-${day}`;
-        },
-
-        // apple(){
-        //     if(!this.isValidRegister){
-        //         this.fieldValidate = true;
-
-        //         if(this.qualificationList.qualificationName !== ''){
-        //             this.fieldValidate = false;
-        //         }
-        //     }
-        // }
-
-
-
-
-
-
-
-
-
-
-        async teacherSubmit() {
-            const reqBody = {
-                ...this.userInfoUpdate
-            };
-
-            const res = await RequestService.request(API_PATH.USER_REGISTER, false, true) as USER_LIST_RES;
-            if (res) {
-                modalController.dismiss();
-            }
-        },
-
-        handleFileUpload(event: Event) {
-            const target = event.target as HTMLInputElement;
-            const file = target.files ? target.files[0] : null;
-
-            if (file) {
-                this.uploadFile(file); // Call method to upload file to server
-            }
-        },
-
-        async uploadFile(file: File) {
-            const formData = new FormData();
-            formData.append('file', file);
-
-            try {
-                // Make a POST request to your backend endpoint for file upload
-                const response = await fetch('/api/upload', {
-                    method: 'POST',
-                    body: formData,
-                });
-
-                if (response.ok) {
-                    const fileName = await response.text(); // Assuming backend responds with file name
-                    this.userInfoUpdate.imageUrl = fileName; // Store file name in userInfoUpdate
-                    console.log('File uploaded successfully:', fileName);
-                } else {
-                    console.error('Failed to upload file');
-                    // Handle failure to upload file (show error message, etc.)
-                }
-            } catch (error) {
-                console.error('Error uploading file:', error);
-                // Handle error (show error message, etc.)
-            }
-        },
-
-        isValidForm(): boolean {
-            // Implement form validation logic as needed
-            return this.userInfoUpdate.firstName !== '' && this.userInfoUpdate.lastName !== '';
-        },
-    },
+        }
+    }
 });
 </script>
-
 
 <style>
 @import url('./user-register.scss');
