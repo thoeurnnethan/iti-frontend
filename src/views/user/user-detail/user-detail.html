@@ -1,7 +1,7 @@
 <div class="popup">
     <div class="popWrap w90p">
         <div class="pop_head">
-            <h1 class="text-center">Student Information Detail</h1>
+            <h1 class="text-center">{{ userInfo.roleID === '04' ? 'Student' : 'Teacher' }} Information Detail</h1>
         </div>
         <div class="pop_cont">
             <div class="cont">
@@ -43,13 +43,9 @@
                             <dt class="text-capitalize">password</dt>
                             <dd>{{ userInfo.password }}</dd>
                         </dl>
-                        <dl>
-                            <dt class="text-capitalize">Image</dt>
-                            <dd>{{ userInfo.imageUrl }}</dd>
-                        </dl>
                     </div>
                 </div>
-                <div class="mt-5">
+                <div class="mt-5" v-if="userInfo.roleID === '04'">
                     <p class="h5 text-capitalize">Parent Details</p>
                     <table>
                         <thead>
@@ -79,7 +75,8 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="mt-5">
+                <!-- student -->
+                <div class="mt-5" v-if="userInfo.roleID === '04'">
                     <p class="h5 text-capitalize">academic Details</p>
                     <table>
                         <thead>
@@ -107,6 +104,39 @@
                         </tbody>
                     </table>
                 </div>
+                <!-- student -->
+                
+                <!-- Teacher -->
+                <div class="mt-5" v-else>
+                    <p class="h5 text-capitalize">Qualification Details</p>
+                    <table>
+                        <thead>
+                            <tr class="text-capitalize">
+                                <th>No</th>
+                                <th>Qualification Name</th>
+                                <th>Qualification Description</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Certificated Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="academic in userInfo?.academicList" :key="academic.seqNo">
+                                <td>{{ academic.seqNo }}</td>
+                                <td>{{ academic.academicName }}</td>
+                                <td>{{ academic.academicDesc }}</td>
+                                <td>{{ $format.formatDateTime(academic.startDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
+                                <td>{{ $format.formatDateTime(academic.endDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
+                                <td>{{ academic.certificatedDate }}</td>
+                            </tr>
+                            <tr v-if="!userInfo?.academicList">
+                                <td colspan="6" class="text-danger">No parent records available.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Teacher -->
+
             </div>
         </div>
         <div class="pop_foot">

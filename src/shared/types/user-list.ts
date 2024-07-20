@@ -1,5 +1,4 @@
 interface USER_LIST {
-  userID: string
   roleID: string
   specID: string
   firstName: string
@@ -12,7 +11,6 @@ interface USER_LIST {
   phone: string
   email: string
   passwd: string
-  imageUrl: string
   studentInfo?: STUDENT_INFO
 }
 

@@ -2,9 +2,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { RequestService } from '@/shared/services/request-service';
 import { API_PATH } from '@/shared/common/api-path';
 import { USER_LIST, USER_LIST_REQ, USER_LIST_RES } from '@/shared/types/user-list';
+import { RequestService } from '@/shared/services/request-service';
+import { modalController } from '@ionic/vue';
 
 export default defineComponent({
     name: 'UserRegister',
@@ -23,32 +24,18 @@ export default defineComponent({
                 phone: '',
                 email: '',
                 passwd: '',
-                imageUrl: '',
             } as USER_LIST,
         };
     },
     methods: {
         async teacherSubmit() {
-            // Validate form fields (you can implement as needed)
-            if (!this.isValidForm()) {
-                alert('Please fill out all required fields');
-                return;
-            }
+            const reqBody = { 
+                ...this.userInfoUpdate 
+            };
 
-            // Push user info to userList array (or handle as needed)
-            const userList: USER_LIST[] = [{ ...this.userInfoUpdate }];
-
-            // Prepare request body
-            const reqBody: USER_LIST_REQ = { userList };
-
-            try {
-                // Make API request to save user data (adjust API_PATH.USER_REGISTER accordingly)
-                const response = await new RequestService().request(API_PATH.USER_REGISTER, reqBody, false) as USER_LIST_RES;
-                console.log('User registered successfully:', response);
-                this.$router.push('/user-list'); // Redirect to user list page after successful registration
-            } catch (error) {
-                console.error('Error registering user:', error);
-                // Handle error (show error message, etc.)
+            const res = await RequestService.request(API_PATH.USER_REGISTER, false, true) as USER_LIST_RES;
+            if (res) {
+                modalController.dismiss();
             }
         },
 

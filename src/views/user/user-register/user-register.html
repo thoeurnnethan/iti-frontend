@@ -58,10 +58,6 @@
                 <input type="text" v-model="userInfoUpdate.passwd" class="form-control">
             </div>
             <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                <label class="form-label font_15">Image URL</label><br>
-                <input type="file" @change="handleFileUpload" class="form-control">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                 <label class="form-label font_15">Place of Birth</label><br>
                 <textarea style="height: 38px;" v-model="userInfoUpdate.placeOfBirth" class="form-control"></textarea>
             </div>
@@ -69,9 +65,43 @@
                 <label class="form-label font_15">Address</label><br>
                 <textarea style="height: 38px;" v-model="userInfoUpdate.address" class="form-control"></textarea>
             </div>
+            
+            <!-- Academic List -->
+            <div class="col-12">
+                <h5 class="mt-4">Academic List</h5>
+                <hr>
+                <!-- Academic List - Academic 1 -->
+                <fieldset class="border rounded-3">
+                    <legend class="float-none w-auto m_left20 px-2 h5">Academic 1</legend>
+                    <div class="row m-0">
+                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                            <label class="form-label font_15">Qualification Name</label><br>
+                            <input type="text" name="academicName1" class="form-control" value="BaccII">
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                            <label class="form-label font_15">Qualification Description</label><br>
+                            <input type="text" name="academicDesc1" class="form-control" value="High School">
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                            <label class="form-label font_15">Start Date</label><br>
+                            <input type="date" name="startDate1" class="form-control" value="2018-10-31">
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                            <label class="form-label font_15">End Date</label><br>
+                            <input type="date" name="endDate1" class="form-control" value="2019-08-01">
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                            <label class="form-label font_15">Certificated Date</label><br>
+                            <input type="text" name="certificatedDate1" class="form-control" value="2020">
+                        </div>
+                    </div>
+                </fieldset>
+                
+            </div>
+
             <div class="row mt-4">
                 <div class="col-lg-4 col-sm-6 col-xl-3 col-md-3 mb-2">
-                    <button class="btn btn-success w-100" @click="teacherSubmit">Submit</button>
+                    <button class="btn btn-success w-100" @click="teacherSubmit()">Submit</button>
                 </div>
             </div>
         </div>
