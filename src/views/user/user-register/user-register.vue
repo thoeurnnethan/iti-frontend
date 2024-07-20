@@ -136,6 +136,11 @@ export default defineComponent({
         },
 
         onClickDelete(item: QUALIFICATION_LIST) {
+            if (this.editingIndex !== -1) {
+                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
+                return;
+            }
+
             this.$confirm.require({
                 message: 'Do you want to delete this record?',
                 header: 'Danger Zone',
