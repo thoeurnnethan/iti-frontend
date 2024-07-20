@@ -127,6 +127,14 @@ export default defineComponent({
             };
         },
 
+        onClickEdit(data: any){
+            this.qualificationList = data
+            const index = this.teacherQualification.findIndex(item => item.no === data.no);
+            if (index !== -1) {
+                this.teacherQualification.splice(index, 1);
+            }
+        },
+
         formatDate(dateString: string): string {
             const date = new Date(dateString);
             if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
