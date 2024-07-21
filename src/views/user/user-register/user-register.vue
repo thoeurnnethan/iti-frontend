@@ -34,6 +34,7 @@ export default defineComponent({
                 certificatedDate: ''
             } as QUALIFICATION_LIST,
             teacherInfo: [] as QUALIFICATION_LIST[],
+            hello_kon_papa:'',
             fieldQualificationName: false,
             fieldStartDate: false,
             fieldEndDate: false,
@@ -62,11 +63,13 @@ export default defineComponent({
                 const reqBody = {
                     ...this.teacherRegisterInfo,
                     dateOfBirth: this.formatDateDatabase(this.teacherRegisterInfo.dateOfBirth),
-                    teacherInfo: this.teacherInfo,
+                    teacherInfo: {
+                        qualificationList:this.teacherInfo
+                    }
                 };
-                // const res = await requestService.request(API_PATH.USER_REGISTER, reqBody, true) as USER_LIST_RES;
+                const res = await requestService.request(API_PATH.USER_REGISTER, reqBody, true) as USER_LIST;
 
-                console.log(reqBody);
+                console.log(res);
             },
         // teacherRegister
 

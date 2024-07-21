@@ -10,70 +10,71 @@
 }
 
 //-custom_css----------------
-.b_shadow {
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
+	.b_shadow {
+		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	}
 
-.text_title {
-	font-size: 15px;
-	text-transform: uppercase;
-	font-weight: 800 !important;
-	font-family: Nunito, 'Hanuman' !important;
-	color: #212529 !important;
-}
+	.text_title {
+		font-size: 15px;
+		text-transform: uppercase;
+		font-weight: 800 !important;
+		font-family: Nunito, 'Hanuman' !important;
+		color: #212529 !important;
+	}
 
-.bg_black {
-	background-color: #252b3b !important;
-}
+	.bg_black {
+		background-color: #252b3b !important;
+	}
 
-.font_15 {
-	font-size: 15px !important;
-}
+	.font_15 {
+		font-size: 15px !important;
+	}
 
-.font_14 {
-	font-size: 14px;
-}
+	.font_14 {
+		font-size: 14px;
+	}
 
-.rad {
-	border-radius: 0.375rem !important;
-}
+	.rad {
+		border-radius: 0.375rem !important;
+	}
 
-.rad_left {
-	border-radius: 0.375rem 0px 0px 0.375rem !important;
-}
+	.rad_left {
+		border-radius: 0.375rem 0px 0px 0.375rem !important;
+	}
 
-.rad_right {
-	border-radius: 0px 0.375rem 0.375rem 0px !important;
-}
+	.rad_right {
+		border-radius: 0px 0.375rem 0.375rem 0px !important;
+	}
 
-.m_left20 {
-	margin-left: 20px;
-}
+	.m_left20 {
+		margin-left: 20px;
+	}
 
-.we_no_select {
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
+	.we_no_select {
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
 
-.we_bg_row {
-	background-color: #8c8c8c !important;
-	color: #fff !important;
-}
+	.we_bg_row {
+		background-color: #8c8c8c !important;
+		color: #fff !important;
+	}
 
-.we_shadow {
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
+	.we_shadow {
+		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	}
 
-.we_text_color {
-	color: #495057;
-	font-weight: 500;
-}
+	.we_text_color {
+		color: #495057;
+		font-weight: 500;
+	}
 
 //-custom_css----------------
 
-.p-invalid, .p-invalid {
+.p-invalid,
+.p-invalid {
 	border: 1px solid #f66a60 !important;
 
 }
@@ -85,20 +86,25 @@
 
 }
 
-.p-datepicker{
+.p-datepicker {
 	min-width: 314px !important;
 }
 
-.p-datepicker-calendar ,.p-calendar{
+.p-datepicker-calendar,
+.p-calendar {
 	width: 100% !important;
 	border-radius: 6px;
-	th, td {
+
+	th,
+	td {
 		padding: 0 !important;
 	}
 }
+
 .p-datepicker-header {
 	padding: 0;
 }
+
 // date
 
 .p-inputtext {

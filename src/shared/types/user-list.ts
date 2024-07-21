@@ -36,7 +36,7 @@ interface ACADEMIC_LIST {
 }
 
 interface QUALIFICATION_LIST {
-  seqNo: number
+  seqNo?: number
   qualificationName: string
   qualificationDesc: string
   startDate: string
