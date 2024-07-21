@@ -12,35 +12,36 @@ interface USER_LIST {
   email: string
   passwd: string
   studentInfo?: STUDENT_INFO
+  teacherInfo?: TEACHER_INFO
 }
 
 interface PARENT_LIST{
   seqNo: number
-  firstName: string;
-  lastName: string;
-  nickName: string;
-  gender: string;
-  job: string;
-  phone: string;
-  address: string;
+  firstName: string
+  lastName: string
+  nickName: string
+  gender: string
+  job: string
+  phone: string
+  address: string
 }
 
 interface ACADEMIC_LIST {
   seqNo: number
-  academicID: number;
-  academicName: string;
-  academicDesc: string;
-  startDate: string;
-  endDate: string;
-  certificatedDate: string;
+  academicID: number
+  academicName: string
+  academicDesc: string
+  startDate: string
+  endDate: string
+  certificatedDate: string
 }
 
 interface QUALIFICATION_LIST {
-  qualificationName: string;
-  qualificationDesc: string;
-  startDate: string;
-  endDate: string;
-  certificatedDate: string;
+  qualificationName: string
+  qualificationDesc: string
+  startDate: string
+  endDate: string
+  certificatedDate: string
 }
 
 interface ManagerList {
@@ -82,6 +83,10 @@ interface USER_LIST_RES {
 interface STUDENT_INFO{
   academicList: Array<ACADEMIC_LIST>,
   parentList: Array<PARENT_LIST>
+}
+
+interface TEACHER_INFO{
+  qualificationList: Array<QUALIFICATION_LIST>
 }
 
 interface USER_DETAIL_REQ {

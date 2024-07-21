@@ -74,44 +74,42 @@
             <hr>
             <!-- Academic List - Academic 1 -->
 
-            <fieldset class="border rounded-3 pb-3">
-                <legend class="float-none w-auto m_left20 px-2 h5">Qualification</legend>
-                <div class="row m-0">
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Qualification Name</label><br>
-                        <InputText v-model="qualificationList.qualificationName" @keyup="onChangeValidate"
-                            :invalid="fieldQualificationName" />
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                    <label class="form-label font_15">Qualification Name</label><br>
+                    <InputText v-model="qualificationList.qualificationName" @keyup="onChangeValidate"
+                        :invalid="fieldQualificationName" />
 
-                    </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Qualification Description</label><br>
-                        <InputText v-model="qualificationList.qualificationDesc" />
-                    </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Start Date</label><br>
-                        <Calendar v-model="qualificationList.startDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
-                            :invalid="fieldStartDate" />
-                    </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">End Date</label><br>
-                        <Calendar v-model="qualificationList.endDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
-                            :invalid="fieldEndDate" />
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                    <label class="form-label font_15">Qualification Description</label><br>
+                    <InputText v-model="qualificationList.qualificationDesc" />
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                    <label class="form-label font_15">Start Date</label><br>
+                    <Calendar v-model="qualificationList.startDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
+                        :invalid="fieldStartDate" />
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                    <label class="form-label font_15">End Date</label><br>
+                    <Calendar v-model="qualificationList.endDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
+                        :invalid="fieldEndDate" />
 
-                    </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Certificated Date</label><br>
-                        <InputText v-model="qualificationList.certificatedDate" @keyup="onChangeValidate"
-                            :invalid="fieldCertificatedDate" />
-                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                    <label class="form-label font_15">Certificated Date</label><br>
+                    <InputText v-model="qualificationList.certificatedDate" @keyup="onChangeValidate"
+                        :invalid="fieldCertificatedDate" />
+                </div>
+                <div class="row">
                     <div class="col-lg-4 col-sm-6 col-xl-3">
-                        <label class="form-label font_15" style="margin-top: 22px;"></label><br>
-                        <button class="btn btn-info" @click="saveQualification">
+                        <button class="btn btn-info w-100 mt-3" @click="saveQualification">
                             <font-awesome-icon :icon="['fa', 'plus']" />
                             <span class="mx-2">Add Qualification</span>
                         </button>
                     </div>
                 </div>
-            </fieldset>
+            </div>
 
             <div class="row mt-4">
                 <div class="col-12">
@@ -148,7 +146,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td colspan="6" class="text-danger">No data records available.</td>
+                                    <td colspan="7" class="text-danger">No data records available.</td>
                                 </tr>
                             </tbody>
                         </table>

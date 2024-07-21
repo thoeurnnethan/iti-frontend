@@ -107,7 +107,7 @@
                 <!-- student -->
                 
                 <!-- Teacher -->
-                <div class="mt-5" v-else>
+                <div class="mt-5" v-if="userInfo.roleID != '04'">
                     <p class="h5 text-capitalize">Qualification Details</p>
                     <table>
                         <thead>
@@ -121,16 +121,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="academic in userInfo?.academicList" :key="academic.seqNo">
-                                <td>{{ academic.seqNo }}</td>
-                                <td>{{ academic.academicName }}</td>
-                                <td>{{ academic.academicDesc }}</td>
-                                <td>{{ $format.formatDateTime(academic.startDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
-                                <td>{{ $format.formatDateTime(academic.endDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
-                                <td>{{ academic.certificatedDate }}</td>
+                            <tr v-for="qualification in userInfo?.qualificationList" >
+                                <td>{{ qualification.seqNo }}</td>
+                                <td>{{ qualification.qualificationName }}</td>
+                                <td>{{ qualification.qualificationDesc }}</td>
+                                <td>{{ $format.formatDateTime(qualification.startDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
+                                <td>{{ $format.formatDateTime(qualification.endDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
+                                <td>{{ $format.formatDateTime(qualification.certificatedDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
+
                             </tr>
-                            <tr v-if="!userInfo?.academicList">
-                                <td colspan="6" class="text-danger">No parent records available.</td>
+                            <tr v-if="!userInfo?.qualificationList">
+                                <td colspan="6" class="text-danger">No qualification records available.</td>
                             </tr>
                         </tbody>
                     </table>

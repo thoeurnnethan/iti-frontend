@@ -26,7 +26,10 @@ export default defineComponent({
         this.userInfo = {
             formatDOB: this.$format.formatDateTime(this.userDetail.dateOfBirth,'yyyy-mm-dd','Slash','FullMonth'),
             ...this.userDetail
+            
         }
+        console.log(this.userInfo);
+
     },
 
     methods: {
