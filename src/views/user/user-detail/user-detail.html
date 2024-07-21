@@ -121,7 +121,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="qualification in userInfo?.qualificationList" >
+                            <tr v-for="qualification in userInfo?.qualificationList"  :key="qualification.seqNo">
                                 <td>{{ qualification.seqNo }}</td>
                                 <td>{{ qualification.qualificationName }}</td>
                                 <td>{{ qualification.qualificationDesc }}</td>

@@ -25,47 +25,57 @@
 
     <!-- default_form -->
     <div class="row mt-4" v-if="select_Role === '03'">
+
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">First Name</label><br>
-            <input type="text" v-model="userInfoUpdate.firstName" class="form-control">
+            <InputText v-model="teacherRegisterInfo.firstName"/>
         </div>
+
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Last Name</label><br>
-            <input type="text" v-model="userInfoUpdate.lastName" class="form-control">
+            <InputText v-model="teacherRegisterInfo.lastName"/>
         </div>
+
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Nick Name</label><br>
-            <input type="text" v-model="userInfoUpdate.nickName" class="form-control">
+            <InputText v-model="teacherRegisterInfo.nickName"/>
         </div>
+
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Gender</label><br>
-            <input type="radio" v-model="userInfoUpdate.gender" class="form-check-input" value="m"> Male
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="radio" v-model="userInfoUpdate.gender" class="form-check-input" value="f"> Female
+            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="m"> Male
+            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="f"> Female
         </div>
+
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Date of Birth</label><br>
-            <input type="date" v-model="userInfoUpdate.dateOfBirth" class="form-control">
+            <Calendar v-model="teacherRegisterInfo.dateOfBirth" dateFormat="yy-mm-dd" />
         </div>
+
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Phone</label><br>
-            <input type="text" v-model="userInfoUpdate.phone" class="form-control">
+            <InputText v-model="teacherRegisterInfo.phone"/>
         </div>
+
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Email</label><br>
-            <input type="email" v-model="userInfoUpdate.email" class="form-control">
+            <InputText v-model="teacherRegisterInfo.email"/>
         </div>
+
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Password</label><br>
-            <input type="text" v-model="userInfoUpdate.passwd" class="form-control">
+            <InputText v-model="teacherRegisterInfo.passwd"/>
         </div>
+
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Place of Birth</label><br>
-            <textarea style="height: 38px;" v-model="userInfoUpdate.placeOfBirth" class="form-control"></textarea>
+            <Textarea v-model="teacherRegisterInfo.placeOfBirth" rows="5" cols="30" />
         </div>
+
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Address</label><br>
-            <textarea style="height: 38px;" v-model="userInfoUpdate.address" class="form-control"></textarea>
+            <Textarea v-model="teacherRegisterInfo.address" rows="5" cols="30" />
+
         </div>
 
         <!-- Academic List -->
@@ -114,8 +124,8 @@
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="we_shadow">
-                        <DataTable v-if="teacherQualification != ''" v-model:selection="qualificationList"
-                            @row-dblclick="onClickRow" :value="teacherQualification">
+                        <DataTable v-if="teacherInfo != ''" v-model:selection="qualificationList"
+                            @row-dblclick="onClickRow" :value="teacherInfo">
                             <Column field="no" header="No" :class="customNoClass"></Column>
                             <Column field="qualificationName" header="Qualification Name"></Column>
                             <Column field="qualificationDesc" header="Qualification Description"></Column>
@@ -157,7 +167,7 @@
 
         <div class="row mt-5">
             <div class="col-lg-4 col-sm-6 col-xl-3 col-md-3">
-                <button class="btn btn-success w-100" @click="teacherSubmit()">Submit</button>
+                <button class="btn btn-success w-100" @click="teacherRegister">Submit</button>
             </div>
         </div>
     </div>

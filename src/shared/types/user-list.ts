@@ -1,6 +1,5 @@
 interface USER_LIST {
   roleID: string
-  specID: string
   firstName: string
   lastName: string
   nickName: string
@@ -37,6 +36,7 @@ interface ACADEMIC_LIST {
 }
 
 interface QUALIFICATION_LIST {
+  seqNo: number
   qualificationName: string
   qualificationDesc: string
   startDate: string
@@ -75,7 +75,12 @@ interface USER_LIST_REQ {
 
 interface USER_LIST_RES {
   body:{
-    totalCount: number,
+    userList: Array<USER_LIST>
+  }
+}
+
+interface TEACHER_RES {
+  body:{
     userList: Array<USER_LIST>
   }
 }
@@ -107,6 +112,7 @@ export type {
   USER_LIST,
   USER_LIST_REQ,
   USER_LIST_RES,
+  TEACHER_RES,
   ManagerList,
   ManagerList_Req,
   ManagerList_Res,
