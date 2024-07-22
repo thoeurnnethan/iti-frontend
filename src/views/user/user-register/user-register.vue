@@ -3,7 +3,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
-import { USER_LIST,USER_LIST_RES, QUALIFICATION_LIST } from '@/shared/types/user-list';
+import { USER_LIST, QUALIFICATION_LIST } from '@/shared/types/user-list';
 import { RequestService } from '@/shared/services/request-service';
 const requestService = new RequestService();
 
@@ -25,7 +25,7 @@ export default defineComponent({
                 email: '',
                 passwd: '',
             } as USER_LIST,
-
+            userList: [] as USER_LIST[],
             qualificationList: {
                 qualificationName: '',
                 qualificationDesc: '',
@@ -59,18 +59,29 @@ export default defineComponent({
     methods: {
 
         // teacherRegister
-            async teacherRegister(){
-                const reqBody = {
-                    ...this.teacherRegisterInfo,
-                    dateOfBirth: this.formatDateDatabase(this.teacherRegisterInfo.dateOfBirth),
-                    teacherInfo: {
-                        qualificationList:this.teacherInfo
-                    }
-                };
-                const res = await requestService.request(API_PATH.USER_REGISTER, reqBody, true) as USER_LIST;
-
-                console.log(res);
-            },
+        async teacherRegister() {
+            const qualList = this.teacherInfo.map((data) =>{
+                return {
+                    qualificationName: data.qualificationName,
+                    qualificationDesc: data.qualificationDesc,
+                    startDate: this.formatDateDatabase(data.startDate),
+                    endDate: this.formatDateDatabase(data.endDate),
+                    certificatedDate: data.certificatedDate,
+                }
+            })
+            const userInfoList = {
+                ...this.teacherRegisterInfo,
+                dateOfBirth: this.formatDateDatabase(this.teacherRegisterInfo.dateOfBirth),
+                teacherInfo: {
+                    qualificationList: qualList
+                }
+            };
+            this.userList.push(userInfoList)
+            const reqBody = {
+                userList: this.userList
+            }
+            await requestService.request(API_PATH.USER_REGISTER, reqBody, true)
+        },
         // teacherRegister
 
         // qualification

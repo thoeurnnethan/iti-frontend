@@ -14,7 +14,7 @@ interface USER_LIST {
   teacherInfo?: TEACHER_INFO
 }
 
-interface PARENT_LIST{
+interface PARENT_LIST {
   seqNo: number
   firstName: string
   lastName: string
@@ -85,7 +85,7 @@ interface TEACHER_RES {
   }
 }
 
-interface STUDENT_INFO{
+interface STUDENT_INFO {
   academicList: Array<ACADEMIC_LIST>,
   parentList: Array<PARENT_LIST>
 }
