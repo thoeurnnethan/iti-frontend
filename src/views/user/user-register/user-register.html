@@ -311,8 +311,9 @@
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="we_shadow">
-                        <DataTable v-if="studentAcademicList != ''" v-model:selection="academicInfo"
-                            @row-dblclick="onClickRow" :value="studentAcademicList">
+                        <DataTable v-if="studentAcademicList != ''" 
+                            v-model:selection="academicInfo"
+                            :value="studentAcademicList">
                             <Column field="no" header="No" :class="customNoClass"></Column>
                             <Column field="academicName" header="Academic Name"></Column>
                             <Column field="academicDesc" header="Academic Description"></Column>

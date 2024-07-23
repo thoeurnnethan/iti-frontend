@@ -12,10 +12,17 @@ export default defineComponent({
     data() {
         return {
             select_Role: '04',
+            userList: [] as USER_LIST[],
+            teacherInfo: [] as QUALIFICATION_LIST[],
+            fatherInfo:{} as PARENT_LIST,
+            motherInfo:{} as PARENT_LIST,
+            studentAcademicList: [] as ACADEMIC_LIST[],
             teacherRegisterInfo: {
                 roleID: '03'
             } as USER_LIST,
-            userList: [] as USER_LIST[],
+            studentRegisterInfo: {
+                roleID: '04'
+            } as USER_LIST,
             qualificationList: {
                 qualificationName: '',
                 qualificationDesc: '',
@@ -23,7 +30,14 @@ export default defineComponent({
                 endDate: '',
                 certificatedDate: ''
             } as QUALIFICATION_LIST,
-            teacherInfo: [] as QUALIFICATION_LIST[],
+            academicInfo: {
+                academicName : '',
+                academicDesc : '',
+                startDate : '',
+                endDate : '',
+                certificatedDate : ''
+            } as ACADEMIC_LIST,
+            customNoClass: 'table_no',
             fieldQualificationName: false,
             fieldStartDate: false,
             fieldEndDate: false,
@@ -35,19 +49,6 @@ export default defineComponent({
             fieldAcademicStartDate: false,
             fieldAcademicEndDate: false,
             fieldAcademicCertificatedDate: false,
-            studentRegisterInfo: {
-                roleID: '04'
-            } as USER_LIST,
-            fatherInfo:{} as PARENT_LIST,
-            motherInfo:{} as PARENT_LIST,
-            studentAcademicList: [] as ACADEMIC_LIST[],
-            academicInfo: {
-                academicName : '',
-                academicDesc : '',
-                startDate : '',
-                endDate : '',
-                certificatedDate : ''
-            } as ACADEMIC_LIST,
             editingIndexAcademic: -1 ,
             academicButton: false,
         };
@@ -81,12 +82,12 @@ export default defineComponent({
                     academicDesc: data.academicDesc,
                     startDate: this.formatDateDatabase(data.startDate),
                     endDate: this.formatDateDatabase(data.endDate),
-                    certificatedDate: data.certificatedDate,
+                    certificatedDate: this.formatDateDatabase(data.certificatedDate),
                 };
             });
             const userInfoList = {
                 ...this.studentRegisterInfo,
-                // dateOfBirth: this.formatDateDatabase(this.studentRegisterInfo.dateOfBirth),
+                dateOfBirth: this.formatDateDatabase(this.studentRegisterInfo.dateOfBirth),
                 studentInfo: {
                     parentList: [
                         this.fatherInfo,
