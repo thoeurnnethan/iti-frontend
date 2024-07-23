@@ -33,7 +33,7 @@ export default defineComponent({
             searchKey: '',
             roleID: '',
             roleTitle: '',
-            totalCount: 0,
+            totalCount: 0 as number,
             pageSize: 10,
             pageNumber: 0
         }
@@ -53,7 +53,7 @@ export default defineComponent({
                 pageNumber: this.pageNumber + 1
             }
             const response = (await requestService.request(API_PATH.USER_LIST, body, false)) as USER_LIST_RES;
-            this.totalCount = response.body.totalCount;
+            this.totalCount = response?.body?.totalCount;
             this.roleTitle = this.roleID
             this.userList = response.body.userList.map((data,index) =>{
                 return{

@@ -1,4 +1,6 @@
 interface USER_LIST {
+  userID?: string
+  specID?: string
   roleID: string
   firstName: string
   lastName: string
@@ -76,6 +78,7 @@ interface USER_LIST_REQ {
 
 interface USER_LIST_RES {
   body:{
+    totalCount: number
     userList: Array<USER_LIST>
   }
 }
@@ -105,16 +108,16 @@ interface USER_DETAIL_RES {
 }
 
 export type {
-PARENT_LIST,
-ACADEMIC_LIST,
-QUALIFICATION_LIST,
-USER_DETAIL_REQ,
-USER_DETAIL_RES,
-USER_LIST,
-USER_LIST_REQ,
-USER_LIST_RES,
-TEACHER_RES,
-ManagerList,
-ManagerList_Req,
-ManagerList_Res, STUDENT_INFO,
+  PARENT_LIST,
+  ACADEMIC_LIST,
+  QUALIFICATION_LIST,
+  USER_DETAIL_REQ,
+  USER_DETAIL_RES,
+  USER_LIST,
+  USER_LIST_REQ,
+  USER_LIST_RES,
+  TEACHER_RES,
+  ManagerList,
+  ManagerList_Req,
+  ManagerList_Res, STUDENT_INFO,
 }
