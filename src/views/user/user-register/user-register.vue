@@ -3,7 +3,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
-import { USER_LIST, QUALIFICATION_LIST ,PARENT_LIST ,ACADEMIC_LIST } from '@/shared/types/user-list';
+import { USER_LIST, QUALIFICATION_LIST ,PARENT_LIST ,ACADEMIC_LIST , STUDENT_INFO } from '@/shared/types/user-list';
 import { RequestService } from '@/shared/services/request-service';
 const requestService = new RequestService();
 
@@ -11,7 +11,7 @@ export default defineComponent({
     name: 'UserRegister',
     data() {
         return {
-            select_Role: '03',
+            select_Role: '04',
             teacherRegisterInfo: {
                 roleID: '03',
                 firstName: '',
@@ -34,7 +34,6 @@ export default defineComponent({
                 certificatedDate: ''
             } as QUALIFICATION_LIST,
             teacherInfo: [] as QUALIFICATION_LIST[],
-            hello_kon_papa:'',
             fieldQualificationName: false,
             fieldStartDate: false,
             fieldEndDate: false,
@@ -42,6 +41,11 @@ export default defineComponent({
             qualificationValid: true,
             appleButton: false,
             editingIndex: -1 ,
+
+            fieldAcademicName: false,
+            fieldAcademicStartDate: false,
+            fieldAcademicEndDate: false,
+            fieldAcademicCertificatedDate: false,
 
             studentRegisterInfo: {
                 roleID: '04',
@@ -59,7 +63,17 @@ export default defineComponent({
 
             fatherInfo:[] as PARENT_LIST[],
             motherInfo:[] as PARENT_LIST[],
-            academicList:[] as ACADEMIC_LIST[],
+            studentInfo: [] as ACADEMIC_LIST[],
+            academicList:{
+                academicName : '',
+                academicDesc : '',
+                startDate : '',
+                endDate : '',
+                certificatedDate : ''
+            } as ACADEMIC_LIST,
+            editingIndexAcademic: -1 ,
+            academicButton: false,
+
         };
     },
 
@@ -71,6 +85,14 @@ export default defineComponent({
                 this.qualificationList.endDate !== '' &&
                 this.qualificationList.certificatedDate !== ''
             );
+        },
+        isAcademicValid(): boolean {
+            return (
+                this.academicList.academicName !== '' &&
+                this.academicList.startDate !== '' &&
+                this.academicList.endDate !== '' &&
+                this.academicList.certificatedDate !== ''
+            );
         }
     },
 
@@ -78,11 +100,146 @@ export default defineComponent({
 
         // studentRegister
             async studentRegister() {
-                console.table(this.studentRegisterInfo);
-                console.table(this.fatherInfo);
-                console.table(this.motherInfo);
+                const academicList = this.studentInfo.map((data) => {
+                    return {
+                        academicName: data.academicName,
+                        academicDesc: data.academicDesc,
+                        startDate: this.formatDateDatabase(data.startDate),
+                        endDate: this.formatDateDatabase(data.endDate),
+                        certificatedDate: data.certificatedDate,
+                    };
+                });
+
+                const userInfoList = {
+                    ...this.studentRegisterInfo,
+                    dateOfBirth: this.formatDateDatabase(this.studentRegisterInfo.dateOfBirth),
+                    studentInfo: {
+                        parentList: [
+                            this.fatherInfo,
+                            this.motherInfo
+                        ],
+                        academicList: academicList
+                    }
+                };
+
+                this.userList.push(userInfoList);
+
+                const reqBody = {
+                    userList: this.userList
+                };
+
+                await requestService.request(API_PATH.USER_REGISTER, reqBody, true);
             },
         // studentRegister
+
+        // Academic
+            saveAcademic() {
+                // Reset validation flags
+                this.fieldAcademicName = false;
+                this.fieldAcademicStartDate = false;
+                this.fieldAcademicEndDate = false;
+                this.fieldAcademicCertificatedDate = false;
+                this.academicButton = true;
+
+                // Validate form
+                if (!this.isAcademicValid) {
+                    this.fieldAcademicName = this.academicList.academicName === '';
+                    this.fieldAcademicStartDate = this.academicList.startDate === '';
+                    this.fieldAcademicEndDate = this.academicList.endDate === '';
+                    this.fieldAcademicCertificatedDate = this.academicList.certificatedDate === '';
+                    return;
+                }
+
+                const updatedAcademic: ACADEMIC_LIST = {
+                    ...this.academicList,
+                    startDate: this.formatDate(this.academicList.startDate),
+                    endDate: this.formatDate(this.academicList.endDate),
+                    certificatedDate: this.formatDate(this.academicList.certificatedDate)
+                };
+
+                if (this.editingIndexAcademic === -1) {
+                    // New entry
+                    updatedAcademic.no = this.studentInfo.length + 1;
+                    this.studentInfo.push(updatedAcademic);
+                } else {
+                    // Update existing entry
+                    this.studentInfo[this.editingIndexAcademic] = updatedAcademic;
+                    this.editingIndexAcademic = -1; // Reset editing index
+                }
+
+                this.updateAcademicNumbers();
+                this.resetAcademicForm();
+                this.academicButton = false;
+            },
+
+            onClickEditAcademic(data: ACADEMIC_LIST) {
+                if (this.editingIndexAcademic !== -1) {
+                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
+                    return;
+                }
+
+                this.$confirm.require({
+                    message: 'Do you want to edit this record?',
+                    header: 'Danger Zone',
+                    accept: () => {
+                        this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
+                        this.academicList = { ...data };
+                        this.editingIndexAcademic = this.studentInfo.findIndex(item => item.no === data.no);
+                    },
+                    reject: () => {
+                        this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+                    }
+                });
+            },
+
+            onClickDeleteAcademic(item: ACADEMIC_LIST) {
+                if (this.editingIndexAcademic !== -1) {
+                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
+                    return;
+                }
+
+                this.$confirm.require({
+                    message: 'Do you want to delete this record?',
+                    header: 'Danger Zone',
+                    accept: () => {
+                        this.studentInfo = this.studentInfo.filter(qual => qual.no !== item.no);
+                        this.updateAcademicNumbers();
+                        this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+                    },
+                    reject: () => {
+                        this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+                    }
+                });
+            },
+
+            resetAcademicForm() {
+                // Reset form fields
+                this.academicList = {
+                    academicName: '',
+                    academicDesc: '',
+                    startDate: '',
+                    endDate: '',
+                    certificatedDate: ''
+                };
+            },
+
+            updateAcademicNumbers() {
+                this.studentInfo.forEach((qual, index) => {
+                    qual.no = index + 1;
+                });
+            },
+
+            onChangeValidateAcademic() {
+                // Validate fields on input change
+                if (this.academicButton) {
+                    this.fieldAcademicName = this.academicList.academicName === '';
+                    this.fieldAcademicStartDate = this.academicList.startDate === '';
+                    this.fieldAcademicEndDate = this.academicList.endDate === '';
+                    this.fieldAcademicCertificatedDate = this.academicList.certificatedDate === '';
+                }
+            },
+        // Academic
+
 
         //--------------------------------------------------------------------------------
 
@@ -219,28 +376,29 @@ export default defineComponent({
                 });
             },
 
-            formatDate(dateString: string): string {
-                const date = new Date(dateString);
-                if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
-
-                const year = date.getFullYear();
-                const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                const day = date.getDate().toString().padStart(2, '0');
-
-                return `${year}-${month}-${day}`;
-            },
-
-            formatDateDatabase(dateString: string): string {
-                const date = new Date(dateString);
-                if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
-
-                const year = date.getFullYear();
-                const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                const day = date.getDate().toString().padStart(2, '0');
-
-                return `${year}${month}${day}`;
-            },
         // qualification
+
+        formatDate(dateString: string): string {
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
+
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+
+            return `${year}-${month}-${day}`;
+        },
+
+        formatDateDatabase(dateString: string): string {
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
+
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+
+            return `${year}${month}${day}`;
+        },
 
 
 
