@@ -13,17 +13,7 @@ export default defineComponent({
         return {
             select_Role: '04',
             teacherRegisterInfo: {
-                roleID: '03',
-                firstName: '',
-                lastName: '',
-                nickName: '',
-                gender: '',
-                dateOfBirth: '',
-                placeOfBirth: '',
-                address: '',
-                phone: '',
-                email: '',
-                passwd: '',
+                roleID: '03'
             } as USER_LIST,
             userList: [] as USER_LIST[],
             qualificationList: {
@@ -46,22 +36,12 @@ export default defineComponent({
             fieldAcademicEndDate: false,
             fieldAcademicCertificatedDate: false,
             studentRegisterInfo: {
-                roleID: '04',
-                firstName: '',
-                lastName: '',
-                nickName: '',
-                gender: '',
-                dateOfBirth: '',
-                phone: '',
-                email: '',
-                passwd: '',
-                placeOfBirth: '',
-                address: '',
+                roleID: '04'
             } as USER_LIST,
-            fatherInfo:[] as PARENT_LIST[],
-            motherInfo:[] as PARENT_LIST[],
-            studentInfo: [] as ACADEMIC_LIST[],
-            academicList:{
+            fatherInfo:{} as PARENT_LIST,
+            motherInfo:{} as PARENT_LIST,
+            studentAcademicList: [] as ACADEMIC_LIST[],
+            academicInfo: {
                 academicName : '',
                 academicDesc : '',
                 startDate : '',
@@ -84,10 +64,10 @@ export default defineComponent({
         },
         isAcademicValid(): boolean {
             return (
-                this.academicList.academicName !== '' &&
-                this.academicList.startDate !== '' &&
-                this.academicList.endDate !== '' &&
-                this.academicList.certificatedDate !== ''
+                this.academicInfo.academicName !== '' &&
+                this.academicInfo.startDate !== '' &&
+                this.academicInfo.endDate !== '' &&
+                this.academicInfo.certificatedDate !== ''
             );
         }
     },
@@ -95,7 +75,7 @@ export default defineComponent({
     methods: {
         // studentRegister
         async studentRegister() {
-            const academicList = this.studentInfo.map((data) => {
+            const academicList = this.studentAcademicList.map((data) => {
                 return {
                     academicName: data.academicName,
                     academicDesc: data.academicDesc,
@@ -106,7 +86,7 @@ export default defineComponent({
             });
             const userInfoList = {
                 ...this.studentRegisterInfo,
-                dateOfBirth: this.formatDateDatabase(this.studentRegisterInfo.dateOfBirth),
+                // dateOfBirth: this.formatDateDatabase(this.studentRegisterInfo.dateOfBirth),
                 studentInfo: {
                     parentList: [
                         this.fatherInfo,
@@ -133,23 +113,23 @@ export default defineComponent({
             this.academicButton = true;
             // Validate form
             if (!this.isAcademicValid) {
-                this.fieldAcademicName = this.academicList.academicName === '';
-                this.fieldAcademicStartDate = this.academicList.startDate === '';
-                this.fieldAcademicEndDate = this.academicList.endDate === '';
-                this.fieldAcademicCertificatedDate = this.academicList.certificatedDate === '';
+                this.fieldAcademicName = this.academicInfo.academicName === '';
+                this.fieldAcademicStartDate = this.academicInfo.startDate === '';
+                this.fieldAcademicEndDate = this.academicInfo.endDate === '';
+                this.fieldAcademicCertificatedDate = this.academicInfo.certificatedDate === '';
                 return;
             }
             const updatedAcademic: ACADEMIC_LIST = {
-                ...this.academicList,
-                startDate: this.formatDate(this.academicList.startDate),
-                endDate: this.formatDate(this.academicList.endDate),
-                certificatedDate: this.formatDate(this.academicList.certificatedDate)
+                ...this.academicInfo,
+                startDate: this.formatDate(this.academicInfo.startDate),
+                endDate: this.formatDate(this.academicInfo.endDate),
+                certificatedDate: this.formatDate(this.academicInfo.certificatedDate)
             };
             if (this.editingIndexAcademic === -1) {
-                updatedAcademic.no = this.studentInfo.length + 1;
-                this.studentInfo.push(updatedAcademic);
+                updatedAcademic.no = this.studentAcademicList.length + 1;
+                this.studentAcademicList.push(updatedAcademic);
             } else {
-                this.studentInfo[this.editingIndexAcademic] = updatedAcademic;
+                this.studentAcademicList[this.editingIndexAcademic] = updatedAcademic;
                 this.editingIndexAcademic = -1;
             }
             this.updateAcademicNumbers();
@@ -167,8 +147,8 @@ export default defineComponent({
                 header: 'Danger Zone',
                 accept: () => {
                     this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
-                    this.academicList = { ...data };
-                    this.editingIndexAcademic = this.studentInfo.findIndex(item => item.no === data.no);
+                    this.academicInfo = { ...data };
+                    this.editingIndexAcademic = this.studentAcademicList.findIndex(item => item.no === data.no);
                 },
                 reject: () => {
                     this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
@@ -185,7 +165,7 @@ export default defineComponent({
                 message: 'Do you want to delete this record?',
                 header: 'Danger Zone',
                 accept: () => {
-                    this.studentInfo = this.studentInfo.filter(qual => qual.no !== item.no);
+                    this.studentAcademicList = this.studentAcademicList.filter(qual => qual.no !== item.no);
                     this.updateAcademicNumbers();
                     this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
                 },
@@ -196,8 +176,7 @@ export default defineComponent({
         },
 
         resetAcademicForm() {
-            // Reset form fields
-            this.academicList = {
+            this.academicInfo = {
                 academicName: '',
                 academicDesc: '',
                 startDate: '',
@@ -207,7 +186,7 @@ export default defineComponent({
         },
 
         updateAcademicNumbers() {
-            this.studentInfo.forEach((qual, index) => {
+            this.studentAcademicList.forEach((qual, index) => {
                 qual.no = index + 1;
             });
         },
@@ -215,10 +194,10 @@ export default defineComponent({
         onChangeValidateAcademic() {
             // Validate fields on input change
             if (this.academicButton) {
-                this.fieldAcademicName = this.academicList.academicName === '';
-                this.fieldAcademicStartDate = this.academicList.startDate === '';
-                this.fieldAcademicEndDate = this.academicList.endDate === '';
-                this.fieldAcademicCertificatedDate = this.academicList.certificatedDate === '';
+                this.fieldAcademicName = this.academicInfo.academicName === '';
+                this.fieldAcademicStartDate = this.academicInfo.startDate === '';
+                this.fieldAcademicEndDate = this.academicInfo.endDate === '';
+                this.fieldAcademicCertificatedDate = this.academicInfo.certificatedDate === '';
             }
         },
         // Academic

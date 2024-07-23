@@ -280,23 +280,23 @@
                 <div class="row m-0">
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Academic Name</label><br>
-                        <InputText v-model="academicList.academicName" :invalid="fieldAcademicName" @keyup="onChangeValidateAcademic"/>
+                        <InputText v-model="academicInfo.academicName" :invalid="fieldAcademicName" @keyup="onChangeValidateAcademic"/>
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Academic Description</label><br>
-                        <InputText v-model="academicList.academicDesc" />
+                        <InputText v-model="academicInfo.academicDesc" />
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Start Date</label><br>
-                        <Calendar v-model="academicList.startDate" :invalid="fieldAcademicStartDate" @blur="onChangeValidateAcademic" dateFormat="yy-mm-dd" />
+                        <Calendar v-model="academicInfo.startDate" :invalid="fieldAcademicStartDate" @blur="onChangeValidateAcademic" dateFormat="yy-mm-dd" />
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">End Date</label><br>
-                        <Calendar v-model="academicList.endDate" :invalid="fieldAcademicEndDate" @blur="onChangeValidateAcademic" dateFormat="yy-mm-dd" />
+                        <Calendar v-model="academicInfo.endDate" :invalid="fieldAcademicEndDate" @blur="onChangeValidateAcademic" dateFormat="yy-mm-dd" />
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Certificated Date</label><br>
-                        <Calendar v-model="academicList.certificatedDate" :invalid="fieldAcademicCertificatedDate" @blur="onChangeValidateAcademic" dateFormat="yy-mm-dd" />
+                        <Calendar v-model="academicInfo.certificatedDate" :invalid="fieldAcademicCertificatedDate" @blur="onChangeValidateAcademic" dateFormat="yy-mm-dd" />
                     </div>
                     <div class="row">
                         <div class="col-lg-4 col-sm-6 col-xl-3">
@@ -311,8 +311,8 @@
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="we_shadow">
-                        <DataTable v-if="studentInfo != ''" v-model:selection="academicList"
-                            @row-dblclick="onClickRow" :value="studentInfo">
+                        <DataTable v-if="studentAcademicList != ''" v-model:selection="academicInfo"
+                            @row-dblclick="onClickRow" :value="studentAcademicList">
                             <Column field="no" header="No" :class="customNoClass"></Column>
                             <Column field="academicName" header="Academic Name"></Column>
                             <Column field="academicDesc" header="Academic Description"></Column>
@@ -322,7 +322,7 @@
                             <Column header="Edit" class="text-center">
                                 <template #body="{ data }">
                                     <font-awesome-icon style="cursor: pointer;" @click="onClickEditAcademic(data)"
-                                        icon="fas fa-pencil" class=" text-primary" title="Edit" />&nbsp;
+                                        icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;
                                     <font-awesome-icon style="cursor: pointer;" @click="onClickDeleteAcademic(data)"
                                         icon="fa-solid fa-trash" class=" text-danger" title="Delete" />
                                 </template>

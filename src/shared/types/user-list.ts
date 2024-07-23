@@ -25,8 +25,9 @@ interface PARENT_LIST {
 }
 
 interface ACADEMIC_LIST {
+  no?: number
   seqNo?: number
-  academicID: number
+  academicID?: number
   academicName: string
   academicDesc: string
   startDate: string
@@ -35,6 +36,7 @@ interface ACADEMIC_LIST {
 }
 
 interface QUALIFICATION_LIST {
+  no?: number
   seqNo?: number
   qualificationName: string
   qualificationDesc: string
