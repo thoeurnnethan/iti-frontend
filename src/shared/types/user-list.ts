@@ -15,7 +15,6 @@ interface USER_LIST {
 }
 
 interface PARENT_LIST {
-  seqNo: number
   firstName: string
   lastName: string
   nickName: string
@@ -26,7 +25,7 @@ interface PARENT_LIST {
 }
 
 interface ACADEMIC_LIST {
-  seqNo: number
+  seqNo?: number
   academicID: number
   academicName: string
   academicDesc: string

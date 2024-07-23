@@ -3,7 +3,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
-import { USER_LIST, QUALIFICATION_LIST } from '@/shared/types/user-list';
+import { USER_LIST, QUALIFICATION_LIST ,PARENT_LIST ,ACADEMIC_LIST } from '@/shared/types/user-list';
 import { RequestService } from '@/shared/services/request-service';
 const requestService = new RequestService();
 
@@ -41,7 +41,25 @@ export default defineComponent({
             fieldCertificatedDate: false,
             qualificationValid: true,
             appleButton: false,
-            editingIndex: -1 ,// Track the index of the currently editing item
+            editingIndex: -1 ,
+
+            studentRegisterInfo: {
+                roleID: '04',
+                firstName: '',
+                lastName: '',
+                nickName: '',
+                gender: '',
+                dateOfBirth: '',
+                phone: '',
+                email: '',
+                passwd: '',
+                placeOfBirth: '',
+                address: '',
+            } as USER_LIST,
+
+            fatherInfo:[] as PARENT_LIST[],
+            motherInfo:[] as PARENT_LIST[],
+            academicList:[] as ACADEMIC_LIST[],
         };
     },
 
@@ -58,30 +76,40 @@ export default defineComponent({
 
     methods: {
 
+        // studentRegister
+            async studentRegister() {
+                console.table(this.studentRegisterInfo);
+                console.table(this.fatherInfo);
+                console.table(this.motherInfo);
+            },
+        // studentRegister
+
+        //--------------------------------------------------------------------------------
+
         // teacherRegister
-        async teacherRegister() {
-            const qualList = this.teacherInfo.map((data) =>{
-                return {
-                    qualificationName: data.qualificationName,
-                    qualificationDesc: data.qualificationDesc,
-                    startDate: this.formatDateDatabase(data.startDate),
-                    endDate: this.formatDateDatabase(data.endDate),
-                    certificatedDate: data.certificatedDate,
+            async teacherRegister() {
+                const qualList = this.teacherInfo.map((data) =>{
+                    return {
+                        qualificationName: data.qualificationName,
+                        qualificationDesc: data.qualificationDesc,
+                        startDate: this.formatDateDatabase(data.startDate),
+                        endDate: this.formatDateDatabase(data.endDate),
+                        certificatedDate: data.certificatedDate,
+                    }
+                })
+                const userInfoList = {
+                    ...this.teacherRegisterInfo,
+                    dateOfBirth: this.formatDateDatabase(this.teacherRegisterInfo.dateOfBirth),
+                    teacherInfo: {
+                        qualificationList: qualList
+                    }
+                };
+                this.userList.push(userInfoList)
+                const reqBody = {
+                    userList: this.userList
                 }
-            })
-            const userInfoList = {
-                ...this.teacherRegisterInfo,
-                dateOfBirth: this.formatDateDatabase(this.teacherRegisterInfo.dateOfBirth),
-                teacherInfo: {
-                    qualificationList: qualList
-                }
-            };
-            this.userList.push(userInfoList)
-            const reqBody = {
-                userList: this.userList
-            }
-            await requestService.request(API_PATH.USER_REGISTER, reqBody, true)
-        },
+                await requestService.request(API_PATH.USER_REGISTER, reqBody, true)
+            },
         // teacherRegister
 
         // qualification
@@ -201,6 +229,7 @@ export default defineComponent({
 
                 return `${year}-${month}-${day}`;
             },
+
             formatDateDatabase(dateString: string): string {
                 const date = new Date(dateString);
                 if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
