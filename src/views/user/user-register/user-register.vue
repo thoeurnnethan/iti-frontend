@@ -3,7 +3,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
-import { USER_LIST, QUALIFICATION_LIST ,PARENT_LIST ,ACADEMIC_LIST , STUDENT_INFO } from '@/shared/types/user-list';
+import { USER_LIST, QUALIFICATION_LIST ,PARENT_LIST ,ACADEMIC_LIST } from '@/shared/types/user-list';
 import { RequestService } from '@/shared/services/request-service';
 const requestService = new RequestService();
 
@@ -41,12 +41,10 @@ export default defineComponent({
             qualificationValid: true,
             appleButton: false,
             editingIndex: -1 ,
-
             fieldAcademicName: false,
             fieldAcademicStartDate: false,
             fieldAcademicEndDate: false,
             fieldAcademicCertificatedDate: false,
-
             studentRegisterInfo: {
                 roleID: '04',
                 firstName: '',
@@ -60,7 +58,6 @@ export default defineComponent({
                 placeOfBirth: '',
                 address: '',
             } as USER_LIST,
-
             fatherInfo:[] as PARENT_LIST[],
             motherInfo:[] as PARENT_LIST[],
             studentInfo: [] as ACADEMIC_LIST[],
@@ -73,7 +70,6 @@ export default defineComponent({
             } as ACADEMIC_LIST,
             editingIndexAcademic: -1 ,
             academicButton: false,
-
         };
     },
 
@@ -97,312 +93,285 @@ export default defineComponent({
     },
 
     methods: {
-
         // studentRegister
-            async studentRegister() {
-                const academicList = this.studentInfo.map((data) => {
-                    return {
-                        academicName: data.academicName,
-                        academicDesc: data.academicDesc,
-                        startDate: this.formatDateDatabase(data.startDate),
-                        endDate: this.formatDateDatabase(data.endDate),
-                        certificatedDate: data.certificatedDate,
-                    };
-                });
-
-                const userInfoList = {
-                    ...this.studentRegisterInfo,
-                    dateOfBirth: this.formatDateDatabase(this.studentRegisterInfo.dateOfBirth),
-                    studentInfo: {
-                        parentList: [
-                            this.fatherInfo,
-                            this.motherInfo
-                        ],
-                        academicList: academicList
-                    }
+        async studentRegister() {
+            const academicList = this.studentInfo.map((data) => {
+                return {
+                    academicName: data.academicName,
+                    academicDesc: data.academicDesc,
+                    startDate: this.formatDateDatabase(data.startDate),
+                    endDate: this.formatDateDatabase(data.endDate),
+                    certificatedDate: data.certificatedDate,
                 };
-
-                this.userList.push(userInfoList);
-
-                const reqBody = {
-                    userList: this.userList
-                };
-
-                await requestService.request(API_PATH.USER_REGISTER, reqBody, true);
-            },
+            });
+            const userInfoList = {
+                ...this.studentRegisterInfo,
+                dateOfBirth: this.formatDateDatabase(this.studentRegisterInfo.dateOfBirth),
+                studentInfo: {
+                    parentList: [
+                        this.fatherInfo,
+                        this.motherInfo
+                    ],
+                    academicList: academicList
+                }
+            };
+            this.userList.push(userInfoList);
+            const reqBody = {
+                userList: this.userList
+            };
+            await requestService.request(API_PATH.USER_REGISTER, reqBody, true);
+        },
         // studentRegister
 
         // Academic
-            saveAcademic() {
-                // Reset validation flags
-                this.fieldAcademicName = false;
-                this.fieldAcademicStartDate = false;
-                this.fieldAcademicEndDate = false;
-                this.fieldAcademicCertificatedDate = false;
-                this.academicButton = true;
+        saveAcademic() {
+            // Reset validation flags
+            this.fieldAcademicName = false;
+            this.fieldAcademicStartDate = false;
+            this.fieldAcademicEndDate = false;
+            this.fieldAcademicCertificatedDate = false;
+            this.academicButton = true;
+            // Validate form
+            if (!this.isAcademicValid) {
+                this.fieldAcademicName = this.academicList.academicName === '';
+                this.fieldAcademicStartDate = this.academicList.startDate === '';
+                this.fieldAcademicEndDate = this.academicList.endDate === '';
+                this.fieldAcademicCertificatedDate = this.academicList.certificatedDate === '';
+                return;
+            }
+            const updatedAcademic: ACADEMIC_LIST = {
+                ...this.academicList,
+                startDate: this.formatDate(this.academicList.startDate),
+                endDate: this.formatDate(this.academicList.endDate),
+                certificatedDate: this.formatDate(this.academicList.certificatedDate)
+            };
+            if (this.editingIndexAcademic === -1) {
+                updatedAcademic.no = this.studentInfo.length + 1;
+                this.studentInfo.push(updatedAcademic);
+            } else {
+                this.studentInfo[this.editingIndexAcademic] = updatedAcademic;
+                this.editingIndexAcademic = -1;
+            }
+            this.updateAcademicNumbers();
+            this.resetAcademicForm();
+            this.academicButton = false;
+        },
 
-                // Validate form
-                if (!this.isAcademicValid) {
-                    this.fieldAcademicName = this.academicList.academicName === '';
-                    this.fieldAcademicStartDate = this.academicList.startDate === '';
-                    this.fieldAcademicEndDate = this.academicList.endDate === '';
-                    this.fieldAcademicCertificatedDate = this.academicList.certificatedDate === '';
-                    return;
+        onClickEditAcademic(data: ACADEMIC_LIST) {
+            if (this.editingIndexAcademic !== -1) {
+                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
+                return;
+            }
+            this.$confirm.require({
+                message: 'Do you want to edit this record?',
+                header: 'Danger Zone',
+                accept: () => {
+                    this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
+                    this.academicList = { ...data };
+                    this.editingIndexAcademic = this.studentInfo.findIndex(item => item.no === data.no);
+                },
+                reject: () => {
+                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
                 }
+            });
+        },
 
-                const updatedAcademic: ACADEMIC_LIST = {
-                    ...this.academicList,
-                    startDate: this.formatDate(this.academicList.startDate),
-                    endDate: this.formatDate(this.academicList.endDate),
-                    certificatedDate: this.formatDate(this.academicList.certificatedDate)
-                };
-
-                if (this.editingIndexAcademic === -1) {
-                    // New entry
-                    updatedAcademic.no = this.studentInfo.length + 1;
-                    this.studentInfo.push(updatedAcademic);
-                } else {
-                    // Update existing entry
-                    this.studentInfo[this.editingIndexAcademic] = updatedAcademic;
-                    this.editingIndexAcademic = -1; // Reset editing index
+        onClickDeleteAcademic(item: ACADEMIC_LIST) {
+            if (this.editingIndexAcademic !== -1) {
+                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
+                return;
+            }
+            this.$confirm.require({
+                message: 'Do you want to delete this record?',
+                header: 'Danger Zone',
+                accept: () => {
+                    this.studentInfo = this.studentInfo.filter(qual => qual.no !== item.no);
+                    this.updateAcademicNumbers();
+                    this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+                },
+                reject: () => {
+                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
                 }
+            });
+        },
 
-                this.updateAcademicNumbers();
-                this.resetAcademicForm();
-                this.academicButton = false;
-            },
+        resetAcademicForm() {
+            // Reset form fields
+            this.academicList = {
+                academicName: '',
+                academicDesc: '',
+                startDate: '',
+                endDate: '',
+                certificatedDate: ''
+            };
+        },
 
-            onClickEditAcademic(data: ACADEMIC_LIST) {
-                if (this.editingIndexAcademic !== -1) {
-                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
-                    return;
-                }
+        updateAcademicNumbers() {
+            this.studentInfo.forEach((qual, index) => {
+                qual.no = index + 1;
+            });
+        },
 
-                this.$confirm.require({
-                    message: 'Do you want to edit this record?',
-                    header: 'Danger Zone',
-                    accept: () => {
-                        this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
-                        this.academicList = { ...data };
-                        this.editingIndexAcademic = this.studentInfo.findIndex(item => item.no === data.no);
-                    },
-                    reject: () => {
-                        this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-                    }
-                });
-            },
-
-            onClickDeleteAcademic(item: ACADEMIC_LIST) {
-                if (this.editingIndexAcademic !== -1) {
-                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
-                    return;
-                }
-
-                this.$confirm.require({
-                    message: 'Do you want to delete this record?',
-                    header: 'Danger Zone',
-                    accept: () => {
-                        this.studentInfo = this.studentInfo.filter(qual => qual.no !== item.no);
-                        this.updateAcademicNumbers();
-                        this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
-                    },
-                    reject: () => {
-                        this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-                    }
-                });
-            },
-
-            resetAcademicForm() {
-                // Reset form fields
-                this.academicList = {
-                    academicName: '',
-                    academicDesc: '',
-                    startDate: '',
-                    endDate: '',
-                    certificatedDate: ''
-                };
-            },
-
-            updateAcademicNumbers() {
-                this.studentInfo.forEach((qual, index) => {
-                    qual.no = index + 1;
-                });
-            },
-
-            onChangeValidateAcademic() {
-                // Validate fields on input change
-                if (this.academicButton) {
-                    this.fieldAcademicName = this.academicList.academicName === '';
-                    this.fieldAcademicStartDate = this.academicList.startDate === '';
-                    this.fieldAcademicEndDate = this.academicList.endDate === '';
-                    this.fieldAcademicCertificatedDate = this.academicList.certificatedDate === '';
-                }
-            },
+        onChangeValidateAcademic() {
+            // Validate fields on input change
+            if (this.academicButton) {
+                this.fieldAcademicName = this.academicList.academicName === '';
+                this.fieldAcademicStartDate = this.academicList.startDate === '';
+                this.fieldAcademicEndDate = this.academicList.endDate === '';
+                this.fieldAcademicCertificatedDate = this.academicList.certificatedDate === '';
+            }
+        },
         // Academic
-
-
         //--------------------------------------------------------------------------------
 
         // teacherRegister
-            async teacherRegister() {
-                const qualList = this.teacherInfo.map((data) =>{
-                    return {
-                        qualificationName: data.qualificationName,
-                        qualificationDesc: data.qualificationDesc,
-                        startDate: this.formatDateDatabase(data.startDate),
-                        endDate: this.formatDateDatabase(data.endDate),
-                        certificatedDate: data.certificatedDate,
-                    }
-                })
-                const userInfoList = {
-                    ...this.teacherRegisterInfo,
-                    dateOfBirth: this.formatDateDatabase(this.teacherRegisterInfo.dateOfBirth),
-                    teacherInfo: {
-                        qualificationList: qualList
-                    }
-                };
-                this.userList.push(userInfoList)
-                const reqBody = {
-                    userList: this.userList
+        async teacherRegister() {
+            const qualList = this.teacherInfo.map((data) => {
+                return {
+                    qualificationName: data.qualificationName,
+                    qualificationDesc: data.qualificationDesc,
+                    startDate: this.formatDateDatabase(data.startDate),
+                    endDate: this.formatDateDatabase(data.endDate),
+                    certificatedDate: data.certificatedDate,
                 }
-                await requestService.request(API_PATH.USER_REGISTER, reqBody, true)
-            },
+            })
+            const userInfoList = {
+                ...this.teacherRegisterInfo,
+                dateOfBirth: this.formatDateDatabase(this.teacherRegisterInfo.dateOfBirth),
+                teacherInfo: {
+                    qualificationList: qualList
+                }
+            };
+            this.userList.push(userInfoList)
+            const reqBody = {
+                userList: this.userList
+            }
+            await requestService.request(API_PATH.USER_REGISTER, reqBody, true)
+        },
         // teacherRegister
 
         // qualification
-            saveQualification() {
-                // Reset validation flags
-                this.fieldQualificationName = false;
-                this.fieldStartDate = false;
-                this.fieldEndDate = false;
-                this.fieldCertificatedDate = false;
-                this.appleButton = true;
+        saveQualification() {
+            // Reset validation flags
+            this.fieldQualificationName = false;
+            this.fieldStartDate = false;
+            this.fieldEndDate = false;
+            this.fieldCertificatedDate = false;
+            this.appleButton = true;
 
-                // Validate form
-                if (!this.isValid) {
-                    this.fieldQualificationName = this.qualificationList.qualificationName === '';
-                    this.fieldStartDate = this.qualificationList.startDate === '';
-                    this.fieldEndDate = this.qualificationList.endDate === '';
-                    this.fieldCertificatedDate = this.qualificationList.certificatedDate === '';
-                    return;
+            // Validate form
+            if (!this.isValid) {
+                this.fieldQualificationName = this.qualificationList.qualificationName === '';
+                this.fieldStartDate = this.qualificationList.startDate === '';
+                this.fieldEndDate = this.qualificationList.endDate === '';
+                this.fieldCertificatedDate = this.qualificationList.certificatedDate === '';
+                return;
+            }
+
+            const updatedQualification: QUALIFICATION_LIST = {
+                ...this.qualificationList,
+                startDate: this.formatDate(this.qualificationList.startDate),
+                endDate: this.formatDate(this.qualificationList.endDate)
+            };
+
+            if (this.editingIndex === -1) {
+                // New entry
+                updatedQualification.no = this.teacherInfo.length + 1;
+                this.teacherInfo.push(updatedQualification);
+            } else {
+                // Update existing entry
+                this.teacherInfo[this.editingIndex] = updatedQualification;
+                this.editingIndex = -1; // Reset editing index
+            }
+
+            this.updateQualificationNumbers();
+            this.resetQualificationForm();
+            this.appleButton = false;
+        },
+
+        onChangeValidate() {
+            // Validate fields on input change
+            if (this.appleButton) {
+                this.fieldQualificationName = this.qualificationList.qualificationName === '';
+                this.fieldStartDate = this.qualificationList.startDate === '';
+                this.fieldEndDate = this.qualificationList.endDate === '';
+                this.fieldCertificatedDate = this.qualificationList.certificatedDate === '';
+            }
+        },
+
+        resetQualificationForm() {
+            // Reset form fields
+            this.qualificationList = {
+                qualificationName: '',
+                qualificationDesc: '',
+                startDate: '',
+                endDate: '',
+                certificatedDate: ''
+            };
+        },
+
+        onClickEdit(data: QUALIFICATION_LIST) {
+            if (this.editingIndex !== -1) {
+                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
+                return;
+            }
+            this.$confirm.require({
+                message: 'Do you want to edit this record?',
+                header: 'Danger Zone',
+                accept: () => {
+                    this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
+                    this.qualificationList = { ...data };
+                    this.editingIndex = this.teacherInfo.findIndex(item => item.no === data.no);
+                },
+                reject: () => {
+                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
                 }
+            });
+        },
 
-                const updatedQualification: QUALIFICATION_LIST = {
-                    ...this.qualificationList,
-                    startDate: this.formatDate(this.qualificationList.startDate),
-                    endDate: this.formatDate(this.qualificationList.endDate)
-                };
-
-                if (this.editingIndex === -1) {
-                    // New entry
-                    updatedQualification.no = this.teacherInfo.length + 1;
-                    this.teacherInfo.push(updatedQualification);
-                } else {
-                    // Update existing entry
-                    this.teacherInfo[this.editingIndex] = updatedQualification;
-                    this.editingIndex = -1; // Reset editing index
+        onClickDelete(item: QUALIFICATION_LIST) {
+            if (this.editingIndex !== -1) {
+                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
+                return;
+            }
+            this.$confirm.require({
+                message: 'Do you want to delete this record?',
+                header: 'Danger Zone',
+                accept: () => {
+                    this.teacherInfo = this.teacherInfo.filter(qual => qual.no !== item.no);
+                    this.updateQualificationNumbers();
+                    this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+                },
+                reject: () => {
+                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
                 }
+            });
+        },
 
-                this.updateQualificationNumbers();
-                this.resetQualificationForm();
-                this.appleButton = false;
-            },
-
-            onChangeValidate() {
-                // Validate fields on input change
-                if (this.appleButton) {
-                    this.fieldQualificationName = this.qualificationList.qualificationName === '';
-                    this.fieldStartDate = this.qualificationList.startDate === '';
-                    this.fieldEndDate = this.qualificationList.endDate === '';
-                    this.fieldCertificatedDate = this.qualificationList.certificatedDate === '';
-                }
-            },
-
-            resetQualificationForm() {
-                // Reset form fields
-                this.qualificationList = {
-                    qualificationName: '',
-                    qualificationDesc: '',
-                    startDate: '',
-                    endDate: '',
-                    certificatedDate: ''
-                };
-            },
-
-            onClickEdit(data: QUALIFICATION_LIST) {
-                if (this.editingIndex !== -1) {
-                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
-                    return;
-                }
-
-                this.$confirm.require({
-                    message: 'Do you want to edit this record?',
-                    header: 'Danger Zone',
-                    accept: () => {
-                        this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
-                        this.qualificationList = { ...data };
-                        this.editingIndex = this.teacherInfo.findIndex(item => item.no === data.no);
-                    },
-                    reject: () => {
-                        this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-                    }
-                });
-            },
-
-            onClickDelete(item: QUALIFICATION_LIST) {
-                if (this.editingIndex !== -1) {
-                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
-                    return;
-                }
-
-                this.$confirm.require({
-                    message: 'Do you want to delete this record?',
-                    header: 'Danger Zone',
-                    accept: () => {
-                        this.teacherInfo = this.teacherInfo.filter(qual => qual.no !== item.no);
-                        this.updateQualificationNumbers();
-                        this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
-                    },
-                    reject: () => {
-                        this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-                    }
-                });
-            },
-
-            updateQualificationNumbers() {
-                // Update the 'no' field for each qualification
-                this.teacherInfo.forEach((qual, index) => {
-                    qual.no = index + 1;
-                });
-            },
-
-        // qualification
+        updateQualificationNumbers() {
+            // Update the 'no' field for each qualification
+            this.teacherInfo.forEach((qual, index) => {
+                qual.no = index + 1;
+            });
+        },
 
         formatDate(dateString: string): string {
             const date = new Date(dateString);
             if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
-
             const year = date.getFullYear();
             const month = (date.getMonth() + 1).toString().padStart(2, '0');
             const day = date.getDate().toString().padStart(2, '0');
-
             return `${year}-${month}-${day}`;
         },
 
         formatDateDatabase(dateString: string): string {
             const date = new Date(dateString);
             if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
-
             const year = date.getFullYear();
             const month = (date.getMonth() + 1).toString().padStart(2, '0');
             const day = date.getDate().toString().padStart(2, '0');
-
             return `${year}${month}${day}`;
         },
-
-
-
-
     }
 });
 </script>
