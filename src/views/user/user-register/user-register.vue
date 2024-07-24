@@ -1,17 +1,17 @@
 <template src="./user-register.html"></template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
 import { USER_LIST, QUALIFICATION_LIST ,PARENT_LIST ,ACADEMIC_LIST } from '@/shared/types/user-list';
 import { RequestService } from '@/shared/services/request-service';
+import { defineComponent } from 'vue';
 const requestService = new RequestService();
 
 export default defineComponent({
     name: 'UserRegister',
     data() {
         return {
-            select_Role: '04',
+            select_Role: '03',
             userList: [] as USER_LIST[],
             teacherInfo: [] as QUALIFICATION_LIST[],
             fatherInfo:{
@@ -111,7 +111,7 @@ export default defineComponent({
                 this.teacherRegisterInfo.lastName !== '' &&
                 this.teacherRegisterInfo.dateOfBirth !== '' &&
                 this.teacherRegisterInfo.phone !== '' &&
-                this.teacherRegisterInfo.email !== '' &&
+                this.isValidEmail(this.teacherRegisterInfo.email) &&
                 this.teacherRegisterInfo.placeOfBirth !== '' &&
                 this.teacherRegisterInfo.address !== ''
             );
@@ -130,7 +130,7 @@ export default defineComponent({
                 this.studentRegisterInfo.lastName !== '' &&
                 this.studentRegisterInfo.dateOfBirth !== '' &&
                 this.studentRegisterInfo.phone !== '' &&
-                this.studentRegisterInfo.email !== '' &&
+                this.isValidEmail(this.studentRegisterInfo.email) &&
                 this.studentRegisterInfo.placeOfBirth !== '' &&
                 this.studentRegisterInfo.address !== '' &&
 
@@ -178,7 +178,7 @@ export default defineComponent({
                     this.studentRegisterPlaceOfBirth = this.studentRegisterInfo.placeOfBirth === '';
                     this.studentRegisterAddress = this.studentRegisterInfo.address === '';
                     this.studentRegisterPhone = this.studentRegisterInfo.phone === '';
-                    this.studentRegisterEmail = this.studentRegisterInfo.email === '';
+                    this.studentRegisterEmail = !this.isValidEmail(this.studentRegisterInfo.email);
 
                     this.fatherFirstName = this.fatherInfo.firstName === '';
                     this.fatherLastName = this.fatherInfo.lastName === '';
@@ -190,8 +190,7 @@ export default defineComponent({
                     return;
                 }
 
-
-                if (academicListCount.length <= 0) {
+                if (academicListCount.length < 0) {
                     return;
                 }
 
@@ -365,12 +364,12 @@ export default defineComponent({
                     this.teacherRegisterPlaceOfBirth = this.teacherRegisterInfo.placeOfBirth === '';
                     this.teacherRegisterAddress = this.teacherRegisterInfo.address === '';
                     this.teacherRegisterPhone = this.teacherRegisterInfo.phone === '';
-                    this.teacherRegisterEmail = this.teacherRegisterInfo.email === '';
+                    this.teacherRegisterEmail = !this.isValidEmail(this.teacherRegisterInfo.email);
                     return;
                 }
 
 
-                if (qualListCount.length < 0) {
+                if (qualListCount.length <= 0) {
                     return;
                 }
 
@@ -380,7 +379,7 @@ export default defineComponent({
                         qualificationDesc: data.qualificationDesc,
                         startDate: this.formatDateDatabase(data.startDate),
                         endDate: this.formatDateDatabase(data.endDate),
-                        certificatedDate: data.certificatedDate,
+                        certificatedDate: this.formatDateDatabase(data.certificatedDate),
                     }
                 })
 
@@ -512,24 +511,30 @@ export default defineComponent({
                 });
             },
 
-            formatDate(dateString: string): string {
-                const date = new Date(dateString);
-                if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
-                const year = date.getFullYear();
-                const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                const day = date.getDate().toString().padStart(2, '0');
-                return `${year}-${month}-${day}`;
-            },
-
-            formatDateDatabase(dateString: string): string {
-                const date = new Date(dateString);
-                if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
-                const year = date.getFullYear();
-                const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                const day = date.getDate().toString().padStart(2, '0');
-                return `${year}${month}${day}`;
-            },
         // qualification
+
+        formatDate(dateString: string): string {
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        },
+
+        formatDateDatabase(dateString: string): string {
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            return `${year}${month}${day}`;
+        },
+        isValidEmail(email: string): boolean {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailPattern.test(email);
+        },
+        
 
     }
 });
