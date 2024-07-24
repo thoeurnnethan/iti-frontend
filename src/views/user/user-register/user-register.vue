@@ -11,7 +11,7 @@ export default defineComponent({
     name: 'UserRegister',
     data() {
         return {
-            select_Role: '03',
+            select_Role: '04',
             userList: [] as USER_LIST[],
             teacherInfo: [] as QUALIFICATION_LIST[],
             fatherInfo:{
@@ -126,13 +126,13 @@ export default defineComponent({
         },
         isStudentValid(): boolean {
             return (
-                this.teacherRegisterInfo.firstName !== '' &&
-                this.teacherRegisterInfo.lastName !== '' &&
-                this.teacherRegisterInfo.dateOfBirth !== '' &&
-                this.teacherRegisterInfo.phone !== '' &&
-                this.teacherRegisterInfo.email !== '' &&
-                this.teacherRegisterInfo.placeOfBirth !== '' &&
-                this.teacherRegisterInfo.address !== '' &&
+                this.studentRegisterInfo.firstName !== '' &&
+                this.studentRegisterInfo.lastName !== '' &&
+                this.studentRegisterInfo.dateOfBirth !== '' &&
+                this.studentRegisterInfo.phone !== '' &&
+                this.studentRegisterInfo.email !== '' &&
+                this.studentRegisterInfo.placeOfBirth !== '' &&
+                this.studentRegisterInfo.address !== '' &&
 
                 this.fatherInfo.firstName !== '' &&
                 this.fatherInfo.lastName !== '' &&
@@ -161,7 +161,17 @@ export default defineComponent({
 
                 this.academicButton = true;
 
-                if (!this.isTeacherValid) {
+                const academicListCount = this.studentAcademicList.map((data) => {
+                    return {
+                        academicName: data.academicName,
+                        academicDesc: data.academicDesc,
+                        startDate: this.formatDateDatabase(data.startDate),
+                        endDate: this.formatDateDatabase(data.endDate),
+                        certificatedDate: this.formatDateDatabase(data.certificatedDate),
+                    };
+                });                
+
+                if (!this.isStudentValid) {
                     this.studentRegisterFirstName = this.studentRegisterInfo.firstName === '';
                     this.studentRegisterLastName = this.studentRegisterInfo.lastName === '';
                     this.studentRegisterDateOfBirth = this.studentRegisterInfo.dateOfBirth === '';
@@ -177,14 +187,11 @@ export default defineComponent({
                     this.motherFirstName = this.motherInfo.firstName === '';
                     this.motherLastName = this.motherInfo.lastName === '';
                     this.motherPhone = this.motherInfo.phone === '';
-
+                    return;
                 }
 
-                if (!this.isAcademicValid) {
-                    this.fieldAcademicName = this.academicInfo.academicName === '';
-                    this.fieldAcademicStartDate = this.academicInfo.startDate === '';
-                    this.fieldAcademicEndDate = this.academicInfo.endDate === '';
-                    this.fieldAcademicCertificatedDate = this.academicInfo.certificatedDate === '';
+
+                if (academicListCount.length <= 0) {
                     return;
                 }
 
