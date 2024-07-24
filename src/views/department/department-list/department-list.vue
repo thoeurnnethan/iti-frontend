@@ -121,7 +121,6 @@ export default defineComponent({
         message: 'Do you want to hide this record?',
         header: 'Danger Zone',
         accept: async () => {
-          console.table(_item);
           const reqBody = {
             departmentID: _item.departmentID,
             statusCode: '09'
@@ -137,7 +136,6 @@ export default defineComponent({
     },
 
     async setActive(_item: DEPARTMENT_LIST) {
-      console.table(_item);
       const reqBody = {
         departmentID: _item.departmentID,
         statusCode: '01'
@@ -153,7 +151,13 @@ export default defineComponent({
         dataProp:{
           department: this.departmentInfo,
           isRegister: true
-        }
+        },
+        callback: () => {
+          this.getDepartmentList();
+        },
+        onClose: () =>{
+          this.getDepartmentList();
+        } 
       })
     },
 
