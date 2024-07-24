@@ -30,6 +30,11 @@ const router = createRouter({
                     component: () => import("@/views/user/user-register/user-register.vue")
                 },
                 {
+                    path: "/user-edit/:id",
+                    name: "user-update",
+                    component: () => import("@/views/user/user-update/user-update.vue")
+                },
+                {
                     path: "/class-list",
                     name: "class-list",
                     component: () => import("@/views/class/class-list/class-list.vue")

@@ -6,6 +6,7 @@ import { USER_LIST_RES, USER_LIST, USER_LIST_REQ, USER_DETAIL_RES } from '@/shar
 import { defineComponent, ref } from 'vue';
 import { RequestService } from '@/shared/services/request-service';
 import { UserRoleList, GenderCodeList } from '@/shared/common/common';
+import { StandardCodeData } from '@/shared/types/standard-code';
 import user_detail from "@/views/user/user-detail/user-detail.vue";
 import { ExportExcel } from '@/shared/services/export-excel-class';
 
@@ -35,16 +36,20 @@ export default defineComponent({
             roleTitle: '',
             totalCount: 0 as number,
             pageSize: 10,
-            pageNumber: 0
+            pageNumber: 0,
+            statusCodeList: [
+                { codeValue: '01', codeValueDesc: 'Active' },
+                { codeValue: '09', codeValueDesc: 'Inactive' },
+            ] as StandardCodeData[],
         }
     },
 
     mounted() {
-        this.getStudentList()
+        this.getUserList()
     },
 
     methods: {
-        async getStudentList() {
+        async getUserList() {
             const body: USER_LIST_REQ = {
                 searchKey: this.searchKey,
                 roleID: this.roleID,
@@ -82,12 +87,41 @@ export default defineComponent({
                 }
             })
         },
+
+        async deleteUser(_item: USER_LIST) {
+            this.$confirm.require({
+                message: 'Do you want to hide this record?',
+                header: 'Danger Zone',
+                accept: async () => {
+                const reqBody = {
+                    body:{
+                        userID: _item.userID,
+                        roleID: _item.roleID,
+                        statusCode: '09'
+                    }
+                }
+
+                console.table(reqBody);
+
+                await requestService.request(API_PATH.USER_UPDATE, reqBody, false) as USER_LIST;
+                this.getUserList();
+                this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+                },
+                reject: () => {
+                this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+                }
+            });
+        },
+
+        editUser(_item: USER_LIST){
+            this.$router.push({ path: `/user-edit/${_item.userID}` });
+        },
         
         // Handle page size page number
         onPage(event: { page: number; rows: number; }) {
             this.pageNumber = event.page;
             this.pageSize = event.rows;
-            this.getStudentList();
+            this.getUserList();
         },
 
         //download excel

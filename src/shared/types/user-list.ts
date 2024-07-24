@@ -12,6 +12,7 @@ interface USER_LIST {
   phone: string
   email: string
   passwd: string
+  status: string 
   studentInfo?: STUDENT_INFO
   teacherInfo?: TEACHER_INFO
 }

@@ -1,133 +1,363 @@
-<div id="nav" th:fragment="nav">
-    <div class="col-md-3 left_col">
-        <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-                <a th:href="@{/}" class="site_title"> <strong class="ppcb_logo">Logo Icon</strong> <span class="text" th:text="${bankName}"></span> </a>
-            </div>
-            
-            <div class="clearfix"></div>
-            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                <div class="menu_section">
-                    <ul class="nav side-menu">
-                         <li class="hide MN_ADM_000_01"><a><i class="fa fa-users" aria-hidden="true"></i><span th:text="#{MENU.ADMINISTRATION}"> Administration </span><span class="fa fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                                <li class="sub_menu hide MN_ADM_101_01"><a th:text="#{MENU.DEPARTMENT}" th:href="@{/ADM_101_01}">Department<span class="fa fa-chevron-down"></span></a></li>
-                                <li class="sub_menu hide MN_ADM_201_01"><a th:text="#{MENU.USER}" th:href="@{/ADM_201_01}">User<span class="fa fa-chevron-down"></span></a></li>
-                                <li class="sub_menu hide MN_ADM_301_01"><a th:text="#{MENU.ROLE}" th:href="@{/ADM_301_01}">Role<span class="fa fa-chevron-down"></span></a></li>
-                                <li class="sub_menu hide MN_ADM_401_01"><a th:text="#{MENU.MENU}" th:href="@{/ADM_401_01}">Menu<span class="fa fa-chevron-down"></span></a></li>
-                                <li class="sub_menu hide MN_ADM_501_01"><a th:text="#{MENU.HOST}" th:href="@{/ADM_501_01}">Host</a></li>
-                                <li class="sub_menu hide MN_ADM_601_01"><a th:text="#{MENU.SERVER}" th:href="@{/ADM_601_01}">Server</a></li>
-                                <li class="sub_menu hide MN_ADM_701_01"><a th:text="#{MENU.SETTING}" th:href="@{/ADM_701_01}">Setting<span class="fa fa-chevron-down"></span></a></li>
-                            </ul>
-                        </li>
-                    
-                        <li class="hide MN_CBS_000_01"><a><i class="fa fa-bank"></i><span th:text="#{MENU.CORE_BANKING}" > Core Banking </span><span class="fa fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                                <li class="hide MN_CBS_000_02"><a><span th:text="#{MENU.PARAMETER}" >Parameter</span> <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li class="sub_menu hide MN_CBS_001_01"><a th:href="@{/CBS_001_01}" th:text="#{MENU.SERVICE_PARAMETER}">Service Parameter</a></li>
-                                        <li class="sub_menu hide MN_CBS_003_01"><a th:href="@{/CBS_003_01}" th:text="#{MENU.COMMON_ITEM}">Common Transaction Parameter Items</a></li>
-                                        <li class="sub_menu hide MN_CBS_005_01"><a th:href="@{/CBS_005_01}" th:text="#{MENU.PASSBOOK_SLIP_FORM}">Passbook and Slip Form</a></li>
-                                        <li class="sub_menu hide MN_CBS_007_01"><a th:href="@{/CBS_007_01}" th:text="#{MENU.TRANSACTION_PARAMETER}">Transaction Parameter</a></li>												
-                                        <li class="sub_menu hide MN_CBS_009_01"><a th:href="@{/CBS_009_01}" th:text="#{MENU.LOG_PARAMETER}">Log Parameter</a></li>
-                                        <li class="sub_menu hide MN_CBS_011_01"><a th:href="@{/CBS_011_01}" th:text="#{MENU.LINK_INTERFACE}">Link Interface Parameter</a></li>	
-                                        <li class="sub_menu hide MN_CBS_011_02"><a th:href="@{/CBS_011_02}" th:text="#{MENU.LINK_PARAMETER}">Link Parameter</a></li>	
-                                    </ul>
-                                </li>
-                                <li class="hide MN_CBS_000_03"><a><span th:text="#{MENU.LOG}" >Log</span> <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li class="sub_menu hide MN_CBS_101_01"><a th:href="@{/CBS_101_01}" th:text="#{MENU.TRANSACTION_LOG}">Transaction Log</a></li>
-                                        <li class="sub_menu hide MN_CBS_103_01"><a th:href="@{/CBS_103_01}" th:text="#{MENU.ERROR_LOG}">Error Log</a></li>
-                                        <li class="sub_menu hide MN_CBS_104_01"><a th:href="@{/CBS_104_01}" th:text="#{MENU.BUSINESS_LOG}">Business Log</a></li>
-                                    </ul>
-                                </li>
-                                <li class="hide MN_CBS_000_05">	<a th:href="@{/CBS_000_05}" th:text="#{MENU.MESSAGE_LAYOUT_MASTER}">Message Layout Master</a></li>
-                                <li class="hide MN_CBS_000_04"><a><span th:text="#{MENU.SYSTEM}" >System</span> <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li class="sub_menu hide MN_CBS_110_01"><a th:href="@{/CBS_110_01}" th:text="#{MENU.EX_ROUTINGINFO}">Organization Code</a></li>
-                                        <li class="sub_menu hide MN_CBS_111_01"><a th:href="@{/CBS_111_01}" th:text="#{MENU.BUSINESS_CODE}">Business Code</a></li>
-                                        <li class="sub_menu hide MN_CBS_105_01"><a th:href="@{/CBS_105_01}" th:text="#{MENU.SYSTEM_BATCH}">System Batch</a></li>
-                                        <li class="sub_menu hide MN_CBS_106_01"><a th:href="@{/CBS_106_01}" th:text="#{MENU.BUSINESS_DATE}">Business Date</a></li>
-                                        <li class="sub_menu hide MN_CBS_107_01"><a th:href="@{/monitoring}" th:text="#{MENU.MONITORING}" target="blank" >Monitoring</a></li>
-                                        <li class="sub_menu hide MN_CBS_115_01"><a th:href="@{/smshistory}" th:text="#{MENU.SMS_HISTORY}" target="blank" >SMSHistory</a></li>
-                                        <li class="sub_menu hide MN_CBS_108_01"><a th:href="@{/CBS_108_01}" th:text="#{MENU.UAT_CONTROL}">UAT Control</a></li>
-                                        <li class="sub_menu hide MN_CBS_109_01"><a th:href="@{/CBS_109_01}" th:text="#{MENU.PRODUCTION_CONTROL}">Production Control</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
+<Toast />
+<ConfirmDialog></ConfirmDialog>
+<div class="container-fluid p-0 mb-4">
+    <div class="container-fluid p-0 d-flex justify-content-between">
+        <span class="text_title">User Register</span>
+    </div>
 
-                        <li class="hide MN_BAT_000_01"><a><i class="fa fa-sitemap"></i><span th:text="#{MENU.BATCH}">Batch</span>  <span class="fa fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                                <li class="sub_menu hide MN_BAT_000_02"><a><span th:text="#{MENU.SYSTEM}">System</span> <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">	
-                                        <li class="sub_menu hide MN_BAT_111_01"><a th:href="@{/BAT_111_01}" th:text="#{MENU.SCHEDULER}">Scheduler</a></li>
-                                        <li class="sub_menu hide MN_BAT_116_01"><a th:href="@{/BAT_116_01}" th:text="#{MENU.AGENT}">Agent</a></li>
-                                        <li class="sub_menu hide MN_BAT_121_01"><a th:href="@{/BAT_121_01}" th:text="#{MENU.SHELL_SCRIPT}">Shell script</a></li>
-                                        <li class="sub_menu hide MN_BAT_211_01"><a th:href="@{/BAT_211_01}" th:text="#{MENU.DEFERRED_NODE}">Deferred Node</a></li>
-                                        <li class="sub_menu hide MN_BAT_214_01"><a th:href="@{/BAT_214_01}" th:text="#{MENU.CENTERCUT_NODE}">Centercut Node</a></li>
-                                    </ul>
-                                </li>
-                                <li class="sub_menu hide MN_BAT_000_03"><a><span th:text="#{MENU.JOB}">Job</span> <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">	
-                                        <li class="sub_menu hide MN_BAT_251_01"><a th:href="@{/BAT_251_01}" th:text="#{MENU.TOKENS}">Tokens</a></li>
-                                        <li class="sub_menu hide MN_BAT_201_01"><a th:href="@{/BAT_201_01}" th:text="#{MENU.BATCH_JOBES}">Batch Job</a></li>
-                                        <li class="sub_menu hide MN_BAT_271_01"><a th:href="@{/BAT_271_01}" th:text="#{MENU.ORDER_JOB_RESULT}">Order Job Result</a></li> 
-                                        <li class="sub_menu hide MN_BAT_221_01"><a th:href="@{/BAT_221_01}" th:text="#{MENU.ORDER_JOB}">Order Job History</a></li> 
-                                        <li class="sub_menu hide MN_BAT_261_01"><a th:href="@{/BAT_261_01}" th:text="#{MENU.ORDER_TOKENS}">Order Tokens</a></li> 
-                                    </ul>
-                                </li>
-                                <li class="sub_menu hide MN_BAT_000_04"><a><span th:text="#{MENU.DEFERRED_SERVIVCE}">Deferred Service</span> <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">	
-                                        <li class="sub_menu hide MN_BAT_301_01"><a th:href="@{/BAT_301_01}" th:text="#{MENU.SERVICE_INFO}">Service Info</a></li>
-                                        <li class="sub_menu hide MN_BAT_321_01"><a th:href="@{/BAT_321_01}" th:text="#{MENU.SERVICE_STATUS}">Service Status</a></li>
-                                    <!-- 	<li class="sub_menu hide MN_BAT_331_01"><a th:href="@{/BAT_331_01}" th:text="#{MENU.SERVICE_HISTORY}">Service History</a></li> 
-                                        <li class="sub_menu hide MN_BAT_341_01"><a th:href="@{/BAT_341_01}" th:text="#{MENU.INSTANCE_MGMT}">Instance mgmt</a></li> 
-                                        <li class="sub_menu hide MN_BAT_351_01"><a th:href="@{/BAT_351_01}" th:text="#{MENU.WATCHER_FILE}">Watcher File</a></li>  -->
-                                    </ul>
-                                </li>
-                                <li class="sub_menu hide MN_BAT_000_05"><a><span th:text="#{MENU.CENTERCUT_SERIVCE}">Centercut Service</span> <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">	
-                                        <li class="sub_menu hide MN_BAT_401_01"><a th:href="@{/BAT_401_01}" th:text="#{MENU.SERVICE_STATUS}">Service Info</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        
-                        <li class="hide MN_APR_000_01"><a><i class="fa fa-unlock-alt" aria-hidden="true"></i><span th:text="#{MENU.APPROVAL}"> Approval </span><span class="fa fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                                <li class="sub_menu hide MN_APR_101_01"><a th:href="@{/APR_101_01}" th:text="#{MENU.WAITING_LIST}">Waiting List</a></li>
-                                <li class="sub_menu hide MN_APR_101_01"><a th:href="@{/APR_201_01}" th:text="#{MENU.APPROVED_LIST}">Approved list</a></li>
-                                <li class="sub_menu hide MN_APR_101_01"><a th:href="@{/APR_203_01}" th:text="#{MENU.APPROVED_LINE_TEM}">Approved Line Template</a></li>
-                            </ul>
-                        </li>
-                        
-                        <li class="hide MN_VMG_000_01"><a><i class="fa fa-paste" aria-hidden="true"></i><span th:text="#{MENU.VERSION_MGMT}"> Version Mgmt </span><span class="fa fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                                <li class="sub_menu hide MN_VMG_101_01"><a th:href="@{/VMG_101_01}" th:text="#{MENU.TEST_DEPLOY_LIST}">Test Deploy Request List</a></li>
-                                <li class="sub_menu hide MN_VMG_201_01"><a th:href="@{/VMG_201_01}" th:text="#{MENU.PRO_DEPLOY_LIST}">Production Deploy Request List</a></li>
-                                
-                                <!-- <li class="sub_menu hide MN_VMG_000_02"><a><span th:text="#{MENU.FOR_TEST}" >For Test</span> <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li class="sub_menu hide MN_VMG_101_01"><a th:href="@{/VMG_101_01}" th:text="#{MENU.TEST_DEPLOY_LIST}">Test Deploy List and result</a></li>
-                                        <li class="sub_menu hide MN_VMG_105_01"><a th:href="@{/VMG_105_01}" th:text="#{MENU.SET_MODE}">Set Mode</a></li>
-                                    </ul>
-                                </li>
-                                <li class="sub_menu hide MN_VMG_000_03"><a><span th:text="#{MENU.FOR_PRO}" >For Production</span> <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li class="sub_menu hide MN_VMG_201_01"><a th:href="@{/VMG_201_01}" th:text="#{MENU.REQUEST_LIST}">Request List</a></li>
-                                    </ul>
-                                </li> -->
-                                
-                                <li class="sub_menu hide MN_VMG_301_01"><a th:href="@{/VMG_301_01}"><span th:text="#{MENU.FILE_LEDGER}" >File Ledger</span></a></li>
-                            </ul>
-                        </li>
-                    </ul>
+    <div class="container-fluid px-0 py-3">
+        <div class="row">
+            <div class="col-md-2">
+                <label class="form-label font_14">Select Roles for Register</label>
+                <select class="form-select" v-model="select_Role" @change="selectRole">
+                    <option value="03">Teacher</option>
+                    <option value="04">Student</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4">
+        <h5 v-if="select_Role === '03'">Teacher</h5>
+        <h5 v-else>Student</h5>
+    </div>
+    <hr>
+
+    <!-- default_form -->
+    <div class="row mt-4" v-if="select_Role === '03'">
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">First Name</label><br>
+            <InputText :invalid="teacherRegisterFirstName" v-model="teacherRegisterInfo.firstName" @keyup="onChangeValidate"/>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Last Name</label><br>
+            <InputText :invalid="teacherRegisterLastName" v-model="teacherRegisterInfo.lastName" @keyup="onChangeValidate"/>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Nick Name</label><br>
+            <InputText v-model="teacherRegisterInfo.nickName"/>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Gender</label><br>
+            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="01"> Male
+            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="02"> Female
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Date of Birth</label><br>
+            <Calendar :invalid="teacherRegisterDateOfBirth" v-model="teacherRegisterInfo.dateOfBirth" dateFormat="yy-mm-dd"  @blur="onChangeValidate"/>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Phone</label><br>
+            <InputText :invalid="teacherRegisterPhone" v-model="teacherRegisterInfo.phone" @keyup="onChangeValidate"/>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Email</label><br>
+            <InputText :invalid="teacherRegisterEmail" v-model="teacherRegisterInfo.email" @keyup="onChangeValidate"/>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Password</label><br>
+            <InputText v-model="teacherRegisterInfo.passwd"/>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Place of Birth</label><br>
+            <Textarea :invalid="teacherRegisterPlaceOfBirth" v-model="teacherRegisterInfo.placeOfBirth" rows="5" cols="30"  @keyup="onChangeValidate"/>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Address</label><br>
+            <Textarea :invalid="teacherRegisterAddress" v-model="teacherRegisterInfo.address" rows="5" cols="30"  @keyup="onChangeValidate"/>
+        </div>
+
+        <!-- Academic List -->
+        <div class="col-12">
+            <h5 class="mt-4">List Qualification </h5>
+            <hr>
+            <!-- Academic List - Academic 1 -->
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                    <label class="form-label font_15">Qualification Name</label><br>
+                    <InputText v-model="qualificationList.qualificationName" @keyup="onChangeValidate"
+                        :invalid="fieldQualificationName" />
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                    <label class="form-label font_15">Qualification Description</label><br>
+                    <InputText v-model="qualificationList.qualificationDesc" />
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                    <label class="form-label font_15">Start Date</label><br>
+                    <Calendar v-model="qualificationList.startDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
+                        :invalid="fieldStartDate" />
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                    <label class="form-label font_15">End Date</label><br>
+                    <Calendar v-model="qualificationList.endDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
+                        :invalid="fieldEndDate" />
+
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                    <label class="form-label font_15">Certificated Date</label><br>
+                    <Calendar v-model="qualificationList.certificatedDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
+                        :invalid="fieldCertificatedDate" />
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-6 col-xl-3">
+                        <button class="btn btn-info w-100 mt-3" @click="saveQualification">
+                            <font-awesome-icon :icon="['fa', 'plus']" />
+                            <span class="mx-2">Add Qualification</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="we_shadow">
+                        <DataTable v-if="teacherInfo != ''" v-model:selection="qualificationList"
+                            :value="teacherInfo"
+                        >
+                            <Column field="no" header="No" :class="customNoClass"></Column>
+                            <Column field="qualificationName" header="Qualification Name"></Column>
+                            <Column field="qualificationDesc" header="Qualification Description"></Column>
+                            <Column field="startDate" header="Start Date"></Column>
+                            <Column field="endDate" header="End Date"></Column>
+                            <Column field="certificatedDate" header="Certificated Date"></Column>
+                            <Column header="Edit" class="text-center">
+                                <template #body="{ data }">
+                                    <font-awesome-icon style="cursor: pointer;" @click="onClickEdit(data)"
+                                        icon="fas fa-pencil" class=" text-primary" title="Edit" />&nbsp;
+                                    <font-awesome-icon style="cursor: pointer;" @click="onClickDelete(data)"
+                                        icon="fa-solid fa-trash" class=" text-danger" title="Delete" />
+                                </template>
+                            </Column>
+                        </DataTable>
+
+                        <table v-else>
+                            <thead>
+                                <tr class="text-capitalize">
+                                    <th class="we_text_color">No</th>
+                                    <th class="we_text_color">Qualification Name</th>
+                                    <th class="we_text_color">Qualification Description</th>
+                                    <th class="we_text_color">Start Date</th>
+                                    <th class="we_text_color">End Date</th>
+                                    <th class="we_text_color">Certificated Date</th>
+                                    <th class="we_text_color">Edit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="7" class="text-danger">No data records available.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div class="img-bottom-left-col"></div>
-        
+
+        <div class="row mt-5">
+            <div class="col-lg-4 col-sm-6 col-xl-3 col-md-3">
+                <button class="btn btn-success w-100" @click="teacherRegister">Submit</button>
+            </div>
+        </div>
     </div>
+    <!-- default_form -->
+
+    <!-- Student -->
+    <div class="row mt-4" v-else>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">First Name</label><br>
+            <InputText :invalid="studentRegisterFirstName" v-model="studentRegisterInfo.firstName" @keyup="onChangeValidateAcademic" />
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Last Name</label><br>
+            <InputText :invalid="studentRegisterLastName" v-model="studentRegisterInfo.lastName" @keyup="onChangeValidateAcademic" />
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Nick Name</label><br>
+            <InputText v-model="studentRegisterInfo.nickName"/>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Gender</label><br>
+            <input type="radio" v-model="studentRegisterInfo.gender" class="form-check-input" value="01"> Male
+            <input type="radio" v-model="studentRegisterInfo.gender" class="form-check-input" value="02"> Female
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Date of Birth</label><br>
+            <Calendar :invalid="studentRegisterDateOfBirth" v-model="studentRegisterInfo.dateOfBirth" dateFormat="yy-mm-dd" @blur="onChangeValidateAcademic"  />
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Phone</label><br>
+            <InputText :invalid="studentRegisterPhone" v-model="studentRegisterInfo.phone" @keyup="onChangeValidateAcademic" />
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Email</label><br>
+            <InputText :invalid="studentRegisterEmail" v-model="studentRegisterInfo.email" @keyup="onChangeValidateAcademic" />
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Password</label><br>
+            <InputText v-model="studentRegisterInfo.passwd"/>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Place of Birth</label><br>
+            <Textarea :invalid="studentRegisterPlaceOfBirth" v-model="studentRegisterInfo.placeOfBirth" rows="5" cols="30" @keyup="onChangeValidateAcademic"  />
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Address</label><br>
+            <Textarea :invalid="studentRegisterAddress" v-model="studentRegisterInfo.address" rows="5" cols="30"  @keyup="onChangeValidateAcademic" />
+        </div>
+
+        <!-- Parent List -->
+        <div class="col-12">
+            <h5 class="mt-4">Parent List</h5>
+            <hr>
+            <fieldset class="border rounded-3 pb-2">
+                <legend class="float-none w-auto m_left20 px-2 h5">Father</legend>
+                <div class="row  m-0">
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2 ">
+                        <label class="form-label font_15">First Name</label><br>
+                        <InputText :invalid="fatherFirstName" v-model="fatherInfo.firstName" @keyup="onChangeValidateAcademic" />
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Last Name</label><br>
+                        <InputText :invalid="fatherLastName" v-model="fatherInfo.lastName" @keyup="onChangeValidateAcademic" />
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Gender</label><br>
+                        <input type="radio" v-model="fatherInfo.gender" class="form-check-input" value="01"> Male
+                        <input type="radio" v-model="fatherInfo.gender" class="form-check-input" value="02"> Female
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Job</label><br>
+                        <InputText v-model="fatherInfo.Job"/>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Phone</label><br>
+                        <InputText :invalid="fatherPhone" v-model="fatherInfo.phone" @keyup="onChangeValidateAcademic" />
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Address</label><br>
+                        <Textarea  v-model="fatherInfo.address" rows="5" cols="30" />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="border rounded-3 mt-3 pb-2">
+                <legend class="float-none w-auto m_left20 px-2 h5">Mother</legend>
+                <div class="row  m-0">
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2 ">
+                        <label class="form-label font_15">First Name</label><br>
+                        <InputText :invalid="motherFirstName" v-model="motherInfo.firstName" @keyup="onChangeValidateAcademic" />
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Last Name</label><br>
+                        <InputText :invalid="motherLastName" v-model="motherInfo.lastName" @keyup="onChangeValidateAcademic" />
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Gender</label><br>
+                        <input type="radio" v-model="motherInfo.gender" class="form-check-input" value="01"> Male
+                        <input type="radio" v-model="motherInfo.gender" class="form-check-input" value="02"> Female
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Job</label><br>
+                        <InputText v-model="motherInfo.Job"/>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Phone</label><br>
+                        <InputText :invalid="motherPhone" v-model="motherInfo.phone" @keyup="onChangeValidateAcademic" />
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Address</label><br>
+                        <Textarea  v-model="motherInfo.address" rows="5" cols="30" />
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <!-- Academic List -->
+        <div class="col-12">
+            <h5 class="mt-4">Academic List</h5>
+            <hr>
+            <!-- Academic List - Academic 1 -->
+            <fieldset class="border rounded-3 pb-2">
+                <legend class="float-none w-auto m_left20 px-2 h5">Academic</legend>
+                <div class="row m-0">
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Academic Name</label><br>
+                        <InputText v-model="academicInfo.academicName" :invalid="fieldAcademicName" @keyup="onChangeValidateAcademic"/>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Academic Description</label><br>
+                        <InputText v-model="academicInfo.academicDesc" />
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Start Date</label><br>
+                        <Calendar v-model="academicInfo.startDate" :invalid="fieldAcademicStartDate" @blur="onChangeValidateAcademic" dateFormat="yy-mm-dd" />
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">End Date</label><br>
+                        <Calendar v-model="academicInfo.endDate" :invalid="fieldAcademicEndDate" @blur="onChangeValidateAcademic" dateFormat="yy-mm-dd" />
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+                        <label class="form-label font_15">Certificated Date</label><br>
+                        <Calendar v-model="academicInfo.certificatedDate" :invalid="fieldAcademicCertificatedDate" @blur="onChangeValidateAcademic" dateFormat="yy-mm-dd" />
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 col-xl-3">
+                            <button class="btn btn-info w-100 mt-3" @click="saveAcademic">
+                                <font-awesome-icon :icon="['fa', 'plus']" />
+                                <span class="mx-2">Add Academic</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="we_shadow">
+                        <DataTable v-if="studentAcademicList != ''" 
+                            v-model:selection="academicInfo"
+                            :value="studentAcademicList">
+                            <Column field="no" header="No" :class="customNoClass"></Column>
+                            <Column field="academicName" header="Academic Name"></Column>
+                            <Column field="academicDesc" header="Academic Description"></Column>
+                            <Column field="startDate" header="Start Date"></Column>
+                            <Column field="endDate" header="End Date"></Column>
+                            <Column field="certificatedDate" header="Certificated Date"></Column>
+                            <Column header="Edit" class="text-center">
+                                <template #body="{ data }">
+                                    <font-awesome-icon style="cursor: pointer;" @click="onClickEditAcademic(data)"
+                                        icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;
+                                    <font-awesome-icon style="cursor: pointer;" @click="onClickDeleteAcademic(data)"
+                                        icon="fa-solid fa-trash" class=" text-danger" title="Delete" />
+                                </template>
+                            </Column>
+                        </DataTable>
+
+                        <table v-else>
+                            <thead>
+                                <tr class="text-capitalize">
+                                    <th class="we_text_color">No</th>
+                                    <th class="we_text_color">Academic Name</th>
+                                    <th class="we_text_color">Academic Description</th>
+                                    <th class="we_text_color">Start Date</th>
+                                    <th class="we_text_color">End Date</th>
+                                    <th class="we_text_color">Certificated Date</th>
+                                    <th class="we_text_color">Edit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="7" class="text-danger">No data records available.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-lg-4 col-sm-6 col-xl-3 col-md-3">
+                <button class="btn btn-success w-100" @click="studentRegister">Submit</button>
+            </div>
+        </div>
+    </div>
+    <!-- student -->
 </div>

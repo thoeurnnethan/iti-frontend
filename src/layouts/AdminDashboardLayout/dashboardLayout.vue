@@ -90,14 +90,17 @@ export default defineComponent({
 
         updateGreeting() {
             const currentHour = new Date().getHours();
-            if (currentHour < 12) {
+            if (currentHour >= 5 && currentHour < 12) {
                 this.greeting = 'common.goodMorning';
-            } else if (currentHour < 18) {
+            } else if (currentHour >= 12 && currentHour < 17) {
                 this.greeting = 'common.goodAfternoon';
-            } else {
+            } else if (currentHour >= 17 && currentHour < 21) {
                 this.greeting = 'common.goodEvening';
+            } else {
+                this.greeting = 'common.goodNight';
             }
         }
+
     },
 
     beforeDestroy() {

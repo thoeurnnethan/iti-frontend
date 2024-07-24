@@ -15,7 +15,8 @@
     "login": "Login",
     "goodMorning": "Good Morning",
     "goodAfternoon": "Good Afternoon",
-    "goodEvening": "Good Evening"
+    "goodEvening": "Good Evening",
+    "goodNight": "Good Night"
   },
   "department":{
     "title": "Department list",

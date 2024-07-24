@@ -1,3 +1,5 @@
+<Toast />
+<ConfirmDialog></ConfirmDialog>
 <div class="container-fluid d-flex flex-column" style="overflow: hidden;">
     <!-- header -->
     <div class="container-fluid p-0 d-flex justify-content-between">
@@ -94,10 +96,15 @@
             </Column>
             <Column field="email" :header="$t('user.email')"></Column>
             <Column field="passwd" :header="$t('user.password')"></Column>
+            <Column field="statusCode" :header="$t('class.status')" style="min-width: 100px">
+                <template #body="{ data }">
+                    {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
+                </template>
+            </Column>
             <Column :header="$t('class.edit')" class="text-center">
                 <template #body="{ data }">
-                    <font-awesome-icon @click="onClickEdit(data)" icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;
-                    <font-awesome-icon @click="onClickDelete(data)" icon="fa-solid fa-trash" class="text-danger" title="Delete" />
+                    <font-awesome-icon @click="editUser(data)" icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;
+                    <font-awesome-icon  @click="deleteUser(data)" icon="fa-solid fa-trash" class="text-danger" title="Delete" />
                 </template>
             </Column>
         </DataTable>
