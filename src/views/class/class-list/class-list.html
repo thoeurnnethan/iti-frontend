@@ -8,9 +8,9 @@
             <font-awesome-icon :icon="['fa', 'calendar-days']" />
             <span class="text_title mx-1">{{ $t('class.title') }}</span>
         </div>
-        <button class="btn btn-warning p-1 px-2" @click="onClickInsert()">
-            <font-awesome-icon :icon="['fas', 'plus']" />
+        <button class="btn btn-primary p-1 px-2" @click="onClickInsert()">
             <span class="mx-1">{{ $t('common.addNew') }}</span>
+            <font-awesome-icon :icon="['fas', 'plus']" />
         </button>
     </div>
     <!-- header -->
@@ -22,8 +22,8 @@
                 <label class="form-label font_14">{{ $t('class.year') }}</label>
                 <select class="form-select" v-model="selectYear" @click="getClassList()">
                     <option value="" disabled>{{ $t('class.selectYear') }}</option>
-                    <option v-for="status in year" :value="status.codeValue">
-                        {{ status.codeValueDesc }}
+                    <option v-for="year in yearList" :value="year.codeValue">
+                        {{ year.codeValueDesc }}
                     </option>
                 </select>
             </div>
@@ -31,8 +31,8 @@
                 <label class="form-label font_14">{{ $t('class.semester') }}</label>
                 <select class="form-select" v-model="selectSemester" @click="getClassList()">
                     <option value=null disabled>{{ $t('class.selectSemester') }}</option>
-                    <option v-for="status in semester" :value="status.codeValue">
-                        {{ status.codeValueDesc }}
+                    <option v-for="semester in semesterList" :value="semester.codeValue">
+                        {{ semester.codeValueDesc }}
                     </option>
                 </select>
             </div>
@@ -48,7 +48,7 @@
             <InputText @keyup="getClassList()" class="p-1 font_15 rad_left b_shadow c_input" v-model="searchKeyword" :placeholder="$t('common.searchKey')"  style="height: 40.5px;padding-left: 15px !important;"/>
         </InputGroup>
         <button type="button" class="btn btn-dark p-2 px-2 font_15" @click="exportToExcel">
-            <span class="m-1">Export Excel</span>
+            <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
             <font-awesome-icon :icon="['fas', 'file-excel']" />
         </button>
     </div>

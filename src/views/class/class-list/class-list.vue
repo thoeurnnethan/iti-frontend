@@ -8,7 +8,7 @@ import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import { StandardCodeData } from '@/shared/types/standard-code';
 import class_edit from '../class-edit/class-edit.vue';
-import { year , semester } from '@/shared/common/common';
+import { YearList , SemesterList, globalStatusCodeList } from '@/shared/common/common';
 import MyLoading from '../../MyLoading.vue';
 
 const requestService = new RequestService();
@@ -23,15 +23,16 @@ export default defineComponent({
   data() {
     const dataTable = ref<CLASS_LIST[]>([]);
     return {
-      year: year,
-      selectYear: '',
-      selectedStatus: null,
-      semester:semester,
-      selectSemester:null,
-      searchKeyword:'',
-      selectTime:'',
+      yearList: YearList,
+      semesterList: SemesterList,
+      statusCodeList: globalStatusCodeList,
       classList: [] as CLASS_LIST[],
       classInfo: {} as CLASS_LIST,
+      selectYear: '',
+      selectedStatus: '',
+      selectSemester: null,
+      searchKeyword:'',
+      selectTime:'',
       searchKey: '',
       Loading: false,
       totalCount: 0,
@@ -51,30 +52,23 @@ export default defineComponent({
         semester: 0,
         statusCode: '',
       } as CLASS_LIST,
-      statusCodeList: [
-        { codeValue: '01', codeValueDesc: 'Active' },
-        { codeValue: '09', codeValueDesc: 'Inactive' },
-      ] as StandardCodeData[],
     }
   },
 
   mounted() {
-    // Call get department on mount
     this.getClassList();
   },
 
   methods: {
-    // Get Class List
     async getClassList() {
       this.Loading = true;
       const reqBody: CLASS_LIST_REQ = {
-        classID: "",
         departmentID: this.searchKey,
         pageSize: this.pageSize,
         pageNumber: this.pageNumber + 1,
         searchKeyword: this.searchKeyword,
-        year: this.selectYear,
-        semester: this.selectSemester
+        year: this.selectYear === 'All' ? '' : this.selectYear,
+        semester: this.selectSemester === 'All' ? null : this.selectSemester
       }
       const response = (await requestService.request(API_PATH.CLASS_LIST, reqBody, false)) as CLASS_LIST_RES;
       this.classList = response.body?.classList.map((data , index) => {

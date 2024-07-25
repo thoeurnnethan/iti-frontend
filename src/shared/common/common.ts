@@ -15,21 +15,23 @@ export const UserRoleList: StandardCodeData[] = [
 ];
 
 export const GenderCodeList: StandardCodeData[] = [
-  { codeValue: '01', codeValueDesc: 'Male' },
-  { codeValue: '02', codeValueDesc: 'Female' }
+  { codeValue: 'M', codeValueDesc: 'Male' },
+  { codeValue: 'F', codeValueDesc: 'Female' }
 ];
 
-export const year: StandardCodeData[] = [
-  { codeValue: '1', codeValueDesc: '1' },
-  { codeValue: '2', codeValueDesc: '2' },
-  { codeValue: '3', codeValueDesc: '3' },
-  { codeValue: '4', codeValueDesc: '4' },
-  { codeValue: '5', codeValueDesc: '5' },
+export const YearList: StandardCodeData[] = [
+  { codeValue: '', codeValueDesc: 'All' },
+  { codeValue: '1', codeValueDesc: 'Year 1' },
+  { codeValue: '2', codeValueDesc: 'Year 2' },
+  { codeValue: '3', codeValueDesc: 'Year 3' },
+  { codeValue: '4', codeValueDesc: 'Year 4' },
+  { codeValue: '5', codeValueDesc: 'Year 5' },
 ];
 
-export const semester: StandardCodeData[] = [
-  { codeValue: 1, codeValueDesc: '1' },
-  { codeValue: 2, codeValueDesc: '2' },
+export const SemesterList: StandardCodeData[] = [
+  { codeValue: 'All', codeValueDesc: 'All' },
+  { codeValue: 1, codeValueDesc: 'Semester 1' },
+  { codeValue: 2, codeValueDesc: 'Semester 2' },
 ];
 
 export const generation: StandardCodeData[] = [
