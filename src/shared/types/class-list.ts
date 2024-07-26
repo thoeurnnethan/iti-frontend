@@ -11,13 +11,13 @@ export interface CLASS_LIST {
 }
 
 export interface CLASS_LIST_REQ {
-  classID: string
+  classID?: string
   departmentID: string
   pageNumber: number
   pageSize: number
   searchKeyword: string
   year: string 
-  semester: number 
+  semester?: any 
 }
 
 export interface CLASS_LIST_RES {

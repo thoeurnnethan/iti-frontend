@@ -16,7 +16,9 @@
     "goodMorning": "Good Morning",
     "goodAfternoon": "Good Afternoon",
     "goodEvening": "Good Evening",
-    "goodNight": "Good Night"
+    "goodNight": "Good Night",
+    "total": "Total",
+    "downloadExcel": "Download Excel"
   },
   "department":{
     "title": "Department list",
