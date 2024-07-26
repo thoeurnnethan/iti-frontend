@@ -70,11 +70,7 @@ interface ManagerList_Res {
 }
 
 interface USER_LIST_REQ {
-  searchKey: string
   roleID: string
-  statusCode: string
-  pageSize: number
-  pageNumber: number
 }
 
 interface USER_LIST_RES {
