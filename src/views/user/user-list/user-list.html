@@ -7,10 +7,16 @@
             <font-awesome-icon :icon="['fa', 'school']" />&nbsp;
             <span class="text_title">{{ $t('user.userList') }}</span>
         </div>
+        <div>
+            <button type="button" class="btn btn-dark p-1 px-2" @click="exportToExcel">
+                <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
+                <font-awesome-icon :icon="['fas', 'file-excel']" />
+            </button>&nbsp;
+            <button class="btn btn-primary p-1 px-2" @click="$router.push('/user-register')">
+                <span> {{ $t('common.addNew') }} <font-awesome-icon :icon="['fas', 'plus']" /></span>
+            </button>
+        </div>
 
-        <button class="btn btn-primary p-1 px-2" @click="$router.push('/user-register')">
-            <span> {{ $t('common.addNew') }} <font-awesome-icon :icon="['fas', 'plus']" /></span>
-        </button>
     </div>
     <!-- header -->
 
@@ -37,12 +43,7 @@
             <InputText class="p-1 font_15 rad_left b_shadow c_input" @keyup.enter="getUserList()" v-model="searchKey"
                 :placeholder="$t('common.searchKey')" style="height: 40.5px;padding-left: 15px !important;" />
         </InputGroup>
-        <span class="b_shadow">
-            <button type="button" class="btn btn-dark p-2 px-2 font_15" @click="exportToExcel">
-                <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
-                <font-awesome-icon :icon="['fas', 'file-excel']" />
-            </button>
-        </span>
+
     </div>
 </div>
 
