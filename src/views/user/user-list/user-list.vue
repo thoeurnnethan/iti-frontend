@@ -2,14 +2,13 @@
 
 <script lang="ts">
 import { API_PATH } from '@/shared/common/api-path';
-import { USER_LIST_RES, USER_LIST, USER_LIST_REQ, USER_DETAIL_RES } from '@/shared/types/user-list';
+import { USER_LIST_RES, USER_LIST, USER_DETAIL_RES } from '@/shared/types/user-list';
 import { defineComponent, ref } from 'vue';
 import { RequestService } from '@/shared/services/request-service';
 import { UserRoleList, GenderCodeList } from '@/shared/common/common';
 import { StandardCodeData } from '@/shared/types/standard-code';
 import user_detail from "@/views/user/user-detail/user-detail.vue";
 import { ExportExcel } from '@/shared/services/export-excel-class';
-
 
 const requestService = new RequestService();
 const exportExcel = new ExportExcel();
@@ -52,7 +51,7 @@ export default defineComponent({
 
     methods: {
         async getUserList() {
-            const body: USER_LIST_REQ = {
+            const body = {
                 searchKey: this.searchKey,
                 roleID: this.roleID,
                 statusCode: "",

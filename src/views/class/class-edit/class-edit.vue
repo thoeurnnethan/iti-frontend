@@ -6,6 +6,7 @@ import { CLASS_LIST } from '@/shared/types/class-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { globalStatusCodeList, YearList, SemesterList, generation, time } from '@/shared/common/common';
+import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { modalController } from '@ionic/vue';
 
 const requestService = new RequestService();
@@ -35,6 +36,7 @@ export default defineComponent({
         statusCode: '01',
       } as CLASS_LIST,
       classInfoUpdate: {} as CLASS_LIST,
+      departmentList: [] as DEPARTMENT_LIST[],
       selectedStatus: null,
       statusCodeList: globalStatusCodeList,
       year: YearList,
@@ -71,6 +73,7 @@ export default defineComponent({
   },
   mounted() {
     this.onDataLoad();
+    this.getDepartmentList();
   },
   methods: {
     onDataLoad() {
@@ -110,7 +113,18 @@ export default defineComponent({
     },
     onClose() {
       modalController.dismiss();
-    }
+    },
+    
+    async getDepartmentList() {
+            const reqBody: DEPARTMENT_LIST_REQ = {
+                userID: "",
+                searchKey: '',
+                pageSize: 1000,
+                pageNumber: 1
+            }
+            const response = (await requestService.request(API_PATH.DEPARTMENT_LIST,reqBody,false)) as DEPARTMENT_LIST_RES;
+            this.departmentList = response.body?.departmentList;
+        },
   }
 });
 </script>

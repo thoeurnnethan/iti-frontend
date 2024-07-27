@@ -17,12 +17,11 @@
                             <input type="text" class="form-control" v-model="classInfo.className" />
                         </div>
                         <div class="col-lg-3 col-md-4 mb-2">
-                            <label class="form-label font_15">Department</label><br>
+                            <label class="form-label font_15">Department</label>
                             <select class="form-select" v-model="classInfo.departmentID">
-                                <option value="DEP1002">IT</option>
-                                <option value="DEP1001">Electronic</option>
-                                <option value="DEP1003">Finance</option>
-                                <option value="DEP1004">Marketing</option>
+                                <option v-for="department in departmentList" :key="department.departmentID" :value="department.departmentID">
+                                    {{ department.departmentID }} - {{ department.departmentName }}
+                                </option>
                             </select>
                         </div>
                         <div class="col-lg-2 col-md-4 mb-2">

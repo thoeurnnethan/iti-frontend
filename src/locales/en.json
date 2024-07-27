@@ -63,7 +63,8 @@
     "phone": "Phone Number",
     "email": "Email",
     "password": "Password",
-    "imageUrl": "Image URL"
+    "imageUrl": "Image URL",
+    "userList": "User List"
   },
   "class": {
     "title": "Class List",

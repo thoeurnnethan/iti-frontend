@@ -19,18 +19,16 @@
     <div class="container-fluid px-0 py-4">
         <div class="row">
             <div class="col-md-3">
-                <label class="form-label font_14">{{ $t('class.year') }}</label>
-                <select class="form-select" v-model="selectYear" @click="getClassList()">
-                    <option value="" disabled>{{ $t('class.selectYear') }}</option>
+                <label class="form-label font_14">{{ $t('class.selectYear') }}</label>
+                <select class="form-select" v-model="selectYear" @change="getClassList()">
                     <option v-for="year in yearList" :value="year.codeValue">
                         {{ year.codeValueDesc }}
                     </option>
                 </select>
             </div>
             <div class="col-md-3">
-                <label class="form-label font_14">{{ $t('class.semester') }}</label>
-                <select class="form-select" v-model="selectSemester" @click="getClassList()">
-                    <option value=null disabled>{{ $t('class.selectSemester') }}</option>
+                <label class="form-label font_14">{{ $t('class.selectSemester') }}</label>
+                <select class="form-select" v-model="selectSemester" @change="getClassList()">
                     <option v-for="semester in semesterList" :value="semester.codeValue">
                         {{ semester.codeValueDesc }}
                     </option>
@@ -38,14 +36,15 @@
             </div>
         </div>
     </div>
-
     <div class="mt-3"></div>
     <div class="float-end">
-        <button type="button" class="rad_right btn btn-dark b_shadow p-2 px-2 float-end font_15" @click.prevent="getClassList()">
+        <button type="button" class="rad_right btn btn-dark b_shadow p-2 px-2 float-end font_15"
+            @click.prevent="getClassList()">
             {{ $t('common.search') }}
         </button>
         <InputGroup class="float-end w-25">
-            <InputText @keyup="getClassList()" class="p-1 font_15 rad_left b_shadow c_input" v-model="searchKeyword" :placeholder="$t('common.searchKey')"  style="height: 40.5px;padding-left: 15px !important;"/>
+            <InputText @keyup="getClassList()" class="p-1 font_15 rad_left b_shadow c_input" v-model="searchKeyword"
+                :placeholder="$t('common.searchKey')" style="height: 40.5px;padding-left: 15px !important;" />
         </InputGroup>
         <button type="button" class="btn btn-dark p-2 px-2 font_15" @click="exportToExcel">
             <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
@@ -54,23 +53,12 @@
     </div>
 
     <!-- search-bar -->
-    
+
     <div class="mt-3"></div>
     <div class="b_shadow">
-        <DataTable 
-            v-model:selection="classInfo" 
-            tableStyle="min-width: 50rem"
-            selectionMode="single" 
-            scrollable 
-            :value="classList" 
-            :metaKeySelection="true" 
-            :rows="pageSize" 
-            :lazy="true"
-            :paginator="true" 
-            :totalRecords="totalCount" 
-            :rowsPerPageOptions="[10, 20, 50, 100]" 
-            @page="onPage"
-            :rowClass="rowClass">
+        <DataTable v-model:selection="classInfo" tableStyle="min-width: 50rem" selectionMode="single" scrollable
+            :value="classList" :metaKeySelection="true" :rows="pageSize" :lazy="true" :paginator="true"
+            :totalRecords="totalCount" :rowsPerPageOptions="[10, 20, 50, 100]" @page="onPage" :rowClass="rowClass">
             <Column field="no" :header="$t('common.no')" :class="customNoClass"></Column>
             <Column field="classID" :header="$t('class.cId')"></Column>
             <Column field="className" :header="$t('class.cName')"></Column>
@@ -87,11 +75,14 @@
                 <template #body="{ data }">
                     <div class="d-flex align-items-center justify-content-evenly">
                         <div v-if="data.statusCode === '01'">
-                            <font-awesome-icon @click="onClickEdit(data)" icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;
-                            <font-awesome-icon @click="deleteClass(data)" icon="fa-solid fa-trash" class="text-danger" title="Delete" />
+                            <font-awesome-icon @click="onClickEdit(data)" icon="fas fa-pencil" class="text-primary"
+                                title="Edit" />&nbsp;
+                            <font-awesome-icon @click="deleteClass(data)" icon="fa-solid fa-trash" class="text-danger"
+                                title="Delete" />
                         </div>
                         <div v-else>
-                            <font-awesome-icon @click="setActive(data)" :icon="['fas', 'rotate-left']" title="Recover" />
+                            <font-awesome-icon @click="setActive(data)" :icon="['fas', 'rotate-left']"
+                                title="Recover" />
                         </div>
                     </div>
                 </template>

@@ -29,7 +29,7 @@ export default defineComponent({
       classInfo: {} as CLASS_LIST,
       selectYear: '',
       selectedStatus: '',
-      selectSemester: null,
+      selectSemester: '',
       searchKeyword:'',
       selectTime:'',
       searchKey: '',
@@ -50,7 +50,7 @@ export default defineComponent({
         time: '',
         semester: 0,
         statusCode: '',
-      } as CLASS_LIST,
+      } as CLASS_LIST
     }
   },
 
@@ -67,7 +67,7 @@ export default defineComponent({
         pageNumber: this.pageNumber + 1,
         searchKeyword: this.searchKeyword,
         year: this.selectYear === 'All' ? '' : this.selectYear,
-        semester: this.selectSemester === 'All' ? null : this.selectSemester
+        semester: this.selectSemester === '' ? null : this.selectSemester
       }
       const response = (await requestService.request(API_PATH.CLASS_LIST, reqBody, false)) as CLASS_LIST_RES;
       this.classList = response.body?.classList.map((data , index) => {

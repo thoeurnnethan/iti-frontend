@@ -5,13 +5,12 @@
     <div class="container-fluid p-0 d-flex justify-content-between">
         <div>
             <font-awesome-icon :icon="['fa', 'school']" />&nbsp;
-            <span class="text_title">{{ $t('user.title') }}</span>
+            <span class="text_title">{{ $t('user.userList') }}</span>
         </div>
-        <router-link to="/user-register">
-            <button class="btn btn-primary p-1 px-2">
-                <span> {{ $t('common.addNew') }} <font-awesome-icon :icon="['fas', 'plus']" /></span>
-            </button>
-        </router-link>
+        
+        <button class="btn btn-primary p-1 px-2" @click="$router.push('/user-register')">
+            <span> {{ $t('common.addNew') }} <font-awesome-icon :icon="['fas', 'plus']" /></span>
+        </button>
     </div>
     <!-- header -->
 

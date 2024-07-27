@@ -1407,16 +1407,14 @@ body {
 		display: none;
 		position: absolute;
 		left: -1px;
-		top: calc(100% - 4px);
-		max-height: 209px;
+		// top: calc(100% - 4px); 	
+		max-height: 120px;
 		overflow: auto;
 		padding: 10px;
 		width: calc(100% + 2px);
 		border-radius: 0 0 8px 8px;
 		border: 1px solid #DDDDDD;
-		;
 		background: #FFFFFF;
-		;
 		z-index: 99999999999;
 		-webkit-border-radius: 0 0 8px 8px;
 		-moz-border-radius: 0 0 8px 8px;
@@ -1437,11 +1435,11 @@ body {
 		}
 	}
 
-	&.open {
-		.drop_down {
-			display: block;
-		}
-	}
+	// &.open {
+	// 	.drop_down {
+	// 		display: block;
+	// 	}
+	// }
 }
 
 .p-inputgroup-addon {
