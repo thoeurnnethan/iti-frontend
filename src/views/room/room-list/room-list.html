@@ -70,7 +70,7 @@
             :rowsPerPageOptions="[10, 20, 50, 100]" 
             @page="onPage"
             :rowClass="rowClass">
-            <Column field="no" :header="$t('common.no')" :class="customNoRoom"></Column>
+            <Column field="no" :header="$t('common.no')" :class="['text-start']"></Column>
             <Column field="roomID" :header="$t('room.roomID')"></Column>
             <Column field="roomName" :header="$t('room.roomName')"></Column>
             <Column field="building" :header="$t('room.building')"></Column>
@@ -90,7 +90,8 @@
                             <font-awesome-icon @click="deleteRoom(data)" :icon="['fas', 'fa-x']" class="text-danger" title="Delete the record" />
                         </div>
                         <div v-else>
-                            <font-awesome-icon @click="setActive(data)" :icon="['fas', 'fa-eye']" title="Set to Active" />
+                            <font-awesome-icon @click="setActive(data)" :icon="['fas', 'fa-eye']" title="Set to Active" />&nbsp;
+                            <font-awesome-icon @click="deleteRoom(data)" :icon="['fas', 'fa-x']" class="text-danger" title="Delete the record" />
                         </div>
                     </div>
                 </template>

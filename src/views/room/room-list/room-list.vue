@@ -115,6 +115,26 @@ export default defineComponent({
       });
     },
 
+    async deleteRoom(_item: ROOM_LIST) {
+      this.$confirm.require({
+        message: 'Do you want to set this record to Active ?',
+        header: 'Danger Zone',
+        accept: async () => {
+          console.table(_item);
+          const reqBody = {
+            roomID: _item.roomID,
+            statusCode: '02'
+          }
+          await requestService.request(API_PATH.ROOM_UPDATE, reqBody, false) as ROOM_LIST;
+          this.getRoomList();
+          this.$toast.add({ summary: 'Confirmed', detail: 'Record has Set to Active', life: 3000 });
+        },
+        reject: () => {
+          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+      });
+    },
+
     // Handle page size page number
     onPage(event: { page: number; rows: number; }) {
       this.pageNumber = event.page;
@@ -132,7 +152,7 @@ export default defineComponent({
       this.$popupService.onOpen({
         component: room_action,
         dataProp:{
-          classInfoData: this.roomInfo,
+          roomInfoData: this.roomInfo,
           isInsert: true
         },
         callback: () => {
@@ -147,16 +167,16 @@ export default defineComponent({
     // Edit class method
     async onClickEdit(item: ROOM_LIST) {
       this.$popupService.onOpen({
-        component: class_edit,
+        component: room_action,
         dataProp: {
-          classInfoData: item,
+          roomInfoData: item,
           isInsert: false
         },
         callback: () => {
-          this.getroomList();
+          this.getRoomList();
         },
         onClose: () => {
-          this.getroomList();
+          this.getRoomList();
         }
       })
     },

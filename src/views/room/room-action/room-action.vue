@@ -30,7 +30,7 @@ export default defineComponent({
         roomDesc: '',
         building: '',
         floor: 0,
-        statusCode: '01',
+        statusCode: '',
       } as ROOM_LIST,
       roomInfoUpdate: {} as ROOM_LIST,
       selectedStatus: null,

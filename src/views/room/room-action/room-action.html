@@ -33,7 +33,7 @@
                             </select>
                         </div>
 
-                        <div class="col-lg-3 col-md-4 mb-2">
+                        <div class="col-lg-3 col-md-4 mb-2" v-if="!isInsert">
                             <label class="form-label font_15">Status</label><br>
                             <select class="form-select" v-model="roomInfo.statusCode">
                                 <option v-for="status in statusCodeList" :value="status.codeValue">
