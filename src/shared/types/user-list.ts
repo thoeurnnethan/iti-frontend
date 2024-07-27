@@ -76,6 +76,8 @@ interface USER_LIST_REQ {
 interface USER_LIST_RES {
   body:{
     totalCount: number
+    totalMale: number
+    totalFemale: number
     userList: Array<USER_LIST>
   }
 }

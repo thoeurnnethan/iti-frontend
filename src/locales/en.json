@@ -18,6 +18,8 @@
     "goodEvening": "Good Evening",
     "goodNight": "Good Night",
     "total": "Total",
+    "totalMale": "Male",
+    "totalFemale": "Female",
     "downloadExcel": "Download Excel"
   },
   "department":{

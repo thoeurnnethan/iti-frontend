@@ -34,7 +34,9 @@ export default defineComponent({
             searchKey: '',
             roleID: '',
             roleTitle: '',
-            totalCount: 0 as number,
+            totalCount: 0,
+            totalMale: 0,
+            totalFemale: 0,
             pageSize: 10,
             pageNumber: 0,
             statusCodeList: [
@@ -59,6 +61,8 @@ export default defineComponent({
             }
             const response = (await requestService.request(API_PATH.USER_LIST, body, false)) as USER_LIST_RES;
             this.totalCount = response?.body?.totalCount;
+            this.totalMale = response?.body?.totalMale;
+            this.totalFemale = response?.body?.totalFemale;
             this.roleTitle = this.roleID
             this.userList = response.body.userList.map((data,index) =>{
                 return{

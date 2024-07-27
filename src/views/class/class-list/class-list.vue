@@ -6,7 +6,6 @@ import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class-list';
 import { ExportExcel } from '@/shared/services/export-excel-class';
-import { StandardCodeData } from '@/shared/types/standard-code';
 import class_edit from '../class-edit/class-edit.vue';
 import { YearList , SemesterList, globalStatusCodeList } from '@/shared/common/common';
 import MyLoading from '../../MyLoading.vue';
