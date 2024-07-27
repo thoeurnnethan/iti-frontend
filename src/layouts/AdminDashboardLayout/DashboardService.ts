@@ -13,6 +13,11 @@ export const DashboardService = {
                 "name": "departmentList"
             },
             {
+                "path": "/room-list",
+                "iconClass": "fa-calendar-days",
+                "name": "roomList",
+            },
+            {
                 "path": "/class-list",
                 "iconClass": "fa-calendar-days",
                 "name": "classList",

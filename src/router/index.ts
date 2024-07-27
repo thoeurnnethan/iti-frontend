@@ -45,9 +45,9 @@ const router = createRouter({
                     component: () => import("@/views/class/class-insert/class-insert.vue")
                 },
                 {
-                    path: "/class-edit/:id",
-                    name: "class-edit",
-                    component: () => import("@/views/class/class-edit/class-edit.vue")
+                    path: "/room-list",
+                    name: "room-list",
+                    component: () => import("@/views/room/room-list/room-list.vue")
                 },
                 {
                     path: "/department-list",
