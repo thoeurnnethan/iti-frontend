@@ -40,6 +40,7 @@
     "departmentList": "Department List",
     "departmentRegister": "Department Register",
     "classList": "Class List",
+    "roomList": "Room List",
     "classRegister": "Register Class",
     "subjectList": "Subject List",
     "scheduleManagement": "Schedule Management",
@@ -82,5 +83,14 @@
     "selectTime": "Select Time",
     "selectYear": "Select Year",
     "selectSemester": "Select Semester"
+  },
+  "room": {
+    "title": "Room List",
+    "roomID": "Room ID",
+    "roomName": "Room Name",
+    "roomDesc": "Room Description",
+    "building": "Building",
+    "floor": "Room Floor",
+    "statusCode": "Status"
   }
 }

@@ -25,4 +25,8 @@ export enum API_PATH {
     NEWS_EVENT_DETAIL = "newsEvent/detail",
     NEWS_EVENT_REGISTER = "newsEvent/register",
     NEWS_EVENT_UPDATE = "newsEvent/update",
+    //Room
+    ROOM_LIST = "api/room/list",
+    ROOM_UPDATE = "api/room/update",
+    ROOM_REGISTER = "api/room/register",
 }
