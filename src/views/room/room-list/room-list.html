@@ -5,18 +5,17 @@
     <!-- header -->
     <div class="container-fluid p-0 d-flex justify-content-between">
         <div class="breadcrumb">
-            <font-awesome-icon :icon="['fa', 'calendar-days']" />
-            <span class="text_title mx-1">{{ $t('class.title') }}</span>
+            <font-awesome-icon :icon="['fa', 'shop']" />
+            <span class="text_title mx-1">{{ $t('room.title') }}</span>
         </div>
         <button class="btn btn-primary p-1 px-2" @click="onClickInsert()">
             <span class="mx-1">{{ $t('common.addNew') }}</span>
-            <font-awesome-icon :icon="['fas', 'plus']" />
         </button>
     </div>
     <!-- header -->
 
     <!-- search-bar -->
-    <div class="container-fluid px-0 py-4">
+    <!-- <div class="container-fluid px-0 py-4">
         <div class="row">
             <div class="col-md-3">
                 <label class="form-label font_14">{{ $t('class.year') }}</label>
@@ -37,7 +36,7 @@
                 </select>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="mt-3"></div>
     <div class="float-end">
@@ -58,11 +57,11 @@
     <div class="mt-3"></div>
     <div class="b_shadow">
         <DataTable 
-            v-model:selection="classInfo" 
+            v-model:selection="roomInfo" 
             tableStyle="min-width: 50rem"
             selectionMode="single" 
             scrollable 
-            :value="classList" 
+            :value="roomList" 
             :metaKeySelection="true" 
             :rows="pageSize" 
             :lazy="true"
@@ -71,14 +70,13 @@
             :rowsPerPageOptions="[10, 20, 50, 100]" 
             @page="onPage"
             :rowClass="rowClass">
-            <Column field="no" :header="$t('common.no')" :class="customNoClass"></Column>
-            <Column field="classID" :header="$t('class.cId')"></Column>
-            <Column field="className" :header="$t('class.cName')"></Column>
-            <Column field="year" :header="$t('class.year')"></Column>
-            <Column field="generation" :header="$t('class.generation')"></Column>
-            <Column field="time" :header="$t('class.time')"></Column>
-            <Column field="semester" :header="$t('class.semester')"></Column>
-            <Column field="statusCode" :header="$t('class.status')" style="min-width: 100px">
+            <Column field="no" :header="$t('common.no')" :class="customNoRoom"></Column>
+            <Column field="roomID" :header="$t('room.roomID')"></Column>
+            <Column field="roomName" :header="$t('room.roomName')"></Column>
+            <Column field="building" :header="$t('room.building')"></Column>
+            <Column field="roomDesc" :header="$t('room.roomDesc')"></Column>
+            <Column field="floor" :header="$t('room.floor')"></Column>
+            <Column field="statusCode" :header="$t('room.statusCode')" style="min-width: 100px">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
                 </template>
@@ -87,11 +85,12 @@
                 <template #body="{ data }">
                     <div class="d-flex align-items-center justify-content-evenly">
                         <div v-if="data.statusCode === '01'">
-                            <font-awesome-icon @click="onClickEdit(data)" icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;
-                            <font-awesome-icon @click="deleteClass(data)" icon="fa-solid fa-trash" class="text-danger" title="Delete" />
+                            <font-awesome-icon @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-primary" title="Edit" />&nbsp;
+                            <font-awesome-icon @click="setRoom(data)" :icon="['fas', 'fa-eye-slash']" class="text-warning" title="Set to Inactive" />&nbsp;
+                            <font-awesome-icon @click="deleteRoom(data)" :icon="['fas', 'fa-x']" class="text-danger" title="Delete the record" />
                         </div>
                         <div v-else>
-                            <font-awesome-icon @click="setActive(data)" :icon="['fas', 'rotate-left']" title="Recover" />
+                            <font-awesome-icon @click="setActive(data)" :icon="['fas', 'fa-eye']" title="Set to Active" />
                         </div>
                     </div>
                 </template>

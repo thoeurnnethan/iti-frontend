@@ -162,8 +162,10 @@ import {
         faRotateLeft,
         faSchool,
         faShieldHalved,
+        faShop,
         faTrash,
         faUser,
+        faX,
         faXmark
 } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -198,6 +200,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
         library.add(faRotateBack); 
         library.add(faArrowRotateLeft); 
         library.add(faRotateLeft); 
+        library.add(faShop); 
+        library.add(faX); 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 //ionic
