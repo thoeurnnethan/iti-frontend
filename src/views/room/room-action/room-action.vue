@@ -84,7 +84,7 @@ export default defineComponent({
         modalController.dismiss();
       }
     },
-    async classEdit() {
+    async roomEdit() {
       const reqBody = {
         ...this.roomInfo,
       };

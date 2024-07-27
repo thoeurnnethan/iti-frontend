@@ -9,18 +9,22 @@
             </div>
             <ul class="sidebar-list nav flex-column b_shadow p-0 cursor-pointer">
                 <li v-for="item in menuList" :key="item.name" class=" we_no_select">
-                    <router-link style="padding: 10px;" v-if="!item.subMenuList" :to="item.path" class="nav-item link nav-link d-flex">
+                    <router-link style="padding: 10px;" v-if="!item.subMenuList" :to="item.path"
+                        class="nav-item link nav-link d-flex">
                         <div style="width: 25px;">
-                            <i style="color: #252b3b; padding: 0 5px 0 0;"><font-awesome-icon :icon="item.iconClass" /></i>
+                            <i style="color: #252b3b; padding: 0 5px 0 0;"><font-awesome-icon
+                                    :icon="item.iconClass" /></i>
                         </div>
                         <span class="name" style="color: #252b3b;">{{ $t(`menu.${item.name}`) }}</span>
                     </router-link>
                     <div v-else>
-                        <a style="color: #252b3b;padding: 10px ;" class="nav-link link nav-item" @click="toggleSubMenu(item.name)">
+                        <a style="color: #252b3b;padding: 10px ;" class="nav-link link nav-item"
+                            @click="toggleSubMenu(item.name)">
                             <div class=" p-0 d-flex justify-content-between">
                                 <div class="d-flex">
                                     <div style="width: 25px;">
-                                        <i style="color: #252b3b;padding: 0 5px 0 0;"><font-awesome-icon :icon="item.iconClass" /></i>
+                                        <i style="color: #252b3b;padding: 0 5px 0 0;"><font-awesome-icon
+                                                :icon="item.iconClass" /></i>
                                     </div>
                                     <span style="color: #252b3b;" class="name">{{ $t(`menu.${item.name}`) }}</span>
                                 </div>
@@ -31,10 +35,12 @@
                         </a>
 
                         <ul v-if="item.open" class="nav flex-column">
-                            <li style="padding: 10px 0;" v-for="subItem in item.subMenuList" :key="subItem.name" class="nav-item">
+                            <li style="padding: 10px 0;" v-for="subItem in item.subMenuList" :key="subItem.name"
+                                class="nav-item">
                                 <router-link :to="subItem.path" class="nav-link d-flex">
                                     <div style="width: 25px;">
-                                        <i style="color: #252b3b;padding: 0 5px 0 0;"><font-awesome-icon :icon="subItem.iconClass" /></i>
+                                        <i style="color: #252b3b;padding: 0 5px 0 0;"><font-awesome-icon
+                                                :icon="subItem.iconClass" /></i>
                                     </div>
                                     <span style="color: #252b3b;" class="name">{{ $t(`menu.${subItem.name}`) }}</span>
                                 </router-link>
@@ -49,19 +55,15 @@
             <div class="sticky_head d-flex flex-row bg_black">
                 <div class="wrap row">
                     <div class="col-md-10 d-flex">
-                        <p class="text text-light neonText">{{ $t(greeting) }} </p>
-                        <span class="username">: {{ userInfo.username }}</span>
+                        <p class="text text-light neonText">{{ $t(greeting) }} <span class="username">: {{ userInfo.username }}</span></p>
                     </div>
                     <div class="col-md-2">
-                        <SelectButton class="float-end" style="margin-right: 24px;" v-model="currentLanguage"
-                            :options="languageList" aria-labelledby="basic" />
+                        <SelectButton class="float-end" style="margin-right: 24px;" v-model="currentLanguage" :options="languageList" aria-labelledby="basic" />
                     </div>
                 </div>
             </div>
             <div class="main_content m-3">
-                <div class="p-3 rad">
-                    <router-view></router-view>
-                </div>
+                <router-view></router-view>
             </div>
         </div>
     </div>
