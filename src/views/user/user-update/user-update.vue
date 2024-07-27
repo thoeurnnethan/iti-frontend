@@ -2,7 +2,7 @@
 
 <script lang="ts">
 import { API_PATH } from '@/shared/common/api-path';
-import { USER_LIST, QUALIFICATION_LIST ,PARENT_LIST ,ACADEMIC_LIST } from '@/shared/types/user-list';
+import { USER_LIST, QUALIFICATION_LIST ,PARENT_LIST ,ACADEMIC_LIST, USER_LIST_REQ } from '@/shared/types/user-list';
 import { RequestService } from '@/shared/services/request-service';
 import { defineComponent } from 'vue';
 const requestService = new RequestService();
@@ -100,6 +100,7 @@ export default defineComponent({
             motherFirstName: false,
             motherLastName: false,
             motherPhone: false,
+            userIDFromURl: this.$route.params.userID,
 
         };
     },
@@ -154,7 +155,21 @@ export default defineComponent({
 
     },
 
+    mounted() {
+        this.onDataLoad();
+    },
+
     methods: {
+
+        async onDataLoad(){
+            const body: USER_LIST_REQ = {
+                userID: this.userIDFromURl
+            }
+            const response = (await requestService.request(API_PATH.USER_DETAIL, body, false)) as USER_LIST_REQ;
+
+            console.table(response);
+            
+        },
 
         // studentRegister
             async studentRegister() {
