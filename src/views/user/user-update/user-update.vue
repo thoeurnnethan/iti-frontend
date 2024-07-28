@@ -250,9 +250,7 @@ export default defineComponent({
                     academicList: academicList
                 }
             };
-            this.userList.push(userInfoList);
-            const reqBody = this.userList;
-            await requestService.request(API_PATH.USER_UPDATE, reqBody, true);
+            await requestService.request(API_PATH.USER_UPDATE, userInfoList, true);
             this.$router.push('/user-list');
 
         },
