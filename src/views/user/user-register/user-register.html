@@ -38,8 +38,8 @@
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Gender</label><br>
-            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="01"> Male
-            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="02"> Female
+            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="M"> Male
+            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="F"> Female
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Date of Birth</label><br>
@@ -175,8 +175,8 @@
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Gender</label><br>
-            <input type="radio" v-model="studentRegisterInfo.gender" class="form-check-input" value="01"> Male
-            <input type="radio" v-model="studentRegisterInfo.gender" class="form-check-input" value="02"> Female
+            <input type="radio" v-model="studentRegisterInfo.gender" class="form-check-input" value="M"> Male
+            <input type="radio" v-model="studentRegisterInfo.gender" class="form-check-input" value="F"> Female
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Date of Birth</label><br>
@@ -219,11 +219,6 @@
                         <InputText :invalid="fatherLastName" v-model="fatherInfo.lastName" @keyup="onChangeValidateAcademic" />
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Gender</label><br>
-                        <input type="radio" v-model="fatherInfo.gender" class="form-check-input" value="01"> Male
-                        <input type="radio" v-model="fatherInfo.gender" class="form-check-input" value="02"> Female
-                    </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Job</label><br>
                         <InputText v-model="fatherInfo.Job"/>
                     </div>
@@ -248,11 +243,6 @@
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Last Name</label><br>
                         <InputText :invalid="motherLastName" v-model="motherInfo.lastName" @keyup="onChangeValidateAcademic" />
-                    </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Gender</label><br>
-                        <input type="radio" v-model="motherInfo.gender" class="form-check-input" value="01"> Male
-                        <input type="radio" v-model="motherInfo.gender" class="form-check-input" value="02"> Female
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Job</label><br>

@@ -11,18 +11,24 @@ export default defineComponent({
     name: 'UserRegister',
     data() {
         return {
-            select_Role: '03',
+            select_Role: '04',
             userList: [] as USER_LIST[],
             teacherInfo: [] as QUALIFICATION_LIST[],
             fatherInfo:{
                 firstName:'',
                 lastName:'',
+                job:'',
                 phone:'',
+                gender:'F',
+                address:''
             } as PARENT_LIST,
-            motherInfo:{
+            motherInfo:{    
                 firstName:'',
                 lastName:'',
+                job:'',
                 phone:'',
+                gender:'M',
+                address:''
             } as PARENT_LIST,
             studentAcademicList: [] as ACADEMIC_LIST[],
             teacherRegisterInfo: {

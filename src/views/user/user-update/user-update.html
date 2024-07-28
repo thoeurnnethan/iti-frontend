@@ -166,50 +166,50 @@
     <div class="row mt-4" v-else>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">First Name</label><br>
-            <InputText :invalid="studentRegisterFirstName" v-model="studentRegisterInfo.firstName"
+            <InputText :invalid="studentRegisterFirstName" v-model="studentEditInfo.firstName"
                 @keyup="onChangeValidateAcademic" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Last Name</label><br>
-            <InputText :invalid="studentRegisterLastName" v-model="studentRegisterInfo.lastName"
+            <InputText :invalid="studentRegisterLastName" v-model="studentEditInfo.lastName"
                 @keyup="onChangeValidateAcademic" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Nick Name</label><br>
-            <InputText v-model="studentRegisterInfo.nickName" />
+            <InputText v-model="studentEditInfo.nickName" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Gender</label><br>
-            <input type="radio" v-model="studentRegisterInfo.gender" class="form-check-input" value="01"> Male
-            <input type="radio" v-model="studentRegisterInfo.gender" class="form-check-input" value="02"> Female
+            <input type="radio" v-model="studentEditInfo.gender" class="form-check-input" value="01"> Male
+            <input type="radio" v-model="studentEditInfo.gender" class="form-check-input" value="02"> Female
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Date of Birth</label><br>
-            <Calendar :invalid="studentRegisterDateOfBirth" v-model="studentRegisterInfo.dateOfBirth"
+            <Calendar :invalid="studentRegisterDateOfBirth" v-model="studentEditInfo.dateOfBirth"
                 dateFormat="yy-mm-dd" @blur="onChangeValidateAcademic" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Phone</label><br>
-            <InputText :invalid="studentRegisterPhone" v-model="studentRegisterInfo.phone"
+            <InputText :invalid="studentRegisterPhone" v-model="studentEditInfo.phone"
                 @keyup="onChangeValidateAcademic" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Email</label><br>
-            <InputText :invalid="studentRegisterEmail" v-model="studentRegisterInfo.email"
+            <InputText :invalid="studentRegisterEmail" v-model="studentEditInfo.email"
                 @keyup="onChangeValidateAcademic" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Password</label><br>
-            <InputText v-model="studentRegisterInfo.passwd" />
+            <InputText v-model="studentEditInfo.passwd" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Place of Birth</label><br>
-            <Textarea :invalid="studentRegisterPlaceOfBirth" v-model="studentRegisterInfo.placeOfBirth" rows="5"
+            <Textarea :invalid="studentRegisterPlaceOfBirth" v-model="studentEditInfo.placeOfBirth" rows="5"
                 cols="30" @keyup="onChangeValidateAcademic" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Address</label><br>
-            <Textarea :invalid="studentRegisterAddress" v-model="studentRegisterInfo.address" rows="5" cols="30"
+            <Textarea :invalid="studentRegisterAddress" v-model="studentEditInfo.address" rows="5" cols="30"
                 @keyup="onChangeValidateAcademic" />
         </div>
 

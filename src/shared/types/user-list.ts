@@ -20,7 +20,6 @@ interface USER_LIST {
 interface PARENT_LIST {
   firstName: string
   lastName: string
-  nickName: string
   gender: string
   job: string
   phone: string
