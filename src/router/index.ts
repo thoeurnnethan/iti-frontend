@@ -60,15 +60,15 @@ const router = createRouter({
                     component: () => import("@/views/department/department-insert/department-insert.vue")
                 },
                 {
-                    path: "/student-list",
-                    name: "department-insert",
-                    component: () => import("@/views/")
-                },
-                {
                     path: "/score-list",
                     name: "score-list",
                     component: () => import("@/views/score/score-list/score-list.vue")
                 },
+                {
+                    path: "/subject-list",
+                    name: "subject-list",
+                    component: () => import("@/views/subject/subject-list/subject-list.vue")
+                }
             ]
         },
     ]

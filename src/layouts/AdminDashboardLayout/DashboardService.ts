@@ -23,6 +23,11 @@ export const DashboardService = {
                 "name": "classList",
             },
             {
+                "path": "/subject-list",
+                "iconClass": "fa-calendar-days",
+                "name": "subjectList",
+            },
+            {
                 "path": "/user-list",
                 "iconClass": "fa-solid fa-school",
                 "name": "userList",
