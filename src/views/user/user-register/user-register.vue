@@ -11,7 +11,7 @@ export default defineComponent({
     name: 'UserRegister',
     data() {
         return {
-            select_Role: '04',
+            select_Role: '03',
             userList: [] as USER_LIST[],
             teacherInfo: [] as QUALIFICATION_LIST[],
             fatherInfo:{
@@ -199,8 +199,6 @@ export default defineComponent({
                 if (academicListCount.length < 0) {
                     return;
                 }
-
-
 
                 const academicList = this.studentAcademicList.map((data) => {
                     return {

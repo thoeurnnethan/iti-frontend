@@ -40,8 +40,8 @@
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Gender</label><br>
-            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="01"> Male
-            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="02"> Female
+            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="M"> Male
+            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="F"> Female
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Date of Birth</label><br>
@@ -165,6 +165,10 @@
     <!-- Student -->
     <div class="row mt-4" v-else>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
+            <label class="form-label font_15">Student ID</label><br>
+            <InputText v-model="studentEditInfo.userID" disabled />
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">First Name</label><br>
             <InputText :invalid="studentRegisterFirstName" v-model="studentEditInfo.firstName"
                 @keyup="onChangeValidateAcademic" />
@@ -180,8 +184,8 @@
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Gender</label><br>
-            <input type="radio" v-model="studentEditInfo.gender" class="form-check-input" value="01"> Male
-            <input type="radio" v-model="studentEditInfo.gender" class="form-check-input" value="02"> Female
+            <input type="radio" v-model="studentEditInfo.gender" class="form-check-input" value="M"> Male
+            <input type="radio" v-model="studentEditInfo.gender" class="form-check-input" value="F"> Female
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Date of Birth</label><br>
@@ -231,13 +235,8 @@
                             @keyup="onChangeValidateAcademic" />
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Gender</label><br>
-                        <input type="radio" v-model="fatherInfo.gender" class="form-check-input" value="01"> Male
-                        <input type="radio" v-model="fatherInfo.gender" class="form-check-input" value="02"> Female
-                    </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Job</label><br>
-                        <InputText v-model="fatherInfo.Job" />
+                        <InputText v-model="fatherInfo.job" />
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Phone</label><br>
@@ -265,13 +264,8 @@
                             @keyup="onChangeValidateAcademic" />
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Gender</label><br>
-                        <input type="radio" v-model="motherInfo.gender" class="form-check-input" value="01"> Male
-                        <input type="radio" v-model="motherInfo.gender" class="form-check-input" value="02"> Female
-                    </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Job</label><br>
-                        <InputText v-model="motherInfo.Job" />
+                        <InputText v-model="motherInfo.job" />
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                         <label class="form-label font_15">Phone</label><br>
@@ -333,7 +327,7 @@
                     <div class="we_shadow">
                         <DataTable v-if="studentAcademicList != ''" v-model:selection="academicInfo"
                             :value="studentAcademicList">
-                            <Column field="no" header="No" :class="customNoClass"></Column>
+                            <Column field="no" header="No" :class="[text-start]"></Column>
                             <Column field="academicName" header="Academic Name"></Column>
                             <Column field="academicDesc" header="Academic Description"></Column>
                             <Column field="startDate" header="Start Date"></Column>
@@ -374,7 +368,7 @@
 
         <div class="row mt-5">
             <div class="col-lg-4 col-sm-6 col-xl-3 col-md-3">
-                <button class="btn btn-success w-100" @click="studentRegister">Submit</button>
+                <button class="btn btn-success w-100" @click="studentUpdate">Submit</button>
             </div>
         </div>
     </div>
