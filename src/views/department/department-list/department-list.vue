@@ -3,7 +3,6 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
-import { useRouter } from 'vue-router';
 import { RequestService } from '@/shared/services/request-service';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { StandardCodeData } from '@/shared/types/standard-code';
@@ -43,8 +42,7 @@ export default defineComponent({
       statusCodeList: [
         { codeValue: '01', codeValueDesc: 'Active' },
         { codeValue: '09', codeValueDesc: 'Inactive' },
-      ] as StandardCodeData[],
-      router: useRouter(), // Add this line
+      ] as StandardCodeData[]
     }
   },
 
@@ -79,12 +77,6 @@ export default defineComponent({
         return{
           ...data,
           no: this.startingIndex + index
-        }
-      });
-      this.dataTable = response.body?.departmentList.map((data,index)=>{
-        return {
-            ...data,
-            no: this.startingIndex + index, 
         }
       });
       this.Loading = false;
@@ -178,14 +170,28 @@ export default defineComponent({
     },
 
     //downlaod excel
-    exportToExcel(){
+    async exportToExcel(){
+      const reqBody = {
+        userID: "",
+        searchKey: this.searchKey
+      }
+      const response = (await requestService.request(API_PATH.DEPARTMENT_LIST_DOWNLOAD,reqBody,false)) as DEPARTMENT_LIST_RES;
+      this.dataTable = response.body?.departmentList.map((data,index)=>{
+        return {
+            ...data,
+            no: this.startingIndex + index, 
+        }
+      });
       const excelData = this.dataTable.map((data, index) => {
         return {
           "No": index + 1,
-          "ID": data.departmentID,
-          "Name": data.departmentName,
-          "Description": data.departmentDesc,
-          "Status": this.$codeConverter.codeToString(this.statusCodeList,data.statusCode)
+          "Department ID": data.departmentID,
+          "Department Name": data.departmentName,
+          "Department Description": data.departmentDesc,
+          "Departmetn Manager": data.firstName + '-' + data.lastName,
+          "Status": this.$codeConverter.codeToString(this.statusCodeList,data.statusCode),
+          "First Regsiter Date": this.$format.formatDateTime(data.firstRegisterDate? data.firstRegisterDate : '', 'yyyy-mm-dd'),
+          "Last Change Date": this.$format.formatDateTime(data.lastChangeDate ? data.lastChangeDate : '', 'yyyy-mm-dd') 
         };
       })
       const exportExcelData = [
@@ -193,7 +199,7 @@ export default defineComponent({
           data: excelData
         },
       ];
-      exportExcel.exportSheet(exportExcelData, 'Department info')
+      exportExcel.exportSheet(exportExcelData, 'Department')
     },
   },
 })

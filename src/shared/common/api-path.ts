@@ -7,11 +7,13 @@ export enum API_PATH {
     USER_UPDATE = "api/user/update",
     //Department
     DEPARTMENT_LIST = "api/department/list",
+    DEPARTMENT_LIST_DOWNLOAD = "api/department/list/download",
     DEPARTMENT_DETAIL = "api/department/detail",
     DEPARTMENT_REGISTER = "api/department/register",
     DEPARTMENT_UPDATE = "api/department/update",
     //Class
     CLASS_LIST = "api/class-info/list",
+    CLASS_LIST_DOWNLOAD = "api/class-info/list/download",
     CLASS_DETAIL = "api/class-info/detail",
     CLASS_REGISTER = "api/class-info/register",
     CLASS_UPDATE = "api/class-info/update",

@@ -1,13 +1,16 @@
 export interface CLASS_LIST {
   classID: string
   departmentID: string 
+  departmentName: string 
   className: string 
   classDesc: string 
   year: string 
   generation: string 
   time: string 
   semester: number 
-  statusCode: string 
+  statusCode: string ,
+  firstRegisterDate?: string
+  lastChangeDate?: string
 }
 
 export interface CLASS_LIST_REQ {

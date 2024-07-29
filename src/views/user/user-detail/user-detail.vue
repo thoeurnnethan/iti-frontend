@@ -19,6 +19,13 @@ export default defineComponent({
         return {
             userInfo: {} as any,
             genderCodeList: GenderCodeList,
+            userRole: ''
+        }
+    },
+
+    computed:{
+        isStudentRole(): boolean{
+            return this.userRole === '04'
         }
     },
 
@@ -28,8 +35,7 @@ export default defineComponent({
             ...this.userDetail
             
         }
-        console.log(this.userInfo);
-
+        this.userRole = this.userDetail.roleID
     },
 
     methods: {

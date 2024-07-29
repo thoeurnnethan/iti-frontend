@@ -1,7 +1,7 @@
 <div class="popup">
     <div class="popWrap w90p">
         <div class="pop_head">
-            <h1 class="text-center">{{ userInfo.roleID === '04' ? 'Student' : 'Teacher' }} Information Detail</h1>
+            <h1 class="text-center">{{ isStudentRole ? 'Student' : 'Teacher' }} Information Detail</h1>
         </div>
         <div class="pop_cont">
             <div class="cont">
@@ -45,74 +45,77 @@
                         </dl>
                     </div>
                 </div>
-                <div class="mt-5" v-if="userInfo.roleID === '04'">
-                    <p class="h5 text-capitalize">Parent Details</p>
-                    <table>
-                        <thead>
-                            <tr class="text-capitalize">
-                                <th>No</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Gender</th>
-                                <th>Job</th>
-                                <th>Address</th>
-                                <th>Phone</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="parentInfo in userInfo?.parentList" :key="parentInfo.seqNo">
-                                <td>{{ parentInfo.seqNo }}</td>
-                                <td>{{ parentInfo.firstName }}</td>
-                                <td>{{ parentInfo.lastName }}</td>
-                                <td>{{ $codeConverter.codeToString(genderCodeList, parentInfo.gender) }}</td>
-                                <td>{{ parentInfo.job }}</td>
-                                <td>{{ parentInfo.address }}</td>
-                                <td>{{ $phoneNumberFormater.formatPhoneNumber(parentInfo.phone) }}</td>
-                            </tr>
-                            <tr v-if="!userInfo?.parentList">
-                                <td colspan="7" class="text-danger">No parent records available.</td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                <!-- student -->
+                <div class="d-flex flex-column" v-if="isStudentRole">
+                    <div class="mt-5">
+                        <p class="h5 text-capitalize">Parent Details</p>
+                        <table>
+                            <thead>
+                                <tr class="text-capitalize">
+                                    <th>No</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Gender</th>
+                                    <th>Job</th>
+                                    <th>Address</th>
+                                    <th>Phone</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="parentInfo in userInfo?.studentInfo?.parentList" :key="parentInfo.seqNo">
+                                    <td>{{ parentInfo.seqNo }}</td>
+                                    <td>{{ parentInfo.firstName }}</td>
+                                    <td>{{ parentInfo.lastName }}</td>
+                                    <td>{{ $codeConverter.codeToString(genderCodeList, parentInfo.gender) }}</td>
+                                    <td>{{ parentInfo.job }}</td>
+                                    <td>{{ parentInfo.address }}</td>
+                                    <td>{{ $phoneNumberFormater.formatPhoneNumber(parentInfo.phone) }}</td>
+                                </tr>
+                                <tr v-if="!userInfo?.studentInfo?.parentList">
+                                    <td colspan="7" class="text-danger">No parent records available.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-5">
+                        <p class="h5 text-capitalize">academic Details</p>
+                        <table>
+                            <thead>
+                                <tr class="text-capitalize">
+                                    <th>No</th>
+                                    <th>Academic Name</th>
+                                    <th>Academic Description</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Certificated Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="academic in userInfo?.studentInfo?.academicList" :key="academic.seqNo">
+                                    <td>{{ academic.seqNo }}</td>
+                                    <td>{{ academic.academicName }}</td>
+                                    <td>{{ academic.academicDesc }}</td>
+                                    <td>{{ $format.formatDateTime(academic.startDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
+                                    <td>{{ $format.formatDateTime(academic.endDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
+                                    <td>{{ academic.certificatedDate }}</td>
+                                </tr>
+                                <tr v-if="!userInfo?.studentInfo?.academicList">
+                                    <td colspan="6" class="text-danger">No parent records available.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- student -->
-                <div class="mt-5" v-if="userInfo.roleID === '04'">
-                    <p class="h5 text-capitalize">academic Details</p>
-                    <table>
-                        <thead>
-                            <tr class="text-capitalize">
-                                <th>No</th>
-                                <th>Academic Name</th>
-                                <th>Academic Description</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Certificated Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="academic in userInfo?.academicList" :key="academic.seqNo">
-                                <td>{{ academic.seqNo }}</td>
-                                <td>{{ academic.academicName }}</td>
-                                <td>{{ academic.academicDesc }}</td>
-                                <td>{{ $format.formatDateTime(academic.startDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
-                                <td>{{ $format.formatDateTime(academic.endDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
-                                <td>{{ academic.certificatedDate }}</td>
-                            </tr>
-                            <tr v-if="!userInfo?.academicList">
-                                <td colspan="6" class="text-danger">No parent records available.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- student -->
-                
+
                 <!-- Teacher -->
-                <div class="mt-5" v-if="userInfo.roleID != '04'">
+                <div class="mt-5" v-else>
                     <p class="h5 text-capitalize">Qualification Details</p>
                     <table>
                         <thead>
                             <tr class="text-capitalize">
-                                <th>No</th>
+                                <th class="text-center">No</th>
                                 <th>Qualification Name</th>
                                 <th>Qualification Description</th>
                                 <th>Start Date</th>
@@ -121,8 +124,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="qualification in userInfo?.qualificationList"  :key="qualification.seqNo">
-                                <td>{{ qualification.seqNo }}</td>
+                            <tr v-for="qualification in userInfo?.teacherInfo?.qualificationList" :key="qualification.seqNo">
+                                <td class="text-center">{{ qualification.seqNo }}</td>
                                 <td>{{ qualification.qualificationName }}</td>
                                 <td>{{ qualification.qualificationDesc }}</td>
                                 <td>{{ $format.formatDateTime(qualification.startDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
@@ -130,20 +133,19 @@
                                 <td>{{ $format.formatDateTime(qualification.certificatedDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
 
                             </tr>
-                            <tr v-if="!userInfo?.qualificationList">
+                            <tr v-if="!userInfo?.teacherInfo?.qualificationList">
                                 <td colspan="6" class="text-danger">No qualification records available.</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <!-- Teacher -->
-
             </div>
         </div>
         <div class="pop_foot">
             <div class="footer_btn">
                 <div class="right_side">
-                    <button class="btn03" @click="handleClose"><span>Close</span></button>
+                    <button class="btn03" @click="handleClose"><span>{{ $t('common.close') }}</span></button>
                 </div>
             </div>
         </div>

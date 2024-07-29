@@ -30,9 +30,9 @@ const router = createRouter({
                     component: () => import("@/views/user/user-register/user-register.vue")
                 },
                 {
-                    path: "/user-edit/:userID",
+                    path: "/user-update/:userID",
                     name: "user-update",
-                    component: () => import("@/views/user/user-update/user-update.vue")
+                    component: () => import("@/views/user/user-register/user-register.vue")
                 },
                 {
                     path: "/class-list",

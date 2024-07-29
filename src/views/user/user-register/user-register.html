@@ -2,99 +2,106 @@
 <ConfirmDialog></ConfirmDialog>
 <div class="container-fluid we_box">
     <div class="container-fluid p-0 d-flex justify-content-between">
-        <span class="text_title">User Register</span>
+        <span v-if="isRegisterRoute" class="text_title">User Register</span>
+        <span v-else class="text_title p-0 m-auto text-center">Update user information</span>
     </div>
-
-    <div class="container-fluid px-0 py-3">
+    <div class="container-fluid px-0 py-3" v-if="isRegisterRoute">
         <div class="row">
-            <div class="col-md-2">
-                <label class="form-label font_14">Select Roles for Register</label>
-                <select class="form-select" v-model="select_Role" @change="selectRole">
+            <div class="col-sm-2">
+                <label class="form-label font_14">Select Roles for User</label>
+                <select class="form-select" v-model="userSelectedRole" @change="selectRole">
                     <option value="03">Teacher</option>
                     <option value="04">Student</option>
+                </select>
+            </div>
+            <div class="col-md-3" v-if="!isRegisterStudent">
+                <label class="form-label font_14">Select Roles for Teacher</label>
+                <select class="form-select" v-model="teacherSelectedRole" @change="selectRole">
+                    <option v-for="teacherRole in teacherRoleList" :key="teacherRole.codeValue" :value="teacherRole.codeValue">
+                        {{ teacherRole.codeValueDesc }}
+                    </option>
                 </select>
             </div>
         </div>
     </div>
 </div>
     <div class="mt-4 we_box">
-        <h5 v-if="select_Role === '03'">Teacher</h5>
+        <h5 v-if="!isRegisterStudent" class="p-0 m-auto text-center">Teacher</h5>
         <h5 v-else>Student</h5>
     <hr>
-
-    <!-- default_form -->
-    <div class="row mt-4" v-if="select_Role === '03'">
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">First Name</label><br>
-            <InputText :invalid="teacherRegisterFirstName" v-model="teacherRegisterInfo.firstName" @keyup="onChangeValidate"/>
+    {{ userInfo }}
+    {{ isTeacherValid }}
+    <!-- Teacher -->
+    <div class="row mt-4" v-if="!isRegisterStudent">
+        <div :class="customRowClass">
+            <label :class="customFormClass">First Name</label><br>
+            <InputText :invalid="teacherRegisterFirstName" v-model="userInfo.firstName" @keyup="onChangeValidate"/>
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Last Name</label><br>
-            <InputText :invalid="teacherRegisterLastName" v-model="teacherRegisterInfo.lastName" @keyup="onChangeValidate"/>
+        <div :class="customRowClass">
+            <label :class="customFormClass">Last Name</label><br>
+            <InputText :invalid="teacherRegisterLastName" v-model="userInfo.lastName" @keyup="onChangeValidate"/>
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Nick Name</label><br>
-            <InputText v-model="teacherRegisterInfo.nickName"/>
+        <div :class="customRowClass">
+            <label :class="customFormClass">Nick Name</label><br>
+            <InputText v-model="userInfo.nickName"/>
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Gender</label><br>
-            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="M"> Male
-            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="F"> Female
+        <div :class="customRowClass">
+            <label :class="customFormClass">Gender</label><br>
+            <input type="radio" v-model="userInfo.gender" class="form-check-input" value="M"> Male
+            <input type="radio" v-model="userInfo.gender" class="form-check-input" value="F"> Female
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Date of Birth</label><br>
-            <Calendar :invalid="teacherRegisterDateOfBirth" v-model="teacherRegisterInfo.dateOfBirth" dateFormat="yy-mm-dd"  @blur="onChangeValidate"/>
+        <div :class="customRowClass">
+            <label :class="customFormClass">Date of Birth</label><br>
+            <Calendar :invalid="teacherRegisterDateOfBirth" v-model="userInfo.dateOfBirth" dateFormat="yy-mm-dd"  @blur="onChangeValidate"/>
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Phone</label><br>
-            <InputText :invalid="teacherRegisterPhone" v-model="teacherRegisterInfo.phone" @keyup="onChangeValidate"/>
+        <div :class="customRowClass">
+            <label :class="customFormClass">Phone</label><br>
+            <InputText :invalid="teacherRegisterPhone" v-model="userInfo.phone" @keyup="onChangeValidate"/>
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Email</label><br>
-            <InputText :invalid="teacherRegisterEmail" v-model="teacherRegisterInfo.email" @keyup="onChangeValidate"/>
+        <div :class="customRowClass">
+            <label :class="customFormClass">Email</label><br>
+            <InputText :invalid="teacherRegisterEmail" v-model="userInfo.email" @keyup="onChangeValidate"/>
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Password</label><br>
-            <InputText v-model="teacherRegisterInfo.passwd"/>
+        <!-- <div :class="customRowClass">
+            <label :class="customFormClass">Password</label><br>
+            <InputText v-model="userInfo.passwd"/>
+        </div> -->
+        <div :class="customRowClass">
+            <label :class="customFormClass">Place of Birth</label><br>
+            <Textarea :invalid="teacherRegisterPlaceOfBirth" v-model="userInfo.placeOfBirth" rows="5" cols="30"  @keyup="onChangeValidate"/>
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Place of Birth</label><br>
-            <Textarea :invalid="teacherRegisterPlaceOfBirth" v-model="teacherRegisterInfo.placeOfBirth" rows="5" cols="30"  @keyup="onChangeValidate"/>
+        <div :class="customRowClass">
+            <label :class="customFormClass">Address</label><br>
+            <Textarea :invalid="teacherRegisterAddress" v-model="userInfo.address" rows="5" cols="30"  @keyup="onChangeValidate"/>
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Address</label><br>
-            <Textarea :invalid="teacherRegisterAddress" v-model="teacherRegisterInfo.address" rows="5" cols="30"  @keyup="onChangeValidate"/>
-        </div>
-
-        <!-- Academic List -->
+        <!-- Qualify List -->
         <div class="col-12">
-            <h5 class="mt-4">List Qualification </h5>
+            <h5 class="mt-4">Qualification List</h5>
             <hr>
-            <!-- Academic List - Academic 1 -->
+            <!-- Qualify List -->
             <div class="row">
-                <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                    <label class="form-label font_15">Qualification Name</label><br>
-                    <InputText v-model="qualificationList.qualificationName" @keyup="onChangeValidate"
-                        :invalid="fieldQualificationName" />
+                <div :class="customRowClass">
+                    <label :class="customFormClass">Qualification Name</label><br>
+                    <InputText v-model="qualificationInfo.qualificationName" @keyup="onChangeValidate" :invalid="fieldQualificationName" />
                 </div>
-                <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                    <label class="form-label font_15">Qualification Description</label><br>
-                    <InputText v-model="qualificationList.qualificationDesc" />
+                <div :class="customRowClass">
+                    <label :class="customFormClass">Qualification Description</label><br>
+                    <InputText v-model="qualificationInfo.qualificationDesc" />
                 </div>
-                <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                    <label class="form-label font_15">Start Date</label><br>
-                    <Calendar v-model="qualificationList.startDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
+                <div :class="customRowClass">
+                    <label :class="customFormClass">Start Date</label><br>
+                    <Calendar v-model="qualificationInfo.startDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
                         :invalid="fieldStartDate" />
                 </div>
-                <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                    <label class="form-label font_15">End Date</label><br>
-                    <Calendar v-model="qualificationList.endDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
+                <div :class="customRowClass">
+                    <label :class="customFormClass">End Date</label><br>
+                    <Calendar v-model="qualificationInfo.endDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
                         :invalid="fieldEndDate" />
 
                 </div>
-                <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                    <label class="form-label font_15">Certificated Date</label><br>
-                    <Calendar v-model="qualificationList.certificatedDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
+                <div :class="customRowClass">
+                    <label :class="customFormClass">Certificated Date</label><br>
+                    <Calendar v-model="qualificationInfo.certificatedDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
                         :invalid="fieldCertificatedDate" />
                 </div>
                 <div class="row">
@@ -109,10 +116,8 @@
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="we_shadow">
-                        <DataTable v-if="teacherInfo != ''" v-model:selection="qualificationList"
-                            :value="teacherInfo"
-                        >
-                            <Column field="no" header="No" :class="customNoClass"></Column>
+                        <DataTable v-if="qualificationList" v-model:selection="qualificationInfo" :value="qualificationList">
+                            <Column field="seqNo" header="No" :class="customNoClass"></Column>
                             <Column field="qualificationName" header="Qualification Name"></Column>
                             <Column field="qualificationDesc" header="Qualification Description"></Column>
                             <Column field="startDate" header="Start Date"></Column>
@@ -121,13 +126,12 @@
                             <Column header="Edit" class="text-center">
                                 <template #body="{ data }">
                                     <font-awesome-icon style="cursor: pointer;" @click="onClickEdit(data)"
-                                        icon="fas fa-pencil" class=" text-primary" title="Edit" />&nbsp;
+                                        icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;
                                     <font-awesome-icon style="cursor: pointer;" @click="onClickDelete(data)"
                                         icon="fa-solid fa-trash" class=" text-danger" title="Delete" />
                                 </template>
                             </Column>
                         </DataTable>
-
                         <table v-else>
                             <thead>
                                 <tr class="text-capitalize">
@@ -150,57 +154,57 @@
                 </div>
             </div>
         </div>
-
         <div class="row mt-5">
             <div class="col-lg-4 col-sm-6 col-xl-3 col-md-3">
-                <button class="btn btn-success w-100" @click="teacherRegister">Submit</button>
+                <button v-if="!isRegisterRoute" class="btn btn-success w-100">Update</button>
+                <button v-else class="btn btn-success w-100" @click="teacherRegister">Save</button>
             </div>
         </div>
     </div>
-    <!-- default_form -->
+    <!-- Teacher -->
 
     <!-- Student -->
     <div class="row mt-4" v-else>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">First Name</label><br>
-            <InputText :invalid="studentRegisterFirstName" v-model="studentRegisterInfo.firstName" @keyup="onChangeValidateAcademic" />
+        <div :class="customRowClass">
+            <label :class="customFormClass">First Name</label><br>
+            <InputText :invalid="studentRegisterFirstName" v-model="userInfo.firstName" @keyup="onChangeValidateAcademic" />
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Last Name</label><br>
-            <InputText :invalid="studentRegisterLastName" v-model="studentRegisterInfo.lastName" @keyup="onChangeValidateAcademic" />
+        <div :class="customRowClass">
+            <label :class="customFormClass">Last Name</label><br>
+            <InputText :invalid="studentRegisterLastName" v-model="userInfo.lastName" @keyup="onChangeValidateAcademic" />
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Nick Name</label><br>
-            <InputText v-model="studentRegisterInfo.nickName"/>
+        <div :class="customRowClass">
+            <label :class="customFormClass">Nick Name</label><br>
+            <InputText v-model="userInfo.nickName"/>
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Gender</label><br>
-            <input type="radio" v-model="studentRegisterInfo.gender" class="form-check-input" value="M"> Male
-            <input type="radio" v-model="studentRegisterInfo.gender" class="form-check-input" value="F"> Female
+        <div :class="customRowClass">
+            <label :class="customFormClass">Gender</label><br>
+            <input type="radio" v-model="userInfo.gender" class="form-check-input" value="M"> Male
+            <input type="radio" v-model="userInfo.gender" class="form-check-input" value="F"> Female
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Date of Birth</label><br>
-            <Calendar :invalid="studentRegisterDateOfBirth" v-model="studentRegisterInfo.dateOfBirth" dateFormat="yy-mm-dd" @blur="onChangeValidateAcademic"  />
+        <div :class="customRowClass">
+            <label :class="customFormClass">Date of Birth</label><br>
+            <Calendar :invalid="studentRegisterDateOfBirth" v-model="userInfo.dateOfBirth" dateFormat="yy-mm-dd" @blur="onChangeValidateAcademic"  />
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Phone</label><br>
-            <InputText :invalid="studentRegisterPhone" v-model="studentRegisterInfo.phone" @keyup="onChangeValidateAcademic" />
+        <div :class="customRowClass">
+            <label :class="customFormClass">Phone</label><br>
+            <InputText :invalid="studentRegisterPhone" v-model="userInfo.phone" @keyup="onChangeValidateAcademic" />
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Email</label><br>
-            <InputText :invalid="studentRegisterEmail" v-model="studentRegisterInfo.email" @keyup="onChangeValidateAcademic" />
+        <div :class="customRowClass">
+            <label :class="customFormClass">Email</label><br>
+            <InputText :invalid="studentRegisterEmail" v-model="userInfo.email" @keyup="onChangeValidateAcademic" />
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Password</label><br>
-            <InputText v-model="studentRegisterInfo.passwd"/>
+        <!-- <div :class="customRowClass">
+            <label :class="customFormClass">Password</label><br>
+            <InputText v-model="userInfo.passwd"/>
+        </div> -->
+        <div :class="customRowClass">
+            <label :class="customFormClass">Place of Birth</label><br>
+            <Textarea :invalid="studentRegisterPlaceOfBirth" v-model="userInfo.placeOfBirth" rows="5" cols="30" @keyup="onChangeValidateAcademic"  />
         </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Place of Birth</label><br>
-            <Textarea :invalid="studentRegisterPlaceOfBirth" v-model="studentRegisterInfo.placeOfBirth" rows="5" cols="30" @keyup="onChangeValidateAcademic"  />
-        </div>
-        <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-            <label class="form-label font_15">Address</label><br>
-            <Textarea :invalid="studentRegisterAddress" v-model="studentRegisterInfo.address" rows="5" cols="30"  @keyup="onChangeValidateAcademic" />
+        <div :class="customRowClass">
+            <label :class="customFormClass">Address</label><br>
+            <Textarea :invalid="studentRegisterAddress" v-model="userInfo.address" rows="5" cols="30"  @keyup="onChangeValidateAcademic" />
         </div>
 
         <!-- Parent List -->
@@ -210,24 +214,24 @@
             <fieldset class="border rounded-3 pb-2">
                 <legend class="float-none w-auto m_left20 px-2 h5">Father</legend>
                 <div class="row  m-0">
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2 ">
-                        <label class="form-label font_15">First Name</label><br>
+                    <div :class="customRowClass ">
+                        <label :class="customFormClass">First Name</label><br>
                         <InputText :invalid="fatherFirstName" v-model="fatherInfo.firstName" @keyup="onChangeValidateAcademic" />
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Last Name</label><br>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">Last Name</label><br>
                         <InputText :invalid="fatherLastName" v-model="fatherInfo.lastName" @keyup="onChangeValidateAcademic" />
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Job</label><br>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">Job</label><br>
                         <InputText v-model="fatherInfo.job"/>
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Phone</label><br>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">Phone</label><br>
                         <InputText :invalid="fatherPhone" v-model="fatherInfo.phone" @keyup="onChangeValidateAcademic" />
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Address</label><br>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">Address</label><br>
                         <Textarea  v-model="fatherInfo.address" rows="5" cols="30" />
                     </div>
                 </div>
@@ -236,25 +240,25 @@
             <fieldset class="border rounded-3 mt-3 pb-2">
                 <legend class="float-none w-auto m_left20 px-2 h5">Mother</legend>
                 <div class="row  m-0">
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2 ">
-                        <label class="form-label font_15">First Name</label><br>
+                    <div :class="customRowClass ">
+                        <label :class="customFormClass">First Name</label><br>
                         <InputText :invalid="motherFirstName" v-model="motherInfo.firstName" @keyup="onChangeValidateAcademic" />
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Last Name</label><br>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">Last Name</label><br>
                         <InputText :invalid="motherLastName" v-model="motherInfo.lastName" @keyup="onChangeValidateAcademic" />
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Job</label><br>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">Job</label><br>
                         <InputText v-model="motherInfo.job"/>
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Phone</label><br>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">Phone</label><br>
                         <InputText :invalid="motherPhone" v-model="motherInfo.phone" @keyup="onChangeValidateAcademic" />
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Address</label><br>
-                        <Textarea  v-model="motherInfo.address" rows="5" cols="30" />
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">Address</label><br>
+                        <Textarea v-model="motherInfo.address" rows="5" cols="30" />
                     </div>
                 </div>
             </fieldset>
@@ -268,24 +272,24 @@
             <fieldset class="border rounded-3 pb-2">
                 <legend class="float-none w-auto m_left20 px-2 h5">Academic</legend>
                 <div class="row m-0">
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Academic Name</label><br>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">Academic Name</label><br>
                         <InputText v-model="academicInfo.academicName" :invalid="fieldAcademicName" @keyup="onChangeValidateAcademic"/>
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Academic Description</label><br>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">Academic Description</label><br>
                         <InputText v-model="academicInfo.academicDesc" />
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Start Date</label><br>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">Start Date</label><br>
                         <Calendar v-model="academicInfo.startDate" :invalid="fieldAcademicStartDate" @blur="onChangeValidateAcademic" dateFormat="yy-mm-dd" />
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">End Date</label><br>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">End Date</label><br>
                         <Calendar v-model="academicInfo.endDate" :invalid="fieldAcademicEndDate" @blur="onChangeValidateAcademic" dateFormat="yy-mm-dd" />
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
-                        <label class="form-label font_15">Certificated Date</label><br>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">Certificated Date</label><br>
                         <Calendar v-model="academicInfo.certificatedDate" :invalid="fieldAcademicCertificatedDate" @blur="onChangeValidateAcademic" dateFormat="yy-mm-dd" />
                     </div>
                     <div class="row">
@@ -301,10 +305,10 @@
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="we_shadow">
-                        <DataTable v-if="studentAcademicList != ''" 
+                        <DataTable v-if="studentAcademicList" 
                             v-model:selection="academicInfo"
                             :value="studentAcademicList">
-                            <Column field="no" header="No" :class="customNoClass"></Column>
+                            <Column field="seqNo" header="No" :class="customNoClass"></Column>
                             <Column field="academicName" header="Academic Name"></Column>
                             <Column field="academicDesc" header="Academic Description"></Column>
                             <Column field="startDate" header="Start Date"></Column>
@@ -319,10 +323,9 @@
                                 </template>
                             </Column>
                         </DataTable>
-
                         <table v-else>
                             <thead>
-                                <tr class="text-capitalize">
+                                <tr class="text-capitalize text-center">
                                     <th class="we_text_color">No</th>
                                     <th class="we_text_color">Academic Name</th>
                                     <th class="we_text_color">Academic Description</th>
@@ -345,7 +348,8 @@
 
         <div class="row mt-5">
             <div class="col-lg-4 col-sm-6 col-xl-3 col-md-3">
-                <button class="btn btn-success w-100" @click="studentRegister">Submit</button>
+                <button v-if="!isRegisterRoute">Update</button>
+                <button v-else class="btn btn-success w-100" @click="studentRegister">Save</button>
             </div>
         </div>
     </div>

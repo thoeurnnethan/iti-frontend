@@ -14,6 +14,12 @@ export const UserRoleList: StandardCodeData[] = [
   { codeValue: '04', codeValueDesc: 'Student' }
 ];
 
+export const TeacherRoleList: StandardCodeData[] = [
+  { codeValue: '01', codeValueDesc: 'Admin' },
+  { codeValue: '02', codeValueDesc: 'Department Manager' },
+  { codeValue: '03', codeValueDesc: 'Teacher' }
+];
+
 export const GenderCodeList: StandardCodeData[] = [
   { codeValue: 'M', codeValueDesc: 'Male' },
   { codeValue: 'F', codeValueDesc: 'Female' }

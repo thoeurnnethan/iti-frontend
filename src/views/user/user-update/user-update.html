@@ -4,8 +4,7 @@
     <div class="container-fluid p-0 d-flex justify-content-between">
         <span class="text_title">User Register</span>
     </div>
-
-    <div class="container-fluid px-0 py-3">
+    <!-- <div class="container-fluid px-0 py-3">
         <div class="row">
             <div class="col-md-2">
                 <label class="form-label font_14">Select Roles for Register</label>
@@ -15,72 +14,68 @@
                 </select>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 <div class="mt-4 we_box">
     <h5 v-if="select_Role === '03'">Teacher</h5>
     <h5 v-else>Student</h5>
     <hr>
-
+    {{ select_Role }}
     <!-- default_form -->
     <div class="row mt-4" v-if="select_Role === '03'">
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">First Name</label><br>
-            <InputText :invalid="teacherRegisterFirstName" v-model="teacherRegisterInfo.firstName"
-                @keyup="onChangeValidate" />
+            <InputText :invalid="teacherRegisterFirstName" v-model="userDetail.firstName" @keyup="onChangeValidate" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Last Name</label><br>
-            <InputText :invalid="teacherRegisterLastName" v-model="teacherRegisterInfo.lastName"
-                @keyup="onChangeValidate" />
+            <InputText :invalid="teacherRegisterLastName" v-model="userDetail.lastName" @keyup="onChangeValidate" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Nick Name</label><br>
-            <InputText v-model="teacherRegisterInfo.nickName" />
+            <InputText v-model="userDetail.nickName" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Gender</label><br>
-            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="M"> Male
-            <input type="radio" v-model="teacherRegisterInfo.gender" class="form-check-input" value="F"> Female
+            <input type="radio" v-model="userDetail.gender" class="form-check-input" value="M"> Male
+            <input type="radio" v-model="userDetail.gender" class="form-check-input" value="F"> Female
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Date of Birth</label><br>
-            <Calendar :invalid="teacherRegisterDateOfBirth" v-model="teacherRegisterInfo.dateOfBirth"
+            <Calendar :invalid="teacherRegisterDateOfBirth" v-model="userDetail.dateOfBirth"
                 dateFormat="yy-mm-dd" @blur="onChangeValidate" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Phone</label><br>
-            <InputText :invalid="teacherRegisterPhone" v-model="teacherRegisterInfo.phone" @keyup="onChangeValidate" />
+            <InputText :invalid="teacherRegisterPhone" v-model="userDetail.phone" @keyup="onChangeValidate" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Email</label><br>
-            <InputText :invalid="teacherRegisterEmail" v-model="teacherRegisterInfo.email" @keyup="onChangeValidate" />
+            <InputText :invalid="teacherRegisterEmail" v-model="userDetail.email" @keyup="onChangeValidate" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Password</label><br>
-            <InputText v-model="teacherRegisterInfo.passwd" />
+            <InputText v-model="userDetail.passwd" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Place of Birth</label><br>
-            <Textarea :invalid="teacherRegisterPlaceOfBirth" v-model="teacherRegisterInfo.placeOfBirth" rows="5"
+            <Textarea :invalid="teacherRegisterPlaceOfBirth" v-model="userDetail.placeOfBirth" rows="5"
                 cols="30" @keyup="onChangeValidate" />
         </div>
         <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
             <label class="form-label font_15">Address</label><br>
-            <Textarea :invalid="teacherRegisterAddress" v-model="teacherRegisterInfo.address" rows="5" cols="30"
+            <Textarea :invalid="teacherRegisterAddress" v-model="userDetail.address" rows="5" cols="30"
                 @keyup="onChangeValidate" />
         </div>
 
         <!-- Academic List -->
         <div class="col-12">
-            <h5 class="mt-4">List Qualification </h5>
+            <h5 class="mt-4">Qualification List</h5>
             <hr>
-            <!-- Academic List - Academic 1 -->
             <div class="row">
                 <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                     <label class="form-label font_15">Qualification Name</label><br>
-                    <InputText v-model="qualificationList.qualificationName" @keyup="onChangeValidate"
-                        :invalid="fieldQualificationName" />
+                    <InputText v-model="qualificationList.qualificationName" @keyup="onChangeValidate"  :invalid="fieldQualificationName" />
                 </div>
                 <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                     <label class="form-label font_15">Qualification Description</label><br>
@@ -88,19 +83,15 @@
                 </div>
                 <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                     <label class="form-label font_15">Start Date</label><br>
-                    <Calendar v-model="qualificationList.startDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
-                        :invalid="fieldStartDate" />
+                    <Calendar v-model="qualificationList.startDate" @blur="onChangeValidate" dateFormat="yy-mm-dd" :invalid="fieldStartDate" />
                 </div>
                 <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                     <label class="form-label font_15">End Date</label><br>
-                    <Calendar v-model="qualificationList.endDate" @blur="onChangeValidate" dateFormat="yy-mm-dd"
-                        :invalid="fieldEndDate" />
-
+                    <Calendar v-model="qualificationList.endDate" @blur="onChangeValidate" dateFormat="yy-mm-dd" :invalid="fieldEndDate" />
                 </div>
                 <div class="col-lg-4 col-sm-6 col-xl-3 mb-2">
                     <label class="form-label font_15">Certificated Date</label><br>
-                    <Calendar v-model="qualificationList.certificatedDate" @blur="onChangeValidate"
-                        dateFormat="yy-mm-dd" :invalid="fieldCertificatedDate" />
+                    <Calendar v-model="qualificationList.certificatedDate" @blur="onChangeValidate" dateFormat="yy-mm-dd" :invalid="fieldCertificatedDate" />
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-sm-6 col-xl-3">
@@ -114,8 +105,8 @@
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="we_shadow">
-                        <DataTable v-if="teacherInfo != ''" v-model:selection="qualificationList" :value="teacherInfo">
-                            <Column field="no" header="No" :class="customNoClass"></Column>
+                        <DataTable v-if="userDetail.qualificationList" v-model:selection="qualificationList" :value="userDetail.qualificationList">
+                            <Column field="seqNo" header="No"></Column>
                             <Column field="qualificationName" header="Qualification Name"></Column>
                             <Column field="qualificationDesc" header="Qualification Description"></Column>
                             <Column field="startDate" header="Start Date"></Column>
@@ -130,7 +121,6 @@
                                 </template>
                             </Column>
                         </DataTable>
-
                         <table v-else>
                             <thead>
                                 <tr class="text-capitalize">

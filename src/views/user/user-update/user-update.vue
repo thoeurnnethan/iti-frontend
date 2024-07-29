@@ -2,7 +2,7 @@
 
 <script lang="ts">
 import { API_PATH } from '@/shared/common/api-path';
-import { USER_LIST, QUALIFICATION_LIST, PARENT_LIST, ACADEMIC_LIST, USER_LIST_REQ } from '@/shared/types/user-list';
+import { USER_LIST, QUALIFICATION_LIST, PARENT_LIST, ACADEMIC_LIST, USER_LIST_REQ, USER_DETAIL_RES } from '@/shared/types/user-list';
 import { RequestService } from '@/shared/services/request-service';
 import { defineComponent } from 'vue';
 const requestService = new RequestService();
@@ -13,6 +13,7 @@ export default defineComponent({
         return {
             select_Role: '',
             userList: [] as USER_LIST[],
+            userDetail: {} as USER_LIST,
             teacherInfo: [] as QUALIFICATION_LIST[],
             fatherInfo: {
                 firstName: '',
@@ -113,7 +114,6 @@ export default defineComponent({
             motherLastName: false,
             motherPhone: false,
             userIDFromURl: this.$route.params.userID,
-
         };
     },
 
@@ -168,28 +168,28 @@ export default defineComponent({
     },
 
     mounted() {
-        this.onDataLoad();
+        this.getUserDetailSummary();
     },
 
     methods: {
-
-        async onDataLoad() {
-            const body: USER_LIST_REQ = {
+        async getUserDetailSummary() {
+            const body = {
                 userID: this.userIDFromURl
             };
-            const response = (await requestService.request(API_PATH.USER_DETAIL, body, false)) as USER_LIST_REQ;
-
+            const response = (await requestService.request(API_PATH.USER_DETAIL, body, false)) as USER_DETAIL_RES;
             this.select_Role = response.body.roleID;
-            this.studentEditInfo = response.body;
-            this.studentEditInfo.dateOfBirth = this.formatDateFront(response.body.dateOfBirth);
-            this.fatherInfo = response.body.parentList[0];
-            this.motherInfo = response.body.parentList[1];
-            this.studentAcademicList = response.body.academicList.map(academic => ({
-                ...academic,
-                startDate: this.formatDateFront(academic.startDate),
-                endDate: this.formatDateFront(academic.endDate),
-                certificatedDate: this.formatDateFront(academic.certificatedDate)
-            }));
+            this.userDetail = response.body
+
+            // this.studentEditInfo.dateOfBirth = this.formatDateFront(response.body.dateOfBirth);
+            // this.studentEditInfo = response.body;
+            // this.fatherInfo = response.body.parentList[0];
+            // this.motherInfo = response.body.parentList[1];
+            // this.studentAcademicList = response.body.academicList.map(academic => ({
+            //     ...academic,
+            //     startDate: this.formatDateFront(academic.startDate),
+            //     endDate: this.formatDateFront(academic.endDate),
+            //     certificatedDate: this.formatDateFront(academic.certificatedDate)
+            // }));
         },
 
         // studentUpdate

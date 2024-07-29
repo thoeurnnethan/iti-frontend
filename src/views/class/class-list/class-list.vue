@@ -32,7 +32,6 @@ export default defineComponent({
       selectSemester: '',
       searchKeyword:'',
       selectTime:'',
-      searchKey: '',
       Loading: false,
       totalCount: 0,
       pageSize: 10,
@@ -62,7 +61,7 @@ export default defineComponent({
     async getClassList() {
       this.Loading = true;
       const reqBody: CLASS_LIST_REQ = {
-        departmentID: this.searchKey,
+        departmentID: this.searchKeyword,
         pageSize: this.pageSize,
         pageNumber: this.pageNumber + 1,
         searchKeyword: this.searchKeyword,
@@ -169,17 +168,35 @@ export default defineComponent({
     },
 
     //download excel
-    exportToExcel() {
+    async exportToExcel() {
+      const reqBody = {
+        departmentID: this.searchKeyword,
+        searchKeyword: this.searchKeyword,
+        year: this.selectYear === 'All' ? '' : this.selectYear,
+        semester: this.selectSemester === '' ? null : this.selectSemester
+      }
+      const response = (await requestService.request(API_PATH.CLASS_LIST_DOWNLOAD, reqBody, false)) as CLASS_LIST_RES;
+      this.dataTable = response.body?.classList.map((data, index) => {
+        return {
+          ...data,
+          no: this.startingIndex + index,
+        }
+      });
+
       const excelData = this.dataTable.map((data, index) => {
         return {
           "No": index + 1,
-          "ID": data.classID,
+          "Class ID": data.classID,
           "Class Name": data.className,
+          "Class Description": data.classDesc,
           "Year": data.year,
           "Generation": data.generation,
           "Time": data.time,
           "Semester": data.semester,
-          "Status": this.$codeConverter.codeToString(this.statusCodeList, data.statusCode)
+          "Department": data.departmentID + ': '+ data.departmentName,
+          "Status": this.$codeConverter.codeToString(this.statusCodeList, data.statusCode),
+          "First Register Date": this.$format.formatDateTime(data.firstRegisterDate ? data.firstRegisterDate : '', 'yyyy-mm-dd'),
+          "Last Change Date": this.$format.formatDateTime(data.lastChangeDate ? data.lastChangeDate : '', 'yyyy-mm-dd')
         };
       })
       const exportExcelData = [
