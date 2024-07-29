@@ -93,5 +93,13 @@
     "building": "Building",
     "floor": "Room Floor",
     "statusCode": "Status"
+  },
+  "subject": {
+    "title": "Subject List",
+    "classID": "Class ID",
+    "subjectName": "Subject Name",
+    "subjectDesc": "Subject Description",
+    "statusCode": "Status",
+    "edit": "Edit"
   }
 }
