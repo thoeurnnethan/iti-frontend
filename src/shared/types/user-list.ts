@@ -13,8 +13,8 @@ interface USER_LIST {
   email: string
   passwd: string
   status: string 
-  studentInfo?: STUDENT_INFO
-  teacherInfo?: TEACHER_INFO
+  studentInfo: STUDENT_INFO
+  teacherInfo: TEACHER_INFO
 }
 
 interface PARENT_LIST {
@@ -27,7 +27,6 @@ interface PARENT_LIST {
 }
 
 interface ACADEMIC_LIST {
-  no?: number
   seqNo?: number
   academicID?: number
   academicName: string

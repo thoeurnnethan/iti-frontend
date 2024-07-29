@@ -117,7 +117,7 @@ export default defineComponent({
         },
 
         editUser(_item: USER_LIST){
-            this.$router.push({ path: `/user-edit/${_item.userID}` });
+            this.$router.push({ path: `/user-update/${_item.userID}` });
         },
         
         // Handle page size page number

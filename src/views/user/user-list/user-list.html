@@ -67,10 +67,20 @@
         </div>
     </div>
     <div class="we_shadow">
-        <DataTable v-model:selection="userInfo" @row-dblclick="onClickRow" selectionMode="single" scrollable
-            :value="userList" :metaKeySelection="true" :rows="pageSize" :lazy="true" :paginator="true"
-            :totalRecords="totalCount" :rowsPerPageOptions="[10, 20, 50]" @page="onPage">
-            <Column field="no" :header="$t('common.no')" :class="[text-start]"></Column>
+        <DataTable 
+            v-model:selection="userInfo" 
+            @row-dblclick="onClickRow" 
+            selectionMode="single" 
+            scrollable
+            :value="userList" 
+            :metaKeySelection="true" 
+            :rows="pageSize" 
+            :lazy="true" 
+            :paginator="true"
+            :totalRecords="totalCount" 
+            :rowsPerPageOptions="[10, 20, 50]" 
+            @page="onPage">
+            <Column field="no" :header="$t('common.no')" :class="['text-start']"></Column>
             <Column field="specificID" :header="$t('user.ID')"></Column>
             <Column :header="$t('user.role')">
                 <template #body="{ data }">
