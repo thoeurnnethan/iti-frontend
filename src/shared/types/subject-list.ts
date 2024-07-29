@@ -1,12 +1,10 @@
 
 export interface SUBJECT_LIST {
-  classID: string
-  seqNo: number
+  classID?: string
+  seqNo?: number
   subjectName: string
-  subjectDesc: string
-  statusCode: string
-  firstRegisterDate?: string
-  lastChangeDate?: string
+  subjectDesc?: string
+  statusCode?: string
 }
 
 export interface SUBJECT_LIST_REQ {
@@ -19,6 +17,7 @@ export interface SUBJECT_LIST_REQ {
 
 export interface SUBJECT_LIST_RES {
   body : {
+roomList: any
     subjectList: Array<SUBJECT_LIST>
     totalCount : number 
   }
