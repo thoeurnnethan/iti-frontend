@@ -77,7 +77,7 @@ export default defineComponent({
       return data.statusCode === '09' ? 'we_bg_row' : '';
     },
 
-    async setRoom(_item: SUBJECT_LIST) {
+    async setInactive(_item: SUBJECT_LIST) {
       this.$confirm.require({
         message: 'Do you want to set to Inactive?',
         header: 'Warning !!!',
@@ -88,7 +88,7 @@ export default defineComponent({
             statusCode: '09'
           }
           await requestService.request(API_PATH.ROOM_UPDATE, reqBody, false) as SUBJECT_LIST;
-          this.getRoomList();
+          this.getSubjectList();
           this.$toast.add({ summary: 'Confirmed', detail: 'The record has been set.', life: 3000 });
         },
         reject: () => {
@@ -169,16 +169,16 @@ export default defineComponent({
     // Edit class method
     async onClickEdit(item: SUBJECT_LIST) {
       this.$popupService.onOpen({
-        component: room_action,
+        component: subject_action,
         dataProp: {
           roomInfoData: item,
           isInsert: false
         },
         callback: () => {
-          this.getRoomList();
+          this.getSubjectList();
         },
         onClose: () => {
-          this.getRoomList();
+          this.getSubjectList();
         }
       })
     },

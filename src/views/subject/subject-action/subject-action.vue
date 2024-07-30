@@ -46,7 +46,8 @@ export default defineComponent({
       classList: [] as CLASS_LIST[],
       editingIndex: -1,
       fieldNameValidate: false,
-      fieldDesValidate: false
+      fieldDesValidate: false,
+      editConfirmationVisible: false
     };
   },
   computed: {
@@ -78,6 +79,8 @@ export default defineComponent({
         this.subjectInfo = { ...this.subjectInfoData };
         this.subjectInfoUpdate = { ...this.subjectInfo };
       }
+      console.table(this.subjectInfo);
+      
     },
     async classListLoad() {
       const reqBody = {
@@ -114,29 +117,33 @@ export default defineComponent({
     },
     resetForm() {
       this.subjectInfo = {
-        classID: '',
+        classID: this.subjectInfo.classID,  // Retain the current classID
         subjectName: '',
         subjectDesc: '',
-        statusCode: ''
+        statusCode: '01'
       };
       this.fieldNameValidate = false;
       this.fieldDesValidate = false;
     },
 
+
     async onClickEdit(data: SUBJECT_LIST) {
-      if (this.isEditing) {
+      if (this.isEditing || this.editConfirmationVisible) {
         this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
         return;
       }
+      this.editConfirmationVisible = true;
       this.$confirm.require({
         message: 'Do you want to edit this record?',
         header: 'Confirmation',
         accept: () => {
           this.subjectInfo = { ...data };
           this.editingIndex = this.subjectList.findIndex(item => item.seqNo === data.seqNo);
+          this.editConfirmationVisible = false;
           this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
         },
         reject: () => {
+          this.editConfirmationVisible = false;
           this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
         }
       });
@@ -161,13 +168,23 @@ export default defineComponent({
     },
 
     async subjectInsert() {
-      if (!this.isValidInsert) return;
-      const response = await requestService.request(API_PATH.SUBJECT_INSERT, this.subjectInfo, true);
-      if (response.status === 200) {
-        this.$toast.add({ severity: 'success', summary: 'Success', detail: 'Subject added successfully' });
-        this.onClose();
-      }
+      const dataList = this.subjectList.map((data) => ({
+        subjectName: data.subjectName,
+        subjectDesc: data.subjectDesc,
+      }));
+
+      const reqBody = {
+        classID: this.subjectInfo.classID,
+        subjectList: dataList,
+      };
+
+      console.log(reqBody);
+
+      await requestService.request(API_PATH.SUBJECT_REGISTER, reqBody, true);
+      this.resetForm();
+      this.onClose();
     },
+
     async subjectEdit() {
       if (!this.isValidUpdate) return;
       const response = await requestService.request(API_PATH.SUBJECT_UPDATE, this.subjectInfo, true);

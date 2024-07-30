@@ -79,10 +79,6 @@
 
 //-custom_css----------------
 
-.p-dialog-mask, .p-component-overlay, .p-component-overlay-enter{
-	z-index: 100000000;
-}
-
 .p-invalid,
 .p-invalid {
 	border: 1px solid #f66a60 !important;
@@ -2583,6 +2579,10 @@ ion-modal::part(backdrop) {
 	opacity: 0.6 !important;
 }
 
+.p-toast{
+	z-index: 110700 !important;
+}
+
 .popup {
 	display: flex;
 	height: 100%;
@@ -2592,6 +2592,7 @@ ion-modal::part(backdrop) {
 	top: 10px;
 	align-items: center;
 	justify-content: center;
+	z-index: 1 !important;
 
 	.popWrap {
 		position: relative;
@@ -2918,6 +2919,9 @@ ion-modal::part(backdrop) {
 	}
 }
 
+.p-dialog-mask{
+	z-index: 110200 !important;
+}
 
 /* No Data Table */
 .no_data {

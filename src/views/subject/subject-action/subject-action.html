@@ -1,5 +1,5 @@
-<Toast style="z-index: 1000000000000000000000;" />
-<ConfirmDialog style="z-index: 1000000000000000000000;"></ConfirmDialog>
+<Toast />
+<ConfirmationDialog v-if="editConfirmationVisible" @confirm="confirmEdit" @cancel="cancelEdit" />
 <div class="popup">
     <div class="popWrap w70p">
         <div class="pop_head">
@@ -29,10 +29,6 @@
                     <fieldset class="border rounded-3 pb-2">
                         <legend class="float-none w-auto m_left20 px-2 h5">Subject</legend>
                         <div class="row p-3">
-                            <div class="col-lg-3 col-md-4 mb-2" v-if="!isInsert">
-                                <label class="form-label font_15">Subject ID</label><br>
-                                <input type="text" class="form-control" v-model="subjectInfo.subjectID" disabled />
-                            </div>
 
                             <div class="col-lg-3 col-md-4 mb-2">
                                 <label class="form-label font_15">{{ $t('subject.subjectName') }}</label><br>
