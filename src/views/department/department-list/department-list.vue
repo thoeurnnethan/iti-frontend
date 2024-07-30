@@ -76,7 +76,7 @@ export default defineComponent({
       this.departmentList = response.body?.departmentList.map((data,index) =>{
         return{
           ...data,
-          no: this.startingIndex + index
+          no: index + 1 + (this.pageSize) * this.pageNumber
         }
       });
       this.Loading = false;
@@ -88,8 +88,8 @@ export default defineComponent({
 
     // Handle page size page number
     onPage(event: { page: number; rows: number; }) {
-      this.pageNumber = event.page;
       this.pageSize = event.rows;
+      this.pageNumber = event.page;
       this.getDepartmentList();
     },
 

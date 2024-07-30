@@ -36,7 +36,6 @@ export default defineComponent({
       totalCount: 0,
       pageSize: 10,
       pageNumber: 0,
-      startingIndex: 1,
       dataTable,
       customNoClass: 'table_no',
       classInfoUpdate: {
@@ -72,14 +71,14 @@ export default defineComponent({
       this.classList = response.body?.classList.map((data , index) => {
         return {
           ...data,
-          no: this.startingIndex + index
+          no: index + 1 + (this.pageSize) * this.pageNumber
         }
       });
       this.totalCount = response.body?.totalCount;
       this.dataTable = response.body?.classList.map((data, index) => {
         return {
           ...data,
-          no: this.startingIndex + index,
+          no: 1 + index,
         }
       });
       this.Loading = false;
@@ -179,7 +178,7 @@ export default defineComponent({
       this.dataTable = response.body?.classList.map((data, index) => {
         return {
           ...data,
-          no: this.startingIndex + index,
+          no: 1 + index,
         }
       });
 

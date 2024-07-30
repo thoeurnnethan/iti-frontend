@@ -60,10 +60,21 @@
 
 <div class="mt-3 we_box">
     <div class="b_shadow">
-        <DataTable v-model:selection="classInfo" tableStyle="min-width: 50rem" selectionMode="single" scrollable
-            :value="classList" :metaKeySelection="true" :rows="pageSize" :lazy="true" :paginator="true"
-            :totalRecords="totalCount" :rowsPerPageOptions="[10, 20, 50, 100]" @page="onPage" :rowClass="rowClass">
-            <Column field="no" :header="$t('common.no')" :class="[text-start]"></Column>
+        <DataTable 
+            v-model:selection="classInfo" 
+            tableStyle="min-width: 50rem" 
+            selectionMode="single" 
+            scrollable
+            :value="classList" 
+            :metaKeySelection="true" 
+            :rows="pageSize" 
+            :lazy="true" 
+            :paginator="true"
+            :totalRecords="totalCount" 
+            :rowsPerPageOptions="[10, 20, 50, 100]" 
+            @page="onPage" 
+            :rowClass="rowClass">
+            <Column field="no" :header="$t('common.no')" :class="['text-center']"></Column>
             <Column field="classID" :header="$t('class.cId')"></Column>
             <Column field="className" :header="$t('class.cName')"></Column>
             <Column field="year" :header="$t('class.year')"></Column>

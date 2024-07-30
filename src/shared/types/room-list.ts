@@ -17,6 +17,6 @@ export interface ROOM_LIST_REQ {
 export interface ROOM_LIST_RES {
     body : {
         totalCount: number
-        ROOMList: ROOM_LIST[]
+        roomList: ROOM_LIST[]
     }
 }

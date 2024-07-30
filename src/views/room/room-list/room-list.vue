@@ -34,7 +34,6 @@ export default defineComponent({
       totalCount: 0,
       pageSize: 10,
       pageNumber: 0,
-      startingIndex: 1,
       dataTable,
       customNoRoom: 'table_no',
       
@@ -58,19 +57,19 @@ export default defineComponent({
       this.roomList = response.body?.roomList.map((data , index) => {
         return {
           ...data,
-          no: this.startingIndex + index
+          no: index + 1 + (this.pageSize) * this.pageNumber
         }
       });
       this.totalCount = response.body?.totalCount;
       this.dataTable = response.body?.roomList.map((data, index) => {
         return {
           ...data,
-          no: this.startingIndex + index,
+          no: 1 + index,
         }
       });
       this.Loading = false;
     },
-
+    
     rowClass(data: { statusCode: string; }) {
       return data.statusCode === '09' ? 'we_bg_row' : '';
     },
@@ -186,12 +185,9 @@ export default defineComponent({
       const excelData = this.dataTable.map((data, index) => {
         return {
           "No": index + 1,
-          "ID": data.classID,
-          "Class Name": data.className,
-          "Year": data.year,
-          "Generation": data.generation,
-          "Time": data.time,
-          "Semester": data.semester,
+          "Room ID": data.roomID,
+          "Room Name": data.roomName,
+          "Room Desc": data.roomDesc,
           "Status": this.$codeConverter.codeToString(this.statusCodeList, data.statusCode)
         };
       })
