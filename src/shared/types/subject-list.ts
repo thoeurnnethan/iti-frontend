@@ -1,5 +1,6 @@
 
 export interface SUBJECT_LIST {
+[x: string]: { classID?: string | undefined; seqNo?: number | undefined; subjectName: string; subjectDesc?: string | undefined; statusCode?: string | undefined }[]
   classID?: string
   seqNo?: number
   subjectName: string

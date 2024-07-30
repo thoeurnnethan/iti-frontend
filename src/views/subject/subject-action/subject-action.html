@@ -11,12 +11,24 @@
                 <div class="container-fluid p-0">
                     <div class="row">
                         <div class="col-12">
-                            <div class="row d-flex justify-content-center">
+                            <div class="row d-flex justify-content-center" v-if="isInsert">
                                 <div class="col-lg-3 col-md-4 mb-2">
                                     <center>
                                         <label class="form-label font_15">Select Class</label><br>
                                     </center>
                                     <select class="form-select" v-model="subjectInfo.classID">
+                                        <option v-for="classItem in classList" :value="classItem.classID">
+                                            {{ classItem.className }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center" v-else>
+                                <div class="col-lg-3 col-md-4 mb-2">
+                                    <center>
+                                        <label class="form-label font_15">Class Name</label><br>
+                                    </center>
+                                    <select class="form-select" v-model="subjectInfo.classID" disabled>
                                         <option v-for="classItem in classList" :value="classItem.classID">
                                             {{ classItem.className }}
                                         </option>
@@ -50,7 +62,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-lg-3 col-md-4 mb-2">
+                            <div class="col-lg-3 col-md-4 mb-2" v-if="isInsert">
                                 <button class="btn btn-info w-100" style="margin-top: 30.5px;" @click="saveSubject">
                                     <font-awesome-icon :icon="['fa', 'plus']" />
                                     <span class="mx-2">Add Subject</span>
@@ -60,7 +72,7 @@
                     </fieldset>
                 </div>
 
-                <div class="row mt-4">
+                <div class="row mt-4" v-if="isInsert">
                     <div class="col-12">
                         <div class="we_shadow">
                             <DataTable v-if="subjectList.length > 0" :value="subjectList">

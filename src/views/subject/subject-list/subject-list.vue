@@ -82,12 +82,15 @@ export default defineComponent({
         message: 'Do you want to set to Inactive?',
         header: 'Warning !!!',
         accept: async () => {
-          console.table(_item);
           const reqBody = {
-            roomID: _item.roomID,
-            statusCode: '09'
+            classID: _item.classID,
+            subjectList:[{
+              seqNo: _item.seqNo,
+              statusCode: '09'
+            }]
+            
           }
-          await requestService.request(API_PATH.ROOM_UPDATE, reqBody, false) as SUBJECT_LIST;
+          await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false);
           this.getSubjectList();
           this.$toast.add({ summary: 'Confirmed', detail: 'The record has been set.', life: 3000 });
         },
@@ -102,13 +105,16 @@ export default defineComponent({
         message: 'Do you want to set to Active ?',
         header: 'Warning !!!',
         accept: async () => {
-          console.table(_item);
           const reqBody = {
-            roomID: _item.roomID,
-            statusCode: '01'
+            classID: _item.classID,
+            subjectList:[{
+              seqNo: _item.seqNo,
+              statusCode: '01'
+            }]
+            
           }
-          await requestService.request(API_PATH.ROOM_UPDATE, reqBody, false) as SUBJECT_LIST;
-          this.getRoomList();
+          await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false);
+          this.getSubjectList();
           this.$toast.add({ summary: 'Confirmed', detail: 'The record has been set.', life: 3000 });
         },
         reject: () => {
@@ -117,18 +123,21 @@ export default defineComponent({
       });
     },
 
-    async deleteRoom(_item: SUBJECT_LIST) {
+    async deleteAction(_item: SUBJECT_LIST) {
       this.$confirm.require({
         message: 'Do you want to delete this record ?',
         header: 'Warning !!!',
         accept: async () => {
-          console.table(_item);
           const reqBody = {
-            roomID: _item.roomID,
-            statusCode: '02'
+            classID: _item.classID,
+            subjectList:[{
+              seqNo: _item.seqNo,
+              statusCode: '02'
+            }]
+            
           }
-          await requestService.request(API_PATH.ROOM_UPDATE, reqBody, false) as SUBJECT_LIST;
-          this.getRoomList();
+          await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false);
+          this.getSubjectList();
           this.$toast.add({ summary: 'Confirmed', detail: 'Record has Set to Active', life: 3000 });
         },
         reject: () => {
@@ -171,7 +180,7 @@ export default defineComponent({
       this.$popupService.onOpen({
         component: subject_action,
         dataProp: {
-          roomInfoData: item,
+          subjectInfoData: item,
           isInsert: false
         },
         callback: () => {

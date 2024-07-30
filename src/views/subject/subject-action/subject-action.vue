@@ -79,8 +79,6 @@ export default defineComponent({
         this.subjectInfo = { ...this.subjectInfoData };
         this.subjectInfoUpdate = { ...this.subjectInfo };
       }
-      console.table(this.subjectInfo);
-      
     },
     async classListLoad() {
       const reqBody = {
@@ -178,21 +176,32 @@ export default defineComponent({
         subjectList: dataList,
       };
 
-      console.log(reqBody);
-
       await requestService.request(API_PATH.SUBJECT_REGISTER, reqBody, true);
       this.resetForm();
       this.onClose();
     },
 
     async subjectEdit() {
-      if (!this.isValidUpdate) return;
-      const response = await requestService.request(API_PATH.SUBJECT_UPDATE, this.subjectInfo, true);
-      if (response.status === 200) {
-        this.$toast.add({ severity: 'success', summary: 'Success', detail: 'Subject updated successfully' });
-        this.onClose();
-      }
+
+      const dataList = [{
+        seqNo: this.subjectInfo.seqNo,
+        subjectName: this.subjectInfo.subjectName,
+        subjectDesc: this.subjectInfo.subjectDesc,
+        statusCode: this.subjectInfo.statusCode,
+      }];
+
+      const reqBody = {
+        classID: this.subjectInfo.classID,
+        subjectList: dataList,
+      };
+
+      console.log(reqBody);
+
+      await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, true);
+      this.resetForm();
+      this.onClose();
     },
+    
     onClose() {
       this.resetForm();
       modalController.dismiss();
