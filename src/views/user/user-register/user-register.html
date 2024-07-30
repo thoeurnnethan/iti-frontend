@@ -30,6 +30,7 @@
         <h5 v-if="!isRegisterStudent" class="p-0 m-auto text-center">Teacher</h5>
         <h5 v-else>Student</h5>
         <hr>
+        {{ userInfo }}
         <!-- User Information -->
         <div class="container-fluid">
             <div class="row mt-4">
@@ -72,7 +73,7 @@
                 </div>
             </div>
         </div>
-    
+
         <div class="row mt-4">
             <!-- Teacher Qualify List -->
             <div class="col-12" v-if="!isRegisterStudent">
@@ -291,12 +292,23 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-5">
-                <div class="col-lg-4 col-sm-6 col-xl-3 col-md-3">
-                    <button v-if="!isRegisterRoute" class="btn btn-success w-100">Update</button>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-10">
+                <span v-if="!isRegisterRoute">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button class="btn btn-success w-100" @click="onClickUpdateUser">Update</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-info" @click="backToList">Back To List</button>
+                        </div>
+                    </div>
+                </span>
+                <span v-else>
                     <button v-if="isRegisterStudent" class="btn btn-success w-100" @click="studentRegister">Save</button>
                     <button v-else class="btn btn-success w-100" @click="teacherRegister">Save</button>
-                </div>
+                </span>
             </div>
         </div>
     </div>

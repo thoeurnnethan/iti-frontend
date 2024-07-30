@@ -6,6 +6,7 @@ import { USER_LIST, QUALIFICATION_LIST, PARENT_LIST, ACADEMIC_LIST, USER_DETAIL_
 import { RequestService } from '@/shared/services/request-service';
 import { defineComponent } from 'vue';
 import { TeacherRoleList } from '@/shared/common/common';
+import TriStateCheckbox from 'primevue/tristatecheckbox';
 const requestService = new RequestService();
 
 export default defineComponent({
@@ -481,6 +482,22 @@ export default defineComponent({
                 this.motherLastName = this.motherInfo.lastName === '';
                 this.motherPhone = this.motherInfo.phone === '';
             }
+        },
+
+        /* =============================================================== */
+        /* ======================= Update User =========================== */
+        /* =============================================================== */
+        async onClickUpdateUser(){
+            const reqBody = {
+                ...this.userInfo
+            }
+            const res = await requestService.request(API_PATH.USER_UPDATE, reqBody, true);
+            if(res.header.result){
+                console.log(res)
+            }
+        },
+        backToList(){
+            this.$router.push('/user-list')
         },
         
         /* =============================================================== */
