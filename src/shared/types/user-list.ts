@@ -17,6 +17,19 @@ interface USER_LIST {
   teacherInfo: TEACHER_INFO
 }
 
+interface USER_LIST_FORM_CHECK {
+  firstName: boolean
+  lastName: boolean
+  nickName: boolean
+  gender: boolean
+  dateOfBirth: boolean
+  placeOfBirth: boolean
+  address: boolean
+  phone: boolean
+  email: boolean
+  passwd: boolean
+}
+
 interface PARENT_LIST {
   firstName: string
   lastName: string
@@ -44,6 +57,13 @@ interface QUALIFICATION_LIST {
   startDate: string
   endDate: string
   certificatedDate: string
+}
+
+interface QUALIFICATION_LIST_FORM_CHECK {
+  qualificationName: boolean
+  startDate: boolean
+  endDate: boolean
+  certificatedDate: boolean
 }
 
 interface ManagerList {
@@ -116,5 +136,8 @@ export type {
   TEACHER_RES,
   ManagerList,
   ManagerList_Req,
-  ManagerList_Res, STUDENT_INFO,
+  ManagerList_Res,
+  STUDENT_INFO,
+  USER_LIST_FORM_CHECK,
+  QUALIFICATION_LIST_FORM_CHECK
 }
