@@ -80,7 +80,7 @@ export default defineComponent({
     async setInactive(_item: SUBJECT_LIST) {
       this.$confirm.require({
         message: 'Do you want to set to Inactive?',
-        header: 'Warning !!!',
+        header: 'Confirmation !',
         accept: async () => {
           const reqBody = {
             classID: _item.classID,
@@ -103,7 +103,7 @@ export default defineComponent({
     async setActive(_item: SUBJECT_LIST) {
       this.$confirm.require({
         message: 'Do you want to set to Active ?',
-        header: 'Warning !!!',
+        header: 'Confirmation !',
         accept: async () => {
           const reqBody = {
             classID: _item.classID,
@@ -126,7 +126,7 @@ export default defineComponent({
     async deleteAction(_item: SUBJECT_LIST) {
       this.$confirm.require({
         message: 'Do you want to delete this record ?',
-        header: 'Warning !!!',
+        header: 'Confirmation !',
         accept: async () => {
           const reqBody = {
             classID: _item.classID,
@@ -138,7 +138,7 @@ export default defineComponent({
           }
           await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false);
           this.getSubjectList();
-          this.$toast.add({ summary: 'Confirmed', detail: 'Record has Set to Active', life: 3000 });
+          this.$toast.add({ summary: 'Confirmed', detail: 'Record has been delete', life: 3000 });
         },
         reject: () => {
           this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });

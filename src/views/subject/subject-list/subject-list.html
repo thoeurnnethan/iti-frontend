@@ -59,18 +59,13 @@
                 <template #body="{ data }">
                     <div class="d-flex align-items-center justify-content-evenly">
                         <div v-if="data.statusCode === '01'">
-                            <font-awesome-icon @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-dark"
-                                title="Edit" />&nbsp;
-                            <font-awesome-icon @click="setInactive(data)" :icon="['fas', 'fa-eye-slash']"
-                                class="text-primary" title="Set to Inactive" />&nbsp;
-                            <font-awesome-icon @click="deleteAction(data)" :icon="['fas', 'fa-x']" class="text-danger"
-                                title="Delete the record" />
+                            <font-awesome-icon @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-dark" title="Edit" />&nbsp;
+                            <font-awesome-icon @click="setInactive(data)" :icon="['fas', 'fa-eye-slash']" class="text-primary" title="Set to Inactive" />&nbsp;
+                            <font-awesome-icon @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-danger" title="Delete the record" />
                         </div>
                         <div v-else>
-                            <font-awesome-icon @click="setActive(data)" :icon="['fas', 'fa-eye']"
-                                title="Set to Active" />&nbsp;
-                            <font-awesome-icon @click="deleteAction(data)" :icon="['fas', 'fa-x']" class="text-danger"
-                                title="Delete the record" />
+                            <font-awesome-icon @click="setActive(data)" :icon="['fas', 'fa-eye']" title="Set to Active" />&nbsp;
+                            <font-awesome-icon @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-danger" title="Delete the record" />
                         </div>
                     </div>
                 </template>
