@@ -77,7 +77,7 @@ export default defineComponent({
     async setRoom(_item: ROOM_LIST) {
       this.$confirm.require({
         message: 'Do you want to set to Inactive?',
-        header: 'Warning !!!',
+        header: 'Confirmation !',
         accept: async () => {
           console.table(_item);
           const reqBody = {
@@ -97,7 +97,7 @@ export default defineComponent({
     async setActive(_item: ROOM_LIST) {
       this.$confirm.require({
         message: 'Do you want to set to Active ?',
-        header: 'Warning !!!',
+        header: 'Confirmation !',
         accept: async () => {
           console.table(_item);
           const reqBody = {
@@ -117,7 +117,7 @@ export default defineComponent({
     async deleteRoom(_item: ROOM_LIST) {
       this.$confirm.require({
         message: 'Do you want to delete this record ?',
-        header: 'Warning !!!',
+        header: 'Confirmation !',
         accept: async () => {
           console.table(_item);
           const reqBody = {
@@ -126,7 +126,7 @@ export default defineComponent({
           }
           await requestService.request(API_PATH.ROOM_UPDATE, reqBody, false) as ROOM_LIST;
           this.getRoomList();
-          this.$toast.add({ summary: 'Confirmed', detail: 'Record has Set to Active', life: 3000 });
+          this.$toast.add({ summary: 'Confirmed', detail: 'Record has been delete.', life: 3000 });
         },
         reject: () => {
           this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });

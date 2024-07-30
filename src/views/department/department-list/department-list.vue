@@ -108,10 +108,10 @@ export default defineComponent({
       })
     },
 
-    async deleteDepartment(_item: DEPARTMENT_LIST) {
+    async setInactive(_item: DEPARTMENT_LIST) {
       this.$confirm.require({
         message: 'Do you want to hide this record?',
-        header: 'Danger Zone',
+        header: 'Confirmation !',
         accept: async () => {
           const reqBody = {
             departmentID: _item.departmentID,
@@ -119,7 +119,26 @@ export default defineComponent({
           }
           await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, false) as DEPARTMENT_LIST;
           this.getDepartmentList();
-          this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+          this.$toast.add({ summary: 'Confirmed', detail: 'The record has been set.', life: 3000 });
+        },
+        reject: () => {
+          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+      });
+    },
+
+    async deleteAction(_item: DEPARTMENT_LIST) {
+      this.$confirm.require({
+        message: 'Do you want to delete this record?',
+        header: 'Confirmation !',
+        accept: async () => {
+          const reqBody = {
+            departmentID: _item.departmentID,
+            statusCode: '02'
+          }
+          await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, false) as DEPARTMENT_LIST;
+          this.getDepartmentList();
+          this.$toast.add({ summary: 'Confirmed', detail: 'The record has been delete.', life: 3000 });
         },
         reject: () => {
           this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
@@ -128,12 +147,22 @@ export default defineComponent({
     },
 
     async setActive(_item: DEPARTMENT_LIST) {
-      const reqBody = {
-        departmentID: _item.departmentID,
-        statusCode: '01'
-      }
-      await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, false) as DEPARTMENT_LIST;
-      this.getDepartmentList();
+      this.$confirm.require({
+        message: 'Do you want to set to Active ?',
+        header: 'Confirmation !',
+        accept: async () => {
+          const reqBody = {
+            departmentID: _item.departmentID,
+            statusCode: '01'
+          }
+          await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, false) as DEPARTMENT_LIST;
+          this.getDepartmentList();
+          this.$toast.add({ summary: 'Confirmed', detail: 'The record has been set.', life: 3000 });
+        },
+        reject: () => {
+          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+      });
     },
 
     // On click save

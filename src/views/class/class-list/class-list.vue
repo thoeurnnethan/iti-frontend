@@ -88,10 +88,10 @@ export default defineComponent({
       return data.statusCode === '09' ? 'we_bg_row' : '';
     },
 
-    async deleteClass(_item: CLASS_LIST) {
+    async setInactive(_item: CLASS_LIST) {
       this.$confirm.require({
-        message: 'Do you want to hide this record?',
-        header: 'Danger Zone',
+        message: 'Do you want to set to Inactive?',
+        header: 'Confirmation !',
         accept: async () => {
           console.table(_item);
           const reqBody = {
@@ -101,7 +101,7 @@ export default defineComponent({
           }
           await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false) as CLASS_LIST;
           this.getClassList();
-          this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+          this.$toast.add({ summary: 'Confirmed', detail: 'The record has been set.', life: 3000 });
         },
         reject: () => {
           this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
@@ -110,14 +110,45 @@ export default defineComponent({
     },
 
     async setActive(_item: CLASS_LIST) {
-      console.table(_item);
-      const reqBody = {
-        classID: _item.classID,
-        departmentID: _item.departmentID,
-        statusCode: '01'
-      }
-      await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false) as CLASS_LIST;
-      this.getClassList();
+      this.$confirm.require({
+        message: 'Do you want to set to Active ?',
+        header: 'Confirmation !',
+        accept: async () => {
+          console.table(_item);
+          const reqBody = {
+            classID: _item.classID,
+            departmentID: _item.departmentID,
+            statusCode: '01'
+          }
+          await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false) as CLASS_LIST;
+          this.getClassList();
+          this.$toast.add({ summary: 'Confirmed', detail: 'The record has been set.', life: 3000 });
+        },
+        reject: () => {
+          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+      });
+    },
+
+    async deleteAction(_item: CLASS_LIST) {
+      this.$confirm.require({
+        message: 'Do you want to delete this record ?',
+        header: 'Confirmation !',
+        accept: async () => {
+          console.table(_item);
+          const reqBody = {
+            classID: _item.classID,
+            departmentID: _item.departmentID,
+            statusCode: '02'
+          }
+          await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false) as CLASS_LIST;
+          this.getClassList();
+          this.$toast.add({ summary: 'Confirmed', detail: 'Record has been delete', life: 3000 });
+        },
+        reject: () => {
+          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+      });
     },
 
     // Handle page size page number
