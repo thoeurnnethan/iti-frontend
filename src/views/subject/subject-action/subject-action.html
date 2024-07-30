@@ -1,3 +1,5 @@
+<Toast style="z-index: 1000000000000000000000;" />
+<ConfirmDialog style="z-index: 1000000000000000000000;"></ConfirmDialog>
 <div class="popup">
     <div class="popWrap w70p">
         <div class="pop_head">
@@ -34,13 +36,13 @@
 
                             <div class="col-lg-3 col-md-4 mb-2">
                                 <label class="form-label font_15">{{ $t('subject.subjectName') }}</label><br>
-                                <input type="text" class="form-control" v-model="subjectInfo.subjectName" />
+                                <InputText v-model="subjectInfo.subjectName" :invalid="fieldNameValidate" />
                             </div>
 
                             <div class="col-lg-3 col-md-4 mb-2">
                                 <label class="form-label font_15">{{ $t('subject.subjectDesc') }}</label><br>
-                                <textarea class="form-control" v-model="subjectInfo.subjectDesc" rows="1"
-                                    cols="30"></textarea>
+                                <Textarea v-model="subjectInfo.subjectDesc" rows="5" cols="30"
+                                    :invalid="fieldDesValidate" />
                             </div>
 
                             <div class="col-lg-3 col-md-4 mb-2" v-if="!isInsert">
@@ -60,22 +62,20 @@
                             </div>
                         </div>
                     </fieldset>
-
-
                 </div>
 
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="we_shadow">
-                            <DataTable v-if="subjectList != ''" v-model:selection="academicInfo" :value="subjectList">
-                                <Column field="no" :header="$t('common.no')" :class="[text-start]"></Column>
+                            <DataTable v-if="subjectList.length > 0" :value="subjectList">
+                                <Column field="seqNo" :header="$t('common.no')" class="text-start"></Column>
                                 <Column field="subjectName" :header="$t('subject.subjectName')"></Column>
                                 <Column field="subjectDesc" :header="$t('subject.subjectDesc')"></Column>
                                 <Column :header="$t('subject.edit')" class="text-center">
                                     <template #body="{ data }">
-                                        <font-awesome-icon style="cursor: pointer;" @click="onClickEditAcademic(data)"
+                                        <font-awesome-icon style="cursor: pointer;" @click="onClickEdit(data)"
                                             icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;
-                                        <font-awesome-icon style="cursor: pointer;" @click="onClickDeleteAcademic(data)"
+                                        <font-awesome-icon style="cursor: pointer;" @click="onClickDelete(data)"
                                             icon="fa-solid fa-trash" class=" text-danger" title="Delete" />
                                     </template>
                                 </Column>
@@ -110,6 +110,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>

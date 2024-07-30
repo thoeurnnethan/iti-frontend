@@ -79,6 +79,10 @@
 
 //-custom_css----------------
 
+.p-dialog-mask, .p-component-overlay, .p-component-overlay-enter{
+	z-index: 100000000;
+}
+
 .p-invalid,
 .p-invalid {
 	border: 1px solid #f66a60 !important;

@@ -2,10 +2,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { SUBJECT_LIST, CLASS_LIST } from '@/shared/types/subject-list';
+import { SUBJECT_LIST } from '@/shared/types/subject-list';
+import { CLASS_LIST } from '@/shared/types/class-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
-import { globalStatusCodeList, YearList, SemesterList, generation, time } from '@/shared/common/common';
+import { globalStatusCodeList } from '@/shared/common/common';
 import { modalController } from '@ionic/vue';
 
 const requestService = new RequestService();
@@ -44,6 +45,8 @@ export default defineComponent({
       startingIndex: 1,
       classList: [] as CLASS_LIST[],
       editingIndex: -1,
+      fieldNameValidate: false,
+      fieldDesValidate: false
     };
   },
   computed: {
@@ -60,6 +63,9 @@ export default defineComponent({
         this.subjectInfo.subjectDesc !== this.subjectInfoUpdate.subjectDesc ||
         this.subjectInfo.statusCode !== this.subjectInfoUpdate.statusCode
       );
+    },
+    isEditing(): boolean {
+      return this.editingIndex !== -1;
     }
   },
   mounted() {
@@ -67,14 +73,12 @@ export default defineComponent({
     this.classListLoad();
   },
   methods: {
-
     onDataLoad() {
       if (!this.isInsert) {
         this.subjectInfo = { ...this.subjectInfoData };
         this.subjectInfoUpdate = { ...this.subjectInfo };
       }
     },
-
     async classListLoad() {
       const reqBody = {
         classID: this.searchKey,
@@ -83,18 +87,23 @@ export default defineComponent({
         searchKeyword: this.searchKeyword,
         departmentID: '',
         year: ''
-      }
+      };
       const response = await requestService.request(API_PATH.CLASS_LIST, reqBody, false);
       this.classList = response.body?.classList;
     },
-    
     saveSubject() {
-      const updatedSubject = {
-        ...this.subjectInfo,
-      };
+      // Validate fields
+      this.fieldNameValidate = this.subjectInfo.subjectName === '';
+      this.fieldDesValidate = this.subjectInfo.subjectDesc === '';
+
+      if (this.fieldNameValidate || this.fieldDesValidate) {
+        return;
+      }
+
+      const updatedSubject = { ...this.subjectInfo };
 
       if (this.editingIndex === -1) {
-        updatedSubject.no = this.subjectList.length + 1;
+        updatedSubject.seqNo = this.subjectList.length + 1;
         this.subjectList.push(updatedSubject);
       } else {
         this.subjectList[this.editingIndex] = updatedSubject;
@@ -105,49 +114,78 @@ export default defineComponent({
     },
     resetForm() {
       this.subjectInfo = {
+        classID: '',
         subjectName: '',
         subjectDesc: '',
+        statusCode: ''
       };
+      this.fieldNameValidate = false;
+      this.fieldDesValidate = false;
     },
-    
-    onClickEditAcademic(data) {
-      this.editingIndex = this.subjectList.findIndex(item => item.no === data.no);
-      this.subjectInfo = { ...data };
-    },
-    onClickDeleteAcademic(data) {
-      this.subjectList = this.subjectList.filter(item => item.no !== data.no);
-    },
-    
-    async subjectInsert() {
-      const reqBody = {
-        ...this.subjectInfo,
-      };
 
-      const res = await requestService.request(API_PATH.SUBJECT_REGISTER, reqBody, true);
-      if (res) {
-        modalController.dismiss();
+    async onClickEdit(data: SUBJECT_LIST) {
+      if (this.isEditing) {
+        this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
+        return;
+      }
+      this.$confirm.require({
+        message: 'Do you want to edit this record?',
+        header: 'Confirmation',
+        accept: () => {
+          this.subjectInfo = { ...data };
+          this.editingIndex = this.subjectList.findIndex(item => item.seqNo === data.seqNo);
+          this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
+        },
+        reject: () => {
+          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+      });
+    },
+
+    async onClickDelete(data: SUBJECT_LIST) {
+      if (this.isEditing) {
+        this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
+        return;
+      }
+      this.$confirm.require({
+        message: 'Do you want to delete this record?',
+        header: 'Confirmation',
+        accept: () => {
+          this.subjectList = this.subjectList.filter(item => item.seqNo !== data.seqNo);
+          this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+        },
+        reject: () => {
+          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+      });
+    },
+
+    async subjectInsert() {
+      if (!this.isValidInsert) return;
+      const response = await requestService.request(API_PATH.SUBJECT_INSERT, this.subjectInfo, true);
+      if (response.status === 200) {
+        this.$toast.add({ severity: 'success', summary: 'Success', detail: 'Subject added successfully' });
+        this.onClose();
       }
     },
     async subjectEdit() {
-      const reqBody = {
-        ...this.subjectInfo,
-      };
-
-      const res = await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, true);
-      if (res) {
-        modalController.dismiss();
+      if (!this.isValidUpdate) return;
+      const response = await requestService.request(API_PATH.SUBJECT_UPDATE, this.subjectInfo, true);
+      if (response.status === 200) {
+        this.$toast.add({ severity: 'success', summary: 'Success', detail: 'Subject updated successfully' });
+        this.onClose();
       }
     },
-    semesterChangeType() {
-      this.subjectInfo.semester = Number(this.subjectInfo.semester);
-    },
     onClose() {
+      this.resetForm();
       modalController.dismiss();
+    }
+  },
+  watch: {
+    subjectInfoData(newValue: SUBJECT_LIST) {
+      this.subjectInfo = { ...newValue };
+      this.subjectInfoUpdate = { ...newValue };
     }
   }
 });
 </script>
-
-<style scoped>
-@import url('./subject-action.scss');
-</style>
