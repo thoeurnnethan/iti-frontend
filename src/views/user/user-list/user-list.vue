@@ -29,7 +29,6 @@ export default defineComponent({
             genderCodeList: GenderCodeList,
             dataTable,
             customNoClass: 'table_no',
-            startingIndex: 1,
             searchKey: '',
             roleID: '',
             roleTitle: '',
@@ -63,20 +62,14 @@ export default defineComponent({
             this.totalMale = response?.body?.totalMale;
             this.totalFemale = response?.body?.totalFemale;
             this.roleTitle = this.roleID
-            this.userList = response.body.userList.map((data,index) =>{
-                return{
-                    ...data,
-                    no: this.startingIndex + index
-                }
-            });
-            this.dataTable = response.body?.userList.map((data, index) => {
+            this.userList = response.body.userList.map((data, index) => {
                 return {
                     ...data,
-                    no: this.startingIndex + index,
+                    no: index + 1 + (this.pageSize) * this.pageNumber
                 }
-            });
+            })
         },
-        
+
         async onClickRow() {
             const body = {
                 userID: this.userInfo?.userID,
@@ -96,30 +89,25 @@ export default defineComponent({
                 message: 'Do you want to hide this record?',
                 header: 'Danger Zone',
                 accept: async () => {
-                const reqBody = {
-                    body:{
+                    const reqBody = {
                         userID: _item.userID,
                         roleID: _item.roleID,
-                        statusCode: '09'
+                        statusCode: '02'
                     }
-                }
-
-                console.table(reqBody);
-
-                await requestService.request(API_PATH.USER_UPDATE, reqBody, false) as USER_LIST;
-                this.getUserList();
-                this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+                    await requestService.request(API_PATH.USER_UPDATE, reqBody, false) as USER_LIST;
+                    this.getUserList();
+                    this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
                 },
                 reject: () => {
-                this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
                 }
             });
         },
 
-        editUser(_item: USER_LIST){
+        editUser(_item: USER_LIST) {
             this.$router.push({ path: `/user-update/${_item.userID}` });
         },
-        
+
         // Handle page size page number
         onPage(event: { page: number; rows: number; }) {
             this.pageNumber = event.page;

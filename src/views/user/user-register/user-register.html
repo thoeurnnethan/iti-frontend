@@ -112,7 +112,7 @@
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="we_shadow">
-                            <DataTable v-if="qualificationList" v-model:selection="qualificationInfo"
+                            <DataTable v-if="qualificationList.length > 0" v-model:selection="qualificationInfo"
                                 :value="qualificationList">
                                 <Column field="seqNo" header="No" :class="customNoClass"></Column>
                                 <Column field="qualificationName" header="Qualification Name"></Column>
@@ -294,6 +294,7 @@
             <div class="row mt-5">
                 <div class="col-lg-4 col-sm-6 col-xl-3 col-md-3">
                     <button v-if="!isRegisterRoute" class="btn btn-success w-100">Update</button>
+                    <button v-if="isRegisterStudent" class="btn btn-success w-100" @click="studentRegister">Save</button>
                     <button v-else class="btn btn-success w-100" @click="teacherRegister">Save</button>
                 </div>
             </div>

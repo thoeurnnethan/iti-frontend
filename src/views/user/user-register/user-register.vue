@@ -235,8 +235,10 @@ export default defineComponent({
             const reqBody = {
                 userList: this.userList
             }
-            await requestService.request(API_PATH.USER_REGISTER, reqBody, true)
-            this.resetForm()
+            const res = await requestService.request(API_PATH.USER_REGISTER, reqBody, true)
+            if(res.header.result){
+                this.resetForm()
+            }
             // this.$router.push('/user-list');
         },
 
@@ -287,6 +289,7 @@ export default defineComponent({
                     accept: () => {
                         this.qualificationInfo = { ...data };
                         this.editingIndex = this.qualificationList.findIndex(item => item.seqNo === data.seqNo);
+                        this.deleteQualificaton(data)
                         this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
                     },
                     reject: () => {
@@ -296,6 +299,7 @@ export default defineComponent({
             }else{
                 this.qualificationInfo = { ...data };
                 this.editingIndex = this.qualificationList.findIndex(item => item.seqNo === data.seqNo);
+                this.deleteQualificaton(data)
             }
         },
 
@@ -309,8 +313,7 @@ export default defineComponent({
                     message: 'Do you want to delete this record?',
                     header: 'Danger Zone',
                     accept: () => {
-                        this.qualificationList = this.qualificationList.filter(qual => qual.seqNo !== item.seqNo);
-                        this.updateQualificationSeqNo();
+                        this.deleteQualificaton(item)
                         this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
                     },
                     reject: () => {
@@ -318,9 +321,13 @@ export default defineComponent({
                     }
                 })
             }else{
-                this.qualificationList = this.qualificationList.filter(qual => qual.seqNo !== item.seqNo);
-                this.updateQualificationSeqNo();
+                this.deleteQualificaton(item)
             }
+        },
+
+        deleteQualificaton(item: QUALIFICATION_LIST){
+            this.qualificationList = this.qualificationList.filter(qual => qual.seqNo !== item.seqNo);
+            this.updateQualificationSeqNo();
         },
 
         updateQualificationSeqNo() {
@@ -334,39 +341,6 @@ export default defineComponent({
         /* =============================================================== */
         async studentRegister() {
             this.academicButton = true;
-            // const academicListCount = this.studentAcademicList.map((data) => {
-            //     return {
-            //         academicName: data.academicName,
-            //         academicDesc: data.academicDesc,
-            //         startDate: this.formatDateDatabase(data.startDate),
-            //         endDate: this.formatDateDatabase(data.endDate),
-            //         certificatedDate: this.formatDateDatabase(data.certificatedDate),
-            //     };
-            // });
-
-            // if (!this.isStudentValid) {
-            //     this.studentRegisterFirstName = this.userInfo.firstName === '';
-            //     this.studentRegisterLastName = this.userInfo.lastName === '';
-            //     this.studentRegisterDateOfBirth = this.userInfo.dateOfBirth === '';
-            //     this.studentRegisterPlaceOfBirth = this.userInfo.placeOfBirth === '';
-            //     this.studentRegisterAddress = this.userInfo.address === '';
-            //     this.studentRegisterPhone = this.userInfo.phone === '';
-            //     this.studentRegisterEmail = !this.isValidEmail(this.userInfo.email);
-
-            //     this.fatherFirstName = this.fatherInfo.firstName === '';
-            //     this.fatherLastName = this.fatherInfo.lastName === '';
-            //     this.fatherPhone = this.fatherInfo.phone === '';
-
-            //     this.motherFirstName = this.motherInfo.firstName === '';
-            //     this.motherLastName = this.motherInfo.lastName === '';
-            //     this.motherPhone = this.motherInfo.phone === '';
-            //     return;
-            // }
-
-            // if (academicListCount.length < 0) {
-            //     return;
-            // }
-
             const academicList = this.studentAcademicList.map((data) => {
                 return {
                     academicName: data.academicName,
@@ -377,8 +351,9 @@ export default defineComponent({
                 };
             });
             const userInfoList = {
-                ...this.studentRegisterInfo,
-                dateOfBirth: this.formatDateDatabase(this.studentRegisterInfo.dateOfBirth),
+                ...this.userInfo,
+                roleID: this.userSelectedRole,
+                dateOfBirth: this.formatDateDatabase(this.userInfo.dateOfBirth),
                 studentInfo: {
                     parentList: [
                         this.fatherInfo,
@@ -387,6 +362,7 @@ export default defineComponent({
                     academicList: academicList
                 }
             };
+            console.log(userInfoList)
             this.userList.push(userInfoList);
             const reqBody = {
                 userList: this.userList
@@ -510,7 +486,6 @@ export default defineComponent({
         /* =============================================================== */
         /* ============================ Common =========================== */
         /* =============================================================== */
-        
         async getUserDetailSummary() {
             const body = {
                 userID: this.userIDFromURl
