@@ -14,33 +14,33 @@ export const DashboardService = {
             },
             {
                 "path": "/room-list",
-                "iconClass": "fa-calendar-days",
+                "iconClass": "fa-shop",
                 "name": "roomList",
             },
             {
                 "path": "/class-list",
-                "iconClass": "fa-calendar-days",
+                "iconClass": "fa-user-graduate",
                 "name": "classList",
             },
             {
                 "path": "/subject-list",
-                "iconClass": "fa-calendar-days",
+                "iconClass": "fa-book-open",
                 "name": "subjectList",
             },
             {
                 "path": "/user-list",
-                "iconClass": "fa-solid fa-school",
+                "iconClass": "fa-users",
                 "name": "userList",
                 "open": false,
                 "subMenuList":[
                     {
                         "path": "/user-list",
-                        "iconClass": "fa-calendar-days",
+                        "iconClass": "fa-caret-right",
                         "name": "userList",
                     },
                     {
                         "path": "/user-register",
-                        "iconClass": "fa-calendar-days",
+                        "iconClass": "fa-caret-right",
                         "name": "userRegister",
                     },
                 ]

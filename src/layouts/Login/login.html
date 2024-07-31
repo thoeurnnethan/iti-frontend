@@ -11,7 +11,7 @@
         </div>
         <div class="d-flex flex-column gap-2 mt-3">
             <label>{{ $t('common.password') }}</label>
-            <InputText v-model="userLogin.password" @keyup.enter="onClickLogin"/>
+            <Password :feedback="false" v-model="userLogin.password" @keyup.enter="onClickLogin"/>
         </div>
         <button class="btn btn-primary mt-4 float-end" 
         :disabled="!isValidForm"

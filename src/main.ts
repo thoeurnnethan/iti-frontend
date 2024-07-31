@@ -138,9 +138,12 @@ import {
         faBars,
         faBarsProgress,
         faBell,
+        faBookOpen,
+        faBoxArchive,
         faBuilding,
         faCalendarDays,
         faCaretDown,
+        faCaretRight,
         faChevronDown,
         faChevronRight,
         faEye,
@@ -165,6 +168,8 @@ import {
         faShop,
         faTrash,
         faUser,
+        faUserGraduate,
+        faUsers,
         faX,
         faXmark
 } from '@fortawesome/free-solid-svg-icons';
@@ -202,6 +207,11 @@ import { library } from '@fortawesome/fontawesome-svg-core';
         library.add(faRotateLeft); 
         library.add(faShop); 
         library.add(faX); 
+        library.add(faUserGraduate); 
+        library.add(faBookOpen); 
+        library.add(faCaretRight); 
+        library.add(faUsers); 
+        library.add(faBoxArchive); 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 //ionic

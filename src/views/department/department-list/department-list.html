@@ -49,26 +49,25 @@
             @page="onPage"
             :rowClass="rowClass">
             <Column field="no" :header="$t('common.no')" :class="['text-center']"></Column>
-            <Column field="departmentID" :header="$t('department.depID')" style="min-width:100px"></Column>
-            <Column field="departmentName" :header="$t('department.depName')" style="min-width: 150px"></Column>
-            <Column field="departmentDesc" :header="$t('department.depDesc')" style="min-width: 150px"></Column>
-            <Column field="statusCode" :header="$t('department.statusCode')" style="min-width: 100px">
+            <Column field="departmentID" :header="$t('department.depID')"></Column>
+            <Column field="departmentName" :header="$t('department.depName')"></Column>
+            <Column field="departmentDesc" :header="$t('department.depDesc')"></Column>
+            <Column field="statusCode" :header="$t('department.statusCode')">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
                 </template>
             </Column>
-            <Column :header="$t('department.edit')" style="min-width: 10px" class="d-flex justify-content-center">
+            <Column :header="$t('action.action')">
                 <template #body="{ data }">
-                    <div class="d-flex align-items-center justify-content-evenly">
-                        <div v-if="data.statusCode === '01'">
-                            <font-awesome-icon @click="onClickEdit(data)" icon="fas fa-pencil" class="text-dark" title="Edit" />&nbsp;
-                            <font-awesome-icon @click="setInactive(data)" :icon="['fas', 'fa-eye-slash']" class="text-primary" title="Set to Inactive" />&nbsp;
-                            <font-awesome-icon @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-danger" title="Delete" />
-                        </div>
-                        <div v-else>
-                            <font-awesome-icon @click="setActive(data)" :icon="['fas', 'fa-eye']" title="Recover" />&nbsp;
-                            <font-awesome-icon @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-danger" title="Delete" />
-                        </div>
+                    <div v-if="data.statusCode === '01'" class="d-flex align-item-center">
+                        <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" icon="fas fa-pencil" class="text-white" :title="$t('action.edit')" />&nbsp;&nbsp;
+                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setInactive(data)" :icon="['fas', 'fa-box-archive']" class="text-white" :title="$t('action.inactive')" />&nbsp;&nbsp;
+                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+                    </div>
+                    <div v-else class="d-flex align-item-center">
+                        <div style="width: 22px; height: 22px;margin-right: 10px;"></div>
+                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setActive(data)" :icon="['fas', 'fa-rotate-back']" class="text-white" :title="$t('action.active')" />&nbsp;&nbsp;
+                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
                     </div>
                 </template>
             </Column>

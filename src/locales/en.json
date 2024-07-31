@@ -23,6 +23,13 @@
     "totalFemale": "Female",
     "downloadExcel": "Download Excel"
   },
+  "action":{
+    "edit" : "Edit",
+    "active" : "Set to active",
+    "inactive" : "Set to inactive",
+    "delete" : "Delete",
+    "action" : "Action"
+  },
   "department":{
     "title": "Department list",
     "depID": "Department ID",
@@ -70,13 +77,14 @@
   },
   "class": {
     "title": "Class List",
-    "cId": "Class ID",
-    "dId": "Department Name",
-    "cName": "Class Name",
-    "cDes": "Class Description",
+    "classId": "Class ID",
+    "department": "Department Name",
+    "className": "Class Name",
+    "classDesc": "Class Description",
     "status": "Status",
     "edit": "Edit",
-    "editTitle": "Edit Department",
+    "editClass": "Edit Class Information",
+    "insertClass": "Insert Class Information",
     "time": "Time",
     "year": "Year",
     "generation": "Generation",
@@ -92,7 +100,10 @@
     "roomDesc": "Room Description",
     "building": "Building",
     "floor": "Room Floor",
-    "statusCode": "Status"
+    "statusCode": "Status",
+    "actionHeader": "Room Register",
+    "editRoom": "Edit Room Information"
+    
   },
   "subject": {
     "title": "Subject List",
