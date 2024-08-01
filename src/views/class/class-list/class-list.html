@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-md-3">
                 <label class="form-label font_14">{{ $t('class.selectYear') }}</label>
-                <select class="form-select" v-model="selectYear" @change="getClassList()">
+                <select class="form-select" v-model="selectYear" @change="getClassList">
                     <option v-for="year in yearList" :value="year.codeValue">
                         {{ year.codeValueDesc }}
                     </option>
@@ -35,7 +35,7 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label font_14">{{ $t('class.selectSemester') }}</label>
-                <select class="form-select" v-model="selectSemester" @change="getClassList()">
+                <select class="form-select" v-model="selectSemester" @change="getClassList">
                     <option v-for="semester in semesterList" :value="semester.codeValue">
                         {{ semester.codeValueDesc }}
                     </option>
@@ -46,7 +46,7 @@
     <div class="mt-3"></div>
     <div class="float-end">
         <button type="button" class="rad_right btn btn-dark b_shadow p-2 px-2 float-end font_15"
-            @click.prevent="getClassList()">
+            @click.prevent="getClassList">
             {{ $t('common.search') }}
         </button>
         <InputGroup class="float-end w-25">

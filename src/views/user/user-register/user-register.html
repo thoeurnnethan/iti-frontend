@@ -30,7 +30,7 @@
         <h5 v-if="!isRegisterStudent" class="p-0 m-auto text-center">Teacher</h5>
         <h5 v-else>Student</h5>
         <hr>
-        {{ userInfo }}
+        {{ isValidCommonUserInfo }}
         <!-- User Information -->
         <div class="container-fluid">
             <div class="row mt-4">
@@ -155,7 +155,7 @@
             <div class="col-12" v-else>
                 <!-- Student parent list -->
                 <div class="col-12">
-                    <h5 class="mt-4">Parent List</h5>
+                    <h5 class="mt-4">Parent Information</h5>
                     <hr>
                     <fieldset class="border rounded-3 pb-2">
                         <legend class="float-none w-auto m_left20 px-2 h5">Father</legend>
@@ -241,7 +241,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-4 col-sm-6 col-xl-3">
-                                    <button class="btn btn-info w-100 mt-3" @click="saveAcademic">
+                                    <button class="btn btn-info w-100 mt-3" @click="addAcademicToList">
                                         <font-awesome-icon :icon="['fa', 'plus']" />
                                         <span class="mx-2">Add Academic</span>
                                     </button>
@@ -294,7 +294,7 @@
             </div>
         </div>
         <div class="row mt-5">
-            <div class="col-md-10">
+            <div :class="isRegisterRoute ? 'col-md-3' : 'col-md-10'">
                 <span v-if="!isRegisterRoute">
                     <div class="row">
                         <div class="col-md-3">
@@ -306,8 +306,8 @@
                     </div>
                 </span>
                 <span v-else>
-                    <button v-if="isRegisterStudent" class="btn btn-success w-100" @click="studentRegister">Save</button>
-                    <button v-else class="btn btn-success w-100" @click="teacherRegister">Save</button>
+                    <button v-if="isRegisterStudent" class="btn btn-success w-100" @click="studentRegister">Save Student</button>
+                    <button v-else class="btn btn-success w-100" @click="teacherRegister">Save Teacher</button>
                 </span>
             </div>
         </div>

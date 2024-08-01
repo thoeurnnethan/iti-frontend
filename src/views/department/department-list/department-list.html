@@ -59,14 +59,14 @@
             </Column>
             <Column :header="$t('action.action')">
                 <template #body="{ data }">
-                    <div v-if="data.statusCode === '01'" class="d-flex align-item-center">
-                        <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" icon="fas fa-pencil" class="text-white" :title="$t('action.edit')" />&nbsp;&nbsp;
-                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setInactive(data)" :icon="['fas', 'fa-box-archive']" class="text-white" :title="$t('action.inactive')" />&nbsp;&nbsp;
-                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+                    <div v-if="data.statusCode === '01'" class="d-flex justify-content-center align-item-center">
+                        <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-white" :title="$t('action.edit')" />
+                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setInactive(data)" :icon="['fas', 'fa-box-archive']" class="text-white mx-2" :title="$t('action.inactive')" />
+                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteAction(data)" :icon="['fas', 'fa-trash']" class="text-white" :title="$t('action.delete')" />
                     </div>
-                    <div v-else class="d-flex align-item-center">
-                        <div style="width: 24px; height: 24px;"></div>&nbsp;&nbsp;
-                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setActive(data)" :icon="['fas', 'fa-rotate-back']" class="text-white" :title="$t('action.active')" />&nbsp;&nbsp;
+                    <div v-else class="d-flex justify-content-center align-item-center">
+                        <div style="width: 24px; height: 24px;"></div>
+                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setActive(data)" :icon="['fas', 'fa-rotate-back']" class="text-white mx-2" :title="$t('action.active')" />
                         <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
                     </div>
                 </template>

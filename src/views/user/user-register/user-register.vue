@@ -2,11 +2,10 @@
 
 <script lang="ts">
 import { API_PATH } from '@/shared/common/api-path';
-import { USER_LIST, QUALIFICATION_LIST, PARENT_LIST, ACADEMIC_LIST, USER_DETAIL_RES, USER_LIST_FORM_CHECK, QUALIFICATION_LIST_FORM_CHECK } from '@/shared/types/user-list';
+import { USER_LIST, QUALIFICATION_LIST, PARENT_LIST, ACADEMIC_LIST, USER_DETAIL_RES, USER_LIST_FORM_CHECK, QUALIFICATION_LIST_FORM_CHECK, ACADEMIC_LIST_FORM_CHECK, PARENT_LIST_FORM_CHECK } from '@/shared/types/user-list';
 import { RequestService } from '@/shared/services/request-service';
 import { defineComponent } from 'vue';
 import { TeacherRoleList } from '@/shared/common/common';
-import TriStateCheckbox from 'primevue/tristatecheckbox';
 const requestService = new RequestService();
 
 export default defineComponent({
@@ -96,29 +95,37 @@ export default defineComponent({
                 endDate: false,
                 certificatedDate: false
             } as QUALIFICATION_LIST_FORM_CHECK,
-            editingIndex: -1,
-            
+            academicCheckFields: {
+                academicName: false,
+                startDate: false,
+                endDate: false,
+                certificatedDate: false
+            } as ACADEMIC_LIST_FORM_CHECK,
+            fatherCheckFields:{
+                firstName: false,
+                lastName: false,
+                job: false,
+                address: false,
+                phone: false
+            } as PARENT_LIST_FORM_CHECK,
+            motherCheckFields:{
+                firstName: false,
+                lastName: false,
+                job: false,
+                address: false,
+                phone: false
+            } as PARENT_LIST_FORM_CHECK,
+
             customRowClass: 'col-lg-4 col-sm-6 col-xl-3 mb-2',
             customFormClass: 'form-label font_15',
             userSelectedRole: '03',
             teacherSelectedRole: '03',
             customNoClass: 'table_no',
             addedButton: false,
-
-            fieldAcademicName: false,
-            fieldAcademicStartDate: false,
-            fieldAcademicEndDate: false,
-            fieldAcademicCertificatedDate: false,
-            editingIndexAcademic: -1,
             academicButton: false,
-
-            fatherFirstName: false,
-            fatherLastName: false,
-            fatherPhone: false,
-
-            motherFirstName: false,
-            motherLastName: false,
-            motherPhone: false,
+            
+            editingIndex: -1,
+            editingIndexAcademic: -1,
 
             userIDFromURl: this.$route.params.userID,
             routerName: this.$route.name,
@@ -141,7 +148,7 @@ export default defineComponent({
     },
 
     computed: {
-        isTeacherValid(): boolean{
+        isValidCommonUserInfo(): boolean{
             return this.userInfo.firstName !== '' &&
                 this.userInfo.lastName !== '' &&
                 this.userInfo.gender !== '' &&
@@ -152,6 +159,16 @@ export default defineComponent({
                 this.userInfo.email !== '';
         },
 
+        checkUserSpecificErrorFields() {
+            this.userInfoCheckFields.firstName = this.userInfo.firstName === '';
+            this.userInfoCheckFields.lastName = this.userInfo.lastName === '';
+            this.userInfoCheckFields.dateOfBirth = this.userInfo.dateOfBirth === '';
+            this.userInfoCheckFields.placeOfBirth = this.userInfo.placeOfBirth === '';
+            this.userInfoCheckFields.address = this.userInfo.address === '';
+            this.userInfoCheckFields.phone = this.userInfo.phone === '';
+            this.userInfoCheckFields.email = !this.isValidEmail(this.userInfo.email);
+        },
+
         isValidQualification(): boolean {
             return this.qualificationInfo.qualificationName !== '' &&
                 this.qualificationInfo.startDate !== '' &&
@@ -159,29 +176,65 @@ export default defineComponent({
                 this.qualificationInfo.certificatedDate !== ''
         },
 
-        isStudentValid(): boolean {
-            return this.userInfo.firstName !== '' &&
-                this.userInfo.lastName !== '' &&
-                this.userInfo.dateOfBirth !== '' &&
-                this.userInfo.phone !== '' &&
-                this.isValidEmail(this.userInfo.email) &&
-                this.userInfo.placeOfBirth !== '' &&
-                this.userInfo.address !== '' &&
-
-                this.fatherInfo.firstName !== '' &&
-                this.fatherInfo.lastName !== '' &&
-                this.fatherInfo.phone !== '' &&
-
-                this.motherInfo.firstName !== '' &&
-                this.motherInfo.lastName !== '' &&
-                this.motherInfo.phone !== ''
+        checkQualSpecificErrorFields() {
+            this.qualCheckFields.qualificationName = this.qualificationInfo.qualificationName === '';
+            this.qualCheckFields.startDate = this.qualificationInfo.startDate === '';
+            this.qualCheckFields.endDate = this.qualificationInfo.endDate === '';
+            this.qualCheckFields.certificatedDate = this.qualificationInfo.certificatedDate === '';
         },
 
-        isAcademicValid(): boolean {
+        isInvalidQualificationList(){
+            return this.qualificationList.length <= 0;
+        },
+
+        isValidAcademic(): boolean {
             return this.academicInfo.academicName !== '' &&
                 this.academicInfo.startDate !== '' &&
                 this.academicInfo.endDate !== '' &&
                 this.academicInfo.certificatedDate !== ''
+        },
+
+        checkAcademicSpecificErrorFields() {
+            this.academicCheckFields.academicName = this.academicInfo.academicName === '';
+            this.academicCheckFields.startDate = this.academicInfo.academicName === '';
+            this.academicCheckFields.endDate = this.academicInfo.academicName === '';
+            this.academicCheckFields.certificatedDate = this.academicInfo.academicName === '';
+        },
+
+        isInvalidAcademicList(){
+            return this.studentAcademicList.length <= 0;
+        },
+
+        isValidFatherInfo(){
+            return this.fatherInfo.firstName !== '' &&
+                this.fatherInfo.firstName !== ''&&
+                this.fatherInfo.job !== ''&&
+                this.fatherInfo.address !== ''&&
+                this.fatherInfo.phone !== ''
+        },
+        
+        checkFatherSpecificErrorFields(){
+            this.fatherCheckFields.firstName = this.fatherInfo.firstName === '';
+            this.fatherCheckFields.lastName = this.fatherInfo.lastName === '';
+            this.fatherCheckFields.job = this.fatherInfo.job === '';
+            this.fatherCheckFields.address = this.fatherInfo.address === '';
+            this.fatherCheckFields.phone = this.fatherInfo.phone === '';
+        },
+
+        isValidMotherInfo() {
+            return this.motherInfo.firstName !== '' &&
+                this.motherInfo.firstName !== '' &&
+                this.motherInfo.job !== '' &&
+                this.motherInfo.address !== '' &&
+                this.motherInfo.phone !== ''
+        },
+
+        checkMotherSpecificErrorFields(){
+            this.motherCheckFields.firstName = this.motherInfo.firstName === '';
+            this.motherCheckFields.lastName = this.motherInfo.lastName === '';
+            this.motherCheckFields.job = this.motherInfo.job === '';
+            this.motherCheckFields.address = this.motherInfo.address === '';
+            this.motherCheckFields.phone = this.motherInfo.phone === '';
         },
 
         isRegisterRoute(): boolean {
@@ -191,6 +244,7 @@ export default defineComponent({
         isRegisterStudent(): boolean {
             return this.userSelectedRole === '04'
         },
+
         onChangeUserRoleRegister(): void{
             this.resetForm();
         },
@@ -202,17 +256,15 @@ export default defineComponent({
         /* =============================================================== */
         async teacherRegister() {
             this.addedButton = true;
-            if (!this.isTeacherValid) {
-                this.userInfoCheckFields.firstName = this.userInfo.firstName === '';
-                this.userInfoCheckFields.lastName = this.userInfo.lastName === '';
-                this.userInfoCheckFields.dateOfBirth = this.userInfo.dateOfBirth === '';
-                this.userInfoCheckFields.placeOfBirth = this.userInfo.placeOfBirth === '';
-                this.userInfoCheckFields.address = this.userInfo.address === '';
-                this.userInfoCheckFields.phone = this.userInfo.phone === '';
-                this.userInfoCheckFields.email = !this.isValidEmail(this.userInfo.email);
+            if (!this.isValidCommonUserInfo || (!this.isValidQualification && this.isInvalidQualificationList)) {
+                this.checkUserSpecificErrorFields;
+                if(this.isInvalidQualificationList){
+                    this.checkQualSpecificErrorFields
+                }
                 return;
             }
-            if(this.qualificationList.length <= 0){
+            if(this.isInvalidQualificationList){
+                this.checkQualSpecificErrorFields
                 return;
             }
             const qualList = this.qualificationList.map((data) => {
@@ -244,21 +296,16 @@ export default defineComponent({
         },
 
         addQualificationToList() {
-            this.qualCheckFields.qualificationName = false;
-            this.qualCheckFields.startDate = false;
-            this.qualCheckFields.endDate = false;
-            this.qualCheckFields.certificatedDate = false;
-            this.addedButton = true;
-
-            // Validate form
-            if (!this.isValidQualification) {
-                this.qualCheckFields.qualificationName = this.qualificationInfo.qualificationName === '';
-                this.qualCheckFields.startDate = this.qualificationInfo.startDate === '';
-                this.qualCheckFields.endDate = this.qualificationInfo.endDate === '';
-                this.qualCheckFields.certificatedDate = this.qualificationInfo.certificatedDate === '';
-                return;
+            this.qualCheckFields ={
+                qualificationName: false,
+                startDate: false,
+                endDate: false,
+                certificatedDate: false
             }
-
+            if (!this.isValidQualification) {
+                this.checkQualSpecificErrorFields
+                return
+            }
             const updatedQualification: QUALIFICATION_LIST = {
                 ...this.qualificationInfo,
                 startDate: this.formatDate(this.qualificationInfo.startDate),
@@ -342,6 +389,18 @@ export default defineComponent({
         /* =============================================================== */
         async studentRegister() {
             this.academicButton = true;
+            
+            if(!this.isValidCommonUserInfo || !this.isValidFatherInfo || !this.isValidMotherInfo 
+                || (!this.isValidAcademic && this.isInvalidAcademicList)){
+                    this.checkUserSpecificErrorFields
+                    this.checkFatherSpecificErrorFields
+                    this.checkMotherSpecificErrorFields
+                    if(this.isInvalidAcademicList){
+                        this.checkAcademicSpecificErrorFields
+                    }
+                return
+            }
+
             const academicList = this.studentAcademicList.map((data) => {
                 return {
                     academicName: data.academicName,
@@ -363,29 +422,24 @@ export default defineComponent({
                     academicList: academicList
                 }
             };
-            console.log(userInfoList)
             this.userList.push(userInfoList);
             const reqBody = {
                 userList: this.userList
             };
             await requestService.request(API_PATH.USER_REGISTER, reqBody, true);
-            // this.$router.push('/user-list');
         },
 
-        saveAcademic() {
-            // Reset validation flags
-            this.fieldAcademicName = false;
-            this.fieldAcademicStartDate = false;
-            this.fieldAcademicEndDate = false;
-            this.fieldAcademicCertificatedDate = false;
+        addAcademicToList() {
+            this.academicCheckFields = {
+                academicName: false,
+                startDate: false,
+                endDate: false,
+                certificatedDate: false
+            }
             this.academicButton = true;
-            // Validate form
-            if (!this.isAcademicValid) {
-                this.fieldAcademicName = this.academicInfo.academicName === '';
-                this.fieldAcademicStartDate = this.academicInfo.startDate === '';
-                this.fieldAcademicEndDate = this.academicInfo.endDate === '';
-                this.fieldAcademicCertificatedDate = this.academicInfo.certificatedDate === '';
-                return;
+            if (!this.isValidAcademic) {
+                this.checkAcademicSpecificErrorFields
+                return
             }
             const updatedAcademic: ACADEMIC_LIST = {
                 ...this.academicInfo,
@@ -400,7 +454,7 @@ export default defineComponent({
                 this.studentAcademicList[this.editingIndexAcademic] = updatedAcademic;
                 this.editingIndexAcademic = -1;
             }
-            this.updateAcademicNumbers();
+            this.updateAcademicSeqNo();
             this.resetAcademicForm();
             this.academicButton = false;
         },
@@ -417,6 +471,7 @@ export default defineComponent({
                     accept: () => {
                         this.academicInfo = { ...data };
                         this.editingIndexAcademic = this.studentAcademicList.findIndex(item => item.seqNo === data.seqNo);
+                        this.deleteAcademic(data)
                         this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
                     },
                     reject: () => {
@@ -426,6 +481,7 @@ export default defineComponent({
             }else{
                 this.academicInfo = { ...data };
                 this.editingIndexAcademic = this.studentAcademicList.findIndex(item => item.seqNo === data.seqNo);
+                this.deleteAcademic(data)
             }
         },
 
@@ -439,8 +495,7 @@ export default defineComponent({
                     message: 'Do you want to delete this record?',
                     header: 'Danger Zone',
                     accept: () => {
-                        this.studentAcademicList = this.studentAcademicList.filter(qual => qual.seqNo !== item.seqNo);
-                        this.updateAcademicNumbers();
+                        this.deleteAcademic(item)
                         this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
                     },
                     reject: () => {
@@ -448,15 +503,19 @@ export default defineComponent({
                     }
                 });
             }else{
-                this.studentAcademicList = this.studentAcademicList.filter(qual => qual.seqNo !== item.seqNo);
-                this.updateAcademicNumbers();
+                this.deleteAcademic(item)
             }
         },
 
-        updateAcademicNumbers() {
+        updateAcademicSeqNo() {
             this.studentAcademicList.forEach((qual, index) => {
                 qual.seqNo = index + 1;
             });
+        },
+
+        deleteAcademic(item: ACADEMIC_LIST) {
+            this.studentAcademicList = this.studentAcademicList.filter(qual => qual.seqNo !== item.seqNo);
+            this.updateAcademicSeqNo();
         },
 
         onChangeValidateAcademic() {

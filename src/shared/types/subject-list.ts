@@ -1,8 +1,8 @@
 
 export interface SUBJECT_LIST {
-[x: string]: { classID?: string | undefined; seqNo?: number | undefined; subjectName: string; subjectDesc?: string | undefined; statusCode?: string | undefined }[]
-  classID?: string
-  seqNo?: number
+  classID: string
+  className: string
+  subjectID: string
   subjectName: string
   subjectDesc?: string
   statusCode?: string
@@ -17,10 +17,9 @@ export interface SUBJECT_LIST_REQ {
 }
 
 export interface SUBJECT_LIST_RES {
-  body : {
-roomList: any
+  body: {
+    totalCount: number
     subjectList: Array<SUBJECT_LIST>
-    totalCount : number 
   }
 }
 

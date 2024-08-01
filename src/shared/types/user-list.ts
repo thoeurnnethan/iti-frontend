@@ -33,15 +33,23 @@ interface USER_LIST_FORM_CHECK {
 interface PARENT_LIST {
   firstName: string
   lastName: string
-  gender: string
   job: string
   phone: string
   address: string
 }
 
+interface PARENT_LIST_FORM_CHECK {
+  firstName: boolean
+  lastName: boolean
+  gender: boolean
+  job: boolean
+  phone: boolean
+  address: boolean
+}
+
 interface ACADEMIC_LIST {
+  studentID?: string
   seqNo?: number
-  academicID?: number
   academicName: string
   academicDesc: string
   startDate: string
@@ -49,8 +57,15 @@ interface ACADEMIC_LIST {
   certificatedDate: string
 }
 
+interface ACADEMIC_LIST_FORM_CHECK {
+  academicName: boolean
+  startDate: boolean
+  endDate: boolean
+  certificatedDate: boolean
+}
+
 interface QUALIFICATION_LIST {
-  no?: number
+  studentID?: string
   seqNo?: number
   qualificationName: string
   qualificationDesc: string
@@ -139,5 +154,7 @@ export type {
   ManagerList_Res,
   STUDENT_INFO,
   USER_LIST_FORM_CHECK,
-  QUALIFICATION_LIST_FORM_CHECK
+  QUALIFICATION_LIST_FORM_CHECK,
+  ACADEMIC_LIST_FORM_CHECK,
+  PARENT_LIST_FORM_CHECK
 }

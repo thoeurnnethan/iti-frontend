@@ -57,17 +57,11 @@ export default defineComponent({
         userID: ''
       }
       const response = (await requestService.request(API_PATH.SUBJECT_LIST, reqBody, false)) as SUBJECT_LIST_RES;
+      this.totalCount = response.body?.totalCount;
       this.subjectList = response.body?.subjectList.map((data , index) => {
         return {
           ...data,
           no: this.startingIndex + index
-        }
-      });
-      this.totalCount = response.body?.totalCount;
-      this.dataTable = response.body?.roomList.map((data, index) => {
-        return {
-          ...data,
-          no: this.startingIndex + index,
         }
       });
       this.Loading = false;
@@ -85,7 +79,7 @@ export default defineComponent({
           const reqBody = {
             classID: _item.classID,
             subjectList:[{
-              seqNo: _item.seqNo,
+              // seqNo: _item.seqNo,
               statusCode: '09'
             }]
             
@@ -108,7 +102,7 @@ export default defineComponent({
           const reqBody = {
             classID: _item.classID,
             subjectList:[{
-              seqNo: _item.seqNo,
+              // seqNo: _item.seqNo,
               statusCode: '01'
             }]
             
@@ -131,7 +125,7 @@ export default defineComponent({
           const reqBody = {
             classID: _item.classID,
             subjectList:[{
-              seqNo: _item.seqNo,
+              // seqNo: _item.seqNo,
               statusCode: '02'
             }]
             
@@ -198,12 +192,8 @@ export default defineComponent({
         return {
           "No": index + 1,
           "ID": data.classID,
-          "Class Name": data.className,
-          "Year": data.year,
-          "Generation": data.generation,
-          "Time": data.time,
-          "Semester": data.semester,
-          "Status": this.$codeConverter.codeToString(this.statusCodeList, data.statusCode)
+          "Class Name": data.subjectName,
+          "Generation": data.subjectDesc,
         };
       })
       const exportExcelData = [

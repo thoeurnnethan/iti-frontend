@@ -18,7 +18,6 @@
                 <font-awesome-icon :icon="['fas', 'plus']" />
             </button>
         </div>
-        
     </div>
     <!-- header -->
 
@@ -27,7 +26,7 @@
         <div class="row">
             <div class="col-md-3">
                 <label class="form-label font_14">{{ $t('class.year') }}</label>
-                <select class="form-select" v-model="selectYear" @click="getClassList()">
+                <select class="form-select" v-model="selectYear" @click="getRoomList()">
                     <option value="" disabled>{{ $t('class.selectYear') }}</option>
                     <option v-for="year in yearList" :value="year.codeValue">
                         {{ year.codeValueDesc }}
@@ -36,7 +35,7 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label font_14">{{ $t('class.semester') }}</label>
-                <select class="form-select" v-model="selectSemester" @click="getClassList()">
+                <select class="form-select" v-model="selectSemester" @click="getRoomList()">
                     <option value=null disabled>{{ $t('class.selectSemester') }}</option>
                     <option v-for="semester in semesterList" :value="semester.codeValue">
                         {{ semester.codeValueDesc }}
@@ -47,17 +46,15 @@
     </div>
     <div class="float-end">
         <button type="button" class="rad_right btn btn-dark b_shadow p-2 px-2 float-end font_15"
-            @click.prevent="getClassList()">
+            @click.prevent="getRoomList()">
             {{ $t('common.search') }}
         </button>
         <InputGroup class="float-end w-25">
-            <InputText @keyup="getClassList()" class="p-1 font_15 rad_left b_shadow c_input" v-model="searchKeyword"
+            <InputText @keyup="getRoomList()" class="p-1 font_15 rad_left b_shadow c_input" v-model="searchKeyword"
                 :placeholder="$t('common.searchKey')" style="height: 40.5px;padding-left: 15px !important;" />
         </InputGroup>
-    
     </div>
 </div>
-
 
 <div class="we_box mt-3">
     <div class="b_shadow">

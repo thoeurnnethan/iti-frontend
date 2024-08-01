@@ -106,5 +106,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-@import url('./room-action.scss');
+/* @import url('./room-action.scss'); */
 </style>
