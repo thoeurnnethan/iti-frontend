@@ -43,11 +43,11 @@ $color_Light2: #c4c4c4;
 
 /* =============== sidebar =============== */
 .nav-item:hover {
-    background-color: $color_Light2;
+    background-color: #cecece;
 }
 
 .sub-nav-item span {
-    transition: 0.2s;
+    transition: 0.1s;
 }
 
 .sub-nav-item:hover span {
@@ -60,7 +60,7 @@ $color_Light2: #c4c4c4;
     left: 0;
     height: 100%;
     width: 230px;
-    transition: all .5s ease;
+    transition: all .1s ease;
     z-index: 100;
 
     .logo-box {
@@ -70,7 +70,7 @@ $color_Light2: #c4c4c4;
         display: flex;
         align-items: center;
         background-color: var(--ion-color-primary);
-        transition: all .5s ease-in;
+        transition: all .1s ease-in;
         cursor: pointer;
 
         img {
@@ -79,7 +79,7 @@ $color_Light2: #c4c4c4;
             min-width: 50px;
             text-align: center;
             line-height: 50px;
-            transition: all .5s ease;
+            transition: all .1s ease;
         }
 
         .logo-name {
@@ -106,13 +106,13 @@ $color_Light2: #c4c4c4;
         z-index: 1000 !important;
 
         li {
-            transition: all .5s ease;
+            transition: all .1s ease;
 
             .title {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                transition: all .5s ease;
+                transition: all .1s ease;
                 cursor: pointer;
 
                 i {
@@ -178,7 +178,7 @@ $color_Light2: #c4c4c4;
 
 /* ---------------- Submenu ------------- */
 .sidebar-list .sub-list {
-    transition: all .5s ease;
+    transition: all .1s ease;
 }
 
 .sidebar-list li.dropdown.active .submenu {
@@ -195,7 +195,7 @@ $color_Light2: #c4c4c4;
     color: var(--color_Light2);
     font-size: 15px;
     padding: 5px 0;
-    transition: all .5s ease;
+    transition: all .1s ease;
 }
 
 .submenu .link:hover {
@@ -234,7 +234,7 @@ $color_Light2: #c4c4c4;
     height: max-content;
     width: max-content;
     opacity: 0;
-    transition: all .5s ease;
+    transition: all .1s ease;
     pointer-events: none;
 }
 
@@ -258,7 +258,7 @@ $color_Light2: #c4c4c4;
     left: 230px;
     width: calc(100% - 230px);
     height: 100vh;
-    transition: all .5s ease;
+    transition: all .1s ease;
     background: transparent;
 
     .sticky_head {
@@ -302,6 +302,11 @@ $color_Light2: #c4c4c4;
             box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
         }
     }
+}
+
+.active-menu-item {
+    background-color: #cecece; // Change this to your desired active background color
+    color: #000000; // Optional: change text color when active
 }
 
 .sidebar.collapse {

@@ -49,13 +49,9 @@ export default defineComponent({
     },
 
     methods: {
-        // toggleMenu(menu) {
-        //     this.activeMenu = this.activeMenu === menu ? null : menu;
-        // },
-
-        // closeAllMenus() {
-        //     this.activeMenu = null;
-        // },
+        isActive(item: { path: string }) {
+        return this.$route.path.startsWith(item.path);
+    },
 
         toggleSubMenu(name: string) {
             this.menuList = this.menuList.map(item => {
