@@ -43,28 +43,6 @@ export default defineComponent({
                 gender: 'F',
                 address: ''
             } as PARENT_LIST,
-            teacherRegisterInfo: {
-                roleID: '03',
-                firstName: '',
-                lastName: '',
-                gender: '',
-                dateOfBirth: '',
-                placeOfBirth: '',
-                address: '',
-                phone: '',
-                email: '',
-            } as USER_LIST,
-            studentRegisterInfo: {
-                roleID: '04',
-                firstName: '',
-                lastName: '',
-                gender: '',
-                dateOfBirth: '',
-                placeOfBirth: '',
-                address: '',
-                phone: '',
-                email: '',
-            } as USER_LIST,
             qualificationInfo: {
                 qualificationName: '',
                 qualificationDesc: '',
@@ -389,15 +367,17 @@ export default defineComponent({
         /* =============================================================== */
         async studentRegister() {
             this.academicButton = true;
-            
-            if(!this.isValidCommonUserInfo || !this.isValidFatherInfo || !this.isValidMotherInfo 
-                || (!this.isValidAcademic && this.isInvalidAcademicList)){
-                    this.checkUserSpecificErrorFields
-                    this.checkFatherSpecificErrorFields
-                    this.checkMotherSpecificErrorFields
-                    if(this.isInvalidAcademicList){
-                        this.checkAcademicSpecificErrorFields
-                    }
+            if (!this.isValidCommonUserInfo || !this.isValidFatherInfo || !this.isValidMotherInfo || (!this.isValidAcademic && this.isInvalidAcademicList)) {
+                this.checkUserSpecificErrorFields
+                this.checkFatherSpecificErrorFields
+                this.checkMotherSpecificErrorFields
+                if (this.isInvalidAcademicList) {
+                    this.checkAcademicSpecificErrorFields
+                }
+                return
+            }
+            if(this.isInvalidAcademicList){
+                this.checkAcademicSpecificErrorFields
                 return
             }
 
@@ -518,31 +498,6 @@ export default defineComponent({
             this.updateAcademicSeqNo();
         },
 
-        onChangeValidateAcademic() {
-            // Validate fields on input change
-            if (this.academicButton) {
-                this.fieldAcademicName = this.academicInfo.academicName === '';
-                this.fieldAcademicStartDate = this.academicInfo.startDate === '';
-                this.fieldAcademicEndDate = this.academicInfo.endDate === '';
-                this.fieldAcademicCertificatedDate = this.academicInfo.certificatedDate === '';
-                this.studentRegisterFirstName = this.studentRegisterInfo.firstName === '';
-                this.studentRegisterLastName = this.studentRegisterInfo.lastName === '';
-                this.studentRegisterDateOfBirth = this.studentRegisterInfo.dateOfBirth === '';
-                this.studentRegisterPlaceOfBirth = this.studentRegisterInfo.placeOfBirth === '';
-                this.studentRegisterAddress = this.studentRegisterInfo.address === '';
-                this.studentRegisterPhone = this.studentRegisterInfo.phone === '';
-                this.studentRegisterEmail = this.studentRegisterInfo.email === '';
-
-                this.fatherFirstName = this.fatherInfo.firstName === '';
-                this.fatherLastName = this.fatherInfo.lastName === '';
-                this.fatherPhone = this.fatherInfo.phone === '';
-
-                this.motherFirstName = this.motherInfo.firstName === '';
-                this.motherLastName = this.motherInfo.lastName === '';
-                this.motherPhone = this.motherInfo.phone === '';
-            }
-        },
-
         /* =============================================================== */
         /* ======================= Update User =========================== */
         /* =============================================================== */
@@ -578,25 +533,26 @@ export default defineComponent({
             }
         },
 
-        checkQualRequireFields() {
-            if (this.addedButton) {
-                this.qualCheckFields.qualificationName = this.qualificationInfo.qualificationName === '';
-                this.qualCheckFields.startDate = this.qualificationInfo.startDate === '';
-                this.qualCheckFields.endDate = this.qualificationInfo.endDate === '';
-                this.qualCheckFields.certificatedDate = this.qualificationInfo.certificatedDate === '';
+        checkUserRequireFields(){
+            if(this.addedButton){
+                this.checkUserRequireFields
             }
         },
 
-        checkUserRequireFields(){
-            if(this.addedButton){
-                this.userInfoCheckFields.firstName = this.userInfo.firstName === '';
-                this.userInfoCheckFields.lastName = this.userInfo.lastName === '';
-                this.userInfoCheckFields.dateOfBirth = this.userInfo.dateOfBirth === '';
-                this.userInfoCheckFields.placeOfBirth = this.userInfo.placeOfBirth === '';
-                this.userInfoCheckFields.address = this.userInfo.address === '';
-                this.userInfoCheckFields.phone = this.userInfo.phone === '';
-                this.userInfoCheckFields.email = this.userInfo.email === '';
-            }
+        checkQualRequireFields() {
+            this.checkQualSpecificErrorFields
+        },
+
+        checkAcademicRequireFields() {
+            this.checkAcademicSpecificErrorFields
+        },
+
+        checkFatherInfoRequireFields() {
+            this.checkFatherSpecificErrorFields
+        },
+
+        checkMotherInfoRequireFields() {
+            this.checkMotherSpecificErrorFields
         },
 
         formatDate(dateString: string): string {

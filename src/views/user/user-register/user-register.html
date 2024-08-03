@@ -30,7 +30,14 @@
         <h5 v-if="!isRegisterStudent" class="p-0 m-auto text-center">Teacher</h5>
         <h5 v-else>Student</h5>
         <hr>
-        {{ isValidCommonUserInfo }}
+        AcademicInfo :{{ academicInfo }} <br>
+        {{ isValidAcademic }} <br>
+        Academic List :{{ studentAcademicList }}
+        {{ isInvalidAcademicList }} <br>
+        FatherInfo :{{ fatherInfo }} <br>
+        {{ isValidFatherInfo }} <br>
+        MotherInfo :{{ motherInfo }} <br>
+        {{ isValidMotherInfo }} <br>
         <!-- User Information -->
         <div class="container-fluid">
             <div class="row mt-4">
@@ -113,7 +120,7 @@
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="we_shadow">
-                            <DataTable v-if="qualificationList.length > 0" v-model:selection="qualificationInfo"
+                            <DataTable v-if="!isInvalidQualificationList" v-model:selection="qualificationInfo"
                                 :value="qualificationList">
                                 <Column field="seqNo" header="No" :class="customNoClass"></Column>
                                 <Column field="qualificationName" header="Qualification Name"></Column>
@@ -162,11 +169,11 @@
                         <div class="row  m-0">
                             <div :class="customRowClass ">
                                 <label :class="customFormClass">First Name</label><br>
-                                <InputText :invalid="fatherFirstName" v-model="fatherInfo.firstName" @keyup="onChangeValidateAcademic" />
+                                <InputText :invalid="fatherCheckFields.firstName" v-model="fatherInfo.firstName" @keyup="checkFatherInfoRequireFields" />
                             </div>
                             <div :class="customRowClass">
                                 <label :class="customFormClass">Last Name</label><br>
-                                <InputText :invalid="fatherLastName" v-model="fatherInfo.lastName" @keyup="onChangeValidateAcademic" />
+                                <InputText :invalid="fatherCheckFields.lastName" v-model="fatherInfo.lastName" @keyup="checkFatherInfoRequireFields" />
                             </div>
                             <div :class="customRowClass">
                                 <label :class="customFormClass">Job</label><br>
@@ -174,7 +181,7 @@
                             </div>
                             <div :class="customRowClass">
                                 <label :class="customFormClass">Phone</label><br>
-                                <InputText :invalid="fatherPhone" v-model="fatherInfo.phone" @keyup="onChangeValidateAcademic" />
+                                <InputText :invalid="fatherCheckFields.phone" v-model="fatherInfo.phone" @keyup="checkFatherInfoRequireFields" />
                             </div>
                             <div :class="customRowClass">
                                 <label :class="customFormClass">Address</label><br>
@@ -187,11 +194,11 @@
                         <div class="row  m-0">
                             <div :class="customRowClass ">
                                 <label :class="customFormClass">First Name</label><br>
-                                <InputText :invalid="motherFirstName" v-model="motherInfo.firstName" @keyup="onChangeValidateAcademic" />
+                                <InputText :invalid="motherCheckFields.firstName" v-model="motherInfo.firstName" @keyup="checkMotherInfoRequireFields" />
                             </div>
                             <div :class="customRowClass">
                                 <label :class="customFormClass">Last Name</label><br>
-                                <InputText :invalid="motherLastName" v-model="motherInfo.lastName" @keyup="onChangeValidateAcademic" />
+                                <InputText :invalid="motherCheckFields.lastName" v-model="motherInfo.lastName" @keyup="checkMotherInfoRequireFields" />
                             </div>
                             <div :class="customRowClass">
                                 <label :class="customFormClass">Job</label><br>
@@ -199,7 +206,7 @@
                             </div>
                             <div :class="customRowClass">
                                 <label :class="customFormClass">Phone</label><br>
-                                <InputText :invalid="motherPhone" v-model="motherInfo.phone" @keyup="onChangeValidateAcademic" />
+                                <InputText :invalid="motherCheckFields.phone" v-model="motherInfo.phone" @keyup="checkMotherInfoRequireFields" />
                             </div>
                             <div :class="customRowClass">
                                 <label :class="customFormClass">Address</label><br>
@@ -217,8 +224,7 @@
                         <div class="row m-0">
                             <div :class="customRowClass">
                                 <label :class="customFormClass">Academic Name</label><br>
-                                <InputText v-model="academicInfo.academicName" :invalid="fieldAcademicName"
-                                    @keyup="onChangeValidateAcademic" />
+                                <InputText v-model="academicInfo.academicName" :invalid="academicCheckFields.academicName" @keyup="checkAcademicRequireFields" />
                             </div>
                             <div :class="customRowClass">
                                 <label :class="customFormClass">Academic Description</label><br>
@@ -226,18 +232,15 @@
                             </div>
                             <div :class="customRowClass">
                                 <label :class="customFormClass">Start Date</label><br>
-                                <Calendar v-model="academicInfo.startDate" :invalid="fieldAcademicStartDate"
-                                    @blur="onChangeValidateAcademic" dateFormat="yy-mm-dd" />
+                                <Calendar v-model="academicInfo.startDate" :invalid="academicCheckFields.startDate" @blur="checkAcademicRequireFields" dateFormat="yy-mm-dd" />
                             </div>
                             <div :class="customRowClass">
                                 <label :class="customFormClass">End Date</label><br>
-                                <Calendar v-model="academicInfo.endDate" :invalid="fieldAcademicEndDate"
-                                    @blur="onChangeValidateAcademic" dateFormat="yy-mm-dd" />
+                                <Calendar v-model="academicInfo.endDate" :invalid="academicCheckFields.endDate" @blur="checkAcademicRequireFields" dateFormat="yy-mm-dd" />
                             </div>
                             <div :class="customRowClass">
                                 <label :class="customFormClass">Certificated Date</label><br>
-                                <Calendar v-model="academicInfo.certificatedDate" :invalid="fieldAcademicCertificatedDate"
-                                    @blur="onChangeValidateAcademic" dateFormat="yy-mm-dd" />
+                                <Calendar v-model="academicInfo.certificatedDate" :invalid="academicCheckFields.certificatedDate" @blur="checkAcademicRequireFields" dateFormat="yy-mm-dd" />
                             </div>
                             <div class="row">
                                 <div class="col-lg-4 col-sm-6 col-xl-3">
@@ -252,7 +255,7 @@
                     <div class="row mt-4">
                         <div class="col-12">
                             <div class="we_shadow">
-                                <DataTable v-if="studentAcademicList" v-model:selection="academicInfo"
+                                <DataTable v-if="!isInvalidAcademicList" v-model:selection="academicInfo"
                                     :value="studentAcademicList">
                                     <Column field="seqNo" header="No" :class="customNoClass"></Column>
                                     <Column field="academicName" header="Academic Name"></Column>
