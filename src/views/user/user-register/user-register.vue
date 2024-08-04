@@ -304,7 +304,7 @@ export default defineComponent({
         },
 
         onClickEditQualification(data: QUALIFICATION_LIST) {
-            if(!this.isRegisterRoute){
+            if(this.isRegisterRoute){
                 if (this.editingIndex !== -1) {
                     this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
                     return;
@@ -315,7 +315,7 @@ export default defineComponent({
                     accept: () => {
                         this.qualificationInfo = { ...data };
                         this.editingIndex = this.qualificationList.findIndex(item => item.seqNo === data.seqNo);
-                        this.deleteQualificaton(data)
+                        this.deleteQualification(data)
                         this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
                     },
                     reject: () => {
@@ -325,7 +325,7 @@ export default defineComponent({
             }else{
                 this.qualificationInfo = { ...data };
                 this.editingIndex = this.qualificationList.findIndex(item => item.seqNo === data.seqNo);
-                this.deleteQualificaton(data)
+                this.deleteQualification(data)
             }
         },
 
@@ -339,7 +339,7 @@ export default defineComponent({
                     message: 'Do you want to delete this record?',
                     header: 'Danger Zone',
                     accept: () => {
-                        this.deleteQualificaton(item)
+                        this.deleteQualification(item)
                         this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
                     },
                     reject: () => {
@@ -347,11 +347,11 @@ export default defineComponent({
                     }
                 })
             }else{
-                this.deleteQualificaton(item)
+                this.deleteQualification(item)
             }
         },
 
-        deleteQualificaton(item: QUALIFICATION_LIST){
+        deleteQualification(item: QUALIFICATION_LIST){
             this.qualificationList = this.qualificationList.filter(qual => qual.seqNo !== item.seqNo);
             this.updateQualificationSeqNo();
         },

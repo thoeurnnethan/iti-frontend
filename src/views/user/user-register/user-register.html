@@ -167,7 +167,7 @@
                     <fieldset class="border rounded-3 pb-2">
                         <legend class="float-none w-auto m_left20 px-2 h5">Father</legend>
                         <div class="row  m-0">
-                            <div :class="customRowClass ">
+                            <div :class="customRowClass">
                                 <label :class="customFormClass">First Name</label><br>
                                 <InputText :invalid="fatherCheckFields.firstName" v-model="fatherInfo.firstName" @keyup="checkFatherInfoRequireFields" />
                             </div>
@@ -192,7 +192,7 @@
                     <fieldset class="border rounded-3 mt-3 pb-2">
                         <legend class="float-none w-auto m_left20 px-2 h5">Mother</legend>
                         <div class="row  m-0">
-                            <div :class="customRowClass ">
+                            <div :class="customRowClass">
                                 <label :class="customFormClass">First Name</label><br>
                                 <InputText :invalid="motherCheckFields.firstName" v-model="motherInfo.firstName" @keyup="checkMotherInfoRequireFields" />
                             </div>
