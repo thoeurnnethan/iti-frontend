@@ -36,8 +36,8 @@ export const YearList: StandardCodeData[] = [
 
 export const SemesterList: StandardCodeData[] = [
   { codeValue: '', codeValueDesc: 'All' },
-  { codeValue: 1, codeValueDesc: 'Semester 1' },
-  { codeValue: 2, codeValueDesc: 'Semester 2' },
+  { codeValue: '1', codeValueDesc: 'Semester 1' },
+  { codeValue: '2', codeValueDesc: 'Semester 2' },
 ];
 
 export const generation: StandardCodeData[] = [

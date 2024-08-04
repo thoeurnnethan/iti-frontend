@@ -20,14 +20,12 @@ export default defineComponent({
     MyLoading
   },
   data() {
-    const dataTable = ref<SUBJECT_LIST[]>([]);
     return {
       yearList: YearList,
       semesterList: SemesterList,
       statusCodeList: globalStatusCodeList,
       subjectList: [] as SUBJECT_LIST[],
       subjectInfo: {} as SUBJECT_LIST,
-      searchKeyword:'',
       selectTime:'',
       searchKey: '',
       Loading: false,
@@ -35,9 +33,8 @@ export default defineComponent({
       pageSize: 10,
       pageNumber: 0,
       startingIndex: 1,
-      dataTable,
-      customNoRoom: 'table_no',
-      
+      expandedRowGroups: null,
+      selectClassId:''
     }
   },
 
@@ -50,11 +47,10 @@ export default defineComponent({
     async getSubjectList() {
       this.Loading = true;
       const reqBody: SUBJECT_LIST_REQ = {
-        classID: this.searchKey,
+        classID: this.selectClassId,
         pageSize: this.pageSize,
         pageNumber: this.pageNumber + 1,
-        searchKey: this.searchKeyword,
-        userID: ''
+        searchKey: this.searchKey,
       }
       const response = (await requestService.request(API_PATH.SUBJECT_LIST, reqBody, false)) as SUBJECT_LIST_RES;
       this.totalCount = response.body?.totalCount;
@@ -79,7 +75,8 @@ export default defineComponent({
           const reqBody = {
             ..._item,
             subjectList:[{
-              // seqNo: _item.seqNo,
+              subjectID:  _item.subjectID,
+              statusCode: '09'
             }]
           }
           await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false);
@@ -100,7 +97,7 @@ export default defineComponent({
           const reqBody = {
             ..._item,
             subjectList:[{
-              // seqNo: _item.seqNo,
+              subjectID:  _item.subjectID,
               statusCode: '01'
             }]
           }
@@ -122,7 +119,7 @@ export default defineComponent({
           const reqBody = {
             ..._item,
             subjectList:[{
-              // seqNo: _item.seqNo,
+              subjectID:  _item.subjectID,
               statusCode: '02'
             }]
           }
@@ -149,7 +146,7 @@ export default defineComponent({
     },
 
     // Insert Room
-      async onClickInsert(){
+    async onClickInsert(){
       this.$popupService.onOpen({
         component: subject_action,
         dataProp:{
@@ -182,9 +179,9 @@ export default defineComponent({
       })
     },
 
-    //download excel
+    // Download Excel
     exportToExcel() {
-      const excelData = this.dataTable.map((data, index) => {
+      const excelData = this.subjectList.map((data, index) => {
         return {
           "No": index + 1,
           "ID": data.classID,
@@ -200,14 +197,18 @@ export default defineComponent({
       exportExcel.exportSheet(exportExcelData, 'Class info')
     },
 
-    //detailsClass
-    detailsClass(_data: { id: any; }) {
-      this.$router.push('/score-list');
+    // Calculate Total Subjects per Group
+    calculateTotalSubjects(classID: string) {
+      let total = 0;
+      if (this.subjectList) {
+        total = this.subjectList.filter(subject => subject.classID === classID).length;
+      }
+      return total;
     },
-
   },
 })
 </script>
+
 
 <style scoped>
 @import url('./subject-list.scss');

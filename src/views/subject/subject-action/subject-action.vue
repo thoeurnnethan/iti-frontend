@@ -115,7 +115,7 @@ export default defineComponent({
     },
     resetForm() {
       this.subjectInfo = {
-        classID: this.subjectInfo.classID,  // Retain the current classID
+        classID: this.subjectInfo.classID,
         subjectName: '',
         subjectDesc: '',
         statusCode: '01'
@@ -136,7 +136,7 @@ export default defineComponent({
         header: 'Confirmation',
         accept: () => {
           this.subjectInfo = { ...data };
-          this.editingIndex = this.subjectList.findIndex(item => item.seqNo === data.seqNo);
+          this.editingIndex = this.subjectList.findIndex(item => item.subjectID === data.subjectID);
           this.editConfirmationVisible = false;
           this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
         },
@@ -184,7 +184,7 @@ export default defineComponent({
     async subjectEdit() {
 
       const dataList = [{
-        seqNo: this.subjectInfo.seqNo,
+        subjectID: this.subjectInfo.subjectID,
         subjectName: this.subjectInfo.subjectName,
         subjectDesc: this.subjectInfo.subjectDesc,
         statusCode: this.subjectInfo.statusCode,

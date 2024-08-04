@@ -7,7 +7,7 @@ export interface CLASS_LIST {
   year: string 
   generation: string 
   time: string 
-  semester: number 
+  semester: string 
   statusCode: string ,
   firstRegisterDate?: string
   lastChangeDate?: string

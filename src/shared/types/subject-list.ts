@@ -9,7 +9,6 @@ export interface SUBJECT_LIST {
 }
 
 export interface SUBJECT_LIST_REQ {
-  userID: string
   classID: string
   searchKey: string
   pageSize: number
@@ -19,6 +18,7 @@ export interface SUBJECT_LIST_REQ {
 export interface SUBJECT_LIST_RES {
   body: {
     totalCount: number
+    classID: string
     subjectList: Array<SUBJECT_LIST>
   }
 }

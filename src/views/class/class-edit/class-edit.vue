@@ -32,7 +32,7 @@ export default defineComponent({
         year: '',
         generation: '',
         time: '',
-        semester: 0,
+        semester: '',
         statusCode: '01',
       } as CLASS_LIST,
       classInfoUpdate: {} as CLASS_LIST,
@@ -51,7 +51,7 @@ export default defineComponent({
         this.classInfo.className !== '' &&
         this.classInfo.departmentID !== '' &&
         this.classInfo.year !== '' &&
-        this.classInfo.semester !== null &&
+        this.classInfo.semester !== '' &&
         this.classInfo.generation !== '' &&
         this.classInfo.time !== '' &&
         this.classInfo.classDesc !== '' &&
@@ -85,7 +85,6 @@ export default defineComponent({
     async classInsert() {
       const reqBody = {
         cyear: this.classInfo.year,
-        ctime: this.classInfo.time,
         ...this.classInfo,
       };
 
@@ -107,9 +106,6 @@ export default defineComponent({
       if (res) {
         modalController.dismiss();
       }
-    },
-    semesterChangeType() {
-      this.classInfo.semester = Number(this.classInfo.semester);
     },
     onClose() {
       modalController.dismiss();

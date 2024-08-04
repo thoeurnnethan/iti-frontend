@@ -22,52 +22,68 @@
         <button type="button" class="rad_right btn btn-dark p-2 px-2 float-end font_15"
             @click.prevent="getSubjectList()">{{ $t('common.search') }}</button>
         <InputGroup class="float-end w-25">
-            <InputText class="p-1 font_15 rad_left c_input b_shadow" @keyup.enter="getSubjectList()" v-model="searchKey"
+            <InputText class="p-1 font_15 rad_left c_input b_shadow" @keyup="getSubjectList()" v-model="searchKey"
                 :placeholder="$t('common.searchKey')" style="height: 40.5px;padding: 15px;" />
         </InputGroup>
     </div>
 </div>
 <div class="mt-3 we_box">
     <div class="b_shadow">
-        <DataTable 
-            v-model:selection="subjectInfo" 
-            @row-dblclick="onClickRow(subjectInfo)" 
-            tableStyle="min-width: 50rem"
-            selectionMode="single" 
-            scrollable 
-            :value="subjectList" 
-            :metaKeySelection="true" 
-            :rows="pageSize"
-            :lazy="true" 
-            :paginator="true" 
-            :totalRecords="totalCount" 
-            :rowsPerPageOptions="[10, 20, 50]" 
-            @page="onPage"
-            :rowClass="rowClass">
-            <Column field="no" :header="$t('common.no')" :class="['text-start']"></Column>
-            <Column field="classID" :header="$t('subject.classID')" style="min-width:100px"></Column>
-            <Column field="subjectName" :header="$t('subject.subjectName')" style="min-width: 150px"></Column>
-            <Column field="subjectDesc" :header="$t('subject.subjectDesc')" style="min-width: 150px"></Column>
-            <Column field="statusCode" :header="$t('subject.statusCode')" style="min-width: 100px">
-                <template #body="{ data }">
-                    {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
+        <div class="card">
+            <DataTable 
+                v-model:expandedRowGroups="expandedRowGroups" 
+                :value="subjectList" 
+                tableStyle="min-width: 50rem"
+                expandableRowGroups 
+                rowGroupMode="subheader" 
+                groupRowsBy="classID" 
+                sortMode="single" 
+                sortField="classID" 
+                :sortOrder="1"
+                @page="onPage"
+                :totalRecords="totalCount" 
+                :rows="pageSize"
+                :rowsPerPageOptions="[10, 20, 50]"
+                :rowClass="rowClass"
+                >
+                
+                <!-- Group Header -->
+                <template #groupheader="slotProps">
+                    <span class="vertical-align-middle ml-2 font-bold line-height-3 text-capitalize">{{ slotProps.data.className }}</span>
                 </template>
-            </Column>
-            <Column :header="$t('action.action')">
-                <template #body="{ data }">
-                    <div v-if="data.statusCode === '01'" class="d-flex align-item-center">
-                        <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-white" :title="$t('action.edit')" />&nbsp;&nbsp;
-                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setInactive(data)" :icon="['fas', 'fa-archive']" class="text-white" :title="$t('action.inactive')" />&nbsp;&nbsp;
-                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
-                    </div>
-                    <div v-else class="d-flex align-item-center">
-                        <div style="width: 24px; height: 24px;"></div>&nbsp;&nbsp;
-                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setActive(data)" :icon="['fas', 'fa-rotate-back']" class="text-white" :title="$t('action.active')" />&nbsp;&nbsp;
-                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
-                    </div>
+                
+                <!-- Columns -->
+                <Column field="classID" header="Class ID" style="min-width:100px"></Column>
+                <Column field="subjectName" header="Subject Name" style="min-width: 150px"></Column>
+                <Column field="subjectDesc" header="Subject Description" style="min-width: 150px"></Column>
+                <Column field="statusCode" header="Status Code" style="min-width: 100px">
+                    <template #body="{ data }">
+                        {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
+                    </template>
+                </Column>
+                
+                <!-- Action Column -->
+                <Column header="Action">
+                    <template #body="{ data }">
+                        <div v-if="data.statusCode === '01'" class="d-flex justify-content-center align-item-center">
+                            <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-white" :title="$t('action.edit')" />&nbsp;&nbsp;
+                            <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setInactive(data)" :icon="['fas', 'fa-archive']" class="text-white" :title="$t('action.inactive')" />&nbsp;&nbsp;
+                            <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+                        </div>
+                        <div v-else class="d-flex justify-content-center align-item-center">
+                            <div style="width: 24px; height: 24px;"></div>&nbsp;&nbsp;
+                            <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setActive(data)" :icon="['fas', 'fa-rotate-back']" class="text-white" :title="$t('action.active')" />&nbsp;&nbsp;
+                            <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+                        </div>
+                    </template>
+                </Column>
+                
+                <!-- Group Footer -->
+                <template #groupfooter="slotProps">
+                    <div class="flex justify-content-end font-bold w-full"><b>Total Subjects: {{ calculateTotalSubjects(slotProps.data.classID) }}</b></div>
                 </template>
-            </Column>
-        </DataTable>
+            </DataTable>
+        </div>
     </div>
     <div class="p-1"></div>
 </div>
