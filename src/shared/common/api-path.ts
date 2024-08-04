@@ -26,8 +26,12 @@ export enum API_PATH {
     ROOM_LIST = "api/room/list",
     ROOM_UPDATE = "api/room/update",
     ROOM_REGISTER = "api/room/register",
-    //Room
+    //Subject
     SUBJECT_LIST = "api/subject/list",
     SUBJECT_UPDATE = "api/subject/update",
     SUBJECT_REGISTER = "api/subject/register",
+    //Schedule
+    SCHEDULE_LIST = "api/schedule/list",
+    SCHEDULE_UPDATE = "api/schedule/update",
+    SCHEDULE_REGISTER = "api/schedule/register",
 }

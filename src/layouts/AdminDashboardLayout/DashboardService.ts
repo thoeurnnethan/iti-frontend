@@ -13,11 +13,6 @@ export const DashboardService = {
                 "name": "departmentList"
             },
             {
-                "path": "/room-list",
-                "iconClass": "fa-shop",
-                "name": "roomList",
-            },
-            {
                 "path": "/class-list",
                 "iconClass": "fa-user-graduate",
                 "name": "classList",
@@ -26,6 +21,16 @@ export const DashboardService = {
                 "path": "/subject-list",
                 "iconClass": "fa-book-open",
                 "name": "subjectList",
+            },
+            {
+                "path": "/room-list",
+                "iconClass": "fa-shop",
+                "name": "roomList",
+            },
+            {
+                "path": "/schedule-list",
+                "iconClass": "fa-book-open",
+                "name": "scheduleManagement"
             },
             {
                 "path": "/user-list",
@@ -44,7 +49,7 @@ export const DashboardService = {
                         "name": "userRegister",
                     },
                 ]
-            },
+            }
         ]
     }
 
