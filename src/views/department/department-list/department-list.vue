@@ -217,9 +217,9 @@ export default defineComponent({
           "Department ID": data.departmentID,
           "Department Name": data.departmentName,
           "Department Description": data.departmentDesc,
-          "Departmetn Manager": data.firstName + '-' + data.lastName,
+          "Department Manager": data.firstName + '-' + data.lastName,
           "Status": this.$codeConverter.codeToString(this.statusCodeList,data.statusCode),
-          "First Regsiter Date": this.$format.formatDateTime(data.firstRegisterDate? data.firstRegisterDate : '', 'yyyy-mm-dd'),
+          "First Register Date": this.$format.formatDateTime(data.firstRegisterDate? data.firstRegisterDate : '', 'yyyy-mm-dd'),
           "Last Change Date": this.$format.formatDateTime(data.lastChangeDate ? data.lastChangeDate : '', 'yyyy-mm-dd') 
         };
       })

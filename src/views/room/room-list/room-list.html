@@ -22,29 +22,7 @@
     <!-- header -->
 
     <!-- search-bar -->
-    <div class="container-fluid px-0 py-4">
-        <div class="row">
-            <div class="col-md-3">
-                <label class="form-label font_14">{{ $t('class.year') }}</label>
-                <select class="form-select" v-model="selectYear" @click="getRoomList()">
-                    <option value="" disabled>{{ $t('class.selectYear') }}</option>
-                    <option v-for="year in yearList" :value="year.codeValue">
-                        {{ year.codeValueDesc }}
-                    </option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label font_14">{{ $t('class.semester') }}</label>
-                <select class="form-select" v-model="selectSemester" @click="getRoomList()">
-                    <option value=null disabled>{{ $t('class.selectSemester') }}</option>
-                    <option v-for="semester in semesterList" :value="semester.codeValue">
-                        {{ semester.codeValueDesc }}
-                    </option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="float-end">
+    <div class="float-end mt-3">
         <button type="button" class="rad_right btn btn-dark b_shadow p-2 px-2 float-end font_15"
             @click.prevent="getRoomList()">
             {{ $t('common.search') }}
@@ -60,7 +38,6 @@
     <div class="b_shadow">
         <DataTable 
             v-model:selection="roomInfo" 
-            tableStyle="min-width: 50rem" 
             selectionMode="single" 
             scrollable
             :value="roomList" 
@@ -74,11 +51,11 @@
             :rowClass="rowClass">
             <Column field="no" :header="$t('common.no')" :class="['text-center']"></Column>
             <Column field="roomID" :header="$t('room.roomID')"></Column>
-            <Column field="roomName" :header="$t('room.roomName')"></Column>
+            <Column field="roomName" :header="$t('room.roomName')" style="min-width:150px"></Column>
             <Column field="building" :header="$t('room.building')"></Column>
             <Column field="roomDesc" :header="$t('room.roomDesc')"></Column>
             <Column field="floor" :header="$t('room.floor')"></Column>
-            <Column field="statusCode" :header="$t('room.statusCode')" style="min-width: 100px">
+            <Column field="statusCode" :header="$t('room.statusCode')">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
                 </template>

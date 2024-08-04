@@ -50,8 +50,8 @@ export default defineComponent({
 
     methods: {
         isActive(item: { path: string }) {
-        return this.$route.path.startsWith(item.path);
-    },
+            return this.$route.path === item.path;
+        },
 
         toggleSubMenu(name: string) {
             this.menuList = this.menuList.map(item => {

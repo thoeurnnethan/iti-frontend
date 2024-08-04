@@ -95,10 +95,10 @@ export default defineComponent({
         accept: async () => {
           console.table(_item);
           const reqBody = {
-            classID: _item.classID,
-            departmentID: _item.departmentID,
+            ..._item,
             statusCode: '09'
           }
+
           await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false) as CLASS_LIST;
           this.getClassList();
           this.$toast.add({ summary: 'Confirmed', detail: 'The record has been set.', life: 3000 });
@@ -116,8 +116,7 @@ export default defineComponent({
         accept: async () => {
           console.table(_item);
           const reqBody = {
-            classID: _item.classID,
-            departmentID: _item.departmentID,
+            ..._item,
             statusCode: '01'
           }
           await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false) as CLASS_LIST;
@@ -137,8 +136,7 @@ export default defineComponent({
         accept: async () => {
           console.table(_item);
           const reqBody = {
-            classID: _item.classID,
-            departmentID: _item.departmentID,
+            ..._item,
             statusCode: '02'
           }
           await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false) as CLASS_LIST;

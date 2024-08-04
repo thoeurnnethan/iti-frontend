@@ -77,12 +77,10 @@ export default defineComponent({
         header: 'Confirmation !',
         accept: async () => {
           const reqBody = {
-            classID: _item.classID,
+            ..._item,
             subjectList:[{
               // seqNo: _item.seqNo,
-              statusCode: '09'
             }]
-            
           }
           await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false);
           this.getSubjectList();
@@ -100,12 +98,11 @@ export default defineComponent({
         header: 'Confirmation !',
         accept: async () => {
           const reqBody = {
-            classID: _item.classID,
+            ..._item,
             subjectList:[{
               // seqNo: _item.seqNo,
               statusCode: '01'
             }]
-            
           }
           await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false);
           this.getSubjectList();
@@ -123,12 +120,11 @@ export default defineComponent({
         header: 'Confirmation !',
         accept: async () => {
           const reqBody = {
-            classID: _item.classID,
+            ..._item,
             subjectList:[{
               // seqNo: _item.seqNo,
               statusCode: '02'
             }]
-            
           }
           await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false);
           this.getSubjectList();

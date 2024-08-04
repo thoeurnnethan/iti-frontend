@@ -75,7 +75,6 @@ export default defineComponent({
       const reqBody = {
         ...this.roomInfo,
       };
-      console.table(reqBody);
 
       const res = await requestService.request(API_PATH.ROOM_REGISTER, reqBody, true) as ROOM_LIST;
 
@@ -94,9 +93,6 @@ export default defineComponent({
       if (res) {
         modalController.dismiss();
       }
-    },
-    semesterChangeType() {
-      this.roomInfo.semester = Number(this.roomInfo.semester);
     },
     onClose() {
       modalController.dismiss();

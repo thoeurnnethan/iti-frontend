@@ -99,7 +99,7 @@
     "roomName": "Room Name",
     "roomDesc": "Room Description",
     "building": "Building",
-    "floor": "Room Floor",
+    "floor": "Floor",
     "statusCode": "Status",
     "actionHeader": "Room Register",
     "editRoom": "Edit Room Information"

@@ -21,10 +21,10 @@
     </div>
     <div class="mt-3"></div>
     <div class="float-end">
-        <button type="button" class="rad_right btn btn-dark p-2 px-2 float-end font_15" @click.prevent="getDepartmentList()">{{ $t('common.search') }}</button>
+        <button type="button" class="rad_right btn btn-dark p-2 px-2 float-end font_15">{{ $t('common.search') }}</button>
         <InputGroup class="float-end w-25">
             <InputText class="p-1 font_15 rad_left c_input b_shadow" 
-            @keyup.enter="getDepartmentList()"
+            @keyup="getDepartmentList()"
             v-model="searchKey" 
             :placeholder="$t('common.searchKey')" style="height: 40.5px;padding: 15px;" />
         </InputGroup>
