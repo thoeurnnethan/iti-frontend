@@ -3,32 +3,20 @@
 <div class="popup">
     <div class="popWrap w70p">
         <div class="pop_head">
-            <h1 class="text-center text-dark" v-if="isInsert">Subject Register</h1>
-            <h1 class="text-center text-dark" v-else>Subject Edit</h1>
+            <h1 class="text-center text-dark" v-if="isInsert">{{ $t('subject.register') }}</h1>
+            <h1 class="text-center text-dark" v-else>{{ $t('subject.editSub') }}</h1>
         </div>
         <div class="pop_cont">
             <div class="cont">
                 <div class="container-fluid p-0">
                     <div class="row">
                         <div class="col-12">
-                            <div class="row d-flex justify-content-center" v-if="isInsert">
+                            <div class="row d-flex justify-content-center">
                                 <div class="col-lg-3 col-md-4 mb-2">
                                     <center>
-                                        <label class="form-label font_15">Select Class</label><br>
+                                        <label class="form-label font_15"> {{ isInsert ? $t('subject.selectClass') : $t('class.className')}}</label><br>
                                     </center>
-                                    <select class="form-select" v-model="subjectInfo.classID">
-                                        <option v-for="classItem in classList" :value="classItem.classID">
-                                            {{ classItem.className }}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row d-flex justify-content-center" v-else>
-                                <div class="col-lg-3 col-md-4 mb-2">
-                                    <center>
-                                        <label class="form-label font_15">Class Name</label><br>
-                                    </center>
-                                    <select class="form-select" v-model="subjectInfo.classID" disabled>
+                                    <select class="form-select" v-model="subjectInfo.classID" :disabled="!isInsert">
                                         <option v-for="classItem in classList" :value="classItem.classID">
                                             {{ classItem.className }}
                                         </option>
@@ -37,41 +25,34 @@
                             </div>
                         </div>
                     </div>
-
                     <fieldset class="border rounded-3 pb-2">
-                        <legend class="float-none w-auto m_left20 px-2 h5">Subject</legend>
+                        <legend class="float-none w-auto m_left20 px-2 h5">{{ $t('subject.subjectInfo') }}</legend>
                         <div class="row p-3">
-
                             <div class="col-lg-3 col-md-4 mb-2">
                                 <label class="form-label font_15">{{ $t('subject.subjectName') }}</label><br>
                                 <InputText v-model="subjectInfo.subjectName" :invalid="fieldNameValidate" />
                             </div>
-
                             <div class="col-lg-6 col-md-4 mb-2">
                                 <label class="form-label font_15">{{ $t('subject.subjectDesc') }}</label><br>
-                                <Textarea v-model="subjectInfo.subjectDesc" rows="5" cols="30"
-                                    :invalid="fieldDesValidate" />
+                                <Textarea v-model="subjectInfo.subjectDesc" rows="5" cols="30" :invalid="fieldDesValidate" />
                             </div>
-
                             <div class="col-lg-3 col-md-4 mb-2" v-if="!isInsert">
-                                <label class="form-label font_15">Status</label><br>
+                                <label class="form-label font_15">{{ $t('subject.statusCode') }}</label><br>
                                 <select class="form-select" v-model="subjectInfo.statusCode">
                                     <option v-for="status in statusCodeList" :value="status.codeValue">
                                         {{ status.codeValueDesc }}
                                     </option>
                                 </select>
                             </div>
-
                             <div class="col-lg-3 col-md-4 mb-2" v-if="isInsert">
                                 <button class="btn btn-info w-100" style="margin-top: 30.5px;" @click="saveSubject">
                                     <font-awesome-icon :icon="['fa', 'plus']" />
-                                    <span class="mx-2">Add Subject</span>
+                                    <span class="mx-2">{{ $t('subject.addSubject') }}</span>
                                 </button>
                             </div>
                         </div>
                     </fieldset>
                 </div>
-
                 <div class="row mt-4" v-if="isInsert">
                     <div class="col-12">
                         <div class="we_shadow">
@@ -81,14 +62,11 @@
                                 <Column field="subjectDesc" :header="$t('subject.subjectDesc')"></Column>
                                 <Column :header="$t('subject.edit')" class="text-center">
                                     <template #body="{ data }">
-                                        <font-awesome-icon style="cursor: pointer;" @click="onClickEdit(data)"
-                                            icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;
-                                        <font-awesome-icon style="cursor: pointer;" @click="onClickDelete(data)"
-                                            icon="fa-solid fa-trash" class=" text-danger" title="Delete" />
+                                        <font-awesome-icon style="cursor: pointer;" icon="fas fa-pencil" class="text-primary mx-2" title="Edit" @click="onClickEdit(data)"/>
+                                        <font-awesome-icon style="cursor: pointer;" icon="fa-solid fa-trash" class=" text-danger" title="Delete" @click="onClickDelete(data)"/>
                                     </template>
                                 </Column>
                             </DataTable>
-
                             <table v-else>
                                 <thead>
                                     <tr class="text-capitalize">
@@ -100,7 +78,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td colspan="7" class="text-danger">No data records available.</td>
+                                        <td colspan="7" class="text-danger">{{ $t('common.noData') }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -112,9 +90,9 @@
         <div class="pop_foot">
             <div class="footer_btn">
                 <div class="right_side">
-                    <button class="btn03" style="width:185px" @click="onClose">Close</button>
+                    <button class="btn03" style="width:185px" @click="onClose">{{ $t('common.cancel') }}</button>
                     <button class="btn01" style="width:185px"
-                        @click="isInsert ? subjectInsert() : subjectEdit()">Save</button>
+                        @click="isInsert ? subjectInsert() : subjectEdit()">{{ $t('common.save') }}</button>
                 </div>
             </div>
         </div>

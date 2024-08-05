@@ -41,9 +41,14 @@ export default defineComponent({
     async onGetScheduleList() {
       this.Loading = true;
       const reqBody = {
-        departmentID: this.searchKey,
-        pageSize: this.pageSize,
-        pageNumber: this.pageNumber + 1
+        scheduleDay: "",
+        departmentID: "",
+        teacherID: "",
+        subjectID: "",
+        roomID: "",
+        floor: "",
+        classYear: "",
+        semester: ""
       }
       const response = (await requestService.request(API_PATH.SCHEDULE_LIST, reqBody, false)) as SCHEDULE_LIST_RES;
       this.scheduleList = response.body?.scheduleList.map((data , index) => {

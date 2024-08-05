@@ -1,8 +1,8 @@
 
 export interface SUBJECT_LIST {
   classID: string
-  className: string
-  subjectID: string
+  className?: string
+  subjectID?: string
   subjectName: string
   subjectDesc?: string
   statusCode?: string

@@ -21,7 +21,8 @@
     "total": "Total",
     "totalMale": "Male",
     "totalFemale": "Female",
-    "downloadExcel": "Download Excel"
+    "downloadExcel": "Download Excel",
+    "noData": "No data records available."
   },
   "action":{
     "edit" : "Edit",
@@ -111,6 +112,11 @@
     "subjectName": "Subject Name",
     "subjectDesc": "Subject Description",
     "statusCode": "Status",
-    "edit": "Edit"
+    "edit": "Edit",
+    "register": "Register Subject",
+    "editSub": "Edit Subject",
+    "selectClass": "Select Class",
+    "subjectInfo": "Subject Information",
+    "addSubject": "Add To List"
   }
 }

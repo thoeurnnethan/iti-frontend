@@ -41,12 +41,13 @@ export default defineComponent({
       classInfoUpdate: {
         classID: '',
         departmentID: '',
+        departmentName: '',
         className: '',
         classDesc: '',
         year: '',
         generation: '',
         time: '',
-        semester: 0,
+        semester: '',
         statusCode: '',
       } as CLASS_LIST
     }

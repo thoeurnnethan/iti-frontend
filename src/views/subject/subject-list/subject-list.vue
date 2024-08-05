@@ -1,7 +1,7 @@
 <template src="./subject-list.html"></template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { SUBJECT_LIST , SUBJECT_LIST_REQ , SUBJECT_LIST_RES } from '@/shared/types/subject-list';

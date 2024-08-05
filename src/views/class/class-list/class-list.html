@@ -57,7 +57,6 @@
 </div>
 
 <!-- search-bar -->
-
 <div class="mt-3 we_box">
     <div class="b_shadow">
         <DataTable 
@@ -77,9 +76,11 @@
             <Column field="no" :header="$t('common.no')" :class="['text-center']"></Column>
             <Column field="classID" :header="$t('class.classId')"></Column>
             <Column field="className" :header="$t('class.className')"></Column>
+            <Column field="departmentName" :header="$t('department.depName')"></Column>
             <Column field="year" :header="$t('class.year')"></Column>
-            <Column field="generation" :header="$t('class.generation')"></Column>
             <Column field="semester" :header="$t('class.semester')"></Column>
+            <Column field="generation" :header="$t('class.generation')"></Column>
+            <Column field="classDesc" :header="$t('class.classDesc')"></Column>
             <Column field="statusCode" :header="$t('class.status')" style="min-width: 100px">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
