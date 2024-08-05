@@ -1,5 +1,6 @@
 
 export interface SUBJECT_LIST {
+  seqNo?: number
   classID: string
   className?: string
   subjectID?: string

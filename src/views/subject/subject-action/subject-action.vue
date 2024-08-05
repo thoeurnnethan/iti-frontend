@@ -182,7 +182,6 @@ export default defineComponent({
     },
 
     async subjectEdit() {
-
       const dataList = [{
         subjectID: this.subjectInfo.subjectID,
         subjectName: this.subjectInfo.subjectName,
@@ -194,8 +193,6 @@ export default defineComponent({
         classID: this.subjectInfo.classID,
         subjectList: dataList,
       };
-
-      console.log(reqBody);
 
       await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, true);
       this.resetForm();

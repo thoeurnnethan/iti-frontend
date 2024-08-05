@@ -39,8 +39,8 @@ export default defineComponent({
       departmentList: [] as DEPARTMENT_LIST[],
       selectedStatus: null,
       statusCodeList: globalStatusCodeList,
-      year: YearList,
-      semester: SemesterList,
+      yearList: YearList,
+      semesterList: SemesterList,
       generation: generation,
       time: time
     };
@@ -82,11 +82,14 @@ export default defineComponent({
         this.classInfoUpdate = { ...this.classInfo };
       }
     },
+
     async classInsert() {
-      const reqBody = {
-        cyear: this.classInfo.year,
+
+      const reqBody ={
         ...this.classInfo,
-      };
+        cyear: this.classInfo.year,
+        generation: this.classInfo.generation + ''
+      }
 
       const res = await requestService.request(API_PATH.CLASS_REGISTER, reqBody, true) as CLASS_LIST;
       this.classInfo = res;
@@ -94,11 +97,13 @@ export default defineComponent({
         modalController.dismiss();
       }
     },
+
     async classEdit() {
       const reqBody = {
+        ...this.classInfo,
         cyear: this.classInfo.year,
         ctime: this.classInfo.time,
-        ...this.classInfo,
+        generation: this.classInfo.generation + ''
       };
 
       const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, true) as CLASS_LIST;
@@ -107,6 +112,7 @@ export default defineComponent({
         modalController.dismiss();
       }
     },
+
     onClose() {
       modalController.dismiss();
     },

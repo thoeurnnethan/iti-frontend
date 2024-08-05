@@ -27,26 +27,22 @@
                         <div class="col-lg-2 col-md-4 mb-2">
                             <label class="form-label font_15">{{ $t('class.year') }}</label><br>
                             <select class="form-select" v-model="classInfo.year">
-                                <option v-for="status in year" :value="status.codeValue">
-                                    {{ status.codeValueDesc }}
+                                <option v-for="year in yearList" :value="year.codeValue" :style="{ display: !year.codeValue ? 'none' : 'block' }">
+                                    <p v-if="year.codeValue">{{ year.codeValueDesc }}</p>
                                 </option>
                             </select>
                         </div>
                         <div class="col-lg-2 col-md-4 mb-2">
                             <label class="form-label font_15">{{ $t('class.semester') }}</label><br>
                             <select class="form-select" v-model="classInfo.semester" @change="semesterChangeType">
-                                <option v-for="status in semester" :value="status.codeValue">
-                                    {{ status.codeValueDesc }}
+                                <option v-for="semester in semesterList" :value="semester.codeValue" :style="{ display: !semester.codeValue ? 'none' : 'block' }">
+                                    <p v-if="semester.codeValue">{{ semester.codeValueDesc }}</p>
                                 </option>
                             </select>
                         </div>
                         <div class="col-lg-2 col-md-4 mb-2">
                             <label class="form-label font_15">{{ $t('class.generation') }}</label><br>
-                            <select class="form-select" v-model="classInfo.generation">
-                                <option v-for="status in generation" :value="status.codeValue">
-                                    {{ status.codeValueDesc }}
-                                </option>
-                            </select>
+                            <InputNumber v-model="classInfo.generation" inputId="integeronly" />
                         </div>
                         <div class="col-lg-2 col-md-4 mb-2">
                             <label class="form-label font_15">{{ $t('class.status') }}</label><br>
