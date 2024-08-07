@@ -1,6 +1,9 @@
 
 import axios, { AxiosRequestConfig } from 'axios';
 import { RequestErrorHandlingService } from './RequestErrorHandlingService';
+import Utils from '../util';
+
+const util = new Utils();
 
 export class RequestService {
     baseUrl = import.meta.env.VITE_APP_SERVER_URL;
@@ -13,11 +16,13 @@ export class RequestService {
     }
 
     public async request(apiPath: string, requestBody: any, isShowMessage = true): Promise<any> {
+        const userInfo = util.getDataStorage('userInfo', true)
+        console.log(userInfo)
         const fullReqBody = {
             header: {
                 error_code: "",
                 error_text: "",
-                id_token: "",
+                login_session_id: userInfo.username,
                 info_text: "",
                 result: false
             },

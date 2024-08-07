@@ -252,5 +252,16 @@ import type {
       }`;
       return returnDate;
     }
+    public convertTo12HourFormat(time:string) {
+      try {
+        const hour = parseInt(time.slice(0, 2), 10);
+        const minutes = time.slice(2);
+        const suffix = hour >= 12 ? 'PM' : 'AM';
+        const standardHour = hour % 12 || 12;
+        return `${standardHour}:${minutes} ${suffix}`;
+      } catch (error) {
+        return time;
+      }
+    }
   }
   

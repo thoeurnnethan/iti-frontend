@@ -1,7 +1,6 @@
 interface UserInfo {
   username: string
   password: string
-  roleID: string
 }
 
 interface userRoleList {

@@ -42,13 +42,13 @@ export default defineComponent({
       this.Loading = true;
       const reqBody = {
         scheduleDay: "",
-        departmentID: "",
+        departmentID: 'DEP1016',
         teacherID: "",
         subjectID: "",
         roomID: "",
-        floor: "",
-        classYear: "",
-        semester: ""
+        classID: "CLS1001",
+        classYear: "1",
+        semester: "1"
       }
       const response = (await requestService.request(API_PATH.SCHEDULE_LIST, reqBody, false)) as SCHEDULE_LIST_RES;
       this.scheduleList = response.body?.scheduleList.map((data , index) => {
@@ -71,10 +71,14 @@ export default defineComponent({
       this.onGetScheduleList();
     },
 
+    convertTime(time:string){
+      return this.$format.convertTo12HourFormat(time)
+    }
+
   },
 })
 </script>
 
 <style scoped>
-/* @import url('./room-list.scss'); */
+  /* @import url('./schedule-list.scss'); */
 </style>

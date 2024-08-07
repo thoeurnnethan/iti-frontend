@@ -46,43 +46,200 @@
             :metaKeySelection="true"
             :lazy="true" 
             :rowClass="rowClass">
-            <Column field="no" :header="$t('common.no')" :class="['text-center']" style="min-width:100px"></Column>
-            <Column field="scheduleYear" :header="$t('room.roomID')" style="min-width:150px"></Column>
-            <Column field="className" :header="$t('room.building')" style="min-width:150px"></Column>
-            <Column field="classYear" :header="$t('room.roomDesc')" style="min-width:150px"></Column>
-            <Column field="semester" :header="$t('room.floor')"></Column>
-            <Column field="generation" :header="$t('room.floor')"></Column>
-            <Column field="departmentName" :header="$t('room.floor')" style="min-width:150px"></Column>
-            <Column field="scheduleDay" :header="$t('room.floor')" style="min-width: 150px;"></Column>
-            <Column :header="$t('room.statusCode')" style="min-width: 200px;">
+            <Column header="Time" :class="['text-center']" style="min-width:200px">
                 <template #body="{ data }">
-                    <div class="row justify-content-center text-center p-0">
-                        <div class="col-sm1 p-0">
-                            <p class="p-0 m-0">{{ data.firstName }} {{ data.lastName }}</p>
-                            <p class="p-0 m-0">({{ data.phoneNumber }})</p>
+                    <span v-if="data.Monday.startTime">{{ convertTime(data.Monday.startTime) }} - {{ convertTime(data.Monday.endTime) }}</span>
+                    <span v-else-if="data.Tuesday.startTime">{{ convertTime(data.Tuesday.startTime) }} - {{ convertTime(data.Tuesday.endTime) }}</span>
+                    <span v-else-if="data.Wednesday.startTime">{{ convertTime(data.Wednesday.startTime) }} - {{ convertTime(data.Wednesday.endTime) }}</span>
+                    <span v-else-if="data.Thursday.startTime">{{ convertTime(data.Thursday.startTime) }} - {{ convertTime(data.Thursday.endTime) }}</span>
+                    <span v-else-if="data.Friday.startTime">{{ convertTime(data.Friday.startTime) }} - {{ convertTime(data.Friday.endTime) }}</span>
+                    <span v-else>{{ convertTime(data.Saturday.startTime) }} - {{ convertTime(data.Saturday.endTime) }}</span>
+                </template>
+            </Column>
+            <Column header="Monday" :class="['text-center']" style="min-width:300px">
+                <template #body="{ data }">
+                    <div class="container" v-if="data.Monday.scheduleDay">
+                        <div class="row">
+                            <div class="com-md-12">
+                                {{ data.Monday.subjectName }}
+                            </div>
                         </div>
-                        <div class="col-sm1 p-0">
-                            <p class="p-0 m-0">{{ data.subjectName }}</p>
+                        <div class="row">
+                            <div class="com-md-12">
+                                {{ data.Monday.firstName }} - {{ data.Monday.lastName }}
+                            </div>
                         </div>
-                        <div class="col-sm1 p-0">
-                            <p class="p-0 m-0">{{ data.startTime }} - {{ data.endTime }}</p>
+                        <div class="row">
+                            <div class="com-md-12">
+                                Room: {{ data.Monday.roomName }}
+                            </div>
                         </div>
-                        <div class="col-sm1 p-0">
-                            <p class="p-0 m-0">{{ data.roomName }}</p>
-                            <p class="p-0 m-0"> ({{ data.building }}, floor: {{ data.floor }})</p>
+                        <div class="row">
+                            <div class="com-md-12">
+                                Building: {{ data.Monday.building }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12 text-left">
+                                Floor: {{ data.Monday.floor }}
+                            </div>
                         </div>
                     </div>
                 </template>
             </Column>
-            <Column field="subjectName" :header="$t('room.floor')"></Column>
-            <Column field="phoneNumber" :header="$t('room.floor')"></Column>
-            <Column field="roomName" :header="$t('room.floor')" style="min-width:150px"></Column>
-            <Column field="building" :header="$t('room.floor')" style="min-width:150px"></Column>
-            <Column field="floor" :header="$t('room.floor')"></Column>
-            <Column field="startTime" :header="$t('room.floor')"></Column>
-            <Column field="endTime" :header="$t('room.statusCode')">
+            <Column header="Tuesday" :class="['text-center']" style="min-width:300px">
                 <template #body="{ data }">
-                    {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
+                    <div class="container" v-if="data.Tuesday.scheduleDay">
+                        <div class="row">
+                            <div class="com-md-12">
+                                {{ data.Tuesday.subjectName }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12">
+                                {{ data.Tuesday.firstName }} - {{ data.Tuesday.lastName }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12">
+                                Room: {{ data.Tuesday.roomName }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12">
+                                Building: {{ data.Tuesday.building }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12 text-left">
+                                Floor: {{ data.Tuesday.floor }}
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </Column>
+            <Column header="Wednesday" :class="['text-center']" style="min-width:300px">
+                <template #body="{ data }">
+                    <div class="container" v-if="data.Wednesday.scheduleDay">
+                        <div class="row">
+                            <div class="com-md-12">
+                                {{ data.Wednesday.subjectName }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12">
+                                {{ data.Wednesday.firstName }} - {{ data.Wednesday.lastName }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12">
+                                Room: {{ data.Wednesday.roomName }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12">
+                                Building: {{ data.Wednesday.building }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12 text-left">
+                                Floor: {{ data.Wednesday.floor }}
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </Column>
+            <Column header="Thursday" :class="['text-center']" style="min-width:300px">
+                <template #body="{ data }">
+                    <div class="container"  v-if="data.Thursday.scheduleDay">
+                        <div class="row">
+                            <div class="com-md-12">
+                                {{ data.Thursday.subjectName }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12">
+                                {{ data.Thursday.firstName }} - {{ data.Thursday.lastName }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12">
+                                Room: {{ data.Thursday.roomName }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12">
+                                Building: {{ data.Monday.building }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12 text-left">
+                                Floor: {{ data.Monday.floor }}
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </Column>
+            <Column header="Friday" :class="['text-center']" style="min-width:300px">
+                <template #body="{ data }">
+                    <div class="container"  v-if="data.Friday.scheduleDay">
+                        <div class="row">
+                            <div class="com-md-12">
+                                {{ data.Friday.subjectName }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12">
+                                {{ data.Friday.firstName }} - {{ data.Friday.lastName }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12">
+                                Room: {{ data.Friday.roomName }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12">
+                                Building: {{ data.Friday.building }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12 text-left">
+                                Floor: {{ data.Friday.floor }}
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </Column>
+            <Column header="Saturday" :class="['text-center']" style="min-width:300px">
+                <template #body="{ data }">
+                    <div class="container"  v-if="data.Saturday.scheduleDay">
+                        <div class="row">
+                            <div class="com-md-12">
+                                {{ data.Saturday.subjectName }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12">
+                                {{ data.Saturday.firstName }} - {{ data.Saturday.lastName }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12">
+                                Room: {{ data.Saturday.roomName }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12">
+                                Building: {{ data.Saturday.building }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="com-md-12 text-left">
+                                Floor: {{ data.Saturday.floor }}
+                            </div>
+                        </div>
+                    </div>
                 </template>
             </Column>
             <Column :header="$t('action.action')">

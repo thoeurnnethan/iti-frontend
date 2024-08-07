@@ -13,8 +13,6 @@
             <label>{{ $t('common.password') }}</label>
             <Password :feedback="false" v-model="userLogin.password" @keyup.enter="onClickLogin"/>
         </div>
-        <button class="btn btn-primary mt-4 float-end" 
-        :disabled="!isValidForm"
-        @click="onClickLogin">{{ $t('common.login') }}</button>
+        <button class="btn btn-primary mt-4 float-end" :disabled="!isValidForm" @click="onClickLogin">{{ $t('common.login') }}</button>
     </div>
 </div>
