@@ -20,7 +20,26 @@
         </div>
     </div>
     <!-- header -->
-
+    <div class="container-fluid px-0 py-4">
+        <div class="row">
+            <div class="col-md-3">
+                <label class="form-label font_14">{{ $t('class.selectYear') }}</label>
+                <select class="form-select" v-model="selectYear" @change="getClassList">
+                    <option v-for="year in yearList" :value="year.codeValue">
+                        {{ year.codeValueDesc }}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label font_14">{{ $t('class.selectSemester') }}</label>
+                <select class="form-select" v-model="selectSemester" @change="getClassList">
+                    <option v-for="semester in semesterList" :value="semester.codeValue">
+                        {{ semester.codeValueDesc }}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
     <!-- search-bar -->
     <div class="float-end mt-3">
         <button type="button" class="rad_right btn btn-dark b_shadow p-2 px-2 float-end font_15"
@@ -28,7 +47,7 @@
             {{ $t('common.search') }}
         </button>
         <InputGroup class="float-end w-25">
-            <InputText @keyup="onGetScheduleList()" class="p-1 font_15 rad_left b_shadow c_input" v-model="searchKeyword"
+            <InputText @keyup.enter="onGetScheduleList()" class="p-1 font_15 rad_left b_shadow c_input" v-model="searchKeyword"
                 :placeholder="$t('common.searchKey')" style="height: 40.5px;padding-left: 15px !important;" />
         </InputGroup>
     </div>
@@ -38,221 +57,43 @@
     <div class="b_shadow">
         <DataTable 
             v-model:selection="scheduleInfo" 
+            :value="rows"
             selectionMode="single" 
             tableStyle="min-width: 150px"
             stripedRows 
             scrollable
-            :value="scheduleList" 
             :metaKeySelection="true"
-            :lazy="true" 
-            :rowClass="rowClass">
-            <Column header="Time" :class="['text-center']" style="min-width:200px">
+            :lazy="true" >
+            <Column header="Time" style="min-width: 250px;" >
                 <template #body="{ data }">
-                    <span v-if="data.Monday.startTime">{{ convertTime(data.Monday.startTime) }} - {{ convertTime(data.Monday.endTime) }}</span>
-                    <span v-else-if="data.Tuesday.startTime">{{ convertTime(data.Tuesday.startTime) }} - {{ convertTime(data.Tuesday.endTime) }}</span>
-                    <span v-else-if="data.Wednesday.startTime">{{ convertTime(data.Wednesday.startTime) }} - {{ convertTime(data.Wednesday.endTime) }}</span>
-                    <span v-else-if="data.Thursday.startTime">{{ convertTime(data.Thursday.startTime) }} - {{ convertTime(data.Thursday.endTime) }}</span>
-                    <span v-else-if="data.Friday.startTime">{{ convertTime(data.Friday.startTime) }} - {{ convertTime(data.Friday.endTime) }}</span>
-                    <span v-else>{{ convertTime(data.Saturday.startTime) }} - {{ convertTime(data.Saturday.endTime) }}</span>
-                </template>
-            </Column>
-            <Column header="Monday" :class="['text-center']" style="min-width:300px">
-                <template #body="{ data }">
-                    <div class="container" v-if="data.Monday.scheduleDay">
-                        <div class="row">
-                            <div class="com-md-12">
-                                {{ data.Monday.subjectName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                {{ data.Monday.firstName }} - {{ data.Monday.lastName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                Room: {{ data.Monday.roomName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                Building: {{ data.Monday.building }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12 text-left">
-                                Floor: {{ data.Monday.floor }}
-                            </div>
+                    <div class="container">
+                        <div class="row text-center">
+                            <span class="com-md-12">{{ convertTime(data.startTime) }} - {{ convertTime(data.endTime) }}</span>
                         </div>
                     </div>
                 </template>
             </Column>
-            <Column header="Tuesday" :class="['text-center']" style="min-width:300px">
-                <template #body="{ data }">
-                    <div class="container" v-if="data.Tuesday.scheduleDay">
-                        <div class="row">
-                            <div class="com-md-12">
-                                {{ data.Tuesday.subjectName }}
-                            </div>
+            <Column v-for="col in columns" :key="col.field" :field="col.field" :header="col.header" style="min-width: 300px;">
+                <template #body="slotProps">
+                    <div class="container" v-if="slotProps.data[col.field].scheduleDay">
+                        <div class="row text-center">
+                            <span class="com-md-12">Subject: {{ slotProps.data[col.field].subjectName }}</span>
                         </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                {{ data.Tuesday.firstName }} - {{ data.Tuesday.lastName }}
-                            </div>
+                        <div class="row text-center">
+                            <span class="com-md-12">Teacher: {{ slotProps.data[col.field].firstName }} - {{ slotProps.data[col.field].lastName }}</span>
                         </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                Room: {{ data.Tuesday.roomName }}
-                            </div>
+                        <div class="row text-center">
+                            <span class="com-md-12">Room: {{ slotProps.data[col.field].roomName }}</span>
                         </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                Building: {{ data.Tuesday.building }}
-                            </div>
+                        <div class="row text-center">
+                            <span class="com-md-12">Building: {{ slotProps.data[col.field].building }}</span>
                         </div>
-                        <div class="row">
-                            <div class="com-md-12 text-left">
-                                Floor: {{ data.Tuesday.floor }}
-                            </div>
+                        <div class="row text-center">
+                            <span class="com-md-12">Floor: {{ slotProps.data[col.field].floor }}</span>
                         </div>
                     </div>
-                </template>
-            </Column>
-            <Column header="Wednesday" :class="['text-center']" style="min-width:300px">
-                <template #body="{ data }">
-                    <div class="container" v-if="data.Wednesday.scheduleDay">
-                        <div class="row">
-                            <div class="com-md-12">
-                                {{ data.Wednesday.subjectName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                {{ data.Wednesday.firstName }} - {{ data.Wednesday.lastName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                Room: {{ data.Wednesday.roomName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                Building: {{ data.Wednesday.building }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12 text-left">
-                                Floor: {{ data.Wednesday.floor }}
-                            </div>
-                        </div>
-                    </div>
-                </template>
-            </Column>
-            <Column header="Thursday" :class="['text-center']" style="min-width:300px">
-                <template #body="{ data }">
-                    <div class="container"  v-if="data.Thursday.scheduleDay">
-                        <div class="row">
-                            <div class="com-md-12">
-                                {{ data.Thursday.subjectName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                {{ data.Thursday.firstName }} - {{ data.Thursday.lastName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                Room: {{ data.Thursday.roomName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                Building: {{ data.Monday.building }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12 text-left">
-                                Floor: {{ data.Monday.floor }}
-                            </div>
-                        </div>
-                    </div>
-                </template>
-            </Column>
-            <Column header="Friday" :class="['text-center']" style="min-width:300px">
-                <template #body="{ data }">
-                    <div class="container"  v-if="data.Friday.scheduleDay">
-                        <div class="row">
-                            <div class="com-md-12">
-                                {{ data.Friday.subjectName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                {{ data.Friday.firstName }} - {{ data.Friday.lastName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                Room: {{ data.Friday.roomName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                Building: {{ data.Friday.building }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12 text-left">
-                                Floor: {{ data.Friday.floor }}
-                            </div>
-                        </div>
-                    </div>
-                </template>
-            </Column>
-            <Column header="Saturday" :class="['text-center']" style="min-width:300px">
-                <template #body="{ data }">
-                    <div class="container"  v-if="data.Saturday.scheduleDay">
-                        <div class="row">
-                            <div class="com-md-12">
-                                {{ data.Saturday.subjectName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                {{ data.Saturday.firstName }} - {{ data.Saturday.lastName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                Room: {{ data.Saturday.roomName }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12">
-                                Building: {{ data.Saturday.building }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="com-md-12 text-left">
-                                Floor: {{ data.Saturday.floor }}
-                            </div>
-                        </div>
-                    </div>
-                </template>
-            </Column>
-            <Column :header="$t('action.action')">
-                <template #body="{ data }">
-                    <div v-if="data.statusCode === '01'"  class="d-flex align-item-center">
-                        <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-white" :title="$t('action.edit')" />&nbsp;&nbsp;
-                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setRoom(data)" :icon="['fas', 'fa-archive']" class="text-white" :title="$t('action.inactive')" />&nbsp;&nbsp;
-                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteRoom(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
-                    </div>
-                    <div v-else  class="d-flex align-item-center">
-                        <div style="width: 24px; height: 24px;"></div>&nbsp;&nbsp;
-                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setActive(data)" :icon="['fas', 'fa-rotate-back']" class="text-white" :title="$t('action.active')" />&nbsp;&nbsp;
-                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteRoom(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+                    <div v-else>
+                        <center>X</center>
                     </div>
                 </template>
             </Column>

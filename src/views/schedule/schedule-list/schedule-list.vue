@@ -6,7 +6,7 @@ import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { YearList , SemesterList, globalStatusCodeList } from '@/shared/common/common';
 import MyLoading from '../../MyLoading.vue';
-import { SCHEDULE_LIST, SCHEDULE_LIST_RES } from '@/shared/types/schedule-list';
+import { SCHEDULE_LIST, SCHEDULE_LIST_RES, ScheduleColumn, ScheduleRow } from '@/shared/types/schedule-list';
 
 const requestService = new RequestService();
 
@@ -23,6 +23,8 @@ export default defineComponent({
       statusCodeList: globalStatusCodeList,
       scheduleList: [] as SCHEDULE_LIST[],
       scheduleInfo: {} as SCHEDULE_LIST,
+      columns: [] as ScheduleColumn[],
+      rows: [] as ScheduleRow[],
       selectTime:'',
       searchKey: '',
       Loading: false,
@@ -34,7 +36,7 @@ export default defineComponent({
   },
 
   mounted() {
-    this.onGetScheduleList();
+    console.log(this.onGetScheduleListDynamicColumn());
   },
 
   methods: {
@@ -59,16 +61,33 @@ export default defineComponent({
       });
       this.Loading = false;
     },
-    
-    rowClass(data: { statusCode: string; }) {
-      return data.statusCode === '09' ? 'we_bg_row' : '';
-    },
 
-    // Handle page size page number
-    onPage(event: { page: number; rows: number; }) {
-      this.pageNumber = event.page;
-      this.pageSize = event.rows;
-      this.onGetScheduleList();
+    async onGetScheduleListDynamicColumn() {
+      const reqBody = {
+        scheduleDay: "",
+        departmentID: 'DEP1016',
+        teacherID: "",
+        subjectID: "",
+        roomID: "",
+        classID: "CLS1001",
+        classYear: "1",
+        semester: "1"
+      }
+      const response = (await requestService.request(API_PATH.SCHEDULE_LIST, reqBody, false)) as SCHEDULE_LIST_RES;
+      this.columns = Object.keys(response.body.scheduleList[0]).map(day => ({
+        field: day,
+        header: day
+      })) as ScheduleColumn[];
+      this.rows = response.body.scheduleList.map((item) =>{
+        const nonEmptyDay = this.columns.find(col => item[col.field]?.startTime && item[col.field]?.endTime);
+        const startTime   = nonEmptyDay ? `${item[nonEmptyDay.field]?.startTime}` : '';
+        const endTime     = nonEmptyDay ? `${item[nonEmptyDay.field].endTime}` : '';
+        return {
+          ...item,
+          startTime: startTime,
+          endTime: endTime,
+        }as ScheduleRow;
+      })
     },
 
     convertTime(time:string){
