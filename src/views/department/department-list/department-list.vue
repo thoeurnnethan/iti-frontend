@@ -105,22 +105,19 @@ export default defineComponent({
     async onClickAction(item: DEPARTMENT_LIST, statusCode: string){
       let messageHeader       = ''
       let messageAcceptDetail = ''
-      let messageRejectDetail = ''
+      let messageRejectDetail = 'You have rejected'
       let btnAcceptClass      = 'btn '
       if(statusCode === '01'){
         messageHeader        = "Do you want to set to Active ?";
         messageAcceptDetail  = 'The record has been set.';
-        messageRejectDetail  = 'You have rejected';
         btnAcceptClass      += 'btn-success'
       } else if(statusCode === '02'){
         messageHeader        = "Do you want to delete this record?";
         messageAcceptDetail  = 'The record has been deleted.';
-        messageRejectDetail  = 'You have rejected';
         btnAcceptClass      += 'btn-danger'
       } else{
         messageHeader        = "Do you want to hide this record?";
         messageAcceptDetail  = 'The record has been set.';
-        messageRejectDetail  = 'You have rejected';
         btnAcceptClass      += 'btn-warning'
       }
       this.$confirm.require({
@@ -130,7 +127,6 @@ export default defineComponent({
         acceptClass: btnAcceptClass,
         rejectLabel: 'No',
         rejectClass: 'btn btn-secondary',
-        defaultFocus: 'reject',
         accept: async () => {
           const reqBody = {
             departmentID: item.departmentID,

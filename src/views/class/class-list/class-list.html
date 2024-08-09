@@ -3,22 +3,21 @@
 <ConfirmDialog></ConfirmDialog>
 <div class="container-fluid d-flex flex-column we_box" style="overflow: hidden;">
     <!-- header -->
-    <div class="container-fluid p-0 d-flex justify-content-between">
+    <div class="container-fluid p-1 d-flex justify-content-between">
         <div class="breadcrumb">
             <font-awesome-icon :icon="['fa', 'user-graduate']" />
             <span class="text_title mx-1">{{ $t('class.title') }}</span>
         </div>
         <div>
-            <button type="button" class="btn btn-dark p-1 px-2 " @click="exportToExcel">
+            <button type="button" class="btn btn-dark p-1 px-2 mx-2" @click="exportToExcel">
                 <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
                 <font-awesome-icon :icon="['fas', 'file-excel']" />
-            </button>&nbsp;
+            </button>
             <button class="btn btn-primary p-1 px-2" @click="onClickInsert()">
                 <span class="mx-1">{{ $t('common.addNew') }}</span>
                 <font-awesome-icon :icon="['fas', 'plus']" />
             </button>
         </div>
-        
     </div>
     <!-- header -->
 
@@ -96,13 +95,13 @@
                 <template #body="{ data }">
                     <div v-if="data.statusCode === '01'" class="d-flex justify-content-center align-item-center">
                         <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" icon="fas fa-pencil" class="text-white" :title="$t('action.edit')" />
-                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-archive']" class="text-white mx-2" :title="$t('action.inactive')" />
-                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '09')" :icon="['fas', 'fa-archive']" class="text-white mx-2" :title="$t('action.inactive')" />
+                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
                     </div>
                     <div v-else class="d-flex justify-content-center align-item-center">
                         <div style="width: 24px; height: 24px;"></div>
-                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setActive(data)" :icon="['fas', 'fa-rotate-back']" class="text-white mx-2" :title="$t('action.active')" />
-                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '01')" :icon="['fas', 'fa-rotate-back']" class="text-white mx-2" :title="$t('action.active')" />
+                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
                     </div>
                 </template>
             </Column>
