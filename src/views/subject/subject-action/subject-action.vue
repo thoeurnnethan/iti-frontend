@@ -23,7 +23,6 @@ export default defineComponent({
       required: true
     }
   },
-
   data() {
     return {
       subjectInfo: {
@@ -127,7 +126,7 @@ export default defineComponent({
 
     resetForm() {
       this.subjectInfo = {
-        classID: this.subjectInfo.classID,
+        classID: this.subjectInfo.classInfoID,
         subjectName: '',
         subjectDesc: '',
         statusCode: '01'
@@ -198,7 +197,7 @@ export default defineComponent({
       }];
 
       const reqBody = {
-        classID: this.subjectInfo.classID,
+        classID: this.subjectInfo.classInfoID,
         subjectList: dataList,
       };
 

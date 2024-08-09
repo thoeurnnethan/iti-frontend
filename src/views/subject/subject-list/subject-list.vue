@@ -175,10 +175,13 @@ export default defineComponent({
         accept: async () => {
           const reqBody = {
             ...item,
-            cyear: item.className,
-            statusCode: statusCode
+            classID: item.classInfoID,
+            subjectList:[{
+              subjectID:  item.subjectID,
+              statusCode: statusCode
+            }]
           }
-          const res = await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false);
+          const res = await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, true);
           if(res.header.result){
             this.getSubjectList();
             this.$toast.add({ summary: 'Confirmed', detail: messageAcceptDetail, life: 1000 });
