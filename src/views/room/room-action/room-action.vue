@@ -5,7 +5,7 @@ import { PropType, defineComponent } from 'vue';
 import { ROOM_LIST } from '@/shared/types/room-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
-import { globalStatusCodeList, YearList, SemesterList, generation, time } from '@/shared/common/common';
+import { globalStatusCodeList } from '@/shared/common/common';
 import { modalController } from '@ionic/vue';
 
 const requestService = new RequestService();
@@ -33,12 +33,7 @@ export default defineComponent({
         statusCode: '',
       } as ROOM_LIST,
       roomInfoUpdate: {} as ROOM_LIST,
-      selectedStatus: null,
-      statusCodeList: globalStatusCodeList,
-      year: YearList,
-      semester: SemesterList,
-      generation: generation,
-      time: time
+      statusCodeList: globalStatusCodeList
     };
   },
   computed: {
@@ -74,20 +69,20 @@ export default defineComponent({
     async roomInsert() {
       const reqBody = {
         ...this.roomInfo,
+        floor: this.roomInfo.floor + ''
       };
-
       const res = await requestService.request(API_PATH.ROOM_REGISTER, reqBody, true) as ROOM_LIST;
-
       this.roomInfo = res;
       if (res) {
         modalController.dismiss();
       }
     },
+    
     async roomEdit() {
       const reqBody = {
         ...this.roomInfo,
+        floor: this.roomInfo.floor + ''
       };
-
       const res = await requestService.request(API_PATH.ROOM_UPDATE, reqBody, true) as ROOM_LIST;
       this.roomInfo = res;
       if (res) {

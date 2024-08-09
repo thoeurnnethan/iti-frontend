@@ -8,7 +8,6 @@ export interface ROOM_LIST {
 }
 
 export interface ROOM_LIST_REQ {
-    roomID?: string
     searchKey: string
     pageNumber: number
     pageSize: number

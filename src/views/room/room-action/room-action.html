@@ -12,27 +12,18 @@
                             <label class="form-label font_15">{{ $t('room.roomID') }}</label><br>
                             <input type="text" class="form-control" v-model="roomInfo.roomID" disabled />
                         </div>
-
                         <div class="col-lg-3 col-md-4 mb-2">
                             <label class="form-label font_15">{{ $t('room.roomName') }}</label><br>
                             <input type="text" class="form-control" v-model="roomInfo.roomName" />
                         </div>
-
                         <div class="col-lg-3 col-md-4 mb-2">
                             <label class="form-label font_15">{{ $t('room.building') }}</label><br>
                             <input type="text" class="form-control" v-model="roomInfo.building" />
                         </div>
-
                         <div class="col-lg-3 col-md-4 mb-2">
                             <label class="form-label font_15">{{ $t('room.floor') }}</label><br>
-                            <select class="form-select" v-model="roomInfo.floor">
-                                <option value="0" disabled>Select building floor</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
+                            <InputNumber v-model="roomInfo.floor" inputId="integeronly" />
                         </div>
-
                         <div class="col-lg-3 col-md-4 mb-2" v-if="!isInsert">
                             <label class="form-label font_15">{{ $t('room.statusCode') }}</label><br>
                             <select class="form-select" v-model="roomInfo.statusCode">
@@ -41,7 +32,6 @@
                                 </option>
                             </select>
                         </div>
-
                         <div class="col-lg-12">
                             <label class="form-label font_15">{{ $t('room.roomDesc') }}</label><br>
                             <textarea class="form-control" v-model="roomInfo.roomDesc" rows="5" cols="30"></textarea>
