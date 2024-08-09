@@ -212,6 +212,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
         library.add(faCaretRight); 
         library.add(faUsers); 
         library.add(faBoxArchive); 
+        library.add(faCalendarDays); 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 //ionic

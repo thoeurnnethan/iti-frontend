@@ -54,6 +54,8 @@
     "classRegister": "ចុះបញ្ជីថ្នាក់រៀនថ្មី",
     "subjectList": "បញ្ជីមុខវិជ្ចា",
     "scheduleManagement": "គ្រប់គ្រងកាលវិភាគ",
+    "scheduleManagementList": "បញ្ជីគ្រប់គ្រងកាលវិភាគ",
+    "insertSchedule": "បញ្ចូលកាលវិភាគ",
     "studentList": "បញ្ជីសិស្ស",
     "studentRegister": "ចុះឈ្មោះសិស្ស",
     "userList": "បញ្ជីអ្នកប្រើប្រាស់",
