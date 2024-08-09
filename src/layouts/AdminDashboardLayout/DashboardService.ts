@@ -29,8 +29,8 @@ export const DashboardService = {
             },
             {
                 "path": "/schedule-list",
-                "iconClass": "fa-book-open",
-                "name": "scheduleManagement"
+                "iconClass": "fa-calendar-days",
+                "name": "scheduleManagement",
             },
             {
                 "path": "/user-list",

@@ -53,6 +53,8 @@
     "classRegister": "Register Class",
     "subjectList": "Subject List",
     "scheduleManagement": "Schedule Management",
+    "scheduleManagementList": "Schedule Management List",
+    "insertSchedule": "Insert Schedule",
     "userList": "User List",
     "userRegister": "User Register",
     "studentList": "Student List",

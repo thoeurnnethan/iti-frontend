@@ -1,4 +1,4 @@
-<template src="./room-action.html"></template>
+<template src="./schedule-action.html"></template>
 
 <script lang="ts">
 import { PropType, defineComponent } from 'vue';
@@ -11,7 +11,7 @@ import { modalController } from '@ionic/vue';
 const requestService = new RequestService();
 
 export default defineComponent({
-  name: 'room-action',
+  name: 'schedule-action',
   props: {
     roomInfoData: {
       type: Object as PropType<ROOM_LIST>,
@@ -102,5 +102,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/* @import url('./room-action.scss'); */
+/* @import url('./schedule-action.scss'); */
 </style>
