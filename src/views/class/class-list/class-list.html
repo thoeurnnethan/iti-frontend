@@ -26,8 +26,17 @@
     <div class="container-fluid px-0 py-4">
         <div class="row">
             <div class="col-md-3">
+                <label class="form-label font_14">{{ $t('class.selectDepartment') }}</label>
+                <select class="form-select" v-model="selectedDepartment" @change="getClassList">
+                    <option value=""><span>All</span></option>
+                    <option v-for="department in departmentList" :value="department.departmentID">
+                        <span>{{ department.departmentName }}</span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3">
                 <label class="form-label font_14">{{ $t('class.selectYear') }}</label>
-                <select class="form-select" v-model="selectYear" @change="getClassList">
+                <select class="form-select" v-model="selectedYear" @change="getClassList">
                     <option v-for="year in yearList" :value="year.codeValue">
                         {{ year.codeValueDesc }}
                     </option>
@@ -45,12 +54,9 @@
     </div>
     <div class="mt-3"></div>
     <div class="float-end">
-        <button type="button" class="rad_right btn btn-dark b_shadow p-2 px-2 float-end font_15"
-            @click.prevent="getClassList">
-            {{ $t('common.search') }}
-        </button>
+        <button type="button" class="rad_right btn btn-dark b_shadow p-2 px-2 float-end font_15" @click.prevent="getClassList">{{ $t('common.search') }}</button>
         <InputGroup class="float-end w-25">
-            <InputText @keyup="getClassList()" class="p-1 font_15 rad_left b_shadow c_input" v-model="searchKeyword"
+            <InputText @keyup.enter="getClassList()" class="p-1 font_15 rad_left b_shadow c_input" v-model="searchKey"
                 :placeholder="$t('common.searchKey')" style="height: 40.5px;padding-left: 15px !important;" />
         </InputGroup>
     </div>
@@ -89,13 +95,13 @@
             <Column :header="$t('action.action')">
                 <template #body="{ data }">
                     <div v-if="data.statusCode === '01'" class="d-flex justify-content-center align-item-center">
-                        <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" icon="fas fa-pencil" class="text-white" :title="$t('action.edit')" />&nbsp;&nbsp;
-                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="1(data)" :icon="['fas', 'fa-archive']" class="text-white" :title="$t('action.inactive')" />&nbsp;&nbsp;
+                        <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" icon="fas fa-pencil" class="text-white" :title="$t('action.edit')" />
+                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-archive']" class="text-white mx-2" :title="$t('action.inactive')" />
                         <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
                     </div>
                     <div v-else class="d-flex justify-content-center align-item-center">
-                        <div style="width: 24px; height: 24px;"></div>&nbsp;&nbsp;
-                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setActive(data)" :icon="['fas', 'fa-rotate-back']" class="text-white" :title="$t('action.active')" />&nbsp;&nbsp;
+                        <div style="width: 24px; height: 24px;"></div>
+                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setActive(data)" :icon="['fas', 'fa-rotate-back']" class="text-white mx-2" :title="$t('action.active')" />
                         <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteAction(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
                     </div>
                 </template>

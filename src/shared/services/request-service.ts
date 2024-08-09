@@ -17,7 +17,6 @@ export class RequestService {
 
     public async request(apiPath: string, requestBody: any, isShowMessage = true): Promise<any> {
         const userInfo = util.getDataStorage('userInfo', true)
-        console.log(userInfo)
         const fullReqBody = {
             header: {
                 error_code: "",

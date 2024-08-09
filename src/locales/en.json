@@ -42,7 +42,8 @@
     "addNew":"Register New Department",
     "editDepartment":"Edit Department Information",
     "firstRegisterDate":"First Register Date",
-    "lastChangeDate":"Last Change Date"
+    "lastChangeDate":"Last Change Date",
+    "detail": "Department Detail​Information"
   },
   "menu":{
     "home": "Home",
@@ -90,9 +91,9 @@
     "year": "Year",
     "generation": "Generation",
     "semester": "Semester",
-    "selectTime": "Select Time",
     "selectYear": "Select Year",
-    "selectSemester": "Select Semester"
+    "selectSemester": "Select Semester",
+    "selectDepartment": "Select Department"
   },
   "room": {
     "title": "Room List",
