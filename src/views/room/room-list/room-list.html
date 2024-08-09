@@ -23,12 +23,9 @@
 
     <!-- search-bar -->
     <div class="float-end mt-3">
-        <button type="button" class="rad_right btn btn-dark b_shadow p-2 px-2 float-end font_15"
-            @click.prevent="getRoomList()">
-            {{ $t('common.search') }}
-        </button>
+        <button type="button" class="rad_right btn btn-dark b_shadow p-2 px-2 float-end font_15" @click="getRoomList()">{{ $t('common.search') }}</button>
         <InputGroup class="float-end w-25">
-            <InputText @keyup="getRoomList()" class="p-1 font_15 rad_left b_shadow c_input" v-model="searchKeyword"
+            <InputText @keyup.enter="getRoomList()" class="p-1 font_15 rad_left b_shadow c_input" v-model="searchKeyword"
                 :placeholder="$t('common.searchKey')" style="height: 40.5px;padding-left: 15px !important;" />
         </InputGroup>
     </div>
@@ -46,7 +43,7 @@
             :lazy="true" 
             :paginator="true"
             :totalRecords="totalCount" 
-            :rowsPerPageOptions="[10, 20, 50, 100]" 
+            :rowsPerPageOptions="[10, 20, 50]" 
             @page="onPage" 
             :rowClass="rowClass">
             <Column field="no" :header="$t('common.no')" :class="['text-center']"></Column>
@@ -62,6 +59,7 @@
             </Column>
             <Column :header="$t('action.action')">
                 <template #body="{ data }">
+<<<<<<< HEAD
                     <div v-if="data.statusCode === '01'"  class="d-flex align-item-center justify-content-center">
                         <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-white" :title="$t('action.edit')" />&nbsp;&nbsp;
                         <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setRoom(data)" :icon="['fas', 'fa-archive']" class="text-white" :title="$t('action.inactive')" />&nbsp;&nbsp;
@@ -71,6 +69,17 @@
                         <div style="width: 24px; height: 24px;"></div>&nbsp;&nbsp;
                         <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="setActive(data)" :icon="['fas', 'fa-rotate-back']" class="text-white" :title="$t('action.active')" />&nbsp;&nbsp;
                         <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteRoom(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+=======
+                    <div v-if="data.statusCode === '01'" class="d-flex justify-content-center align-item-center">
+                        <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-white" :title="$t('action.edit')" />
+                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '09')" :icon="['fas', 'fa-archive']" class="text-white mx-2" :title="$t('action.inactive')" />
+                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" :icon="['fas', 'fa-trash']" class="text-white" :title="$t('action.delete')" />
+                    </div>
+                    <div v-else  class="d-flex justify-content-center align-item-center">
+                        <div style="width: 24px; height: 24px;"></div>
+                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '01')" :icon="['fas', 'fa-rotate-back']" class="text-white mx-2" :title="$t('action.active')" />
+                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" :icon="['fas', 'fa-trash']" class="text-white" :title="$t('action.delete')" />
+>>>>>>> 189413b86254dbebbede800711d65ece585b27dc
                     </div>
                 </template>
             </Column>

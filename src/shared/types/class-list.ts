@@ -14,13 +14,14 @@ export interface CLASS_LIST {
 }
 
 export interface CLASS_LIST_REQ {
-  classID?: string
+  classID: string
   departmentID: string
-  pageNumber: number
-  pageSize: number
-  searchKeyword: string
+  searchKey: string
   year: string 
-  semester?: any 
+  semester: string 
+  generation: string
+  pageNumber?: number
+  pageSize?: number
 }
 
 export interface CLASS_LIST_RES {

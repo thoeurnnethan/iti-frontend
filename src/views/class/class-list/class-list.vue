@@ -9,6 +9,7 @@ import { ExportExcel } from '@/shared/services/export-excel-class';
 import class_edit from '../class-edit/class-edit.vue';
 import { YearList , SemesterList, globalStatusCodeList } from '@/shared/common/common';
 import MyLoading from '../../MyLoading.vue';
+import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 
 const requestService = new RequestService();
 const exportExcel = new ExportExcel();
@@ -27,17 +28,17 @@ export default defineComponent({
       statusCodeList: globalStatusCodeList,
       classList: [] as CLASS_LIST[],
       classInfo: {} as CLASS_LIST,
-      selectYear: '',
+      departmentList: [] as DEPARTMENT_LIST[],
+      selectedDepartment: '',
+      selectedYear: '',
       selectedStatus: '',
       selectSemester: '',
-      searchKeyword:'',
-      selectTime:'',
+      searchKey:'',
       Loading: false,
       totalCount: 0,
       pageSize: 10,
       pageNumber: 0,
       dataTable,
-      customNoClass: 'table_no',
       classInfoUpdate: {
         classID: '',
         departmentID: '',
@@ -46,7 +47,6 @@ export default defineComponent({
         classDesc: '',
         year: '',
         generation: '',
-        time: '',
         semester: '',
         statusCode: '',
       } as CLASS_LIST
@@ -55,18 +55,21 @@ export default defineComponent({
 
   mounted() {
     this.getClassList();
+    this.getDepartmentList();
   },
 
   methods: {
     async getClassList() {
       this.Loading = true;
       const reqBody: CLASS_LIST_REQ = {
-        departmentID: this.searchKeyword,
+        classID: '',
+        departmentID: this.selectedDepartment,
+        searchKey: this.searchKey,
+        year: this.selectedYear === 'All' ? '' : this.selectedYear,
+        semester: this.selectSemester === 'All' ? '' : this.selectSemester,
+        generation: '',
         pageSize: this.pageSize,
-        pageNumber: this.pageNumber + 1,
-        searchKeyword: this.searchKeyword,
-        year: this.selectYear === 'All' ? '' : this.selectYear,
-        semester: this.selectSemester === '' ? null : this.selectSemester
+        pageNumber: this.pageNumber + 1
       }
       const response = (await requestService.request(API_PATH.CLASS_LIST, reqBody, false)) as CLASS_LIST_RES;
       this.classList = response.body?.classList.map((data , index) => {
@@ -76,93 +79,73 @@ export default defineComponent({
         }
       });
       this.totalCount = response.body?.totalCount;
-      this.dataTable = response.body?.classList.map((data, index) => {
-        return {
-          ...data,
-          no: 1 + index,
-        }
-      });
       this.Loading = false;
+    },
+
+    async getDepartmentList() {
+      const reqBody: DEPARTMENT_LIST_REQ = {
+        userID: "",
+        searchKey: this.searchKey,
+        pageSize: 1000,
+        pageNumber: 1
+      }
+      const response = (await requestService.request(API_PATH.DEPARTMENT_LIST,reqBody,false)) as DEPARTMENT_LIST_RES;
+      this.departmentList = response.body?.departmentList
     },
 
     rowClass(data: { statusCode: string; }) {
       return data.statusCode === '09' ? 'we_bg_row' : '';
     },
 
-    async setInactive(_item: CLASS_LIST) {
-      this.$confirm.require({
-        message: 'Do you want to set to Inactive?',
-        header: 'Confirmation !',
-        accept: async () => {
-          console.table(_item);
-          const reqBody = {
-            ..._item,
-            statusCode: '09'
-          }
-
-          await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false) as CLASS_LIST;
-          this.getClassList();
-          this.$toast.add({ summary: 'Confirmed', detail: 'The record has been set.', life: 3000 });
-        },
-        reject: () => {
-          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-        }
-      });
-    },
-
-    async setActive(_item: CLASS_LIST) {
-      this.$confirm.require({
-        message: 'Do you want to set to Active ?',
-        header: 'Confirmation !',
-        accept: async () => {
-          console.table(_item);
-          const reqBody = {
-            ..._item,
-            statusCode: '01'
-          }
-          await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false) as CLASS_LIST;
-          this.getClassList();
-          this.$toast.add({ summary: 'Confirmed', detail: 'The record has been set.', life: 3000 });
-        },
-        reject: () => {
-          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-        }
-      });
-    },
-
-    async deleteAction(_item: CLASS_LIST) {
-      this.$confirm.require({
-        message: 'Do you want to delete this record ?',
-        header: 'Confirmation !',
-        accept: async () => {
-          console.table(_item);
-          const reqBody = {
-            ..._item,
-            statusCode: '02'
-          }
-          await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false) as CLASS_LIST;
-          this.getClassList();
-          this.$toast.add({ summary: 'Confirmed', detail: 'Record has been delete', life: 3000 });
-        },
-        reject: () => {
-          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-        }
-      });
-    },
-
-    // Handle page size page number
     onPage(event: { page: number; rows: number; }) {
       this.pageNumber = event.page;
       this.pageSize = event.rows;
       this.getClassList();
     },
 
-    // Get Status text
-    getStatusClass(statusCode: string): string {
-      return statusCode === '01' ? 'active-text' : 'inactive-text';
+    async onClickAction(item: CLASS_LIST, statusCode: string){
+      let messageHeader       = ''
+      let messageAcceptDetail = ''
+      let messageRejectDetail = 'You have rejected'
+      let btnAcceptClass      = 'btn '
+      if(statusCode === '01'){
+        messageHeader        = "Do you want to set to Active ?";
+        messageAcceptDetail  = 'The record has been set.';
+        btnAcceptClass      += 'btn-success'
+      } else if(statusCode === '02'){
+        messageHeader        = "Do you want to delete this record?";
+        messageAcceptDetail  = 'The record has been deleted.';
+        btnAcceptClass      += 'btn-danger'
+      } else{
+        messageHeader        = "Do you want to hide this record?";
+        messageAcceptDetail  = 'The record has been set.';
+        btnAcceptClass      += 'btn-warning'
+      }
+      this.$confirm.require({
+        message: messageHeader,
+        header: 'Please Comfirm',
+        acceptLabel: 'Yes',
+        acceptClass: btnAcceptClass,
+        rejectLabel: 'No',
+        rejectClass: 'btn btn-secondary',
+        accept: async () => {
+          const reqBody = {
+            ...item,
+            cyear: item.year,
+            statusCode: statusCode
+          }
+          const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, true);
+          if(res.header.result){
+            this.getClassList();
+            this.$toast.add({ summary: 'Confirmed', detail: messageAcceptDetail, life: 1000 });
+          }
+        },
+        reject: () => {
+          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: messageRejectDetail, life: 1000 });
+        }
+      });
     },
 
-    // Insert class method
     async onClickInsert(){
       this.$popupService.onOpen({
         component: class_edit,
@@ -179,7 +162,6 @@ export default defineComponent({
       })
     },
 
-    // Edit class method
     async onClickEdit(item: CLASS_LIST) {
       this.$popupService.onOpen({
         component: class_edit,
@@ -196,13 +178,14 @@ export default defineComponent({
       })
     },
 
-    //download excel
     async exportToExcel() {
-      const reqBody = {
-        departmentID: this.searchKeyword,
-        searchKeyword: this.searchKeyword,
-        year: this.selectYear === 'All' ? '' : this.selectYear,
-        semester: this.selectSemester === '' ? null : this.selectSemester
+      const reqBody: CLASS_LIST_REQ = {
+        classID: '',
+        departmentID: this.selectedDepartment,
+        searchKey: this.searchKey,
+        year: this.selectedYear === 'All' ? '' : this.selectedYear,
+        semester: this.selectSemester === 'All' ? '' : this.selectSemester,
+        generation: '',
       }
       const response = (await requestService.request(API_PATH.CLASS_LIST_DOWNLOAD, reqBody, false)) as CLASS_LIST_RES;
       this.dataTable = response.body?.classList.map((data, index) => {
@@ -218,10 +201,10 @@ export default defineComponent({
           "Class ID": data.classID,
           "Class Name": data.className,
           "Class Description": data.classDesc,
+          "Department Name": data.departmentName,
           "Year": data.year,
-          "Generation": data.generation,
-          "Time": data.time,
           "Semester": data.semester,
+          "Generation": data.generation,
           "Department": data.departmentID + ': '+ data.departmentName,
           "Status": this.$codeConverter.codeToString(this.statusCodeList, data.statusCode),
           "First Register Date": this.$format.formatDateTime(data.firstRegisterDate ? data.firstRegisterDate : '', 'yyyy-mm-dd'),
@@ -234,11 +217,6 @@ export default defineComponent({
         },
       ];
       exportExcel.exportSheet(exportExcelData, 'Class info')
-    },
-
-    //detailsClass
-    detailsClass(_data: { id: any; }) {
-      this.$router.push('/score-list');
     },
 
   },

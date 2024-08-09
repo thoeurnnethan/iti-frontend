@@ -8,6 +8,7 @@ import { RequestService } from '@/shared/services/request-service';
 import { globalStatusCodeList, YearList, SemesterList, generation, time } from '@/shared/common/common';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { modalController } from '@ionic/vue';
+import axios from 'axios';
 
 const requestService = new RequestService();
 
@@ -42,7 +43,8 @@ export default defineComponent({
       yearList: YearList,
       semesterList: SemesterList,
       generation: generation,
-      time: time
+      time: time,
+      selectedFile: '',
     };
   },
   computed: {
@@ -84,7 +86,6 @@ export default defineComponent({
     },
 
     async classInsert() {
-
       const reqBody ={
         ...this.classInfo,
         cyear: this.classInfo.year,
@@ -118,15 +119,35 @@ export default defineComponent({
     },
     
     async getDepartmentList() {
-            const reqBody: DEPARTMENT_LIST_REQ = {
-                userID: "",
-                searchKey: '',
-                pageSize: 1000,
-                pageNumber: 1
-            }
-            const response = (await requestService.request(API_PATH.DEPARTMENT_LIST,reqBody,false)) as DEPARTMENT_LIST_RES;
-            this.departmentList = response.body?.departmentList;
-        },
+      const reqBody: DEPARTMENT_LIST_REQ = {
+        userID: "",
+        searchKey: '',
+        pageSize: 1000,
+        pageNumber: 1
+      }
+      const response = (await requestService.request(API_PATH.DEPARTMENT_LIST, reqBody, false)) as DEPARTMENT_LIST_RES;
+      this.departmentList = response.body?.departmentList;
+    },
+    
+    handleFileUpload(event: { files: string[]; }){
+      this.selectedFile = event.files[0];
+    },
+
+    async submitFile() {
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+      try {
+        const response = await axios.post('http://localhost:8081/api/file-upload/register', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        console.log('File uploaded successfully:', response.data);
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      }
+    },
+    
   }
 });
 </script>

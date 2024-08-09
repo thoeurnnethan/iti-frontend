@@ -93,12 +93,6 @@ export default defineComponent({
       this.getDepartmentList();
     },
 
-    // Get Status text
-    getStatusClass(statusCode: string): string {
-      return statusCode === '01' ? 'active-text' : 'inactive-text';
-    },
-
-    // On click any row
     async onClickRow(item: DEPARTMENT_LIST) {
       this.$popupService.onOpen({
         component: department_detail,
@@ -108,59 +102,42 @@ export default defineComponent({
       })
     },
 
-    async setInactive(_item: DEPARTMENT_LIST) {
+    async onClickAction(item: DEPARTMENT_LIST, statusCode: string){
+      let messageHeader       = ''
+      let messageAcceptDetail = ''
+      let messageRejectDetail = 'You have rejected'
+      let btnAcceptClass      = 'btn '
+      if(statusCode === '01'){
+        messageHeader        = "Do you want to set to Active ?";
+        messageAcceptDetail  = 'The record has been set.';
+        btnAcceptClass      += 'btn-success'
+      } else if(statusCode === '02'){
+        messageHeader        = "Do you want to delete this record?";
+        messageAcceptDetail  = 'The record has been deleted.';
+        btnAcceptClass      += 'btn-danger'
+      } else{
+        messageHeader        = "Do you want to hide this record?";
+        messageAcceptDetail  = 'The record has been set.';
+        btnAcceptClass      += 'btn-warning'
+      }
       this.$confirm.require({
-        message: 'Do you want to hide this record?',
-        header: 'Confirmation !',
+        message: messageHeader,
+        header: 'Please Comfirm',
+        acceptLabel: 'Yes',
+        acceptClass: btnAcceptClass,
+        rejectLabel: 'No',
+        rejectClass: 'btn btn-secondary',
         accept: async () => {
           const reqBody = {
-            departmentID: _item.departmentID,
-            statusCode: '09'
+            departmentID: item.departmentID,
+            statusCode: statusCode
           }
           await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, false) as DEPARTMENT_LIST;
           this.getDepartmentList();
-          this.$toast.add({ summary: 'Confirmed', detail: 'The record has been set.', life: 3000 });
+          this.$toast.add({ summary: 'Confirmed', detail: messageAcceptDetail, life: 1000 });
         },
         reject: () => {
-          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-        }
-      });
-    },
-
-    async deleteAction(_item: DEPARTMENT_LIST) {
-      this.$confirm.require({
-        message: 'Do you want to delete this record?',
-        header: 'Confirmation !',
-        accept: async () => {
-          const reqBody = {
-            departmentID: _item.departmentID,
-            statusCode: '02'
-          }
-          await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, false) as DEPARTMENT_LIST;
-          this.getDepartmentList();
-          this.$toast.add({ summary: 'Confirmed', detail: 'The record has been delete.', life: 3000 });
-        },
-        reject: () => {
-          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-        }
-      });
-    },
-
-    async setActive(_item: DEPARTMENT_LIST) {
-      this.$confirm.require({
-        message: 'Do you want to set to Active ?',
-        header: 'Confirmation !',
-        accept: async () => {
-          const reqBody = {
-            departmentID: _item.departmentID,
-            statusCode: '01'
-          }
-          await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, false) as DEPARTMENT_LIST;
-          this.getDepartmentList();
-          this.$toast.add({ summary: 'Confirmed', detail: 'The record has been set.', life: 3000 });
-        },
-        reject: () => {
-          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: messageRejectDetail, life: 1000 });
         }
       });
     },
