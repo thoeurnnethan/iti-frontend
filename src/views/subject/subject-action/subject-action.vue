@@ -3,7 +3,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { SUBJECT_LIST } from '@/shared/types/subject-list';
-import { CLASS_LIST } from '@/shared/types/class-list';
+import { CLASS_LIST, CLASS_LIST_RES } from '@/shared/types/class-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { globalStatusCodeList } from '@/shared/common/common';
@@ -23,6 +23,7 @@ export default defineComponent({
       required: true
     }
   },
+
   data() {
     return {
       subjectInfo: {
@@ -33,16 +34,12 @@ export default defineComponent({
       } as SUBJECT_LIST,
       subjectInfoUpdate: {} as SUBJECT_LIST,
       subjectList: [] as SUBJECT_LIST[],
-      selectedStatus: null,
       statusCodeList: globalStatusCodeList,
-      searchKeyword: '',
-      selectTime: '',
       searchKey: '',
       Loading: false,
       totalCount: 0,
       pageSize: 10,
       pageNumber: 0,
-      startingIndex: 1,
       classList: [] as CLASS_LIST[],
       editingIndex: -1,
       fieldNameValidate: false,
@@ -50,6 +47,14 @@ export default defineComponent({
       editConfirmationVisible: false
     };
   },
+
+  watch: {
+    subjectInfoData(newValue: SUBJECT_LIST) {
+      this.subjectInfo = { ...newValue };
+      this.subjectInfoUpdate = { ...newValue };
+    }
+  },
+
   computed: {
     isValidInsert(): boolean {
       return (
@@ -69,10 +74,12 @@ export default defineComponent({
       return this.editingIndex !== -1;
     }
   },
+  
   mounted() {
     this.onDataLoad();
     this.classListLoad();
   },
+
   methods: {
     onDataLoad() {
       if (!this.isInsert) {
@@ -80,18 +87,22 @@ export default defineComponent({
         this.subjectInfoUpdate = { ...this.subjectInfo };
       }
     },
+
     async classListLoad() {
       const reqBody = {
-        classID: this.searchKey,
-        pageSize: this.pageSize,
-        pageNumber: this.pageNumber + 1,
-        searchKeyword: this.searchKeyword,
+        classID: '',
         departmentID: '',
-        year: ''
+        searchKey: this.searchKey,
+        year: '',
+        semester: '',
+        generation: '',
+        pageSize: 1000,
+        pageNumber: 1
       };
-      const response = await requestService.request(API_PATH.CLASS_LIST, reqBody, false);
+      const response = await requestService.request(API_PATH.CLASS_LIST, reqBody, false) as CLASS_LIST_RES;
       this.classList = response.body?.classList;
     },
+
     saveSubject() {
       // Validate fields
       this.fieldNameValidate = this.subjectInfo.subjectName === '';
@@ -113,6 +124,7 @@ export default defineComponent({
 
       this.resetForm();
     },
+
     resetForm() {
       this.subjectInfo = {
         classID: this.subjectInfo.classID,
@@ -123,7 +135,6 @@ export default defineComponent({
       this.fieldNameValidate = false;
       this.fieldDesValidate = false;
     },
-
 
     async onClickEdit(data: SUBJECT_LIST) {
       if (this.isEditing || this.editConfirmationVisible) {
@@ -166,19 +177,16 @@ export default defineComponent({
     },
 
     async subjectInsert() {
-      const dataList = this.subjectList.map((data) => ({
-        subjectName: data.subjectName,
-        subjectDesc: data.subjectDesc,
-      }));
-
       const reqBody = {
         classID: this.subjectInfo.classID,
-        subjectList: dataList,
+        subjectList: this.subjectList,
       };
 
-      await requestService.request(API_PATH.SUBJECT_REGISTER, reqBody, true);
-      this.resetForm();
-      this.onClose();
+      const response = await requestService.request(API_PATH.SUBJECT_REGISTER, reqBody, true);
+      if(response.header.result){
+        this.resetForm();
+        this.onClose();
+      }
     },
 
     async subjectEdit() {
@@ -204,11 +212,6 @@ export default defineComponent({
       modalController.dismiss();
     }
   },
-  watch: {
-    subjectInfoData(newValue: SUBJECT_LIST) {
-      this.subjectInfo = { ...newValue };
-      this.subjectInfoUpdate = { ...newValue };
-    }
-  }
+
 });
 </script>

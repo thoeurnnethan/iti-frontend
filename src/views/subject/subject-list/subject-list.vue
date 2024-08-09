@@ -43,7 +43,7 @@ export default defineComponent({
   },
 
   methods: {
-    
+
     async getSubjectList() {
       this.Loading = true;
       const reqBody: SUBJECT_LIST_REQ = {
@@ -63,8 +63,22 @@ export default defineComponent({
       this.Loading = false;
     },
 
+    calculateTotalSubjects(classID: string) {
+      let total = 0;
+      if (this.subjectList) {
+        total = this.subjectList.filter(subject => subject.classID === classID).length;
+      }
+      return total;
+    },
+
     rowClass(data: { statusCode: string; }) {
       return data.statusCode === '09' ? 'we_bg_row' : '';
+    },
+
+    onPage(event: { page: number; rows: number; }) {
+      this.pageNumber = event.page;
+      this.pageSize = event.rows;
+      this.getSubjectList();
     },
 
     async setInactive(_item: SUBJECT_LIST) {
@@ -133,19 +147,49 @@ export default defineComponent({
       });
     },
 
-    // Handle page size page number
-    onPage(event: { page: number; rows: number; }) {
-      this.pageNumber = event.page;
-      this.pageSize = event.rows;
-      this.getSubjectList();
+    onClickAction(item: SUBJECT_LIST, statusCode: string){
+      let messageHeader       = ''
+      let messageAcceptDetail = ''
+      let messageRejectDetail = 'You have rejected'
+      let btnAcceptClass      = 'btn '
+      if(statusCode === '01'){
+        messageHeader        = "Do you want to set to Active ?";
+        messageAcceptDetail  = 'The record has been set.';
+        btnAcceptClass      += 'btn-success'
+      } else if(statusCode === '02'){
+        messageHeader        = "Do you want to delete this record?";
+        messageAcceptDetail  = 'The record has been deleted.';
+        btnAcceptClass      += 'btn-danger'
+      } else{
+        messageHeader        = "Do you want to hide this record?";
+        messageAcceptDetail  = 'The record has been set.';
+        btnAcceptClass      += 'btn-warning'
+      }
+      this.$confirm.require({
+        message: messageHeader,
+        header: 'Please Comfirm',
+        acceptLabel: 'Yes',
+        acceptClass: btnAcceptClass,
+        rejectLabel: 'No',
+        rejectClass: 'btn btn-secondary',
+        accept: async () => {
+          const reqBody = {
+            ...item,
+            cyear: item.className,
+            statusCode: statusCode
+          }
+          const res = await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false);
+          if(res.header.result){
+            this.getSubjectList();
+            this.$toast.add({ summary: 'Confirmed', detail: messageAcceptDetail, life: 1000 });
+          }
+        },
+        reject: () => {
+          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: messageRejectDetail, life: 1000 });
+        }
+      });
     },
 
-    // Get Status text
-    getStatusClass(statusCode: string): string {
-      return statusCode === '01' ? 'active-text' : 'inactive-text';
-    },
-
-    // Insert Room
     async onClickInsert(){
       this.$popupService.onOpen({
         component: subject_action,
@@ -162,7 +206,6 @@ export default defineComponent({
       })
     },
 
-    // Edit class method
     async onClickEdit(item: SUBJECT_LIST) {
       this.$popupService.onOpen({
         component: subject_action,
@@ -179,7 +222,6 @@ export default defineComponent({
       })
     },
 
-    // Download Excel
     exportToExcel() {
       const excelData = this.subjectList.map((data, index) => {
         return {
@@ -197,14 +239,6 @@ export default defineComponent({
       exportExcel.exportSheet(exportExcelData, 'Class info')
     },
 
-    // Calculate Total Subjects per Group
-    calculateTotalSubjects(classID: string) {
-      let total = 0;
-      if (this.subjectList) {
-        total = this.subjectList.filter(subject => subject.classID === classID).length;
-      }
-      return total;
-    },
   },
 })
 </script>

@@ -17,8 +17,8 @@
                                         <label class="form-label font_15"> {{ isInsert ? $t('subject.selectClass') : $t('class.className')}}</label><br>
                                     </center>
                                     <select class="form-select" v-model="subjectInfo.classID" :disabled="!isInsert">
-                                        <option v-for="classItem in classList" :value="classItem.classID">
-                                            {{ classItem.className }}
+                                        <option v-for="classItem in classList" :value="classItem.classInfoID">
+                                            <span>{{ classItem.classID }}: {{ classItem.className }} - (Y: {{ classItem.year }} - S: {{ classItem.semester }})</span>
                                         </option>
                                     </select>
                                 </div>
@@ -91,8 +91,7 @@
             <div class="footer_btn">
                 <div class="right_side">
                     <button class="btn03" style="width:185px" @click="onClose">{{ $t('common.cancel') }}</button>
-                    <button class="btn01" style="width:185px"
-                        @click="isInsert ? subjectInsert() : subjectEdit()">{{ $t('common.save') }}</button>
+                    <button class="btn01" style="width:185px" @click="isInsert ? subjectInsert() : subjectEdit()">{{ $t('common.save') }}</button>
                 </div>
             </div>
         </div>
