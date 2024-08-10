@@ -56,3 +56,14 @@ export const WeekdayList: StandardCodeData[] = [
   { codeValue: 'Friday', codeValueDesc: 'Friday' },
   { codeValue: 'Saturday', codeValueDesc: 'Saturday' },
 ];
+
+export const day: StandardCodeData[] = [
+  { codeValue: 'Monday', codeValueDesc: 'Monday' },
+  { codeValue: 'Tuesday', codeValueDesc: 'Tuesday' },
+  { codeValue: 'Wednesday', codeValueDesc: 'Wednesday' },
+  { codeValue: 'Thursday', codeValueDesc: 'Thursday' },
+  { codeValue: 'Friday', codeValueDesc: 'Friday' },
+  { codeValue: 'Saturday', codeValueDesc: 'Saturday' },
+  { codeValue: 'Sunday', codeValueDesc: 'Sunday' },
+];
+

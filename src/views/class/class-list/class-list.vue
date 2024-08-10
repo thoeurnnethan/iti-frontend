@@ -123,7 +123,7 @@ export default defineComponent({
       }
       this.$confirm.require({
         message: messageHeader,
-        header: 'Please Comfirm',
+        header: 'Please Confirm',
         acceptLabel: 'Yes',
         acceptClass: btnAcceptClass,
         rejectLabel: 'No',

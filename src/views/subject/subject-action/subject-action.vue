@@ -21,12 +21,16 @@ export default defineComponent({
     isInsert: {
       type: Boolean,
       required: true
-    }
+    },
+    isAdd: {
+      type: Boolean,
+      required: true
+    },
   },
   data() {
     return {
       subjectInfo: {
-        classInfoID: '',
+        classInfoID: 'apple',
         subjectName: '',
         subjectDesc: '',
       } as SUBJECT_LIST,
@@ -47,11 +51,30 @@ export default defineComponent({
   },
 
   watch: {
-    subjectInfoData(newValue: SUBJECT_LIST) {
-      this.subjectInfo = { ...newValue };
-      this.subjectInfoUpdate = { ...newValue };
+    subjectInfoData: {
+      handler(newValue: SUBJECT_LIST | SUBJECT_LIST[]) {
+        if (Array.isArray(newValue)) {
+          // Handle when newValue is an array
+          this.subjectList = newValue; // Update the subjectList directly
+          if (newValue.length > 0) {
+            this.subjectInfo = { ...newValue[0] }; // Handle the first item in the array
+            this.subjectInfoUpdate = { ...newValue[0] }; // Similar handling for update
+          } else {
+            // Optionally handle the case where the array is empty
+            this.subjectInfo = {} as SUBJECT_LIST;
+            this.subjectInfoUpdate = {} as SUBJECT_LIST;
+          }
+        } else {
+          // Handle when newValue is a single object
+          this.subjectInfo = { ...newValue };
+          this.subjectInfoUpdate = { ...newValue };
+        }
+      },
+      immediate: true, // Run this handler immediately on component creation
+      deep: true // Optional: If you want to watch nested properties within subjectInfoData
     }
   },
+
 
   computed: {
     isValidInsert(): boolean {
@@ -70,7 +93,8 @@ export default defineComponent({
     },
     isEditing(): boolean {
       return this.editingIndex !== -1;
-    }
+    },
+
   },
   
   mounted() {
@@ -109,18 +133,27 @@ export default defineComponent({
       }
 
       const updatedSubject = { 
-        seqNo: this.subjectInfo.seqNo,
+        no: this.subjectInfo.seqNo,
+        subjectID: this.subjectInfo.seqNo+"",
         subjectName: this.subjectInfo.subjectName,
         subjectDesc: this.subjectInfo.subjectDesc
       };
       if (this.editingIndex === -1) {
-        updatedSubject.seqNo = this.subjectList.length + 1;
+        updatedSubject.no = this.subjectList.length + 1;
+        updatedSubject.subjectID = this.subjectInfo.classInfoID+"_SUB"+(this.subjectList.length + 1),
         this.subjectList.push(updatedSubject);
       } else {
         this.subjectList[this.editingIndex] = updatedSubject;
         this.editingIndex = -1;
       }
+      this.updateSeqNo();
       this.resetForm();
+    },
+
+    updateSeqNo() {
+      this.subjectList.forEach((qual, index) => {
+          qual.no = index + 1;
+      });
     },
 
     async onClickEdit(data: SUBJECT_LIST) {
@@ -154,8 +187,9 @@ export default defineComponent({
         message: 'Do you want to delete this record?',
         header: 'Confirmation',
         accept: () => {
-          this.subjectList = this.subjectList.filter(item => item.seqNo !== data.seqNo);
+          this.subjectList = this.subjectList.filter(item => item.no !== data.no);
           this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+          this.updateSeqNo();
         },
         reject: () => {
           this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
@@ -186,6 +220,18 @@ export default defineComponent({
       const reqBody = {
         classID: this.subjectInfo.classInfoID,
         subjectList: dataList,
+      };
+
+      await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, true);
+      this.resetForm();
+      this.onClose();
+    },
+
+    async addSubjectInfo() {
+
+      const reqBody = {
+        classID: this.subjectInfo.classInfoID,
+        subjectList: this.subjectList,
       };
 
       await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, true);

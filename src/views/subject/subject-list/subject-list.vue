@@ -59,7 +59,7 @@ export default defineComponent({
       this.subjectList = response.body?.subjectList.map((data , index) => {
         return {
           ...data,
-          no: this.startingIndex + index
+          no: data.subjectID?.substring(data.subjectID.length -1, data.subjectID.length)
         }
       });
       this.Loading = false;
@@ -117,7 +117,7 @@ export default defineComponent({
               statusCode: statusCode
             }]
           }
-          const res = await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, true);
+          const res = await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false);
           if(res.header.result){
             this.getSubjectList();
             this.$toast.add({ summary: 'Confirmed', detail: messageAcceptDetail, life: 1000 });
@@ -134,7 +134,8 @@ export default defineComponent({
         component: subject_action,
         dataProp:{
           subjectInfoData: this.subjectInfo,
-          isInsert: true
+          isInsert: true,
+          isAdd: false
         },
         callback: () => {
           this.getSubjectList();
@@ -150,7 +151,8 @@ export default defineComponent({
         component: subject_action,
         dataProp: {
           subjectInfoData: item,
-          isInsert: false
+          isInsert: false,
+          isAdd: false
         },
         callback: () => {
           this.getSubjectList();
@@ -159,6 +161,26 @@ export default defineComponent({
           this.getSubjectList();
         }
       })
+    },
+
+    async onClickAdd(item: SUBJECT_LIST) {
+      // Filter subjects related to the selected class
+      const filteredSubjects = this.subjectList.filter(subject => subject.classInfoID === item.classInfoID);
+
+      this.$popupService.onOpen({
+          component: subject_action,
+          dataProp: {
+              subjectInfoData: filteredSubjects, 
+              isInsert:true,
+              isAdd: true
+          },
+          callback: () => {
+              this.getSubjectList();
+          },
+          onClose: () => {
+              this.getSubjectList();
+          }
+      });
     },
 
     exportToExcel() {
