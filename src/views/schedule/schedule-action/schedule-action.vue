@@ -2,11 +2,13 @@
 
 <script lang="ts">
 import { PropType, defineComponent } from 'vue';
-import { ROOM_LIST } from '@/shared/types/room-list';
+import { SCHEDULE_LIST } from '@/shared/types/schedule-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { globalStatusCodeList, YearList, SemesterList, generation, time } from '@/shared/common/common';
 import { modalController } from '@ionic/vue';
+import { day } from '@/shared/common/common';
+
 
 const requestService = new RequestService();
 
@@ -14,7 +16,7 @@ export default defineComponent({
   name: 'schedule-action',
   props: {
     roomInfoData: {
-      type: Object as PropType<ROOM_LIST>,
+      type: Object as PropType<SCHEDULE_LIST>,
       required: true
     },
     isInsert: {
@@ -24,18 +26,22 @@ export default defineComponent({
   },
   data() {
     return {
-      roomInfo: {
+      schedule: {
+        schDay:'',
+        seqNo: 0,
+        teacherID: '',
+        subjectID:'',
         roomID: '',
-        roomName: '',
-        roomDesc: '',
-        building: '',
-        floor: 0,
-        statusCode: '',
-      } as ROOM_LIST,
-      roomInfoUpdate: {} as ROOM_LIST,
+        scheduleYear: '',
+        floor: '',
+        startTime: '',
+        endTime: ''
+      } as SCHEDULE_LIST,
+      roomInfoUpdate: {} as SCHEDULE_LIST,
       selectedStatus: null,
       statusCodeList: globalStatusCodeList,
       year: YearList,
+      day: day,
       semester: SemesterList,
       generation: generation,
       time: time
@@ -76,7 +82,7 @@ export default defineComponent({
         ...this.roomInfo,
       };
 
-      const res = await requestService.request(API_PATH.ROOM_REGISTER, reqBody, true) as ROOM_LIST;
+      const res = await requestService.request(API_PATH.ROOM_REGISTER, reqBody, true) as SCHEDULE_LIST;
 
       this.roomInfo = res;
       if (res) {
@@ -88,7 +94,7 @@ export default defineComponent({
         ...this.roomInfo,
       };
 
-      const res = await requestService.request(API_PATH.ROOM_UPDATE, reqBody, true) as ROOM_LIST;
+      const res = await requestService.request(API_PATH.ROOM_UPDATE, reqBody, true) as SCHEDULE_LIST;
       this.roomInfo = res;
       if (res) {
         modalController.dismiss();

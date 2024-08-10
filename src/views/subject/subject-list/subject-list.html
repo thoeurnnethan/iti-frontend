@@ -44,7 +44,10 @@
                 <!-- Group Header -->
                 <template #groupheader="slotProps">
                     <span class="vertical-align-middle ml-2 font-bold line-height-3 text-capitalize">{{ slotProps.data.className }} (Year: {{ slotProps.data.year }} Semster: {{ slotProps.data.semester}})</span>
-                    <button class="btn btn-info float-end" @click="onClickInsert">Add new</button>
+                    <button class="btn p-1 px-2 float-end btn-secondary" @click="onClickAdd(slotProps.data)">
+                        Add subject
+                        <font-awesome-icon :icon="['fas', 'plus']" />
+                    </button>
                 </template>
                 <!-- Columns -->
                 <Column field="classInfoID" :header="$t('subject.classID')" style="min-width:100px"></Column>

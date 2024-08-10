@@ -9,6 +9,7 @@ export interface SCHEDULE_LIST {
   departmentName: string
   scheduleID: string
   seqNo: number,
+  schDay: string,
   teacherID: string,
   firstName: string,
   lastName: string,

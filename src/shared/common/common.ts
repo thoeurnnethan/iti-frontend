@@ -55,3 +55,14 @@ export const time: StandardCodeData[] = [
   { codeValue: 'Friday-09:00-12:00', codeValueDesc: 'Friday-09:00-12:00' },
   { codeValue: 'Weekend', codeValueDesc: 'Weekend' },
 ];
+
+export const day: StandardCodeData[] = [
+  { codeValue: 'Monday', codeValueDesc: 'Monday' },
+  { codeValue: 'Tuesday', codeValueDesc: 'Tuesday' },
+  { codeValue: 'Wednesday', codeValueDesc: 'Wednesday' },
+  { codeValue: 'Thursday', codeValueDesc: 'Thursday' },
+  { codeValue: 'Friday', codeValueDesc: 'Friday' },
+  { codeValue: 'Saturday', codeValueDesc: 'Saturday' },
+  { codeValue: 'Sunday', codeValueDesc: 'Sunday' },
+];
+

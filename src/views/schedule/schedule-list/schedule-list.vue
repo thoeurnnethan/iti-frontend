@@ -5,6 +5,7 @@ import { defineComponent } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { YearList , SemesterList, globalStatusCodeList } from '@/shared/common/common';
+import schedule_action from '../schedule-action/schedule-action.vue';
 import MyLoading from '../../MyLoading.vue';
 import { SCHEDULE_LIST, SCHEDULE_LIST_RES, ScheduleColumn, ScheduleRow } from '@/shared/types/schedule-list';
 
@@ -87,6 +88,23 @@ export default defineComponent({
           startTime: startTime,
           endTime: endTime,
         }as ScheduleRow;
+      })
+    },
+
+    // Insert Room
+    async onClickInsert(){
+      this.$popupService.onOpen({
+        component: schedule_action,
+        dataProp:{
+          subjectInfoData: this.scheduleInfo,
+          isInsert: true
+        },
+        callback: () => {
+          this.onGetScheduleList();
+        },
+        onClose: () => {
+          this.onGetScheduleList();
+        }
       })
     },
 

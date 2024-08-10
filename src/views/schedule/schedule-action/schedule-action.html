@@ -1,8 +1,8 @@
 <div class="popup">
     <div class="popWrap w70p">
         <div class="pop_head">
-            <h1 class="text-center text-dark" v-if="isInsert">{{ $t('room.actionHeader') }}</h1>
-            <h1 class="text-center text-dark" v-else>{{ $t('room.editRoom') }}</h1>
+            <h1 class="text-center text-dark" v-if="isInsert">Insert Schedule</h1>
+            <h1 class="text-center text-dark" v-else>Edit Schedule</h1>
         </div>
         <div class="pop_cont">
             <div class="cont">
@@ -14,8 +14,13 @@
                         </div>
 
                         <div class="col-lg-3 col-md-4 mb-2">
-                            <label class="form-label font_15">{{ $t('room.roomName') }}</label><br>
-                            <input type="text" class="form-control" v-model="roomInfo.roomName" />
+                            <label class="form-label font_15">Day</label><br>
+                            <select class="form-select" v-model="schedule.schDay">
+                                <option v-for="days in day" :key="days.codeValue" :value="days.codeValue">
+                                <option value="" disabled>Select day</option>
+                                {{ days.codeValueDesc }}
+                                </option>
+                            </select>
                         </div>
 
                         <div class="col-lg-3 col-md-4 mb-2">
