@@ -5,7 +5,7 @@ import { PropType, defineComponent } from 'vue';
 import { CLASS_LIST } from '@/shared/types/class-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
-import { globalStatusCodeList, YearList, SemesterList, generation, time } from '@/shared/common/common';
+import { globalStatusCodeList, YearList, SemesterList, generation } from '@/shared/common/common';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { modalController } from '@ionic/vue';
 import axios from 'axios';
@@ -32,7 +32,6 @@ export default defineComponent({
         classDesc: '',
         year: '',
         generation: '',
-        time: '',
         semester: '',
         statusCode: '01',
       } as CLASS_LIST,
@@ -43,7 +42,6 @@ export default defineComponent({
       yearList: YearList,
       semesterList: SemesterList,
       generation: generation,
-      time: time,
       selectedFile: '',
     };
   },
@@ -55,7 +53,6 @@ export default defineComponent({
         this.classInfo.year !== '' &&
         this.classInfo.semester !== '' &&
         this.classInfo.generation !== '' &&
-        this.classInfo.time !== '' &&
         this.classInfo.classDesc !== '' &&
         this.classInfo.statusCode !== ''
       );
@@ -67,7 +64,6 @@ export default defineComponent({
         this.classInfo.year !== this.classInfoUpdate.year ||
         this.classInfo.semester !== this.classInfoUpdate.semester ||
         this.classInfo.generation !== this.classInfoUpdate.generation ||
-        this.classInfo.time !== this.classInfoUpdate.time ||
         this.classInfo.classDesc !== this.classInfoUpdate.classDesc ||
         this.classInfo.statusCode !== this.classInfoUpdate.statusCode
       );
@@ -103,7 +99,6 @@ export default defineComponent({
       const reqBody = {
         ...this.classInfo,
         cyear: this.classInfo.year,
-        ctime: this.classInfo.time,
         generation: this.classInfo.generation + ''
       };
 

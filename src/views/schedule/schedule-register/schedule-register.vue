@@ -1,4 +1,4 @@
-<template src="./schedule-list.html"></template>
+<template src="./schedule-register.html"></template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
