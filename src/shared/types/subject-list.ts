@@ -12,6 +12,8 @@ export interface SUBJECT_LIST {
 
 export interface SUBJECT_LIST_REQ {
   classID: string
+  classYear: string,
+  semester: string,
   searchKey: string
   pageSize: number
   pageNumber: number

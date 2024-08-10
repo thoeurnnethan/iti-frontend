@@ -26,10 +26,9 @@ export default defineComponent({
   data() {
     return {
       subjectInfo: {
-        classID: '',
+        classInfoID: '',
         subjectName: '',
         subjectDesc: '',
-        statusCode: '',
       } as SUBJECT_LIST,
       subjectInfoUpdate: {} as SUBJECT_LIST,
       subjectList: [] as SUBJECT_LIST[],
@@ -76,7 +75,7 @@ export default defineComponent({
   
   mounted() {
     this.onDataLoad();
-    this.classListLoad();
+    this.onGetClassList();
   },
 
   methods: {
@@ -87,7 +86,7 @@ export default defineComponent({
       }
     },
 
-    async classListLoad() {
+    async onGetClassList() {
       const reqBody = {
         classID: '',
         departmentID: '',
@@ -102,17 +101,18 @@ export default defineComponent({
       this.classList = response.body?.classList;
     },
 
-    saveSubject() {
-      // Validate fields
+    onAddSubjectToList() {
       this.fieldNameValidate = this.subjectInfo.subjectName === '';
       this.fieldDesValidate = this.subjectInfo.subjectDesc === '';
-
       if (this.fieldNameValidate || this.fieldDesValidate) {
         return;
       }
 
-      const updatedSubject = { ...this.subjectInfo };
-
+      const updatedSubject = { 
+        seqNo: this.subjectInfo.seqNo,
+        subjectName: this.subjectInfo.subjectName,
+        subjectDesc: this.subjectInfo.subjectDesc
+      };
       if (this.editingIndex === -1) {
         updatedSubject.seqNo = this.subjectList.length + 1;
         this.subjectList.push(updatedSubject);
@@ -120,19 +120,7 @@ export default defineComponent({
         this.subjectList[this.editingIndex] = updatedSubject;
         this.editingIndex = -1;
       }
-
       this.resetForm();
-    },
-
-    resetForm() {
-      this.subjectInfo = {
-        classID: this.subjectInfo.classInfoID,
-        subjectName: '',
-        subjectDesc: '',
-        statusCode: '01'
-      };
-      this.fieldNameValidate = false;
-      this.fieldDesValidate = false;
     },
 
     async onClickEdit(data: SUBJECT_LIST) {
@@ -175,12 +163,11 @@ export default defineComponent({
       });
     },
 
-    async subjectInsert() {
+    async registerSubjectInfo() {
       const reqBody = {
-        classID: this.subjectInfo.classID,
+        classID: this.subjectInfo.classInfoID,
         subjectList: this.subjectList,
       };
-
       const response = await requestService.request(API_PATH.SUBJECT_REGISTER, reqBody, true);
       if(response.header.result){
         this.resetForm();
@@ -188,7 +175,7 @@ export default defineComponent({
       }
     },
 
-    async subjectEdit() {
+    async updateSubjectInfo() {
       const dataList = [{
         subjectID: this.subjectInfo.subjectID,
         subjectName: this.subjectInfo.subjectName,
@@ -205,12 +192,23 @@ export default defineComponent({
       this.resetForm();
       this.onClose();
     },
+
+    resetForm() {
+      this.subjectInfo = {
+        classInfoID: this.subjectInfo.classInfoID,
+        subjectName: '',
+        subjectDesc: ''
+      };
+      this.fieldNameValidate = false;
+      this.fieldDesValidate = false;
+    },
     
     onClose() {
       this.resetForm();
       modalController.dismiss();
     }
-  },
+
+},
 
 });
 </script>

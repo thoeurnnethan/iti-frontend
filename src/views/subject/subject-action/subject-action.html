@@ -45,7 +45,7 @@
                                 </select>
                             </div>
                             <div class="col-lg-3 col-md-4 mb-2" v-if="isInsert">
-                                <button class="btn btn-info w-100" style="margin-top: 30.5px;" @click="saveSubject">
+                                <button class="btn btn-info w-100" style="margin-top: 30.5px;" @click="onAddSubjectToList">
                                     <font-awesome-icon :icon="['fa', 'plus']" />
                                     <span class="mx-2">{{ $t('subject.addSubject') }}</span>
                                 </button>
@@ -57,7 +57,7 @@
                     <div class="col-12">
                         <div class="we_shadow">
                             <DataTable v-if="subjectList.length > 0" :value="subjectList">
-                                <Column field="seqNo" :header="$t('common.no')" class="text-start"></Column>
+                                <Column field="seqNo" :header="$t('common.no')" class="text-center"></Column>
                                 <Column field="subjectName" :header="$t('subject.subjectName')"></Column>
                                 <Column field="subjectDesc" :header="$t('subject.subjectDesc')"></Column>
                                 <Column :header="$t('subject.edit')" class="text-center">
@@ -91,7 +91,7 @@
             <div class="footer_btn">
                 <div class="right_side">
                     <button class="btn03" style="width:185px" @click="onClose">{{ $t('common.cancel') }}</button>
-                    <button class="btn01" style="width:185px" @click="isInsert ? subjectInsert() : subjectEdit()">{{ $t('common.save') }}</button>
+                    <button class="btn01" style="width:185px" @click="isInsert ? registerSubjectInfo() : updateSubjectInfo()">{{ $t('common.save') }}</button>
                 </div>
             </div>
         </div>

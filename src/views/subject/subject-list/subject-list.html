@@ -7,10 +7,10 @@
             <span class="text_title">{{ $t('subject.title') }}</span>
         </div>
         <div>
-            <button type="button" class="btn btn-dark p-1 px-2" @click="exportToExcel">
+            <button type="button" class="btn btn-dark p-1 px-2 mx-2 m-2" @click="exportToExcel">
                 <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
                 <font-awesome-icon :icon="['fas', 'file-excel']" />
-            </button>&nbsp;
+            </button>
             <button class="btn btn-primary p-1 px-2" @click="onClickInsert">
                 <span class="mx-1">{{ $t('common.addNew') }}</span>
                 <font-awesome-icon :icon="['fas', 'plus']" />
@@ -36,7 +36,7 @@
                 tableStyle="min-width: 50rem"
                 expandableRowGroups 
                 rowGroupMode="subheader" 
-                groupRowsBy="classID" 
+                groupRowsBy="classInfoID" 
                 sortMode="single" 
                 sortField="classID" 
                 :sortOrder="1"
@@ -44,9 +44,10 @@
                 <!-- Group Header -->
                 <template #groupheader="slotProps">
                     <span class="vertical-align-middle ml-2 font-bold line-height-3 text-capitalize">{{ slotProps.data.className }} (Year: {{ slotProps.data.year }} Semster: {{ slotProps.data.semester}})</span>
+                    <button class="btn btn-info float-end" @click="onClickInsert">Add new</button>
                 </template>
                 <!-- Columns -->
-                <Column field="classID" :header="$t('subject.subjectName')" style="min-width:100px"></Column>
+                <Column field="classInfoID" :header="$t('subject.classID')" style="min-width:100px"></Column>
                 <Column field="subjectName" :header="$t('subject.subjectName')" style="min-width: 150px"></Column>
                 <Column field="subjectDesc" :header="$t('subject.subjectDesc')" style="min-width: 150px"></Column>
                 <Column field="statusCode" :header="$t('subject.statusCode')" style="max-width: 100px">
@@ -70,7 +71,7 @@
                     </template>
                 </Column>
                 <template #groupfooter="slotProps">
-                    <div class="d-flex justify-content-center align-items-center font-bold"><b>Total Subjects: {{ calculateTotalSubjects(slotProps.data.classID) }}</b></div>
+                    <div class="d-flex justify-content-center align-items-center font-bold"><b>Total Subjects: {{ calculateTotalSubjects(slotProps.data.classInfoID) }}</b></div>
                 </template>
             </DataTable>
         </div>

@@ -48,6 +48,8 @@ export default defineComponent({
       this.Loading = true;
       const reqBody: SUBJECT_LIST_REQ = {
         classID: this.selectClassId,
+        classYear: '',
+        semester: '',
         pageSize: this.pageSize,
         pageNumber: this.pageNumber + 1,
         searchKey: this.searchKey,
@@ -63,10 +65,10 @@ export default defineComponent({
       this.Loading = false;
     },
 
-    calculateTotalSubjects(classID: string) {
+    calculateTotalSubjects(classInfoID: string) {
       let total = 0;
       if (this.subjectList) {
-        total = this.subjectList.filter(subject => subject.classID === classID).length;
+        total = this.subjectList.filter(subject => subject.classInfoID === classInfoID).length;
       }
       return total;
     },
@@ -79,72 +81,6 @@ export default defineComponent({
       this.pageNumber = event.page;
       this.pageSize = event.rows;
       this.getSubjectList();
-    },
-
-    async setInactive(_item: SUBJECT_LIST) {
-      this.$confirm.require({
-        message: 'Do you want to set to Inactive?',
-        header: 'Confirmation !',
-        accept: async () => {
-          const reqBody = {
-            ..._item,
-            subjectList:[{
-              subjectID:  _item.subjectID,
-              statusCode: '09'
-            }]
-          }
-          await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false);
-          this.getSubjectList();
-          this.$toast.add({ summary: 'Confirmed', detail: 'The record has been set.', life: 3000 });
-        },
-        reject: () => {
-          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-        }
-      });
-    },
-
-    async setActive(_item: SUBJECT_LIST) {
-      this.$confirm.require({
-        message: 'Do you want to set to Active ?',
-        header: 'Confirmation !',
-        accept: async () => {
-          const reqBody = {
-            ..._item,
-            subjectList:[{
-              subjectID:  _item.subjectID,
-              statusCode: '01'
-            }]
-          }
-          await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false);
-          this.getSubjectList();
-          this.$toast.add({ summary: 'Confirmed', detail: 'The record has been set.', life: 3000 });
-        },
-        reject: () => {
-          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-        }
-      });
-    },
-
-    async deleteAction(_item: SUBJECT_LIST) {
-      this.$confirm.require({
-        message: 'Do you want to delete this record ?',
-        header: 'Confirmation !',
-        accept: async () => {
-          const reqBody = {
-            ..._item,
-            subjectList:[{
-              subjectID:  _item.subjectID,
-              statusCode: '02'
-            }]
-          }
-          await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false);
-          this.getSubjectList();
-          this.$toast.add({ summary: 'Confirmed', detail: 'Record has been delete', life: 3000 });
-        },
-        reject: () => {
-          this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-        }
-      });
     },
 
     onClickAction(item: SUBJECT_LIST, statusCode: string){
