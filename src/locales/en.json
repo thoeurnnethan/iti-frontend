@@ -54,8 +54,9 @@
     "classRegister": "Register Class",
     "subjectList": "Subject List",
     "scheduleManagement": "Schedule Management",
-    "scheduleManagementList": "Schedule Management List",
-    "insertSchedule": "Insert Schedule",
+    "scheduleList": "Schedule List",
+    "scheduleRegister": "Schedule Register",
+    "userManagement": "User Management",
     "userList": "User List",
     "userRegister": "User Register",
     "studentList": "Student List",
@@ -95,6 +96,7 @@
     "semester": "Semester",
     "selectYear": "Select Year",
     "selectSemester": "Select Semester",
+    "selectClass": "Select Class",
     "selectDepartment": "Select Department"
   },
   "room": {
@@ -124,5 +126,11 @@
   },
   "home":{
     "welcomeAdmin":"Welcome to Admin Dashboard"
+  },
+  "schedule":{
+    "title": "Schedule List",
+    "selectScheduleYear": "Select Schedule Year",
+    "selectDay": "Select Day",
+    "selectYear": "Select Year"
   }
 }

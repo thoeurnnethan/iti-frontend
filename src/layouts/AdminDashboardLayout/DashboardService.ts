@@ -31,11 +31,24 @@ export const DashboardService = {
                 "path": "/schedule-list",
                 "iconClass": "fa-calendar-days",
                 "name": "scheduleManagement",
+                "open": false,
+                "subMenuList":[
+                    {
+                        "path": "/schedule-list",
+                        "iconClass": "fa-caret-right",
+                        "name": "scheduleList",
+                    },
+                    {
+                        "path": "/user-register",
+                        "iconClass": "fa-caret-right",
+                        "name": "scheduleRegister",
+                    },
+                ]
             },
             {
                 "path": "/user-list",
                 "iconClass": "fa-users",
-                "name": "userList",
+                "name": "userManagement",
                 "open": false,
                 "subMenuList":[
                     {

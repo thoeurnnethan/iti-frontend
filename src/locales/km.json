@@ -54,10 +54,11 @@
     "classRegister": "ចុះបញ្ជីថ្នាក់រៀនថ្មី",
     "subjectList": "បញ្ជីមុខវិជ្ចា",
     "scheduleManagement": "គ្រប់គ្រងកាលវិភាគ",
-    "scheduleManagementList": "បញ្ជីគ្រប់គ្រងកាលវិភាគ",
-    "insertSchedule": "បញ្ចូលកាលវិភាគ",
+    "scheduleList": "បញ្ជីកាលវិភាគ",
+    "scheduleRegister": "បញ្ចូលកាលវិភាគ",
     "studentList": "បញ្ជីសិស្ស",
     "studentRegister": "ចុះឈ្មោះសិស្ស",
+    "userManagement": "គ្រប់គ្រងអ្នកប្រើប្រាស់",
     "userList": "បញ្ជីអ្នកប្រើប្រាស់",
     "userRegister": "ចុះឈ្មោះអ្នកប្រើប្រាស់"
   },
@@ -95,6 +96,7 @@
     "semester": "ឆមាស",
     "selectYear": "ជ្រើសរើសឆ្នាំ",
     "selectSemester": "ជ្រើសរើសឆមាស",
+    "selectClass": "ជ្រើសរើសថ្នាក់រៀន",
     "selectDepartment": "ជ្រើសរើសដេប៉ាតឺម៉ង់"
   },
   "room": {
@@ -123,5 +125,11 @@
   },
   "home":{
     "welcomeAdmin":"សូមស្វាគមន៍មកកាន់ផ្ទាំងគ្រប់គ្រងរបស់ Admin"
+  },
+  "schedule":{
+    "title": "បញ្ជីកាលវិភាគ",
+    "selectScheduleYear": "ជ្រើសរើសឆ្នាំសិក្សា",
+    "selectDay": "ជ្រើសរើសថ្ងៃសិក្សា",
+    "selectYear": "ជ្រើសរើសឆ្នាំ"
   }
 }

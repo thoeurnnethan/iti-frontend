@@ -58,6 +58,15 @@ export interface ScheduleColumn {
   header: string;
 }
 
+export interface SCHEDULE_LIST_REQ {
+  scheduleYear: string;
+  classYear: string;
+  departmentID: string;
+  classID: string;
+  semester: string;
+  searchKey: string;
+}
+
 export interface SCHEDULE_LIST_RES{
   body:{
     scheduleList: Array<SCHEDULE_LIST>

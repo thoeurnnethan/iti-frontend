@@ -47,13 +47,14 @@ export const generation: StandardCodeData[] = [
   { codeValue: 'G_4', codeValueDesc: 'G_4' },
 ];
 
-export const time: StandardCodeData[] = [
-  { codeValue: 'Monday-14:00-17:00', codeValueDesc: 'Monday-14:00-17:00' },
-  { codeValue: 'Tuesday-14:00-17:00', codeValueDesc: 'Tuesday- 14:00-17:00' },
-  { codeValue: 'Wednesday-09:00-12:00', codeValueDesc: 'Wednesday-09:00-12:00' },
-  { codeValue: 'Thursday-09:00-12:00', codeValueDesc: 'Thursday-09:00-12:00' },
-  { codeValue: 'Friday-09:00-12:00', codeValueDesc: 'Friday-09:00-12:00' },
-  { codeValue: 'Weekend', codeValueDesc: 'Weekend' },
+export const WeekdayList: StandardCodeData[] = [
+  { codeValue: '', codeValueDesc: 'All' },
+  { codeValue: 'Monday', codeValueDesc: 'Monday' },
+  { codeValue: 'Tuesday', codeValueDesc: 'Tuesday' },
+  { codeValue: 'Wednesday', codeValueDesc: 'Wednesday' },
+  { codeValue: 'Thursday', codeValueDesc: 'Thursday' },
+  { codeValue: 'Friday', codeValueDesc: 'Friday' },
+  { codeValue: 'Saturday', codeValueDesc: 'Saturday' },
 ];
 
 export const day: StandardCodeData[] = [
