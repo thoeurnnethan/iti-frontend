@@ -79,6 +79,14 @@
 
 //-custom_css----------------
 
+a{
+	text-decoration: none !important;
+}
+
+.p-tabview .p-tabview-nav {
+    border: none !important;
+}
+
 table td, table th{
 	padding: 10px !important;
 }

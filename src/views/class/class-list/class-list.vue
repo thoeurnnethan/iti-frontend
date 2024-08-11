@@ -8,6 +8,7 @@ import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import class_edit from '../class-edit/class-edit.vue';
 import { YearList , SemesterList, globalStatusCodeList } from '@/shared/common/common';
+import class_detail from '../class-detail/class-detail.vue';
 import MyLoading from '../../MyLoading.vue';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 
@@ -95,6 +96,22 @@ export default defineComponent({
 
     rowClass(data: { statusCode: string; }) {
       return data.statusCode === '09' ? 'we_bg_row' : '';
+    },
+
+    async onClickRow() {
+      const body = {
+        classID: this.classInfo?.classID,
+        classYear: this.classInfo?.year,
+        semester: this.classInfo?.semester,
+      };
+      const response = await requestService.request(API_PATH.SUBJECT_LIST, body, false);
+
+      this.$popupService.onOpen({
+          component: class_detail,
+          dataProp: {
+            subjectDetails: response.body.subjectList
+          }
+      })
     },
 
     onPage(event: { page: number; rows: number; }) {

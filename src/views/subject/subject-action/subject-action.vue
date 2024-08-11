@@ -2,7 +2,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { SUBJECT_LIST } from '@/shared/types/subject-list';
+import { SUBJECT_LIST, SUBJECT_LIST_RES } from '@/shared/types/subject-list';
 import { CLASS_LIST, CLASS_LIST_RES } from '@/shared/types/class-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
@@ -30,7 +30,7 @@ export default defineComponent({
   data() {
     return {
       subjectInfo: {
-        classInfoID: 'apple',
+        classInfoID: '',
         subjectName: '',
         subjectDesc: '',
       } as SUBJECT_LIST,
@@ -54,24 +54,22 @@ export default defineComponent({
     subjectInfoData: {
       handler(newValue: SUBJECT_LIST | SUBJECT_LIST[]) {
         if (Array.isArray(newValue)) {
-          // Handle when newValue is an array
-          this.subjectList = newValue; // Update the subjectList directly
+          this.subjectList = newValue;
           if (newValue.length > 0) {
-            this.subjectInfo = { ...newValue[0] }; // Handle the first item in the array
-            this.subjectInfoUpdate = { ...newValue[0] }; // Similar handling for update
+            this.subjectInfo = { ...newValue[0] };
+            this.subjectInfoUpdate = { ...newValue[0] };
+            this.toNull();
           } else {
-            // Optionally handle the case where the array is empty
             this.subjectInfo = {} as SUBJECT_LIST;
             this.subjectInfoUpdate = {} as SUBJECT_LIST;
           }
         } else {
-          // Handle when newValue is a single object
           this.subjectInfo = { ...newValue };
           this.subjectInfoUpdate = { ...newValue };
         }
       },
-      immediate: true, // Run this handler immediately on component creation
-      deep: true // Optional: If you want to watch nested properties within subjectInfoData
+      immediate: true,
+      deep: true
     }
   },
 
@@ -136,11 +134,15 @@ export default defineComponent({
         no: this.subjectInfo.seqNo,
         subjectID: this.subjectInfo.seqNo+"",
         subjectName: this.subjectInfo.subjectName,
-        subjectDesc: this.subjectInfo.subjectDesc
-      };
+        subjectDesc: this.subjectInfo.subjectDesc,
+        statusCode: '01',
+      };      
+
       if (this.editingIndex === -1) {
         updatedSubject.no = this.subjectList.length + 1;
         updatedSubject.subjectID = this.subjectInfo.classInfoID+"_SUB"+(this.subjectList.length + 1),
+      console.table(updatedSubject);
+
         this.subjectList.push(updatedSubject);
       } else {
         this.subjectList[this.editingIndex] = updatedSubject;
@@ -148,6 +150,11 @@ export default defineComponent({
       }
       this.updateSeqNo();
       this.resetForm();
+    },
+
+    toNull(){
+      this.subjectInfo.subjectName = ''
+      this.subjectInfo.subjectDesc = ''
     },
 
     updateSeqNo() {
@@ -186,10 +193,30 @@ export default defineComponent({
       this.$confirm.require({
         message: 'Do you want to delete this record?',
         header: 'Confirmation',
-        accept: () => {
-          this.subjectList = this.subjectList.filter(item => item.no !== data.no);
-          this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
-          this.updateSeqNo();
+        accept: async () => {
+          if(this.isInsert==true && this.isAdd==false){
+            this.subjectList = this.subjectList.filter(item => item.no !== data.no);
+            
+            this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+            this.updateSeqNo();
+          }
+          if(this.isInsert==true && this.isAdd==true){
+            const subjectInfo = this.subjectList.filter(item => item.subjectID == data.subjectID);
+            
+            const reqBody = {
+              classID:  subjectInfo[0].classInfoID,
+              subjectList:[{
+                subjectID:  subjectInfo[0].subjectID,
+                statusCode: '02'
+              }]
+            }
+            const res = await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false) as SUBJECT_LIST_RES;
+            this.subjectList = res.body.subjectList;
+            this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+            console.log(res);
+            
+            this.updateSeqNo();
+          }
         },
         reject: () => {
           this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });

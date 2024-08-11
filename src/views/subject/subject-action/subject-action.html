@@ -98,8 +98,21 @@
             <div class="footer_btn">
                 <div class="right_side">
                     <button class="btn03" style="width:185px" @click="onClose">{{ $t('common.cancel') }}</button>
-                        <button class="btn01" style="width:185px" @click="addSubjectInfo()">{{ $t('common.save') }}</button>
-                        <!-- <button class="btn01" style="width:185px" @click="isInsert ? registerSubjectInfo() : updateSubjectInfo()">{{ $t('common.save') }}</button> -->
+                    <div v-if="isInsert==true&&isAdd==false">
+                        <button class="btn01" style="width:185px" @click="registerSubjectInfo()">
+                            {{ $t('common.save') }} Register
+                        </button> 
+                    </div>
+                    <div v-if="isInsert==true&&isAdd==true">
+                        <button class="btn01" style="width:185px" @click="addSubjectInfo()">
+                            {{ $t('common.save') }} Add
+                        </button> 
+                    </div>
+                    <div v-if="isInsert==false&&isAdd==false">
+                        <button class="btn01" style="width:185px" @click="updateSubjectInfo()">
+                            {{ $t('common.save') }} Update
+                        </button> 
+                    </div>
                 </div>
             </div>
         </div>
