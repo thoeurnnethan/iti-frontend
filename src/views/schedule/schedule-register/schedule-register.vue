@@ -6,9 +6,12 @@ import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { YearList , SemesterList, globalStatusCodeList, WeekdayList } from '@/shared/common/common';
 import MyLoading from '../../MyLoading.vue';
-import { SCHEDULE_LIST, SCHEDULE_LIST_REQ, SCHEDULE_LIST_RES, ScheduleColumn, ScheduleRow } from '@/shared/types/schedule-list';
+import { SCHEDULE_LIST, SCHEDULE_LIST_REQ, SCHEDULE_LIST_RES, TEACHER_LIST, TEACHER_LIST_RES, ScheduleColumn, ScheduleRow } from '@/shared/types/schedule-list';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class-list';
+import { StandardCodeData } from '@/shared/types/standard-code';
+import { SUBJECT_LIST, SUBJECT_LIST_REQ, SUBJECT_LIST_RES } from '@/shared/types/subject-list';
+import { ROOM_LIST, ROOM_LIST_REQ, ROOM_LIST_RES } from '@/shared/types/room-list';
 
 const requestService = new RequestService();
 
@@ -27,18 +30,31 @@ export default defineComponent({
       departmentList: [] as DEPARTMENT_LIST[],
       classList: [] as CLASS_LIST[],
       scheduleList: [] as SCHEDULE_LIST[],
-      scheduleInfo: {} as SCHEDULE_LIST,
       columns: [] as ScheduleColumn[],
       rows: [] as ScheduleRow[],
       scheduleYearList: this.generateYears(),
+      startTimeList: [] as StandardCodeData[],
+      endTimeList: [] as StandardCodeData[],
+      teacherList: [] as TEACHER_LIST[],
+      subjectList: [] as SUBJECT_LIST[],
+      roomList: [] as ROOM_LIST[],
       filterInfo: {
         scheduleYear: new Date().getFullYear().toString(),
+        scheduleDay: '',
         classYear: '',
         semester: '',
         departmentID: '',
         classID: '',
         searchKey: ''
       } as SCHEDULE_LIST_REQ,
+      scheduleInfo: {
+        startTime: '',
+        endTime: '',
+        teacherID: '',
+        subjectID: '',
+        roomID: '',
+      } as SCHEDULE_LIST,
+      checkedAllTeacher: true,
       pageSize: 10,
       pageNumber: 0,
     }
@@ -47,6 +63,22 @@ export default defineComponent({
   watch:{
     'filterInfo.departmentID'() {
       this.getClassList();
+      this.onGetTeacherList();
+      this.filterInfo.classID = ''
+    },
+    'scheduleInfo.startTime'(){
+      this.filterTimeList(this.scheduleInfo.startTime, true)
+    },
+    'scheduleInfo.endTime'(){
+      this.filterTimeList(this.scheduleInfo.endTime, false)
+    },
+    'filterInfo.classID'(){
+      if(this.isSelectedValidClass){
+        this.getSubjectList()
+      }
+    },
+    'checkedAllTeacher'(){
+      this.onGetTeacherList()
     }
   },
 
@@ -54,12 +86,19 @@ export default defineComponent({
     isSelectedDepartment(): boolean{
       return this.filterInfo.departmentID !== '';
     },
+    isSelectedValidClass(): boolean {
+      return this.filterInfo.classID !== '' && 
+      this.filterInfo.classYear !== '' &&
+      this.filterInfo.semester!== ''
+    }
   },
 
   mounted() {
-    // this.onGetScheduleListDynamicColumn();
     this.getDepartmentList()
     this.generateYears()
+    this.getRoomList()
+    this.startTimeList = this.generateScheduleTime()
+    this.endTimeList = this.generateScheduleTime()
   },
 
   methods: {
@@ -127,6 +166,76 @@ export default defineComponent({
       }
     },
 
+    async onGetTeacherList(){
+      const reqBody = {
+        teacherID: '',
+        departmentID: this.checkedAllTeacher ? this.filterInfo.departmentID : '' 
+      }
+      const res = await requestService.request(API_PATH.DEPARTMENT_MNGT_LIST, reqBody, false) as TEACHER_LIST_RES;
+      this.teacherList = res.body.departmentList
+    },
+
+    async getSubjectList() {
+      const reqBody: SUBJECT_LIST_REQ = {
+        classID: this.filterInfo.classID,
+        classYear: this.filterInfo.classYear,
+        semester: this.filterInfo.semester,
+        pageSize: 1000,
+        pageNumber: 1,
+        searchKey: '',
+      }
+      const response = (await requestService.request(API_PATH.SUBJECT_LIST, reqBody, false)) as SUBJECT_LIST_RES;
+      this.subjectList = response.body?.subjectList
+    },
+
+    async getRoomList() {
+      const reqBody: ROOM_LIST_REQ = {
+        searchKey: '',
+        pageSize: 1000,
+        pageNumber: 1,
+      }
+      const response = (await requestService.request(API_PATH.ROOM_LIST, reqBody, false)) as ROOM_LIST_RES;
+      this.roomList = response.body?.roomList
+    },
+
+    onClickAddToList(){
+      const data = {
+        schDay: this.filterInfo.scheduleDay,
+        seqNo: (this.scheduleList.length + 1),
+        teacherID: this.scheduleInfo.teacherID,
+        subjectID: this.scheduleInfo.subjectID,
+        roomID: this.scheduleInfo.roomID,
+        startTime: this.scheduleInfo.startTime,
+        endTime: this.scheduleInfo.endTime,
+        classID: this.filterInfo.classID
+      } as SCHEDULE_LIST
+      this.scheduleList.push(data)
+    },
+
+    async onClickValidate(){
+      const reqBody = {
+        schYear: this.filterInfo.scheduleYear,
+        classID: this.filterInfo.classID,
+        cyear: this.filterInfo.classYear,
+        semester: this.filterInfo.semester,
+        scheduleList: this.scheduleList
+      }
+      const res = await requestService.request(API_PATH.SCHEDULE_VALIDATE, reqBody, true);
+      console.log(res);
+    },
+
+    async onClickSave(){
+      const reqBody = {
+        schYear: this.filterInfo.scheduleYear,
+        classID: this.filterInfo.classID,
+        cyear: this.filterInfo.classYear,
+        semester: this.filterInfo.semester,
+        scheduleList: this.scheduleList
+      }
+      const res = await requestService.request(API_PATH.SCHEDULE_REGISTER, reqBody, true);
+      console.log(res);
+    },
+
     onClickClearFilter(){
       this.filterInfo= {
         scheduleYear: new Date().getFullYear().toString(),
@@ -145,16 +254,48 @@ export default defineComponent({
     },
 
     generateYears() {
-      const currentYear = new Date().getFullYear();
       const startYear = 2020;
+      const currentYear = new Date().getFullYear();
       const years = [];
-
       for (let year = currentYear; year >= startYear; year--) {
         years.push({ codeValue: year.toString(), codeValueDesc: year });
       }
       return years;
+    },
+
+    generateScheduleTime() {
+      const times = [] as StandardCodeData[];
+      let hour = 7;
+      let minute = 0;
+      while (hour < 21) {
+        const codeValue = `${hour.toString().padStart(2, '0')}${minute.toString().padStart(2, '0')}`;
+        const period = hour < 12 ? 'AM' : 'PM';
+        const displayHour = hour % 12 === 0 ? 12 : hour % 12;
+        const codeValueDesc = `${displayHour}:${minute.toString().padStart(2, '0')} ${period}`;
+        const obj={
+          codeValue: codeValue,
+          codeValueDesc: codeValueDesc
+        } as StandardCodeData
+        times.push(obj);
+        minute += 30;
+        if (minute === 60) {
+          minute = 0;
+          hour++;
+        }
+      }
+      return times
+    },
+
+    filterTimeList(selectHour: string, isStartTime: boolean){
+      if(isStartTime){
+        this.endTimeList = this.generateScheduleTime()
+        this.endTimeList = this.endTimeList.filter(time => (Number(time.codeValue) > Number(selectHour)));
+      }else{
+        this.startTimeList = this.generateScheduleTime()
+        this.startTimeList = this.startTimeList.filter(time => (Number(time.codeValue) < Number(selectHour)));
+      }
     }
-  },
+  }
 })
 </script>
 

@@ -3,23 +3,6 @@
 <ConfirmDialog></ConfirmDialog>
 <div class="container-fluid d-flex flex-column we_box" style="overflow: hidden;">
     <!-- header -->
-    <div class="container-fluid p-0 d-flex justify-content-between">
-        <div class="breadcrumb">
-            <font-awesome-icon :icon="['fa', 'shop']" />
-            <span class="text_title mx-1">{{ $t('schedule.title') }}</span>
-        </div>
-        <div>
-            <button type="button" class="btn btn-dark p-1 px-2" @click="exportToExcel">
-                <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
-                <font-awesome-icon :icon="['fas', 'file-excel']" />
-            </button>&nbsp;
-            <button class="btn btn-primary p-1 px-2" @click="onClickInsert()">
-                <span class="mx-1">{{ $t('common.addNew') }}</span>
-                <font-awesome-icon :icon="['fas', 'plus']" />
-            </button>
-        </div>
-    </div>
-    <!-- header -->
     <div class="container-fluid px-0 py-4">
         <div class="row">
             <div class="col-md-3 mb-2">
@@ -30,100 +13,115 @@
             </div>
             <div class="col-md-3 mb-2">
                 <label class="form-label font_14">{{ $t('schedule.selectYear') }}</label>
-                <select class="form-select" v-model="filterInfo.classYear" @change="getClassList">
-                    <option v-for="year in yearList" :value="year.codeValue">
-                        {{ year.codeValueDesc }}
+                <select class="form-select" v-model="filterInfo.classYear">
+                    <option v-for="year in yearList" :value="year.codeValue" :style="{ display: !year.codeValue ? 'none' : 'block' }">
+                        <p v-if="year.codeValue">{{ year.codeValueDesc }}</p>
                     </option>
                 </select>
             </div>
             <div class="col-md-3 mb-2">
                 <label class="form-label font_14">{{ $t('class.selectSemester') }}</label>
-                <select class="form-select" v-model="filterInfo.semester" @change="getClassList">
-                    <option v-for="semester in semesterList" :value="semester.codeValue">
-                        {{ semester.codeValueDesc }}
+                <select class="form-select" v-model="filterInfo.semester">
+                    <option v-for="semester in semesterList" :value="semester.codeValue" :style="{ display: !semester.codeValue ? 'none' : 'block' }">
+                        <p v-if="semester.codeValue">{{ semester.codeValueDesc }}</p>
                     </option>
                 </select>
             </div>
             <div class="col-md-3 mb-2">
                 <label class="form-label font_14">{{ $t('class.selectDepartment') }}</label>
                 <select class="form-select" v-model="filterInfo.departmentID">
-                    <option value="">All</option>
                     <option v-for="department in departmentList" :key="department.departmentID" :value="department.departmentID">
                         {{ department.departmentID }} - {{ department.departmentName }}
                     </option>
                 </select>
             </div>
-            <div class="col-md-3 mb-2" v-if="filterInfo.departmentID">
+            <div class="col-md-3 mb-2">
                 <label class="form-label font_14">{{ $t('class.selectClass') }}</label>
                 <select class="form-select" v-model="filterInfo.classID">
-                    <option value="">All</option>
                     <option v-for="classInfo in classList" :key="classInfo.classID" :value="classInfo.classID">
                         {{ classInfo.classID }} - {{ classInfo.className }}
                     </option>
                 </select>
             </div>
+            <div class="col-md-3 mb-2">
+                <label class="form-label font_14">{{ $t('schedule.selectDay') }}</label>
+                <select class="form-select" v-model="filterInfo.scheduleDay">
+                    <option v-for="day in weekdayList" :key="day.codeValue" :value="day.codeValue" :style="{ display: !day.codeValue ? 'none' : 'block' }">
+                        <p v-if="day.codeValue">{{ day.codeValueDesc }}</p>
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-2" v-if="isSelectedDepartment">
+                <label class="form-label font_14">Select Teacher From Selected Department</label>
+                <Checkbox class="d-flex justify-content-center align-content-center" v-model="checkedAllTeacher" :binary="true" />
+            </div>
         </div>
-    </div>
-    <!-- search-bar -->
-    <div class="d-flex justify-content-end float-end mt-3">
-        <button class="btn btn-info mx-2" @click="onClickClearFilter">Clear Filter</button>
-        <InputGroup class="float-end w-25">
-            <InputText @keyup.enter="onGetScheduleListDynamicColumn()" class="p-1 font_15 rad_left b_shadow c_input" 
-                v-model="filterInfo.searchKey"
-                :placeholder="$t('common.searchKey')" style="height: 40.5px;padding-left: 15px !important;" />
-        </InputGroup>
-        <button type="button" class="rad_right btn btn-dark b_shadow p-2 px-2 float-end font_15"
-            @click="onGetScheduleListDynamicColumn()">
-            {{ $t('common.search') }}
-        </button>
     </div>
 </div>
 
 <div class="we_box mt-3">
-    <div class="b_shadow">
-        <DataTable 
-            v-model:selection="scheduleInfo" 
-            :value="rows"
-            selectionMode="single" 
-            tableStyle="min-width: 150px"
-            stripedRows 
-            scrollable
-            :metaKeySelection="true"
-            :lazy="true" >
-            <Column header="Time" style="min-width: 250px;" v-if="columns.length > 0" >
-                <template #body="{ data }">
-                    <div class="container">
-                        <div class="row text-center">
-                            <span class="com-md-12">{{ convertTime(data.startTime) }} - {{ convertTime(data.endTime) }}</span>
-                        </div>
-                    </div>
-                </template>
-            </Column>
-            <Column v-for="col in columns" :key="col.field" :field="col.field" :header="col.header" style="min-width: 300px;">
-                <template #body="slotProps">
-                    <div class="container" v-if="slotProps.data[col.field].scheduleDay">
-                        <div class="row text-center">
-                            <span class="com-md-12">Subject: {{ slotProps.data[col.field].subjectName }}</span>
-                        </div>
-                        <div class="row text-center">
-                            <span class="com-md-12">Teacher: {{ slotProps.data[col.field].firstName }} - {{ slotProps.data[col.field].lastName }}</span>
-                        </div>
-                        <div class="row text-center">
-                            <span class="com-md-12">Room: {{ slotProps.data[col.field].roomName }}</span>
-                        </div>
-                        <div class="row text-center">
-                            <span class="com-md-12">Building: {{ slotProps.data[col.field].building }}</span>
-                        </div>
-                        <div class="row text-center">
-                            <span class="com-md-12">Floor: {{ slotProps.data[col.field].floor }}</span>
-                        </div>
-                    </div>
-                    <div v-else>
-                        <center>X</center>
-                    </div>
-                </template>
-            </Column>
+    <div class="container-fluid p-3">
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <label class="form-label font_14">Start Time</label>
+                <select class="form-select" v-model="scheduleInfo.startTime">
+                    <option v-for="time in startTimeList" :value="time.codeValue">{{ time.codeValueDesc }}</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-2">
+                <label class="form-label font_14">End Time</label>
+                <select class="form-select" v-model="scheduleInfo.endTime">
+                    <option v-for="time in endTimeList" :value="time.codeValue">{{ time.codeValueDesc }}</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-2">
+                <label class="form-label font_14">Teacher</label>
+                <select class="form-select" v-model="scheduleInfo.teacherID">
+                    <option v-for="teacher in teacherList" :value="teacher.teacherID" :style="{ display: !teacher.teacherID ? 'none' : 'block' }">
+                        <!-- <span v-if="teacher.teacherID">{{ teacher.teacherID }}- {{ teacher.firstName }} {{ teacher.lastName }}</span> -->
+                        <span>{{ teacher.teacherID }}- {{ teacher.firstName }} {{ teacher.lastName }}</span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-2">
+                <label class="form-label font_14">Subject</label>
+                <select class="form-select" v-model="scheduleInfo.subjectID">
+                    <option v-for="subject in subjectList" :value="subject.subjectID">
+                        <p>{{ subject.subjectName }}</p>
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-2">
+                <label class="form-label font_14">Room</label>
+                <select class="form-select" v-model="scheduleInfo.roomID">
+                    <option v-for="room in roomList" :value="room.roomID">
+                        <p>{{ room.roomName }}</p>
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-2">
+                <button class="btn btn-outline-secondary text-dark" style="margin-top: 29px !important;" @click="onClickAddToList">Add To List</button>
+            </div>
+        </div>
+    </div>
+    <div class="we_shadow p-3">
+        <DataTable :value="scheduleList">
+            <Column field="seqNo" header="Start Time" class="text-center"></Column>
+            <Column field="endTime" header="End Time" class="text-center"></Column>
+            <Column field="teacherName" header="Teacher"></Column>
+            <Column field="subjectName" header="Subject"></Column>
+            <Column field="roomName" header="Room"></Column>
         </DataTable>
+        <div class="container-fluid my-3">
+            <div class="row">
+                <div class="col-md-1">
+                    <button class="btn btn-outline-info" @click="onClickValidate">Validate</button>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-outline-success" @click="onClickSave">Save</button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="p-1"></div>
 </div>

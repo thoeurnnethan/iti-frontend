@@ -53,18 +53,38 @@ export interface ScheduleRow {
   Saturday?: SCHEDULE_INFO
 }
 
+export interface TEACHER_LIST {
+  departmentID: string,
+  departmentName: string
+  departmentDesc: string
+  teacherID: string
+  userRoleID: string
+  firstName: string
+  lastName: string
+  gender: string
+  dateOfBirth: string
+  phoneNumber: string
+}
+
+export interface TEACHER_LIST_RES{
+  body:{
+    departmentList: Array<TEACHER_LIST>
+  }
+}
+
 export interface ScheduleColumn {
   field: string;
   header: string;
 }
 
 export interface SCHEDULE_LIST_REQ {
-  scheduleYear: string;
-  classYear: string;
-  departmentID: string;
-  classID: string;
-  semester: string;
-  searchKey: string;
+  scheduleYear: string
+  scheduleDay?: string
+  classYear: string
+  departmentID: string
+  classID: string
+  semester: string
+  searchKey: string
 }
 
 export interface SCHEDULE_LIST_RES{

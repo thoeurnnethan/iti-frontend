@@ -11,6 +11,8 @@ export enum API_PATH {
     DEPARTMENT_DETAIL = "api/department/detail",
     DEPARTMENT_REGISTER = "api/department/register",
     DEPARTMENT_UPDATE = "api/department/update",
+    //Department Management
+    DEPARTMENT_MNGT_LIST = "api/department-mngt/list",
     //Class
     CLASS_LIST = "api/class-info/list",
     CLASS_LIST_DOWNLOAD = "api/class-info/list/download",
@@ -32,6 +34,7 @@ export enum API_PATH {
     SUBJECT_REGISTER = "api/subject/register",
     //Schedule
     SCHEDULE_LIST = "api/schedule/list",
+    SCHEDULE_VALIDATE = "api/schedule/register/validate",
     SCHEDULE_UPDATE = "api/schedule/update",
     SCHEDULE_REGISTER = "api/schedule/register",
 }

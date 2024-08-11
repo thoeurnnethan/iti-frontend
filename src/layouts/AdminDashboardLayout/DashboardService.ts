@@ -39,7 +39,7 @@ export const DashboardService = {
                         "name": "scheduleList",
                     },
                     {
-                        "path": "/user-register",
+                        "path": "/schedule-register",
                         "iconClass": "fa-caret-right",
                         "name": "scheduleRegister",
                     },

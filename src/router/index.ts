@@ -73,6 +73,11 @@ const router = createRouter({
                     path: "/schedule-list",
                     name: "schedule-list",
                     component: () => import("@/views/schedule/schedule-list/schedule-list.vue")
+                },
+                {
+                    path: "/schedule-register",
+                    name: "schedule-register",
+                    component: () => import("@/views/schedule/schedule-register/schedule-register.vue")
                 }
             ]
         },
