@@ -76,25 +76,24 @@
             </div>
             <div class="col-md-3 mb-2">
                 <label class="form-label font_14">Teacher</label>
-                <select class="form-select" v-model="scheduleInfo.teacherID">
-                    <option v-for="teacher in teacherList" :value="teacher.teacherID" :style="{ display: !teacher.teacherID ? 'none' : 'block' }">
-                        <!-- <span v-if="teacher.teacherID">{{ teacher.teacherID }}- {{ teacher.firstName }} {{ teacher.lastName }}</span> -->
-                        <span>{{ teacher.teacherID }}- {{ teacher.firstName }} {{ teacher.lastName }}</span>
+                <select class="form-select" v-model="teacherInfo">
+                    <option v-for="teacher in teacherList" :value="teacher" :style="{ display: !teacher.teacherID ? 'none' : 'block' }">
+                        <span>{{ teacher.teacherID }} - {{ teacher.firstName }} {{ teacher.lastName }}</span>
                     </option>
                 </select>
             </div>
             <div class="col-md-3 mb-2">
                 <label class="form-label font_14">Subject</label>
-                <select class="form-select" v-model="scheduleInfo.subjectID">
-                    <option v-for="subject in subjectList" :value="subject.subjectID">
+                <select class="form-select" v-model="subjectInfo">
+                    <option v-for="subject in subjectList" :value="subject">
                         <p>{{ subject.subjectName }}</p>
                     </option>
                 </select>
             </div>
             <div class="col-md-3 mb-2">
                 <label class="form-label font_14">Room</label>
-                <select class="form-select" v-model="scheduleInfo.roomID">
-                    <option v-for="room in roomList" :value="room.roomID">
+                <select class="form-select" v-model="roomInfo">
+                    <option v-for="room in roomList" :value="room">
                         <p>{{ room.roomName }}</p>
                     </option>
                 </select>
@@ -105,12 +104,36 @@
         </div>
     </div>
     <div class="we_shadow p-3">
-        <DataTable :value="scheduleList">
-            <Column field="seqNo" header="Start Time" class="text-center"></Column>
-            <Column field="endTime" header="End Time" class="text-center"></Column>
-            <Column field="teacherName" header="Teacher"></Column>
+        <DataTable :value="scheduleList"
+            v-model:selection="rowData" >
+            <Column field="seqNo" header="No" class="text-center"></Column>
+            <Column header="Start Time" class="text-center">
+                <template #body="{ data }">
+                    {{ convertTime(data.startTime) }}
+                </template>
+            </Column>
+            <Column header="End Time" class="text-center">
+                <template #body="{ data }">
+                    {{ convertTime(data.endTime) }}
+                </template>
+            </Column>
+            <Column header="Teacher">
+                <template #body="{ data }">
+                    <span>{{ data.firstName }} {{ data.lastName }}</span>
+                </template>
+            </Column>
             <Column field="subjectName" header="Subject"></Column>
             <Column field="roomName" header="Room"></Column>
+            <Column field="validYn" header="Status"></Column>
+            <Column header="Action">
+                <template #body="{ data }">
+                    <div class="container-fluid justify-content-center align-item-center">
+                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" 
+                        @click="onClickBtnDelete(data)"
+                        :icon="['fas', 'fa-trash']" class="text-white" :title="$t('action.delete')" />
+                    </div>
+                </template>
+            </Column>
         </DataTable>
         <div class="container-fluid my-3">
             <div class="row">

@@ -31,6 +31,7 @@ export default defineComponent({
       columns: [] as ScheduleColumn[],
       rows: [] as ScheduleRow[],
       scheduleYearList: this.generateYears(),
+      scheduleHeader: {},
       filterInfo: {
         scheduleYear: new Date().getFullYear().toString(),
         classYear: '',
@@ -83,6 +84,7 @@ export default defineComponent({
     async onGetScheduleListDynamicColumn() {
       const reqBody = this.filterInfo
       const response = (await requestService.request(API_PATH.SCHEDULE_LIST, reqBody, false)) as SCHEDULE_LIST_RES;
+      this.scheduleHeader = response.body
       this.columns = Object.keys(response.body.scheduleList[0]).map(day => ({
         field: day,
         header: day

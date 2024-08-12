@@ -81,6 +81,11 @@
 
 <div class="we_box mt-3">
     <div class="b_shadow">
+        <div class="conainter-fluid d-flex flex-column justify-content-center align-items-center pt-2 pb-4">
+            <p class="p-0">Weekly Schedule</p>
+            <p class="p-0">Year: {{ scheduleHeader.scheduleYear }}</p>
+            <p class="p-0">Major: {{ scheduleHeader.className }} Year: {{ scheduleHeader.classYear }} Semester: {{ scheduleHeader.semester }} Generation: {{ scheduleHeader.generation }} (Night)</p>
+        </div>
         <DataTable 
             v-model:selection="scheduleInfo" 
             :value="rows"

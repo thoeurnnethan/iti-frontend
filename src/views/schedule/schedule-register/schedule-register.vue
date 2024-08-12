@@ -30,14 +30,18 @@ export default defineComponent({
       departmentList: [] as DEPARTMENT_LIST[],
       classList: [] as CLASS_LIST[],
       scheduleList: [] as SCHEDULE_LIST[],
+      rowData: {} as SCHEDULE_LIST,
       columns: [] as ScheduleColumn[],
       rows: [] as ScheduleRow[],
       scheduleYearList: this.generateYears(),
       startTimeList: [] as StandardCodeData[],
       endTimeList: [] as StandardCodeData[],
       teacherList: [] as TEACHER_LIST[],
+      teacherInfo: {} as TEACHER_LIST,
       subjectList: [] as SUBJECT_LIST[],
+      subjectInfo: {} as SUBJECT_LIST,
       roomList: [] as ROOM_LIST[],
+      roomInfo: {} as ROOM_LIST,
       filterInfo: {
         scheduleYear: new Date().getFullYear().toString(),
         scheduleDay: '',
@@ -67,10 +71,14 @@ export default defineComponent({
       this.filterInfo.classID = ''
     },
     'scheduleInfo.startTime'(){
-      this.filterTimeList(this.scheduleInfo.startTime, true)
+      if(this.scheduleInfo.startTime !== ''){
+        this.filterTimeList(this.scheduleInfo.startTime, true)
+      }
     },
     'scheduleInfo.endTime'(){
-      this.filterTimeList(this.scheduleInfo.endTime, false)
+      if(this.scheduleInfo.endTime !== ''){
+        this.filterTimeList(this.scheduleInfo.endTime, false)
+      }
     },
     'filterInfo.classID'(){
       if(this.isSelectedValidClass){
@@ -90,6 +98,14 @@ export default defineComponent({
       return this.filterInfo.classID !== '' && 
       this.filterInfo.classYear !== '' &&
       this.filterInfo.semester!== ''
+    },
+    isValidFilterInfo(): boolean{
+      return this.filterInfo.scheduleYear !== '' &&
+      this.filterInfo.classID !== '' &&
+      this.filterInfo.classYear !== '' &&
+      this.filterInfo.semester !== '' &&
+      this.filterInfo.departmentID !== '' &&
+      this.filterInfo.scheduleDay !== '';
     }
   },
 
@@ -202,26 +218,45 @@ export default defineComponent({
       const data = {
         schDay: this.filterInfo.scheduleDay,
         seqNo: (this.scheduleList.length + 1),
-        teacherID: this.scheduleInfo.teacherID,
-        subjectID: this.scheduleInfo.subjectID,
-        roomID: this.scheduleInfo.roomID,
+        teacherID: this.teacherInfo.teacherID,
+        firstName: this.teacherInfo.firstName,
+        lastName: this.teacherInfo.lastName,
+        subjectID: this.subjectInfo.subjectID,
+        subjectName: this.subjectInfo.subjectName,
+        roomID: this.roomInfo.roomID,
+        roomName: this.roomInfo.roomName,
         startTime: this.scheduleInfo.startTime,
         endTime: this.scheduleInfo.endTime,
-        classID: this.filterInfo.classID
+        classID: this.filterInfo.classID,
+        validYn: '',
       } as SCHEDULE_LIST
       this.scheduleList.push(data)
+      this.resetFormSchedule()
+    },
+
+    onClickBtnDelete(item: SCHEDULE_LIST){
+      this.scheduleList = this.scheduleList.filter(data => data.seqNo !== item.seqNo)
+      this.scheduleList.forEach((subject, index) => {
+        subject.seqNo = index + 1;
+      });
     },
 
     async onClickValidate(){
       const reqBody = {
         schYear: this.filterInfo.scheduleYear,
+        scheduleDay: this.filterInfo.scheduleDay,
         classID: this.filterInfo.classID,
         cyear: this.filterInfo.classYear,
         semester: this.filterInfo.semester,
         scheduleList: this.scheduleList
       }
       const res = await requestService.request(API_PATH.SCHEDULE_VALIDATE, reqBody, true);
-      console.log(res);
+      this.scheduleList = res.body.scheduleList.map((data: { duplicateTimeYn: string; duplicateTeacherYn: string; }) =>{
+        return {
+          ...data,
+          validYn: data.duplicateTimeYn === 'Y' ? "Schedule Duplicate Time" : data.duplicateTeacherYn === 'Y' ? 'Teacher Duplicate Time' : ''
+        }
+      })
     },
 
     async onClickSave(){
@@ -294,7 +329,21 @@ export default defineComponent({
         this.startTimeList = this.generateScheduleTime()
         this.startTimeList = this.startTimeList.filter(time => (Number(time.codeValue) < Number(selectHour)));
       }
+    },
+
+    resetFormSchedule(){
+      this.scheduleInfo = {
+        startTime: '',
+        endTime: '',
+        teacherID: '',
+        subjectID: '',
+        roomID: this.roomInfo.roomID,
+      } as SCHEDULE_LIST,
+      this.teacherInfo = {} as TEACHER_LIST,
+      this.subjectInfo = {} as SUBJECT_LIST
+      this.startTimeList = this.endTimeList = this.generateScheduleTime()
     }
+
   }
 })
 </script>

@@ -14,7 +14,6 @@ export interface SCHEDULE_LIST {
   firstName: string,
   lastName: string,
   gender: string,
-  email: string,
   subjectID: string,
   subjectName: string,
   roomID: string,
@@ -23,6 +22,7 @@ export interface SCHEDULE_LIST {
   floor: string,
   startTime: string,
   endTime: string,
+  validYn?: string
 }
 
 export interface SCHEDULE_INFO {
@@ -89,6 +89,13 @@ export interface SCHEDULE_LIST_REQ {
 
 export interface SCHEDULE_LIST_RES{
   body:{
+    headerObject:{
+      scheduleYear: string,
+      className: string,
+      classYear: string,
+      semester: string,
+      generation: string
+    }
     scheduleList: Array<SCHEDULE_LIST>
   }
 }

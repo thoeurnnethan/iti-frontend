@@ -30,6 +30,7 @@ export default defineComponent({
   data() {
     return {
       departmentInfo: {
+        departmentID: '',
         departmentName: '',
         departmentDesc: '',
         statusCode: '01',
@@ -65,7 +66,7 @@ export default defineComponent({
         this.departmentInfo = {...this.department}
         this.departmentInfoUpdate= {...this.departmentInfo}
       }
-      this.teacherFullName = this.department?.firstName?.concat(' - ', this.department?.lastName || '') || ''
+      this.teacherFullName = this.departmentInfo?.firstName?.concat(' - ', this.departmentInfo?.lastName || '') || ''
       this.onGetDepartmentManager();
     },
 
@@ -95,7 +96,7 @@ export default defineComponent({
       const reqBody: ManagerList_Req = {
         userID: "",
         roleID: "02",//02: Department Manager
-        pageSize: 50,
+        pageSize: 1000,
         pageNumber: 0
       }
       const res = await requestService.request(API_PATH.USER_LIST, reqBody, false) as ManagerList_Res;
