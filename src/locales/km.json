@@ -131,5 +131,18 @@
     "selectScheduleYear": "ជ្រើសរើសឆ្នាំសិក្សា",
     "selectDay": "ជ្រើសរើសថ្ងៃសិក្សា",
     "selectYear": "ជ្រើសរើសឆ្នាំ"
+  },
+  "studentClass":{
+    "title": "បញ្ជីសិស្ស",
+    "classID": "លេខសម្គាល់ថ្នាក់",
+    "subjectName": "ឈ្មោះមុខវិជ្ជា",
+    "subjectDesc": "ការពិពណ៌នាអំពីមុខវិជ្ជា",
+    "statusCode": "ស្ថានភាព",
+    "edit": "កែសម្រួល",
+    "register": "បញ្ចូលទិន្ន័យសិស្ស",
+    "editSub": "កែប្រែទិន្នន័យសិស្ស",
+    "selectClass": "ជ្រើសរើសថ្នាក់",
+    "subjectInfo": "ព័ត៌មានសិស្ស",
+    "addSubject": "បន្ថែមចូលតារាង"
   }
 }

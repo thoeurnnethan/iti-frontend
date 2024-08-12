@@ -132,5 +132,18 @@
     "selectScheduleYear": "Select Schedule Year",
     "selectDay": "Select Day",
     "selectYear": "Select Year"
+  },
+  "studentClass":{
+    "title": "Student List",
+    "classID": "Class ID",
+    "subjectName": "Subject Name",
+    "subjectDesc": "Subject Description",
+    "statusCode": "Status",
+    "edit": "Edit",
+    "register": "Register Student",
+    "editSub": "Edit Student",
+    "selectClass": "Select Class",
+    "subjectInfo": "Student Information",
+    "addSubject": "Add To List"
   }
 }

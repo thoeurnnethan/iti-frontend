@@ -1,0 +1,86 @@
+<Toast />
+<ConfirmDialog></ConfirmDialog>
+<div class="container-fluid d-flex flex-column we_box" style="overflow: hidden;">
+    <div class="container-fluid p-0 d-flex justify-content-between">
+        <div>
+            <font-awesome-icon :icon="['fa', 'book-open']" />&nbsp;
+            <span class="text_title">{{ $t('studentClass.title') }}</span>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark p-1 px-2 mx-2 m-2" @click="exportToExcel">
+                <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
+                <font-awesome-icon :icon="['fas', 'file-excel']" />
+            </button>
+            <button class="btn btn-primary p-1 px-2" @click="onClickInsert">
+                <span class="mx-1">{{ $t('common.addNew') }}</span>
+                <font-awesome-icon :icon="['fas', 'plus']" />
+            </button>
+        </div>
+    </div>
+    <div class="mt-3"></div>
+    <div class="float-end">
+        <button type="button" class="rad_right btn btn-dark p-2 px-2 float-end font_15"
+            @click.prevent="getSubjectList()">{{ $t('common.search') }}</button>
+        <InputGroup class="float-end w-25">
+            <InputText class="p-1 font_15 rad_left c_input b_shadow" @keyup.enter="getSubjectList()" v-model="searchKey"
+                :placeholder="$t('common.searchKey')" style="height: 40.5px;padding: 15px;" />
+        </InputGroup>
+    </div>
+</div>
+<div class="mt-3 we_box">
+    <div class="b_shadow">
+        <div class="card">
+            <DataTable 
+                v-model:expandedRowGroups="expandedRowGroups" 
+                :value="subjectList" 
+                tableStyle="min-width: 50rem"
+                expandableRowGroups 
+                rowGroupMode="subheader" 
+                groupRowsBy="classInfoID" 
+                sortMode="single" 
+                sortField="classID" 
+                :sortOrder="1"
+                :rowClass="rowClass">
+                <!-- Group Header -->
+                <template #groupheader="slotProps">
+                    <span class="vertical-align-middle ml-2 font-bold line-height-3 text-capitalize">{{ slotProps.data.className }} (Year: {{ slotProps.data.year }} Semster: {{ slotProps.data.semester}})</span>
+                    <button class="btn p-1 px-2 float-end btn-secondary" @click="onClickAdd(slotProps.data)">
+                        Add More Student
+                        <font-awesome-icon :icon="['fas', 'plus']" />
+                    </button>
+                </template>
+                <!-- Columns -->
+                <Column field="classInfoID" header="Class ID" style="min-width:100px"></Column>
+                <Column field="subjectName" header="Class Name" style="min-width: 150px"></Column>
+                <Column field="subjectDesc" header="Student Full Name" style="min-width: 150px"></Column>
+                <Column field="subjectDesc" header="Gender" style="min-width: 150px"></Column>
+                <Column field="subjectDesc" header="Date Of Birth" style="min-width: 150px"></Column>
+                <Column field="subjectDesc" header="Phone Number" style="min-width: 150px"></Column>
+                <Column field="statusCode" header="Status" style="max-width: 100px">
+                    <template #body="{ data }">
+                        {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
+                    </template>
+                </Column>
+                <!-- Action Column -->
+                <Column :header="$t('action.action')">
+                    <template #body="{ data }">
+                        <div v-if="data.statusCode === '01'" class="d-flex justify-content-center align-item-center">
+                            <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-white" :title="$t('action.edit')" />
+                            <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '09')" :icon="['fas', 'fa-archive']" class="text-white mx-2" :title="$t('action.inactive')" />
+                            <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" :icon="['fas', 'fa-trash']" class="text-white" :title="$t('action.delete')" />
+                        </div>
+                        <div v-else class="d-flex justify-content-center align-item-center">
+                            <div style="width: 24px; height: 24px;"></div>
+                            <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '01')" :icon="['fas', 'fa-rotate-back']" class="text-white mx-2" :title="$t('action.active')" />
+                            <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" :icon="['fas', 'fa-trash']" class="text-white" :title="$t('action.delete')" />
+                        </div>
+                    </template>
+                </Column>
+                <template #groupfooter="slotProps">
+                    <div class="d-flex justify-content-center align-items-center font-bold"><b>Total Student: {{ calculateTotalSubjects(slotProps.data.classInfoID) }}</b></div>
+                </template>
+            </DataTable>
+        </div>
+    </div>
+    <div class="p-1"></div>
+</div>

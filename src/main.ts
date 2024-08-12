@@ -152,6 +152,7 @@ import {
         faGear,
         faHouse,
         faHouseUser,
+        faLandmark,
         faLayerGroup,
         faListOl,
         faMessage,
@@ -213,6 +214,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
         library.add(faUsers); 
         library.add(faBoxArchive); 
         library.add(faCalendarDays); 
+        library.add(faLandmark); 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 //ionic

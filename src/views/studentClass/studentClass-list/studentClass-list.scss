@@ -1,0 +1,26 @@
+
+
+tr{
+  th,td{
+      font-size: 14px !important; 
+      white-space: nowrap;
+  }
+}
+.active-text {
+  text-shadow: 2px 2px 15px rgba(251, 34, 15, 0.9);
+  color: rgb(5, 255, 5);
+}
+.inactive-text{
+  color: red;
+}
+.pointer{
+  cursor: pointer;
+}
+.form-select:focus {
+  outline: none; 
+  box-shadow: none;
+}
+select , .c_input{
+  border: none;
+  height: 32.1px;
+}

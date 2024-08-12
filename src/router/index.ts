@@ -70,6 +70,11 @@ const router = createRouter({
                     component: () => import("@/views/subject/subject-list/subject-list.vue")
                 },
                 {
+                    path: "/studentClass-list",
+                    name: "studentClass-list",
+                    component: () => import("@/views/studentClass/studentClass-list/studentClass-list.vue")
+                },
+                {
                     path: "/schedule-list",
                     name: "schedule-list",
                     component: () => import("@/views/schedule/schedule-list/schedule-list.vue")
