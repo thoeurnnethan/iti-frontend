@@ -15,7 +15,7 @@
                             <div class="row d-flex justify-content-start">
                                 <div class="col-lg-5 col-md-6 mb-2">
                                     <label class="form-label font_15">{{ $t('subject.selectClass') }}</label><br>
-                                    <select class="form-select font-bold text-dark" v-model="studentClassInfo.classID" :disabled="isAdd || !isInsert">
+                                    <select class="form-select font-bold text-dark" v-model="studentClassInfo.classID">
                                         <option v-for="classItem in classList" :value="classItem.classInfoID">
                                             {{ classItem.className }} - (Y: {{ classItem.year }} - S: {{ classItem.semester }})
                                         </option>

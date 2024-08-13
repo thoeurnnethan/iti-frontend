@@ -13,11 +13,6 @@ export const DashboardService = {
                 "name": "departmentList"
             },
             {
-                "path": "/studentClass-list",
-                "iconClass": "fa-user-graduate",
-                "name": "studentList"
-            },
-            {
                 "path": "/class-list",
                 "iconClass": "fa-landmark",
                 "name": "classList",
