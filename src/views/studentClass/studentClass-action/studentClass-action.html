@@ -3,12 +3,8 @@
 <div class="popup">
     <div class="popWrap w70p">
         <div class="pop_head">
-            <div v-if="isAdd" class="w-100">
-                <h1 class="text-center text-dark" v-if="isAdd">Add More Subject</h1>
-            </div>
-            <div v-else class="w-100">
-                <h1 class="text-center text-dark" v-if="isInsert">Student Register</h1>
-                <h1 class="text-center text-dark" v-else>Student Edit</h1>
+            <div class="w-100">
+                <h1 class="text-center text-dark">Register Student To Classroom</h1>
             </div>
         </div>
         <div class="pop_cont">
@@ -16,11 +12,9 @@
                 <div class="container-fluid p-0">
                     <div class="row">
                         <div class="col-12">
-                            <div class="row d-flex justify-content-center">
+                            <div class="row d-flex justify-content-start">
                                 <div class="col-lg-5 col-md-6 mb-2">
-                                    <center>
-                                        <label class="form-label font_15"> {{ isInsert ? $t('subject.selectClass') : $t('class.className')}}</label><br>
-                                    </center>
+                                    <label class="form-label font_15">{{ $t('subject.selectClass') }}</label><br>
                                     <select class="form-select font-bold text-dark" v-model="studentClassInfo.classID" :disabled="isAdd || !isInsert">
                                         <option v-for="classItem in classList" :value="classItem.classInfoID">
                                             {{ classItem.className }} - (Y: {{ classItem.year }} - S: {{ classItem.semester }})
@@ -30,68 +24,32 @@
                             </div>
                         </div>
                     </div>
-                    <fieldset class="border rounded-3 pb-2">
-                        <legend class="float-none w-auto m_left20 px-2 h5">All Student</legend>
-                        <div class="row p-3">
-                            <div class="col-lg-6 col-md-4 mb-2">
-                                <label class="form-label font_15">Select Student</label><br>
-                                <select class="form-select font-bold text-dark" v-model="studentClassInfo.studentID" :disabled="isAdd || !isInsert">
-                                    <option v-for="studentItem in studentList" :value="studentItem.specificID">
-                                        {{ studentItem.specificID }} : {{ studentItem.firstName }} {{ studentItem.lastName }} ( {{ studentItem.gender }} )
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="col-lg-3 col-md-4 mb-2" v-if="!isInsert">
-                                <label class="form-label font_15">{{ $t('subject.statusCode') }}</label><br>
-                                <select class="form-select" v-model="subjectInfo.statusCode">
-                                    <option v-for="status in statusCodeList" :value="status.codeValue">
-                                        {{ status.codeValueDesc }}
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="col-lg-3 col-md-4 mb-2" v-if="isInsert">
-                                <button class="btn btn-info w-100" style="margin-top: 30.5px;" @click="onAddDataTableList">
-                                    <font-awesome-icon :icon="['fa', 'plus']" />
-                                    <span class="mx-2">{{ $t('subject.addSubject') }}11</span>
-                                </button>
-                            </div>
-                        </div>
-                    </fieldset>
                 </div>
 
-                <div class="row mt-4" v-if="isInsert && (isAdd || !isAdd)">
+                <div class="row mt-4">
                     <div class="col-12">
+                        <div class="container-fluid d-flex justify-content-end p-0 mb-3">
+                            <div class="w-25">
+                                <input  type="text"  v-model="searchQuery"  class="form-control"  placeholder="Search by full name" @keydown.enter="onSearch" />
+                            </div>
+                        </div>
+
                         <div class="we_shadow">
-                            <DataTable v-if="subjectList.length > 0" :value="subjectList">
-                                <Column field="no" :header="$t('common.no')" class="text-center"></Column>
+
+                            <DataTable 
+                                v-model:selection="selectedStudent" 
+                                :value="filteredStudentList"
+                                dataKey="specificID" 
+                                paginator 
+                                :rows="10"
+                            >
+                                <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
                                 <Column field="fullName" header="Student Full Name"></Column>
                                 <Column field="gender" header="Gender"></Column>
                                 <Column field="dateOfBirth" header="Date Of Birth"></Column>
-                                <Column field="phoneNumber" header="Phone Number"></Column>
-                                <Column header="Action" class="text-center">
-                                    <template #body="{ data }">
-                                        <font-awesome-icon style="cursor: pointer;" icon="fas fa-pencil" class="text-primary mx-2" title="Edit" @click="onClickEdit(data)"/>
-                                        <font-awesome-icon style="cursor: pointer;" icon="fa-solid fa-trash" class=" text-danger" title="Delete" @click="onClickDelete(data)"/>
-                                    </template>
-                                </Column>
+                                <Column field="phone" header="Phone Number"></Column>
                             </DataTable>
-                            <table v-else>
-                                <thead>
-                                    <tr class="text-capitalize">
-                                        <th class="we_text_color">{{ $t('common.no') }}</th>
-                                        <th class="we_text_color">Student Full Name</th>
-                                        <th class="we_text_color">Gender</th>
-                                        <th class="we_text_color">Date Of Birth</th>
-                                        <th class="we_text_color">Phone Number</th>
-                                        <th class="we_text_color">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="6" class="text-danger">{{ $t('common.noData') }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+
                         </div>
                     </div>
                 </div>
@@ -102,21 +60,9 @@
             <div class="footer_btn">
                 <div class="right_side">
                     <button class="btn03" style="width:185px" @click="onClose">{{ $t('common.cancel') }}</button>
-                    <div v-if="isInsert==true&&isAdd==false">
-                        <button class="btn01" style="width:185px" @click="registerSubjectInfo()">
-                            {{ $t('common.save') }} Register
-                        </button> 
-                    </div>
-                    <div v-if="isInsert==true&&isAdd==true">
-                        <button class="btn01" style="width:185px" @click="addSubjectInfo()">
-                            {{ $t('common.save') }} Add
-                        </button> 
-                    </div>
-                    <div v-if="isInsert==false&&isAdd==false">
-                        <button class="btn01" style="width:185px" @click="updateSubjectInfo()">
-                            {{ $t('common.save') }} Update
-                        </button> 
-                    </div>
+                    <button class="btn01" style="width:185px" @click="saveStudent()">
+                        {{ $t('common.save') }}
+                    </button> 
                 </div>
             </div>
         </div>

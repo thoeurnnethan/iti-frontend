@@ -9,6 +9,7 @@ import studentClass_action from '../studentClass-action/studentClass-action.vue'
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import { YearList , SemesterList, globalStatusCodeList } from '@/shared/common/common';
 import MyLoading from '../../MyLoading.vue';
+import { TEACHER_RES } from '@/shared/types/user-list';
 
 const requestService = new RequestService();
 const exportExcel = new ExportExcel();
@@ -26,6 +27,7 @@ export default defineComponent({
       statusCodeList: globalStatusCodeList,
       studentClassList: [] as STUDENT_CLASS_LIST[],
       studentClassInfo: {} as STUDENT_CLASS_LIST,
+      studentList: [] as TEACHER_RES[],
       selectTime:'',
       searchKey: '',
       Loading: false,
@@ -34,16 +36,33 @@ export default defineComponent({
       pageNumber: 0,
       startingIndex: 1,
       expandedRowGroups: null,
-      selectClassId:''
+      selectClassId:'',
+      selectedStudent:{}
     }
   },
 
   mounted() {
     this.getStudentClassList();
+    this.onGetStudentList();
   },
 
   methods: {
+    async onGetStudentList() {
+      const reqBody = {
+        searchKey: this.searchKey, // Use the search key here
+        roleID: '04',
+        pageSize: 1000,
+        pageNumber: 1
+      };
+      const response = await requestService.request(API_PATH.USER_LIST, reqBody, false) as TEACHER_RES;
 
+      if (response.body?.userList) {
+        this.studentList = response.body.userList.map(student => ({
+          ...student,
+          fullName: `${student.firstName} ${student.lastName}`
+        }));
+      }
+    },
     async getStudentClassList() {
       this.Loading = true;
       const reqBody: STUDENT_CLASS_LIST_REQ = {

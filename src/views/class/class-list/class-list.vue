@@ -99,17 +99,23 @@ export default defineComponent({
     },
 
     async onClickRow() {
-      const body = {
+      const body_1 = {
         classID: this.classInfo?.classID,
         classYear: this.classInfo?.year,
         semester: this.classInfo?.semester,
       };
-      const response = await requestService.request(API_PATH.SUBJECT_LIST, body, false);
+      const responseSubject = await requestService.request(API_PATH.SUBJECT_LIST, body_1, false);
+
+      const body_2 = {
+        classInfoID: this.classInfo?.classInfoID
+      };
+      const responseStudent = await requestService.request(API_PATH.STUDENT_CLASS_LIST, body_2, false);
 
       this.$popupService.onOpen({
           component: class_detail,
           dataProp: {
-            subjectDetails: response.body.subjectList
+            subjectDetails: responseSubject.body.subjectList,
+            studentDetails: responseStudent.body.studentList
           }
       })
     },

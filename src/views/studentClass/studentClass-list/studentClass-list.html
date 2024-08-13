@@ -31,54 +31,17 @@
     <div class="b_shadow">
         <div class="card">
             <DataTable 
-                v-model:expandedRowGroups="expandedRowGroups" 
-                :value="subjectList" 
-                tableStyle="min-width: 50rem"
-                expandableRowGroups 
-                rowGroupMode="subheader" 
-                groupRowsBy="classInfoID" 
-                sortMode="single" 
-                sortField="classID" 
-                :sortOrder="1"
-                :rowClass="rowClass">
-                <!-- Group Header -->
-                <template #groupheader="slotProps">
-                    <span class="vertical-align-middle ml-2 font-bold line-height-3 text-capitalize">{{ slotProps.data.className }} (Year: {{ slotProps.data.year }} Semster: {{ slotProps.data.semester}})</span>
-                    <button class="btn p-1 px-2 float-end btn-secondary" @click="onClickAdd(slotProps.data)">
-                        Add More Student
-                        <font-awesome-icon :icon="['fas', 'plus']" />
-                    </button>
-                </template>
-                <!-- Columns -->
-                <Column field="classInfoID" header="Class ID" style="min-width:100px"></Column>
-                <Column field="subjectName" header="Class Name" style="min-width: 150px"></Column>
-                <Column field="subjectDesc" header="Student Full Name" style="min-width: 150px"></Column>
-                <Column field="subjectDesc" header="Gender" style="min-width: 150px"></Column>
-                <Column field="subjectDesc" header="Date Of Birth" style="min-width: 150px"></Column>
-                <Column field="subjectDesc" header="Phone Number" style="min-width: 150px"></Column>
-                <Column field="statusCode" header="Status" style="max-width: 100px">
-                    <template #body="{ data }">
-                        {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
-                    </template>
-                </Column>
-                <!-- Action Column -->
-                <Column :header="$t('action.action')">
-                    <template #body="{ data }">
-                        <div v-if="data.statusCode === '01'" class="d-flex justify-content-center align-item-center">
-                            <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-white" :title="$t('action.edit')" />
-                            <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '09')" :icon="['fas', 'fa-archive']" class="text-white mx-2" :title="$t('action.inactive')" />
-                            <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" :icon="['fas', 'fa-trash']" class="text-white" :title="$t('action.delete')" />
-                        </div>
-                        <div v-else class="d-flex justify-content-center align-item-center">
-                            <div style="width: 24px; height: 24px;"></div>
-                            <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '01')" :icon="['fas', 'fa-rotate-back']" class="text-white mx-2" :title="$t('action.active')" />
-                            <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" :icon="['fas', 'fa-trash']" class="text-white" :title="$t('action.delete')" />
-                        </div>
-                    </template>
-                </Column>
-                <template #groupfooter="slotProps">
-                    <div class="d-flex justify-content-center align-items-center font-bold"><b>Total Student: {{ calculateTotalSubjects(slotProps.data.classInfoID) }}</b></div>
-                </template>
+                v-model:selection="selectedStudent" 
+                :value="studentList"
+                dataKey="studentID" 
+                paginator 
+                :rows="10"
+            >
+                <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+                <Column field="fullName" header="Student Full Name"></Column>
+                <Column field="gender" header="Gender"></Column>
+                <Column field="dateOfBirth" header="Date Of Birth"></Column>
+                <Column field="phone" header="Phone Number"></Column>
             </DataTable>
         </div>
     </div>

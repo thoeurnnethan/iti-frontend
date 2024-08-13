@@ -1,5 +1,6 @@
 
 export interface STUDENT_CLASS_LIST {
+[x: string]: any
   classID?: string 
   classYear?: string 
   semester?: string 
