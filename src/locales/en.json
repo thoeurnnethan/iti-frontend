@@ -22,7 +22,8 @@
     "totalMale": "Male",
     "totalFemale": "Female",
     "downloadExcel": "Download Excel",
-    "noData": "No data records available."
+    "noData": "No data records available.",
+    "noScheduleData": "Cannot find Schedule Information. Did you register it yet?"
   },
   "action":{
     "edit" : "Edit",
@@ -131,7 +132,14 @@
     "title": "Schedule List",
     "selectScheduleYear": "Select Schedule Year",
     "selectDay": "Select Day",
-    "selectYear": "Select Year"
+    "selectYear": "Select Year",
+    "clearFilter": "Clear Filter",
+    "weekly": "Weekly Schedule",
+    "year": "Year",
+    "major": "Major",
+    "classYear": "Year",
+    "semester": "Semester",
+    "generation": "Generation"
   },
   "studentClass":{
     "title": "Student List",

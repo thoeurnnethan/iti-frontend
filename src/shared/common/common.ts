@@ -31,7 +31,6 @@ export const YearList: StandardCodeData[] = [
   { codeValue: '2', codeValueDesc: 'Year 2' },
   { codeValue: '3', codeValueDesc: 'Year 3' },
   { codeValue: '4', codeValueDesc: 'Year 4' },
-  { codeValue: '5', codeValueDesc: 'Year 5' },
 ];
 
 export const SemesterList: StandardCodeData[] = [

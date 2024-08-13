@@ -22,7 +22,8 @@
     "totalMale": "ប្រុស",
     "totalFemale": "ស្រី",
     "downloadExcel": "ទាញយក Excel",
-    "noData": "មិនមានកំណត់ត្រាទិន្ន័យទេ"
+    "noData": "មិនមានកំណត់ត្រាទិន្ន័យទេ",
+    "noScheduleData": "ពុំមានទិន្នន័យកាលវិភាគទេ។ តើអ្នកបានបញ្ចូលរួចរាល់ហើយឫ?"
   },
   "action":{
     "edit" : "កែសម្រួល",
@@ -130,7 +131,14 @@
     "title": "បញ្ជីកាលវិភាគ",
     "selectScheduleYear": "ជ្រើសរើសឆ្នាំសិក្សា",
     "selectDay": "ជ្រើសរើសថ្ងៃសិក្សា",
-    "selectYear": "ជ្រើសរើសឆ្នាំ"
+    "selectYear": "ជ្រើសរើសឆ្នាំ",
+    "clearFilter": "សម្អាត Filter",
+    "weekly": "កាលវិភាគប្រចាំសប្តាហ៏",
+    "year": "ឆ្នាំសិក្សា",
+    "major": "ជំនាញ",
+    "classYear": "ឆ្នាំទី",
+    "semester": "ឆមាសទី",
+    "generation": "ជំនាន់ទី"
   },
   "studentClass":{
     "title": "បញ្ជីសិស្ស",

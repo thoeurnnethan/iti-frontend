@@ -8,7 +8,7 @@
             <font-awesome-icon :icon="['fa', 'shop']" />
             <span class="text_title mx-1">{{ $t('schedule.title') }}</span>
         </div>
-        <div>
+        <!-- <div>
             <button type="button" class="btn btn-dark p-1 px-2" @click="exportToExcel">
                 <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
                 <font-awesome-icon :icon="['fas', 'file-excel']" />
@@ -17,7 +17,7 @@
                 <span class="mx-1">{{ $t('common.addNew') }}</span>
                 <font-awesome-icon :icon="['fas', 'plus']" />
             </button>
-        </div>
+        </div> -->
     </div>
     <!-- header -->
     <div class="container-fluid px-0 py-4">
@@ -31,32 +31,30 @@
             <div class="col-md-3 mb-2">
                 <label class="form-label font_14">{{ $t('schedule.selectYear') }}</label>
                 <select class="form-select" v-model="filterInfo.classYear" @change="getClassList">
-                    <option v-for="year in yearList" :value="year.codeValue">
-                        {{ year.codeValueDesc }}
+                    <option v-for="year in yearList" :value="year.codeValue" :style="{ display: !year.codeValue ? 'none' : 'block' }">
+                        <span v-if="year.codeValue">{{ year.codeValueDesc }}</span>
                     </option>
                 </select>
             </div>
             <div class="col-md-3 mb-2">
                 <label class="form-label font_14">{{ $t('class.selectSemester') }}</label>
                 <select class="form-select" v-model="filterInfo.semester" @change="getClassList">
-                    <option v-for="semester in semesterList" :value="semester.codeValue">
-                        {{ semester.codeValueDesc }}
+                    <option v-for="semester in semesterList" :value="semester.codeValue" :style="{ display: !semester.codeValue ? 'none' : 'block' }">
+                        <span v-if="semester.codeValue">{{ semester.codeValueDesc }}</span>
                     </option>
                 </select>
             </div>
             <div class="col-md-3 mb-2">
                 <label class="form-label font_14">{{ $t('class.selectDepartment') }}</label>
                 <select class="form-select" v-model="filterInfo.departmentID">
-                    <option value="">All</option>
                     <option v-for="department in departmentList" :key="department.departmentID" :value="department.departmentID">
                         {{ department.departmentID }} - {{ department.departmentName }}
                     </option>
                 </select>
             </div>
-            <div class="col-md-3 mb-2" v-if="filterInfo.departmentID">
+            <div class="col-md-3 mb-2">
                 <label class="form-label font_14">{{ $t('class.selectClass') }}</label>
                 <select class="form-select" v-model="filterInfo.classID">
-                    <option value="">All</option>
                     <option v-for="classInfo in classList" :key="classInfo.classID" :value="classInfo.classID">
                         {{ classInfo.classID }} - {{ classInfo.className }}
                     </option>
@@ -66,7 +64,7 @@
     </div>
     <!-- search-bar -->
     <div class="d-flex justify-content-end float-end mt-3">
-        <button class="btn btn-info mx-2" @click="onClickClearFilter">Clear Filter</button>
+        <button class="btn btn-info mx-2" @click="onClickClearFilter">{{ $t('schedule.clearFilter') }}</button>
         <InputGroup class="float-end w-25">
             <InputText @keyup.enter="onGetScheduleListDynamicColumn()" class="p-1 font_15 rad_left b_shadow c_input" 
                 v-model="filterInfo.searchKey"
@@ -80,11 +78,11 @@
 </div>
 
 <div class="we_box mt-3">
-    <div class="b_shadow">
+    <div class="b_shadow" v-if="isValidFilter && rows.length > 0">
         <div class="conainter-fluid d-flex flex-column justify-content-center align-items-center pt-2 pb-4">
-            <p class="p-0">Weekly Schedule</p>
-            <p class="p-0">Year: {{ scheduleHeader.scheduleYear }}</p>
-            <p class="p-0">Major: {{ scheduleHeader.className }} Year: {{ scheduleHeader.classYear }} Semester: {{ scheduleHeader.semester }} Generation: {{ scheduleHeader.generation }} (Night)</p>
+            <p class="p-1 m-0 schedule_header">{{ $t('schedule.weekly') }}</p>
+            <p class="p-1 m-0 schedule_header">{{ $t('schedule.year') }} {{ filterInfo.scheduleYear }}</p>
+            <p class="p-1 m-0 schedule_header">{{ $t('schedule.major') }} {{ scheduleHeader.className }} {{ $t('schedule.classYear') }} {{ scheduleHeader.classYear }} {{ $t('schedule.semester') }} {{ scheduleHeader.semester }} {{ $t('schedule.generation') }} {{ scheduleHeader.generation }}</p>
         </div>
         <DataTable 
             v-model:selection="scheduleInfo" 
@@ -106,7 +104,7 @@
             </Column>
             <Column v-for="col in columns" :key="col.field" :field="col.field" :header="col.header" style="min-width: 300px;">
                 <template #body="slotProps">
-                    <div class="container" v-if="slotProps.data[col.field].scheduleDay">
+                    <div class="container" v-if="slotProps.data[col.field].subjectName">
                         <div class="row text-center">
                             <span class="com-md-12">Subject: {{ slotProps.data[col.field].subjectName }}</span>
                         </div>
@@ -123,12 +121,13 @@
                             <span class="com-md-12">Floor: {{ slotProps.data[col.field].floor }}</span>
                         </div>
                     </div>
-                    <div v-else>
-                        <center>X</center>
+                    <div v-else class="text-center">
+                        <span>X</span>
                     </div>
                 </template>
             </Column>
         </DataTable>
     </div>
+    <span class="d-flex justify-content-center p-3 text-center text-danger" v-else-if="isValidFilter && rows.length <= 0">{{ $t('common.noScheduleData') }}</span>
     <div class="p-1"></div>
 </div>

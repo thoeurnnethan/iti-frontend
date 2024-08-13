@@ -34,8 +34,8 @@ export default defineComponent({
       scheduleHeader: {},
       filterInfo: {
         scheduleYear: new Date().getFullYear().toString(),
-        classYear: '',
-        semester: '',
+        classYear: '1',
+        semester: '1',
         departmentID: '',
         classID: '',
         searchKey: ''
@@ -47,7 +47,15 @@ export default defineComponent({
 
   watch:{
     'filterInfo.departmentID'() {
-      this.getClassList();
+      this.resetTable()
+      this.filterInfo.classID = ''
+      this.getClassList()
+    }, 
+    'filterInfo.classID'(){
+      this.resetTable()
+      if(this.isValidFilter){
+        this.onGetScheduleListDynamicColumn()
+      }
     }
   },
 
@@ -55,6 +63,12 @@ export default defineComponent({
     isSelectedDepartment(): boolean{
       return this.filterInfo.departmentID !== '';
     },
+    isValidFilter(): boolean{
+      return this.filterInfo.classYear !== '' &&
+      this.filterInfo.semester !== '' &&
+      this.filterInfo.departmentID !== '' &&
+      this.filterInfo.classID !== ''
+    }
   },
 
   mounted() {
@@ -132,12 +146,17 @@ export default defineComponent({
     onClickClearFilter(){
       this.filterInfo= {
         scheduleYear: new Date().getFullYear().toString(),
-        classYear: '',
-        semester: '',
+        classYear: '1',
+        semester: '1',
         departmentID: '',
         classID: '',
         searchKey: ''
       },
+      this.resetTable
+      this.classList = []
+    },
+
+    resetTable(){
       this.rows = []
       this.columns = []
     },
@@ -156,10 +175,11 @@ export default defineComponent({
       }
       return years;
     }
+
   },
 })
 </script>
 
 <style scoped>
-  /* @import url('./schedule-list.scss'); */
+  @import url('./schedule-list.scss');
 </style>
