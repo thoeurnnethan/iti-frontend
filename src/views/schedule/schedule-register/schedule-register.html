@@ -2,8 +2,7 @@
 <Toast />
 <ConfirmDialog></ConfirmDialog>
 <div class="container-fluid d-flex flex-column we_box" style="overflow: hidden;">
-    <!-- header -->
-    <div class="container-fluid px-0 py-4">
+    <div class="container-fluid px-0 py-3">
         <div class="row">
             <div class="col-md-3 mb-2">
                 <label class="form-label font_14">{{ $t('schedule.selectScheduleYear') }}</label>
@@ -52,99 +51,101 @@
                 </select>
             </div>
             <div class="col-md-3 mb-2" v-if="isSelectedDepartment">
-                <label class="form-label font_14">Select Teacher From Selected Department</label>
+                <label class="form-label font_14">{{ $t('schedule.filterTeacher') }}</label>
                 <Checkbox class="d-flex justify-content-center align-content-center" v-model="checkedAllTeacher" :binary="true" />
             </div>
         </div>
-    </div>
-</div>
-
-<div class="we_box mt-3">
-    <div class="container-fluid p-3">
         <div class="row">
-            <div class="col-md-3 mb-2">
-                <label class="form-label font_14">Start Time</label>
-                <select class="form-select" v-model="scheduleInfo.startTime">
-                    <option v-for="time in startTimeList" :value="time.codeValue">{{ time.codeValueDesc }}</option>
-                </select>
-            </div>
-            <div class="col-md-3 mb-2">
-                <label class="form-label font_14">End Time</label>
-                <select class="form-select" v-model="scheduleInfo.endTime">
-                    <option v-for="time in endTimeList" :value="time.codeValue">{{ time.codeValueDesc }}</option>
-                </select>
-            </div>
-            <div class="col-md-3 mb-2">
-                <label class="form-label font_14">Teacher</label>
-                <select class="form-select" v-model="teacherInfo">
-                    <option v-for="teacher in teacherList" :value="teacher" :style="{ display: !teacher.teacherID ? 'none' : 'block' }">
-                        <span>{{ teacher.teacherID }} - {{ teacher.firstName }} {{ teacher.lastName }}</span>
-                    </option>
-                </select>
-            </div>
-            <div class="col-md-3 mb-2">
-                <label class="form-label font_14">Subject</label>
-                <select class="form-select" v-model="subjectInfo">
-                    <option v-for="subject in subjectList" :value="subject">
-                        <p>{{ subject.subjectName }}</p>
-                    </option>
-                </select>
-            </div>
-            <div class="col-md-3 mb-2">
-                <label class="form-label font_14">Room</label>
-                <select class="form-select" v-model="roomInfo">
-                    <option v-for="room in roomList" :value="room">
-                        <p>{{ room.roomName }}</p>
-                    </option>
-                </select>
-            </div>
-            <div class="col-md-3 mb-2">
-                <button class="btn btn-outline-secondary text-dark" style="margin-top: 29px !important;" @click="onClickAddToList">Add To List</button>
+            <div class="container-fluid d-flex justify-content-end">
+                <button class="btn btn-info" @click="onClickClearFilter">{{ $t('schedule.clearFilter') }}</button>
             </div>
         </div>
     </div>
-    <div class="we_shadow p-3">
-        <DataTable :value="scheduleList"
-            v-model:selection="rowData" >
-            <Column field="seqNo" header="No" class="text-center"></Column>
-            <Column header="Start Time" class="text-center">
-                <template #body="{ data }">
-                    {{ convertTime(data.startTime) }}
-                </template>
-            </Column>
-            <Column header="End Time" class="text-center">
-                <template #body="{ data }">
-                    {{ convertTime(data.endTime) }}
-                </template>
-            </Column>
-            <Column header="Teacher">
-                <template #body="{ data }">
-                    <span>{{ data.firstName }} {{ data.lastName }}</span>
-                </template>
-            </Column>
-            <Column field="subjectName" header="Subject"></Column>
-            <Column field="roomName" header="Room"></Column>
-            <Column field="validYn" header="Status"></Column>
-            <Column header="Action">
-                <template #body="{ data }">
-                    <div class="container-fluid justify-content-center align-item-center">
-                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" 
-                        @click="onClickBtnDelete(data)"
-                        :icon="['fas', 'fa-trash']" class="text-white" :title="$t('action.delete')" />
-                    </div>
-                </template>
-            </Column>
-        </DataTable>
-        <div class="container-fluid my-3">
-            <div class="row">
-                <div class="col-md-1">
-                    <button class="btn btn-outline-info" @click="onClickValidate">Validate</button>
-                </div>
-                <div class="col-md-1">
-                    <button class="btn btn-outline-success" @click="onClickSave">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="p-1"></div>
 </div>
+<BlockUI :blocked="!isValidFilterInfo">
+    <div class="we_box mt-3">
+        <div class="container-fluid p-3">
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <label class="form-label font_14">{{ $t('schedule.startTime') }}</label>
+                    <select class="form-select" v-model="scheduleInfo.startTime">
+                        <option v-for="time in startTimeList" :value="time.codeValue">{{ time.codeValueDesc }}</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label class="form-label font_14">{{ $t('schedule.endTime') }}</label>
+                    <select class="form-select" v-model="scheduleInfo.endTime">
+                        <option v-for="time in endTimeList" :value="time.codeValue">{{ time.codeValueDesc }}</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label class="form-label font_14">{{ $t('schedule.teacher') }}</label>
+                    <select class="form-select" v-model="teacherInfo">
+                        <option v-for="teacher in teacherList" :value="teacher" :style="{ display: !teacher.teacherID ? 'none' : 'block' }">
+                            <span>{{ teacher.teacherID }} - {{ teacher.firstName }} {{ teacher.lastName }}</span>
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label class="form-label font_14">{{ $t('schedule.subject') }}</label>
+                    <select class="form-select" v-model="subjectInfo">
+                        <option v-for="subject in subjectList" :value="subject">
+                            <p>{{ subject.subjectName }}</p>
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label class="form-label font_14">{{ $t('schedule.room') }}</label>
+                    <select class="form-select" v-model="roomInfo">
+                        <option v-for="room in roomList" :value="room">
+                            <p>{{ room.roomName }}</p>
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <button class="btn btn-outline-secondary text-dark" style="margin-top: 29px !important;" @click="onClickAddToList">{{ $t('schedule.addToList') }}</button>
+                </div>
+            </div>
+        </div>
+        <div class="we_shadow p-3">
+            <div class="row p-2">
+                <div class="col-md-2">
+                    <button class="btn btn-danger" @click="onClickBtnDelete()" :disabled="isDisableDeleteBtn">{{ $t('schedule.deleteLastRecord') }}</button>
+                </div>
+            </div>
+            <DataTable :value="scheduleList"
+                v-model:selection="rowData" >
+                <Column field="seqNo" :header="$t('schedule.no')" class="text-center"></Column>
+                <Column :header="$t('schedule.startTime')">
+                    <template #body="{ data }">
+                        {{ convertTime(data.startTime) }}
+                    </template>
+                </Column>
+                <Column :header="$t('schedule.endTime')">
+                    <template #body="{ data }">
+                        {{ convertTime(data.endTime) }}
+                    </template>
+                </Column>
+                <Column :header="$t('schedule.teacher')">
+                    <template #body="{ data }">
+                        <span>{{ data.firstName }} {{ data.lastName }}</span>
+                    </template>
+                </Column>
+                <Column field="subjectName" :header="$t('schedule.subject')"></Column>
+                <Column field="roomName" :header="$t('schedule.room')"></Column>
+                <Column field="validYn" :header="$t('schedule.result')" class="text-center"></Column>
+            </DataTable>
+            <div class="container-fluid my-3">
+                <div class="row">
+                    <div class="col-md-1">
+                        <button class="btn btn-outline-info" @click="onClickValidate" :disabled="isDisableDeleteBtn">Validate</button>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-outline-success" @click="onClickSave" :disabled="isValidateFail">{{ $t('common.save') }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-1"></div>
+    </div>
+</BlockUI>

@@ -59,6 +59,8 @@ export default defineComponent({
         roomID: '',
       } as SCHEDULE_LIST,
       checkedAllTeacher: true,
+      isValidateFail: true,
+      lastEndTime: '',
       pageSize: 10,
       pageNumber: 0,
     }
@@ -106,6 +108,9 @@ export default defineComponent({
       this.filterInfo.semester !== '' &&
       this.filterInfo.departmentID !== '' &&
       this.filterInfo.scheduleDay !== '';
+    },
+    isDisableDeleteBtn(): boolean {
+      return this.scheduleList.length <= 0;
     }
   },
 
@@ -215,6 +220,7 @@ export default defineComponent({
     },
 
     onClickAddToList(){
+      this.lastEndTime = this.scheduleInfo.endTime
       const data = {
         schDay: this.filterInfo.scheduleDay,
         seqNo: (this.scheduleList.length + 1),
@@ -231,14 +237,18 @@ export default defineComponent({
         validYn: '',
       } as SCHEDULE_LIST
       this.scheduleList.push(data)
-      this.resetFormSchedule()
+      this.resetFormSchedule(false)
     },
 
-    onClickBtnDelete(item: SCHEDULE_LIST){
-      this.scheduleList = this.scheduleList.filter(data => data.seqNo !== item.seqNo)
-      this.scheduleList.forEach((subject, index) => {
-        subject.seqNo = index + 1;
-      });
+    onClickBtnDelete(){
+      const lastItem = this.scheduleList[this.scheduleList.length - 1];
+      this.scheduleList = this.scheduleList.filter(data => data.seqNo !== lastItem.seqNo)
+      this.lastEndTime = lastItem.startTime
+      if(this.scheduleList.length > 0){
+        const lastSchedule = this.scheduleList[this.scheduleList.length - 1];
+        this.lastEndTime = lastSchedule.endTime
+        this.filterStartTime(this.lastEndTime)
+      }
     },
 
     async onClickValidate(){
@@ -254,7 +264,12 @@ export default defineComponent({
       this.scheduleList = res.body.scheduleList.map((data: { duplicateTimeYn: string; duplicateTeacherYn: string; }) =>{
         return {
           ...data,
-          validYn: data.duplicateTimeYn === 'Y' ? "Schedule Duplicate Time" : data.duplicateTeacherYn === 'Y' ? 'Teacher Duplicate Time' : ''
+          validYn: data.duplicateTimeYn === 'Y' ? "Schedule Duplicate Time" : data.duplicateTeacherYn === 'Y' ? 'Teacher Duplicate Time' : 'Yes'
+        }
+      });
+      this.scheduleList.map((data) => {
+        if(data.validYn === 'Yes'){
+          this.isValidateFail = false;
         }
       })
     },
@@ -274,14 +289,21 @@ export default defineComponent({
     onClickClearFilter(){
       this.filterInfo= {
         scheduleYear: new Date().getFullYear().toString(),
+        scheduleDay: '',
         classYear: '',
         semester: '',
         departmentID: '',
         classID: '',
         searchKey: ''
-      },
-      this.rows = []
-      this.columns = []
+      }
+      this.scheduleInfo = {
+        startTime: '',
+        endTime: '',
+        teacherID: '',
+        subjectID: '',
+        roomID: this.roomInfo.roomID,
+      } as SCHEDULE_LIST
+      this.resetFormSchedule(true)
     },
 
     convertTime(time:string){
@@ -327,11 +349,16 @@ export default defineComponent({
         this.endTimeList = this.endTimeList.filter(time => (Number(time.codeValue) > Number(selectHour)));
       }else{
         this.startTimeList = this.generateScheduleTime()
-        this.startTimeList = this.startTimeList.filter(time => (Number(time.codeValue) < Number(selectHour)));
+        this.startTimeList = this.startTimeList.filter(time => (Number(time.codeValue) <= Number(selectHour)));
       }
     },
 
-    resetFormSchedule(){
+    filterStartTime(lastEndTime: string){
+      this.startTimeList = this.generateScheduleTime()
+      this.startTimeList = this.startTimeList.filter(time => (Number(time.codeValue) >= Number(lastEndTime)));
+    },
+
+    resetFormSchedule(isClearFilter: boolean){
       this.scheduleInfo = {
         startTime: '',
         endTime: '',
@@ -341,9 +368,14 @@ export default defineComponent({
       } as SCHEDULE_LIST,
       this.teacherInfo = {} as TEACHER_LIST,
       this.subjectInfo = {} as SUBJECT_LIST
-      this.startTimeList = this.endTimeList = this.generateScheduleTime()
+      if(!isClearFilter){
+        this.filterStartTime(this.lastEndTime)
+      }else{
+        this.roomInfo = {} as ROOM_LIST
+        this.scheduleList = [],
+        this.startTimeList = this.endTimeList = this.generateScheduleTime()
+      }
     }
-
   }
 })
 </script>

@@ -138,7 +138,17 @@
     "major": "ជំនាញ",
     "classYear": "ឆ្នាំទី",
     "semester": "ឆមាសទី",
-    "generation": "ជំនាន់ទី"
+    "generation": "ជំនាន់ទី",
+    "filterTeacher": "ជ្រើសរើសគ្រូពីដេប៉ាតឺម៉ង់ដែលបានជ្រើសរើស",
+    "startTime": "ម៉ោងចាប់ផ្តើម",
+    "endTime": "ម៉ោងបញ្ចប់",
+    "teacher": "លោកគ្រូ/អ្នកគ្រូ",
+    "subject": "មុខវិជ្ជា",
+    "room": "បន្ទប់",
+    "addToList": "បន្ថែមចូលតារាង",
+    "deleteLastRecord": "លុប Record ចុងក្រោយ",
+    "no": "លេខរៀង",
+    "result": "លទ្ធផល"
   },
   "studentClass":{
     "title": "បញ្ជីសិស្ស",

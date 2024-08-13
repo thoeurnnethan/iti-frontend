@@ -139,7 +139,17 @@
     "major": "Major",
     "classYear": "Year",
     "semester": "Semester",
-    "generation": "Generation"
+    "generation": "Generation",
+    "filterTeacher": "Select teacher from selected department",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "teacher": "Teacher",
+    "subject": "Subject",
+    "room": "Room",
+    "addToList": "Add To List",
+    "deleteLastRecord": "Delete Last Record",
+    "no": "No",
+    "result": "Result"
   },
   "studentClass":{
     "title": "Student List",
