@@ -30,9 +30,20 @@
                             <Column field="studentID" header="Student ID" />
                             <Column field="fullName" header="Full Name" />
                             <Column field="gender" header="Gender" />
-                            <Column field="dateOfBirth" header="Date of Birth" />
-                            <Column field="phoneNumber" header="Phone Number" />
-                            <Column field="statusCode" header="Status Code" />
+                            <Column field="dateOfBirth" header="Date of Birth">
+                                <template #body="{ data }">
+                                    {{ $format.formatDateTime(data.dateOfBirth,'yyyy-mm-dd') }}
+                                </template>
+                            </Column>
+                            <Column field="phoneNumber" header="Phone Number">
+                                <template #body="{ data }">
+                                    {{ $phoneNumberFormater.formatPhoneNumber(data.phoneNumber) }}
+                                </template>
+                            </Column>
+                            <Column field="status" header="Status Code" />
+                            <template #body="{ data }">
+                                {{ $codeConverter.codeToString(studentInfo, data.statusCode) }}
+                            </template>
                         </DataTable>
                         <table v-else>
                             <tr rowspan="7">
