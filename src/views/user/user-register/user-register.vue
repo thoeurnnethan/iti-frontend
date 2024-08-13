@@ -6,6 +6,8 @@ import { USER_LIST, QUALIFICATION_LIST, PARENT_LIST, ACADEMIC_LIST, USER_DETAIL_
 import { RequestService } from '@/shared/services/request-service';
 import { defineComponent } from 'vue';
 import { TeacherRoleList } from '@/shared/common/common';
+import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class-list';
+import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 const requestService = new RequestService();
 
 export default defineComponent({
@@ -26,6 +28,8 @@ export default defineComponent({
                 address: '',
                 phone: '',
                 email: '',
+                classInfoID: '',
+                departmentID: '',
             } as USER_LIST,
             fatherInfo: {
                 firstName: '',
@@ -93,6 +97,8 @@ export default defineComponent({
                 address: false,
                 phone: false
             } as PARENT_LIST_FORM_CHECK,
+            classList: [] as CLASS_LIST[],
+            departmentList: [] as DEPARTMENT_LIST[],
 
             customRowClass: 'col-lg-4 col-sm-6 col-xl-3 mb-2',
             customFormClass: 'form-label font_15',
@@ -113,6 +119,13 @@ export default defineComponent({
     mounted() {
         if (!this.isRegisterRoute) {
             this.getUserDetailSummary();
+        }
+        if(this.isRegisterRoute){
+            if(this.isRegisterStudent){
+                this.getClassList()
+            }else{
+                this.getDepartmentList()
+            }
         }
     },
 
@@ -259,6 +272,7 @@ export default defineComponent({
                 roleID: this.isRegisterStudent? this.userSelectedRole : this.teacherSelectedRole,
                 dateOfBirth: this.formatDateDatabase(this.userInfo.dateOfBirth),
                 teacherInfo:{
+                    departmentID: this.userInfo.departmentID,
                     qualificationList: qualList
                 }
             }
@@ -271,6 +285,17 @@ export default defineComponent({
                 this.resetForm()
             }
             // this.$router.push('/user-list');
+        },
+
+        async getDepartmentList() {
+            const reqBody: DEPARTMENT_LIST_REQ = {
+                userID: "",
+                searchKey: '',
+                pageSize: 1000,
+                pageNumber: 1
+            }
+            const response = (await requestService.request(API_PATH.DEPARTMENT_LIST, reqBody, false)) as DEPARTMENT_LIST_RES;
+            this.departmentList = response.body?.departmentList
         },
 
         addQualificationToList() {
@@ -395,6 +420,7 @@ export default defineComponent({
                 roleID: this.userSelectedRole,
                 dateOfBirth: this.formatDateDatabase(this.userInfo.dateOfBirth),
                 studentInfo: {
+                    classInfoID: this.userInfo.classInfoID,
                     parentList: [
                         this.fatherInfo,
                         this.motherInfo
@@ -407,6 +433,23 @@ export default defineComponent({
                 userList: this.userList
             };
             await requestService.request(API_PATH.USER_REGISTER, reqBody, true);
+        },
+
+        async getClassList() {
+            const reqBody: CLASS_LIST_REQ = {
+                classID: '',
+                departmentID: '',
+                searchKey: '',
+                year: '',
+                semester: '',
+                generation: '',
+                pageSize: 1000,
+                pageNumber:  1
+            }
+            const response = (await requestService.request(API_PATH.CLASS_LIST, reqBody, false)) as CLASS_LIST_RES;
+            this.classList = response.body.classList
+            console.log(response);
+            
         },
 
         addAcademicToList() {
@@ -588,6 +631,8 @@ export default defineComponent({
                 address: '',
                 phone: '',
                 email: '',
+                classInfoID: '',
+                departmentID: ''
             } as USER_LIST
             this.routerName = this.$route.name
             this.userInfoCheckFields= {

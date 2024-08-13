@@ -92,7 +92,8 @@ export default defineComponent({
                     const reqBody = {
                         userID: _item.userID,
                         roleID: _item.roleID,
-                        statusCode: '02'
+                        statusCode: '02',
+                        isDeleted: 'Y'
                     }
                     await requestService.request(API_PATH.USER_UPDATE, reqBody, false) as USER_LIST;
                     this.getUserList();
