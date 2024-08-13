@@ -71,6 +71,22 @@
                     <label :class="customFormClass">Address</label><br>
                     <Textarea :invalid="userInfoCheckFields.address" v-model="userInfo.address" rows="5" cols="30" @keyup="checkUserRequireFields" />
                 </div>
+                <div :class="customRowClass" v-if="isRegisterStudent">
+                    <label :class="customFormClass">Select Class</label><br>
+                    <select class="form-select" v-model="userInfo.classInfoID" >
+                        <option v-for="classInfo in classList" :key="classInfo.classInfoID" :value="classInfo.classInfoID">
+                            {{ classInfo.className }} ឆ្នាំទី​ {{ classInfo.year }} ឆមាសទី {{ classInfo.semester }}
+                        </option>
+                    </select>
+                </div>
+                <div :class="customRowClass" v-else>
+                    <label :class="customFormClass">Select Department</label><br>
+                    <select class="form-select" v-model="userInfo.departmentID" >
+                        <option v-for="department in departmentList" :key="department.departmentID" :value="department.departmentID">
+                            {{ department.departmentName }}
+                        </option>
+                    </select>
+                </div>
             </div>
         </div>
 
