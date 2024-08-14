@@ -44,20 +44,21 @@
                             <label class="form-label font_15">{{ $t('class.generation') }}</label><br>
                             <InputNumber v-model="classInfo.generation" inputId="integeronly" />
                         </div>
-                        <div class="col-lg-2 col-md-4 mb-2">
+                        <!-- <div class="col-lg-2 col-md-4 mb-2">
                             <label class="form-label font_15">{{ $t('class.status') }}</label><br>
                             <select class="form-select" v-model="classInfo.statusCode">
                                 <option v-for="status in statusCodeList" :value="status.codeValue">
                                     {{ status.codeValueDesc }}
                                 </option>
                             </select>
-                        </div>
-                        <div class="col-lg-8 col-md-10 mb-2">
-                            <label class="form-label font_15">{{ $t('class.className') }}</label>
-                            <InputGroup>
-                                <FileUpload mode="basic" name="file" :customUpload="true" @select="handleFileUpload" accept="image/*" :maxFileSize="1000000" :multiple="false" />
-                                <span class="d-flex justify-content-center align-items-center m-0">{{ selectedFile.name }}</span>
-                            </InputGroup>
+                        </div> -->
+                        <div class="col-lg-2 col-md-4 mb-2">
+                            <label class="form-label font_15">{{ $t('class.classType') }}</label><br>
+                            <select class="form-select" v-model="classInfo.classType">
+                                <option v-for="classInfo in classTypeList" :value="classInfo.codeValue">
+                                    {{ classInfo.codeValueDesc }}
+                                </option>
+                            </select>
                         </div>
                         <div class="col-lg-12 mt-2 ">
                             <label class="form-label font_15">{{ $t('class.classDesc') }}</label><br>

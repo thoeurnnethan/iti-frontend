@@ -1,13 +1,13 @@
 <div class="popup">
     <div class="popWrap w90p">
         <div class="pop_head">
-            <h1 class="text-center text-primary">Class Details</h1>
+            <h1 class="text-center text-primary">{{ $t('class.classDetail') }}</h1>
         </div>
         <div class="pop_cont">
             <div class="cont">
                 <TabView>
                     <!-- Subject List Details Tab -->
-                    <TabPanel header="Subject List Details">
+                    <TabPanel :header="$t('class.subjectList')">
                         <DataTable v-if="classInfo && classInfo.length > 0" :value="classInfo" stripedRows>
                             <Column field="no" header="No" :body="indexTemplate" />
                             <Column field="subjectName" header="Subject Name" />
@@ -15,16 +15,12 @@
                         </DataTable>
                         <table v-else>
                             <tr rowspan="3">
-                                <th>
-                                    No data available.
-                                </th>
+                                <th>No data available.</th>
                             </tr>
                         </table>
                     </TabPanel>
-
                     <!-- Student List Details Tab -->
-                    <TabPanel header="Student List Details">
-
+                    <TabPanel :header="$t('class.studentList')">
                         <DataTable v-if="studentInfo && studentInfo.length > 0" :value="studentInfo" stripedRows>
                             <Column field="no" header="No" />
                             <Column field="studentID" header="Student ID" />
@@ -47,9 +43,7 @@
                         </DataTable>
                         <table v-else>
                             <tr rowspan="7">
-                                <th>
-                                    No data available.
-                                </th>
+                                <th>No data available.</th>
                             </tr>
                         </table>
                     </TabPanel>

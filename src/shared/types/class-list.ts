@@ -6,6 +6,7 @@ export interface CLASS_LIST {
   departmentName: string 
   className: string 
   classDesc: string 
+  classType: string 
   year: string 
   semester: string 
   generation: string 
@@ -20,7 +21,6 @@ export interface CLASS_LIST_REQ {
   searchKey: string
   year: string 
   semester: string 
-  generation: string
   pageNumber?: number
   pageSize?: number
 }

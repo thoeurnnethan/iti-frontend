@@ -5,10 +5,9 @@ import { PropType, defineComponent } from 'vue';
 import { CLASS_LIST } from '@/shared/types/class-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
-import { globalStatusCodeList, YearList, SemesterList, generation } from '@/shared/common/common';
+import { globalStatusCodeList, YearList, SemesterList, generation, ClassTypeList } from '@/shared/common/common';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { modalController } from '@ionic/vue';
-import axios from 'axios';
 
 const requestService = new RequestService();
 
@@ -34,6 +33,7 @@ export default defineComponent({
         generation: '',
         semester: '',
         statusCode: '01',
+        classType: '01'
       } as CLASS_LIST,
       classInfoUpdate: {} as CLASS_LIST,
       departmentList: [] as DEPARTMENT_LIST[],
@@ -42,7 +42,7 @@ export default defineComponent({
       yearList: YearList,
       semesterList: SemesterList,
       generation: generation,
-      selectedFile: '',
+      classTypeList: ClassTypeList
     };
   },
   computed: {
@@ -122,26 +122,7 @@ export default defineComponent({
       }
       const response = (await requestService.request(API_PATH.DEPARTMENT_LIST, reqBody, false)) as DEPARTMENT_LIST_RES;
       this.departmentList = response.body?.departmentList;
-    },
-    
-    handleFileUpload(event: { files: string[]; }){
-      this.selectedFile = event.files[0];
-    },
-
-    async submitFile() {
-      const formData = new FormData();
-      formData.append('file', this.selectedFile);
-      try {
-        const response = await axios.post('http://localhost:8081/api/file-upload/register', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        console.log('File uploaded successfully:', response.data);
-      } catch (error) {
-        console.error('Error uploading file:', error);
-      }
-    },
+    }
     
   }
 });

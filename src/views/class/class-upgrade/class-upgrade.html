@@ -1,0 +1,70 @@
+<div class="popup">
+    <div class="popWrap w90p">
+        <div class="pop_head">
+            <h1 class="text-center text-dark">{{ $t('class.insertClass') }}</h1>
+        </div>
+        <div class="pop_cont">
+            <div class="cont">
+                <div class="container-fluid d-flex flex-row justify-content-between">
+                    <p class="p-0 mt-auto text-decoration-underline">{{ $t('class.from') }}</p>
+                    <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <label class="form-label font_15">{{ $t('class.className') }}</label>
+                            <input type="text" class="form-control" v-model="classInfo.className" disabled/>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label class="form-label font_15">{{ $t('class.year') }}</label>
+                            <select class="form-select" v-model="classInfo.year" disabled>
+                                <option v-for="year in yearList" :value="year.codeValue">
+                                    <p>{{ year.codeValueDesc }}</p>
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label class="form-label font_15">{{ $t('class.semester') }}</label>
+                            <select class="form-select" v-model="classInfo.semester" disabled>
+                                <option v-for="semester in semesterList" :value="semester.codeValue">
+                                    <p>{{ semester.codeValueDesc }}</p>
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="p-0 mt-auto text-decoration-underline">{{ $t('class.to') }}</p>
+                    <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <label class="form-label font_15">{{ $t('class.className') }}</label>
+                            <input type="text" class="form-control" v-model="classInfoUpdate.className" disabled/>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label class="form-label font_15">{{ $t('class.newYear') }}</label>
+                            <select class="form-select" v-model="classInfoUpdate.year">
+                                <option v-for="year in newYearList" :value="year.codeValue" :style="{ display: !year.codeValue ? 'none' : 'block' }">
+                                    <p v-if="year.codeValue">{{ year.codeValueDesc }}</p>
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label class="form-label font_15">{{ $t('class.newSemester') }}</label>
+                            <select class="form-select" v-model="classInfoUpdate.semester">
+                                <option v-for="semester in newSemesterList" :value="semester.codeValue" :style="{ display: !semester.codeValue ? 'none' : 'block' }">
+                                    <p v-if="semester.codeValue">{{ semester.codeValueDesc }}</p>
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex mt-5">
+                    <p>Notice: When Upgrade class to another new Year or Semester, All students from previous class will be add to New Class, but not Subjects</p>
+                </div>
+            </div>
+        </div>
+        <div class="pop_foot">
+            <div class="footer_btn">
+                <div class="right_side">
+                    <button class="btn03" style="width:185px" @click="onClose">{{ $t('common.cancel') }}</button>
+                    <button class="btn01" style="width:185px" @click="onClickUpdate">{{ $t('common.ok') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

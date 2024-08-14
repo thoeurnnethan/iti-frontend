@@ -19,6 +19,7 @@ export enum API_PATH {
     CLASS_DETAIL = "api/class-info/detail",
     CLASS_REGISTER = "api/class-info/register",
     CLASS_UPDATE = "api/class-info/update",
+    CLASS_UPGRADE = "api/class-info/upgrade",
     //Student
     STUDENT_LIST = "api/student/list",
     STUDENT_DETAIL = "api/student/detail",

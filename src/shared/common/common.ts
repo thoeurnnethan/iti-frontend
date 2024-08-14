@@ -66,34 +66,9 @@ export const day: StandardCodeData[] = [
   { codeValue: 'Sunday', codeValueDesc: 'Sunday' },
 ];
 
-export const TimeList: StandardCodeData[] = [
-  { codeValue: '0730', codeValueDesc: '7:30 AM' },
-  { codeValue: '0800', codeValueDesc: '8:00 AM' },
-  { codeValue: '0830', codeValueDesc: '8:30 AM' },
-  { codeValue: '0900', codeValueDesc: '9:00 AM' },
-  { codeValue: '0930', codeValueDesc: '9:30 AM' },
-  { codeValue: '1000', codeValueDesc: '10:00 AM' },
-  { codeValue: '1030', codeValueDesc: '10:30 AM' },
-  { codeValue: '1100', codeValueDesc: '11:00 AM' },
-  { codeValue: '1130', codeValueDesc: '11:30 AM' },
-  { codeValue: '1200', codeValueDesc: '12:00 PM' },
-  { codeValue: '1230', codeValueDesc: '12:30 PM' },
-  { codeValue: '1300', codeValueDesc: '1:30 PM' },
-  { codeValue: '1330', codeValueDesc: '1:30 PM' },
-  { codeValue: '1400', codeValueDesc: '2:00 PM' },
-  { codeValue: '1430', codeValueDesc: '2:30 PM' },
-  { codeValue: '1500', codeValueDesc: '3:00 PM' },
-  { codeValue: '1530', codeValueDesc: '3:30 PM' },
-  { codeValue: '1600', codeValueDesc: '4:00 PM' },
-  { codeValue: '1630', codeValueDesc: '4:30 PM' },
-  { codeValue: '1700', codeValueDesc: '5:00 PM' },
-  { codeValue: '1730', codeValueDesc: '5:30 PM' },
-  { codeValue: '1800', codeValueDesc: '6:00 PM' },
-  { codeValue: '1830', codeValueDesc: '6:30 PM' },
-  { codeValue: '1900', codeValueDesc: '7:00 PM' },
-  { codeValue: '1930', codeValueDesc: '7:30 PM' },
-  { codeValue: '2000', codeValueDesc: '8:00 PM' },
-  { codeValue: '2030', codeValueDesc: '8:30 PM' },
+export const ClassTypeList: StandardCodeData[] = [
+  { codeValue: '01', codeValueDesc: 'Morning' },
+  { codeValue: '02', codeValueDesc: 'Night' }
 ];
 
 
