@@ -4,7 +4,7 @@
     <div class="popWrap w80p">
         <div class="pop_head">
             <div class="w-100">
-                <h1 class="text-center text-dark">Register Student To Classroom</h1>
+                <h1 class="text-center text-dark">Register Teacher To Department</h1>
             </div>
         </div>
         <div class="pop_cont">
@@ -14,10 +14,10 @@
                         <div class="col-12">
                             <div class="row d-flex justify-content-start">
                                 <div class="col-lg-5 col-md-6 mb-2">
-                                    <label class="form-label font_15">{{ $t('subject.selectClass') }}</label><br>
-                                    <select class="form-select font-bold text-dark" v-model="studentClassInfo.classID">
-                                        <option v-for="classItem in classList" :value="classItem.classInfoID">
-                                            {{ classItem.className }} - (Y: {{ classItem.year }} - S: {{ classItem.semester }})
+                                    <label class="form-label font_15">Select Department</label><br>
+                                    <select class="form-select font-bold text-dark" v-model="teacherDepartmentInfo.departmentID">
+                                        <option v-for="departmentItem in departmentList" :value="departmentItem.departmentID">
+                                            {{ departmentItem.departmentID }} - {{ departmentItem.departmentName }}
                                         </option>
                                     </select>
                                 </div>
@@ -30,19 +30,20 @@
                     <div class="col-12">
                         <div class="container-fluid d-flex justify-content-end p-0 mb-3">
                             <div class="w-25">
-                                <input  type="text"  v-model="searchQuery"  class="form-control"  placeholder="Search student here ..." @keydown.enter="onSearch" />
+                                <input  type="text"  v-model="searchQuery"  class="form-control"  placeholder="Search here ..." @keydown.enter="onSearch" />
                             </div>
                         </div>
 
                         <div class="we_shadow">
 
                             <DataTable 
-                                v-model:selection="selectedStudent" 
-                                :value="filteredStudentList"
+                                v-model:selection="selectedTeacher" 
+                                :value="filteredTeacherList"
                                 dataKey="specificID" 
                             >
                                 <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
                                 <Column field="fullName" header="Student Full Name"></Column>
+                                <Column field="roleID" header="Role"></Column>
                                 <Column field="gender" header="Gender"></Column>
                                 <Column field="dateOfBirth" header="Date of Birth">
                                     <template #body="{ data }">
@@ -66,7 +67,7 @@
             <div class="footer_btn">
                 <div class="right_side">
                     <button class="btn03" style="width:185px" @click="onClose">{{ $t('common.cancel') }}</button>
-                    <button class="btn01" style="width:185px" @click="saveStudent()">
+                    <button class="btn01" style="width:185px" @click="saveData()">
                         {{ $t('common.save') }}
                     </button> 
                 </div>

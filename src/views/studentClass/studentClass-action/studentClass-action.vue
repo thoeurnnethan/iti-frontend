@@ -2,12 +2,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { STUDENT_CLASS_LIST, SUBJECT_CLASS_LIST_REQ } from '@/shared/types/studentClass-list';
+import { STUDENT_CLASS_LIST } from '@/shared/types/studentClass-list';
 import { TEACHER_RES } from '@/shared/types/user-list';
 import { CLASS_LIST, CLASS_LIST_RES } from '@/shared/types/class-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
-import { globalStatusCodeList } from '@/shared/common/common';
+import { GenderCodeList , globalStatusCodeList } from '@/shared/common/common';
 import { modalController } from '@ionic/vue';
 
 const requestService = new RequestService();
@@ -32,6 +32,7 @@ export default defineComponent({
             } as STUDENT_CLASS_LIST,
             subjectInfoUpdate: {} as STUDENT_CLASS_LIST,
             subjectList: [] as STUDENT_CLASS_LIST[],
+            genderCodeList: GenderCodeList,
             statusCodeList: globalStatusCodeList,
             searchKey: '',
             Loading: false,
@@ -99,7 +100,8 @@ export default defineComponent({
             if (response.body?.userList) {
                 this.studentList = response.body.userList.map(student => ({
                     ...student,
-                    fullName: `${student.firstName} ${student.lastName}`
+                    fullName: `${student.firstName} ${student.lastName}`,
+                    gender: this.$codeConverter.codeToString(this.genderCodeList, student.gender),
                 }));
             }
         },

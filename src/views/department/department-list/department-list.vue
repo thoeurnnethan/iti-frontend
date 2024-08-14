@@ -7,6 +7,7 @@ import { RequestService } from '@/shared/services/request-service';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { StandardCodeData } from '@/shared/types/standard-code';
 import department_detail from '../department-detail/department-detail.vue';
+import teacherDepartment_action from '../../teacherDepartment/teacherDepartment-action/teacherDepartment-action.vue';
 import department_edit from '../department-edit/department-edit.vue';
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import MyLoading from '../../MyLoading.vue';
@@ -91,6 +92,12 @@ export default defineComponent({
       this.pageSize = event.rows;
       this.pageNumber = event.page;
       this.getDepartmentList();
+    },
+
+    async onClickInsertTeacher(){
+      this.$popupService.onOpen({
+        component: teacherDepartment_action,
+      })
     },
 
     async onClickRow(item: DEPARTMENT_LIST) {
