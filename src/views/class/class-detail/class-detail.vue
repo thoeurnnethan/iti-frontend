@@ -14,7 +14,7 @@ export default defineComponent({
       required: true
     },
     studentDetails: {
-      type: Object as PropType<STUDENT_CLASS_LIST>,
+      type: Array as PropType<STUDENT_CLASS_LIST>,
       required: true
     }
   },
@@ -27,19 +27,24 @@ export default defineComponent({
   },
 
   mounted() {
-    this.classInfo = this.subjectDetails;
-    // Map studentDetails to include fullName
-    this.studentInfo = this.studentDetails.map((student: { firstName: any; lastName: any; }) => ({
+    this.classInfo = this.subjectDetails.map((item: any, index: number) => ({
+      ...item,
+      no: index + 1
+    }));
+
+    this.studentInfo = this.studentDetails.map((student: { firstName: any; lastName: any }, index: number) => ({
       ...student,
-      fullName: `${student.firstName} ${student.lastName}`
+      fullName: `${student.firstName} ${student.lastName}`,
+      no: index + 1
     }));
   },
+
 
   methods: {
     handleClose() {
       this.classInfo = {} as CLASS_LIST;
       this.studentInfo = [] as Array<any>;
-      modalController.dismiss(); // Dismiss the modal
+      modalController.dismiss();
     },
   },
 });

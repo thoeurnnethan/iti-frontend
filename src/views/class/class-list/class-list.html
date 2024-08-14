@@ -9,9 +9,13 @@
             <span class="text_title mx-1">{{ $t('class.title') }}</span>
         </div>
         <div>
-            <button type="button" class="btn btn-dark p-1 px-2 mx-2" @click="exportToExcel">
+            <button type="button" class="btn btn-dark p-1 px-2" @click="exportToExcel">
                 <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
                 <font-awesome-icon :icon="['fas', 'file-excel']" />
+            </button>
+            <button class="btn btn-info p-1 px-2 mx-2" @click="onClickInsertStudent">
+                <span class="mx-1">Register Student Into Class</span>
+                <font-awesome-icon :icon="['fas', 'plus']" />
             </button>
             <button class="btn btn-primary p-1 px-2" @click="onClickInsert()">
                 <span class="mx-1">{{ $t('common.addNew') }}</span>

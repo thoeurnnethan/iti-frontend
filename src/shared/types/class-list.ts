@@ -1,4 +1,5 @@
 export interface CLASS_LIST {
+[x: string]: any
   classID: string
   classInfoID: string
   departmentID: string 

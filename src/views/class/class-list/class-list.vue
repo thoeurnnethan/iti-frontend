@@ -8,6 +8,7 @@ import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import class_edit from '../class-edit/class-edit.vue';
 import { YearList , SemesterList, globalStatusCodeList } from '@/shared/common/common';
+import studentClass_action from '../../studentClass/studentClass-action/studentClass-action.vue';
 import class_detail from '../class-detail/class-detail.vue';
 import MyLoading from '../../MyLoading.vue';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
@@ -182,6 +183,12 @@ export default defineComponent({
         onClose: () => {
           this.getClassList();
         }
+      })
+    },
+
+    async onClickInsertStudent(){
+      this.$popupService.onOpen({
+        component: studentClass_action,
       })
     },
 
