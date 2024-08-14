@@ -29,21 +29,18 @@
 </div>
 <div class="mt-3 we_box">
     <div class="b_shadow">
-        <div class="card">
-            <DataTable 
-                v-model:selection="selectedStudent" 
-                :value="studentList"
-                dataKey="studentID" 
-                paginator 
-                :rows="10"
-            >
-                <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-                <Column field="fullName" header="Student Full Name"></Column>
-                <Column field="gender" header="Gender"></Column>
-                <Column field="dateOfBirth" header="Date Of Birth"></Column>
-                <Column field="phone" header="Phone Number"></Column>
-            </DataTable>
-        </div>
+        <DataTable 
+            v-model:selection="selectedStudent" 
+            :value="studentList"
+            dataKey="studentID" 
+            paginator 
+            :rows="10">
+            <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+            <Column field="fullName" header="Student Full Name"></Column>
+            <Column field="gender" header="Gender"></Column>
+            <Column field="dateOfBirth" header="Date Of Birth"></Column>
+            <Column field="phone" header="Phone Number"></Column>
+        </DataTable>
     </div>
     <div class="p-1"></div>
 </div>

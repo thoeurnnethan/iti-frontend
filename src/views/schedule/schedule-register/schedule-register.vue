@@ -6,7 +6,7 @@ import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { YearList , SemesterList, globalStatusCodeList, WeekdayList } from '@/shared/common/common';
 import MyLoading from '../../MyLoading.vue';
-import { SCHEDULE_LIST, SCHEDULE_LIST_REQ, SCHEDULE_LIST_RES, TEACHER_LIST, TEACHER_LIST_RES, ScheduleColumn, ScheduleRow } from '@/shared/types/schedule-list';
+import { SCHEDULE_LIST, SCHEDULE_LIST_REQ, SCHEDULE_LIST_RES, TEACHER_LIST, TEACHER_LIST_RES, ScheduleColumn, ScheduleRow, SCHEDULE_INFO } from '@/shared/types/schedule-list';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class-list';
 import { StandardCodeData } from '@/shared/types/standard-code';
@@ -89,6 +89,11 @@ export default defineComponent({
     },
     'checkedAllTeacher'(){
       this.onGetTeacherList()
+    },
+    'filterInfo.scheduleDay'(){
+      if(this.isValidFilterInfo){
+        this.onGetScheduleListDynamicColumn()
+      }
     }
   },
 
@@ -97,18 +102,26 @@ export default defineComponent({
       return this.filterInfo.departmentID !== '';
     },
     isSelectedValidClass(): boolean {
-      return this.filterInfo.classID !== '' && 
+      return (this.filterInfo.classID !== '' && 
       this.filterInfo.classYear !== '' &&
-      this.filterInfo.semester!== ''
+      this.filterInfo.semester!== '')
     },
     isValidFilterInfo(): boolean{
-      return this.filterInfo.scheduleYear !== '' &&
+      return (this.filterInfo.scheduleYear !== '' &&
       this.filterInfo.classID !== '' &&
       this.filterInfo.classYear !== '' &&
       this.filterInfo.semester !== '' &&
       this.filterInfo.departmentID !== '' &&
-      this.filterInfo.scheduleDay !== '';
+      this.filterInfo.scheduleDay !== '')
     },
+    isValidScheduleInfo(): boolean{
+      return this.scheduleInfo.startTime !== '' &&
+      this.scheduleInfo.endTime !== '' &&
+      this.teacherInfo.teacherID !== undefined && 
+      this.subjectInfo.subjectID !== undefined && 
+      this.roomInfo.roomID !== undefined
+    },
+
     isDisableDeleteBtn(): boolean {
       return this.scheduleList.length <= 0;
     }
@@ -143,6 +156,12 @@ export default defineComponent({
     async onGetScheduleListDynamicColumn() {
       const reqBody = this.filterInfo
       const response = (await requestService.request(API_PATH.SCHEDULE_LIST, reqBody, false)) as SCHEDULE_LIST_RES;
+      this.scheduleList = response.body.scheduleList.map((data: any) =>{
+        return {
+          ...data,
+          schDay: data.scheduleDay
+        } 
+      })
       this.columns = Object.keys(response.body.scheduleList[0]).map(day => ({
         field: day,
         header: day
@@ -233,8 +252,7 @@ export default defineComponent({
         roomName: this.roomInfo.roomName,
         startTime: this.scheduleInfo.startTime,
         endTime: this.scheduleInfo.endTime,
-        classID: this.filterInfo.classID,
-        validYn: '',
+        classID: this.filterInfo.classID
       } as SCHEDULE_LIST
       this.scheduleList.push(data)
       this.resetFormSchedule(false)
@@ -249,29 +267,6 @@ export default defineComponent({
         this.lastEndTime = lastSchedule.endTime
         this.filterStartTime(this.lastEndTime)
       }
-    },
-
-    async onClickValidate(){
-      const reqBody = {
-        schYear: this.filterInfo.scheduleYear,
-        scheduleDay: this.filterInfo.scheduleDay,
-        classID: this.filterInfo.classID,
-        cyear: this.filterInfo.classYear,
-        semester: this.filterInfo.semester,
-        scheduleList: this.scheduleList
-      }
-      const res = await requestService.request(API_PATH.SCHEDULE_VALIDATE, reqBody, true);
-      this.scheduleList = res.body.scheduleList.map((data: { duplicateTimeYn: string; duplicateTeacherYn: string; }) =>{
-        return {
-          ...data,
-          validYn: data.duplicateTimeYn === 'Y' ? "Schedule Duplicate Time" : data.duplicateTeacherYn === 'Y' ? 'Teacher Duplicate Time' : 'Yes'
-        }
-      });
-      this.scheduleList.map((data) => {
-        if(data.validYn === 'Yes'){
-          this.isValidateFail = false;
-        }
-      })
     },
 
     async onClickSave(){
@@ -304,6 +299,10 @@ export default defineComponent({
         roomID: this.roomInfo.roomID,
       } as SCHEDULE_LIST
       this.resetFormSchedule(true)
+    },
+
+    onClickClearFilterSchedule(){
+      this.resetFormSchedule
     },
 
     convertTime(time:string){
