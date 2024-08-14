@@ -93,6 +93,8 @@ export default defineComponent({
     'filterInfo.scheduleDay'(){
       if(this.isValidFilterInfo){
         this.onGetScheduleListDynamicColumn()
+        this.startTimeList = this.generateScheduleTime()
+        this.endTimeList = this.generateScheduleTime()
       }
     }
   },

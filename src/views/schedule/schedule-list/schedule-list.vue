@@ -103,16 +103,17 @@ export default defineComponent({
         field: day,
         header: day
       })) as ScheduleColumn[];
-      this.rows = response.body.scheduleList.map((item) =>{
-        const nonEmptyDay = this.columns.find(col => item[col.field]?.startTime && item[col.field]?.endTime);
-        const startTime   = nonEmptyDay ? `${item[nonEmptyDay.field]?.startTime}` : '';
-        const endTime     = nonEmptyDay ? `${item[nonEmptyDay.field].endTime}` : '';
-        return {
-          ...item,
-          startTime: startTime,
-          endTime: endTime,
-        }as ScheduleRow;
-      })
+      this.rows = response.body.scheduleList
+      // this.rows = response.body.scheduleList.map((item) =>{
+      //   const nonEmptyDay = this.columns.find(col => item[col.field]?.startTime && item[col.field]?.endTime);
+      //   const startTime   = nonEmptyDay ? `${item[nonEmptyDay.field]?.startTime}` : '';
+      //   const endTime     = nonEmptyDay ? `${item[nonEmptyDay.field].endTime}` : '';
+      //   return {
+      //     ...item,
+      //     startTime: startTime,
+      //     endTime: endTime,
+      //   }as ScheduleRow;
+      // })
     },
 
     async getDepartmentList() {

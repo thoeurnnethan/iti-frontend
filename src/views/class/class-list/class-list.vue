@@ -7,8 +7,9 @@ import { RequestService } from '@/shared/services/request-service';
 import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class-list';
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import class_edit from '../class-edit/class-edit.vue';
-import { YearList , SemesterList, globalStatusCodeList } from '@/shared/common/common';
+import { YearList , SemesterList, globalStatusCodeList, ClassTypeList } from '@/shared/common/common';
 import studentClass_action from '../../studentClass/studentClass-action/studentClass-action.vue';
+import class_upgrade from '../class-upgrade/class-upgrade.vue';
 import class_detail from '../class-detail/class-detail.vue';
 import MyLoading from '../../MyLoading.vue';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
@@ -28,6 +29,7 @@ export default defineComponent({
       yearList: YearList,
       semesterList: SemesterList,
       statusCodeList: globalStatusCodeList,
+      classTypeList: ClassTypeList,
       classList: [] as CLASS_LIST[],
       classInfo: {} as CLASS_LIST,
       departmentList: [] as DEPARTMENT_LIST[],
@@ -35,7 +37,8 @@ export default defineComponent({
       selectedYear: '',
       selectedStatus: '',
       selectSemester: '',
-      searchKey:'',
+      searchKey: '',
+      classID: '',
       Loading: false,
       totalCount: 0,
       pageSize: 10,
@@ -64,12 +67,11 @@ export default defineComponent({
     async getClassList() {
       this.Loading = true;
       const reqBody: CLASS_LIST_REQ = {
-        classID: '',
+        classID: this.classID,
         departmentID: this.selectedDepartment,
         searchKey: this.searchKey,
         year: this.selectedYear === 'All' ? '' : this.selectedYear,
         semester: this.selectSemester === 'All' ? '' : this.selectSemester,
-        generation: '',
         pageSize: this.pageSize,
         pageNumber: this.pageNumber + 1
       }
@@ -214,8 +216,7 @@ export default defineComponent({
         departmentID: this.selectedDepartment,
         searchKey: this.searchKey,
         year: this.selectedYear === 'All' ? '' : this.selectedYear,
-        semester: this.selectSemester === 'All' ? '' : this.selectSemester,
-        generation: '',
+        semester: this.selectSemester === 'All' ? '' : this.selectSemester
       }
       const response = (await requestService.request(API_PATH.CLASS_LIST_DOWNLOAD, reqBody, false)) as CLASS_LIST_RES;
       this.dataTable = response.body?.classList.map((data, index) => {
@@ -227,18 +228,18 @@ export default defineComponent({
 
       const excelData = this.dataTable.map((data, index) => {
         return {
-          "No": index + 1,
-          "Class ID": data.classID,
-          "Class Name": data.className,
-          "Class Description": data.classDesc,
-          "Department Name": data.departmentName,
-          "Year": data.year,
-          "Semester": data.semester,
-          "Generation": data.generation,
-          "Department": data.departmentID + ': '+ data.departmentName,
-          "Status": this.$codeConverter.codeToString(this.statusCodeList, data.statusCode),
-          "First Register Date": this.$format.formatDateTime(data.firstRegisterDate ? data.firstRegisterDate : '', 'yyyy-mm-dd'),
-          "Last Change Date": this.$format.formatDateTime(data.lastChangeDate ? data.lastChangeDate : '', 'yyyy-mm-dd')
+          "លេខរៀង": index + 1,
+          "លេខសម្គាល់ថ្នាក់រៀន": data.classID,
+          "ឈ្មោះថ្នាក់រៀន": data.className,
+          "ឆ្នាំ": data.year,
+          "ឆមាស": data.semester,
+          "ជ៉នាន់": data.generation,
+          "លម្អិតអំពីថ្នាក់រៀន": data.classDesc,
+          "ប្រភេទថ្នាក់រៀន": this.$codeConverter.codeToString(this.classTypeList, data.classType),
+          "ឈ្មោះដេប៉ាតឺម៉ង់": data.departmentName,
+          "ស្ថានភាព": this.$codeConverter.codeToString(this.statusCodeList, data.statusCode),
+          "ថ្ងៃចុះបញ្ជីដំបូង": this.$format.formatDateTime(data.firstRegisterDate ? data.firstRegisterDate : '', 'yyyy-mm-dd'),
+          "ថ្ងៃផ្លាស់ប្តូរចុងក្រោយ": this.$format.formatDateTime(data.lastChangeDate ? data.lastChangeDate : '', 'yyyy-mm-dd')
         };
       })
       const exportExcelData = [
@@ -248,6 +249,21 @@ export default defineComponent({
       ];
       exportExcel.exportSheet(exportExcelData, 'Class info')
     },
+
+    onClickUpgrade(item: CLASS_LIST){
+      this.$popupService.onOpen({
+        component: class_upgrade,
+        dataProp: {
+          classInfoData: item
+        },
+        callback: () => {
+          this.getClassList();
+        },
+        onClose: () => {
+          this.getClassList();
+        }
+      })
+    }
 
   },
 })
