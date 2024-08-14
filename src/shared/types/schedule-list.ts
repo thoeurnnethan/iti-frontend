@@ -1,5 +1,6 @@
 export interface SCHEDULE_LIST {
   scheduleYear: string
+  scheduleDay?: string
   classID: string
   className: string
   classYear: string
@@ -21,8 +22,7 @@ export interface SCHEDULE_LIST {
   building: string,
   floor: string,
   startTime: string,
-  endTime: string,
-  validYn?: string
+  endTime: string
 }
 
 export interface SCHEDULE_INFO {
