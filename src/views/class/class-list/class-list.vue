@@ -18,7 +18,7 @@ const requestService = new RequestService();
 const exportExcel = new ExportExcel();
 
 export default defineComponent({
-    name: "department-list",
+    name: "class-list",
     inheritAttrs: false,
     components: {
         MyLoading
@@ -59,9 +59,18 @@ export default defineComponent({
         }
     },
 
+    watch:{
+        '$i18n.locale'(){
+            this.updateTranslatedSemesterList()
+            this.updateTranslatedYearList()
+        }
+    },
+
     mounted() {
-        this.getClassList();
-        this.getDepartmentList();
+        this.getClassList()
+        this.getDepartmentList()
+        this.updateTranslatedSemesterList()
+        this.updateTranslatedYearList()
     },
 
     methods: {
@@ -288,7 +297,21 @@ export default defineComponent({
                     this.getClassList();
                 }
             })
-        }
+        },
+
+        updateTranslatedSemesterList() {
+            this.semesterList = this.semesterList.map(item => ({
+                codeValue: item.codeValue,
+                codeValueDesc: this.$codeConverter.codeToString(this.semesterList, String(item.codeValue), 'semesterCode')
+            }));
+        },
+
+        updateTranslatedYearList() {
+            this.yearList = this.yearList.map(item => ({
+                codeValue: item.codeValue,
+                codeValueDesc: this.$codeConverter.codeToString(this.yearList, String(item.codeValue), 'yearCode')
+            }));
+        },
     },
 })
 </script>

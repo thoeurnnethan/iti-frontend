@@ -24,7 +24,9 @@
         "totalFemale": "Female",
         "downloadExcel": "Download Excel",
         "noData": "No data records available.",
-        "noScheduleData": "Cannot find Schedule Information. Did you register it yet?"
+        "noScheduleData": "Cannot find Schedule Information. Did you register it yet?",
+        "all": "All",
+        "status": "Status"
     },
     "action": {
         "edit": "Edit",
@@ -194,6 +196,20 @@
             "02": "Department Manager",
             "03": "Teacher",
             "04": "Student"
+        },
+        "classType":{
+            "01": "Morning",
+            "02": "Night"
+        },
+        "semesterCode":{
+            "1": "Semester 1",
+            "2": "Semester 2"
+        },
+        "yearCode":{
+            "1": "Year 1",
+            "2": "Year 2",
+            "3": "Year 3",
+            "4": "Year 4"
         }
     }
 }

@@ -26,7 +26,6 @@ export const GenderCodeList: StandardCodeData[] = [
 ];
 
 export const YearList: StandardCodeData[] = [
-    { codeValue: '', codeValueDesc: 'All' },
     { codeValue: '1', codeValueDesc: 'Year 1' },
     { codeValue: '2', codeValueDesc: 'Year 2' },
     { codeValue: '3', codeValueDesc: 'Year 3' },
@@ -34,7 +33,6 @@ export const YearList: StandardCodeData[] = [
 ];
 
 export const SemesterList: StandardCodeData[] = [
-    { codeValue: '', codeValueDesc: 'All' },
     { codeValue: '1', codeValueDesc: 'Semester 1' },
     { codeValue: '2', codeValueDesc: 'Semester 2' },
 ];

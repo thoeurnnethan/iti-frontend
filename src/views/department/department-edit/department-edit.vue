@@ -58,7 +58,6 @@ export default defineComponent({
 
     mounted() {
         this.onInitData();
-        console.log(this.updateTranslatedStatusCodes())
     },
 
     methods: {

@@ -72,7 +72,7 @@ export default defineComponent({
                 this.subjectInfoUpdate = { ...this.studentClassInfo };
             }
         },
-
+        
         async onGetClassList() {
             const reqBody = {
                 classID: '',
@@ -96,12 +96,11 @@ export default defineComponent({
                 pageNumber: 1
             };
             const response = await requestService.request(API_PATH.USER_LIST, reqBody, false) as TEACHER_RES;
-
             if (response.body?.userList) {
                 this.studentList = response.body.userList.map(student => ({
                     ...student,
                     fullName: `${student.firstName} ${student.lastName}`,
-                    gender: this.$codeConverter.codeToString(this.genderCodeList, student.gender),
+                    gender: this.$codeConverter.codeToString(this.genderCodeList, student.gender, 'genderCode'),
                 }));
             }
         },

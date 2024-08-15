@@ -28,7 +28,7 @@
             <div class="col-md-3">
                 <label class="form-label font_14">{{ $t('class.selectDepartment') }}</label>
                 <select class="form-select" v-model="selectedDepartment" @change="getClassList">
-                    <option value=""><span>All</span></option>
+                    <option value=""><span>{{ $t('common.all') }}</span></option>
                     <option v-for="department in departmentList" :value="department.departmentID">
                         <span>{{ department.departmentName }}</span>
                     </option>
@@ -37,14 +37,16 @@
             <div class="col-md-3">
                 <label class="form-label font_14">{{ $t('class.selectYear') }}</label>
                 <select class="form-select" v-model="selectedYear" @change="getClassList">
+                    <option value=""><span>{{ $t('common.all') }}</span></option>
                     <option v-for="year in yearList" :value="year.codeValue">
-                        {{ year.codeValueDesc }}
+                        <span>{{ year.codeValueDesc }}</span>
                     </option>
                 </select>
             </div>
             <div class="col-md-3">
                 <label class="form-label font_14">{{ $t('class.selectSemester') }}</label>
                 <select class="form-select" v-model="selectSemester" @change="getClassList">
+                    <option value=""><span>{{ $t('common.all') }}</span></option>
                     <option v-for="semester in semesterList" :value="semester.codeValue">
                         {{ semester.codeValueDesc }}
                     </option>
@@ -95,12 +97,12 @@
             <Column field="classDesc" :header="$t('class.classDesc')" style="min-width: 150px;"></Column>
             <Column :header="$t('class.classType')" style="min-width: 120px;">
                 <template #body="{ data }">
-                    {{ $codeConverter.codeToString(classTypeList, data.classType) }}
+                    {{ $codeConverter.codeToString(classTypeList, data.classType, 'classType') }}
                 </template>
             </Column>
             <Column field="statusCode" :header="$t('class.status')" style="min-width: 100px">
                 <template #body="{ data }">
-                    {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
+                    {{ $codeConverter.codeToString(statusCodeList, data.statusCode, 'statusCode') }}
                 </template>
             </Column>
             <Column :header="$t('action.action')" style="min-width: 120px;">
