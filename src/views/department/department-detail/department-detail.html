@@ -1,40 +1,63 @@
 <div class="popup">
-    <div class="popWrap w920">
+    <div class="popWrap w70p">
         <div class="pop_head">
             <h1 class="text-center text-primary">{{ $t('department.detail') }}</h1>
         </div>
         <div class="pop_cont">
             <div class="cont">
-                <div class="dlist05 type02 p-2">
-                    <dl>
-                        <dt>{{ $t('department.depID') }}</dt>
-                        <dd>{{ departmentInfo.departmentID }}</dd>
-                    </dl>
-                    <dl>
-                        <dt>{{ $t('department.depName') }}</dt>
-                        <dd>{{ departmentInfo.departmentName }}</dd>
-                    </dl>
-                    <dl>
-                        <dt>{{ $t('department.depDesc') }}</dt>
-                        <dd>{{ departmentInfo.departmentDesc }}</dd>
-                    </dl>
-                    <dl>
-                        <dt>{{ $t('department.depManager') }}</dt>
-                        <dd>{{ departmentInfo.firstName }}-{{ departmentInfo.lastName}}</dd>
-                    </dl>
-                    <dl>
-                        <dt>{{ $t('department.statusCode') }}</dt>
-                        <dd>{{ $codeConverter.codeToString(statusCodeList,departmentInfo.statusCode) }}</dd>
-                    </dl>
-                    <dl>
-                        <dt>{{ $t('department.firstRegisterDate') }}</dt>
-                        <dd>{{ $format.formatDateTime(department.firstRegisterDate,'yyyy-mm-dd') }}</dd>
-                    </dl>
-                    <dl>
-                        <dt>{{ $t('department.lastChangeDate') }}</dt>
-                        <dd>{{ $format.formatDateTime(department.lastChangeDate,'yyyy-mm-dd') }}</dd>
-                    </dl>
-                </div>
+                <TabView>
+                    <!-- Subject List Details Tab -->
+                    <TabPanel header="Department Details">
+                        <div class="dlist05 type02 p-2" v-if="departmentInfo != ''">
+                            <dl>
+                                <dt>{{ $t('department.depID') }}</dt>
+                                <dd>{{ departmentInfo.departmentID }}</dd>
+                            </dl>
+                            <dl>
+                                <dt>{{ $t('department.depName') }}</dt>
+                                <dd>{{ departmentInfo.departmentName }}</dd>
+                            </dl>
+                            <dl>
+                                <dt>{{ $t('department.depDesc') }}</dt>
+                                <dd>{{ departmentInfo.departmentDesc }}</dd>
+                            </dl>
+                            <dl>
+                                <dt>{{ $t('department.depManager') }}</dt>
+                                <dd>{{ departmentInfo.firstName }}-{{ departmentInfo.lastName}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>{{ $t('department.statusCode') }}</dt>
+                                <dd>{{ $codeConverter.codeToString(statusCodeList,departmentInfo.statusCode) }}</dd>
+                            </dl>
+                            <dl>
+                                <dt>{{ $t('department.firstRegisterDate') }}</dt>
+                                <dd>{{ $format.formatDateTime(department.firstRegisterDate,'yyyy-mm-dd') }}</dd>
+                            </dl>
+                            <dl>
+                                <dt>{{ $t('department.lastChangeDate') }}</dt>
+                                <dd>{{ $format.formatDateTime(department.lastChangeDate,'yyyy-mm-dd') }}</dd>
+                            </dl>
+                        </div>
+                        <table v-else>
+                            <tr rowspan="3">
+                                <th>No data available.</th>
+                            </tr>
+                        </table>
+                    </TabPanel>
+                    <!-- Student List Details Tab -->
+                    <TabPanel header="Department Members">
+                        <DataTable v-if="departmentMemberInfo && departmentMemberInfo.length > 0" :value="departmentMemberInfo" stripedRows>
+                            <Column field="no" header="No" />
+                            <Column field="teacherID" header="Student ID" />
+                            <Column field="fullName" header="Full Name" />
+                            <Column field="gender" header="Gender" />
+                            <Column field="roleID" header="Role" />
+                        </DataTable>
+                        <table v-else>
+                            <tr> <th>No data available.</th> </tr>
+                        </table>
+                    </TabPanel>
+                </TabView>
             </div>
         </div>
         <div class="pop_foot">
