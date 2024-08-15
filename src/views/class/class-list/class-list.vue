@@ -83,25 +83,32 @@ export default defineComponent({
                     no: index + 1
                 }
             })
-            let lastClassIndex = 0;
-            this.classList.forEach((item,index) =>{
-                if (
-                    parseInt(item.year) > parseInt(this.classList[lastClassIndex].year) ||
-                    (parseInt(item.year) === parseInt(this.classList[lastClassIndex].year) && 
-                    parseInt(item.semester) > parseInt(this.classList[lastClassIndex].semester))
-                ) {
-                    lastClassIndex = index;
-                }
-            })
-            this.classList.forEach((item, index) => {
-                if(Number(item.year) >= 4 && Number(item.semester) >= 2){
-                    item.isLast = false;
-                }else{
-                    item.isLast = index === lastClassIndex;
-                }
-            });
+            // Check isLast only when search by ClassID, So default will be false
+            if(this.checkIsValidPrefixClassID(this.classID)){
+                let lastClassIndex = 0;
+                this.classList.forEach((item,index) =>{
+                    if (
+                        parseInt(item.year) > parseInt(this.classList[lastClassIndex].year) ||
+                        (parseInt(item.year) === parseInt(this.classList[lastClassIndex].year) && 
+                        parseInt(item.semester) > parseInt(this.classList[lastClassIndex].semester))
+                    ) {
+                        lastClassIndex = index;
+                    }
+                })
+                this.classList.forEach((item, index) => {
+                    if(Number(item.year) >= 4 && Number(item.semester) >= 2){
+                        item.isLast = false;
+                    }else{
+                        item.isLast = index === lastClassIndex;
+                    }
+                });
+            }
             this.totalCount = response.body?.totalCount;
             this.Loading = false;
+        },
+
+        checkIsValidPrefixClassID(classID: string): boolean{
+            return classID.length >= 6;
         },
 
         async getDepartmentList() {
@@ -282,7 +289,6 @@ export default defineComponent({
                 }
             })
         }
-
     },
 })
 </script>

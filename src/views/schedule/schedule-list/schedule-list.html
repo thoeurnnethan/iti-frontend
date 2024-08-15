@@ -90,15 +90,6 @@
             scrollable
             :metaKeySelection="true"
             :lazy="false" >
-            <!-- <Column header="Time" style="min-width: 250px;" v-if="columns.length > 0" >
-                <template #body="{ data }">
-                    <div class="container">
-                        <div class="row text-center">
-                            <span class="com-md-12">{{ convertTime(data.startTime) }} - {{ convertTime(data.endTime) }}</span>
-                        </div>
-                    </div>
-                </template>
-            </Column> -->
             <Column v-for="col in columns" :key="col.field" :field="col.field" :header="col.header" style="min-width: 300px;">
                 <template #body="slotProps">
                     <div class="container" v-if="slotProps.data[col.field].subjectName">
