@@ -73,18 +73,15 @@ export default defineComponent({
                 accept: async () => {
                     const reqBody = {
                         departmentID: item.departmentID,
-                        teacherList: {
+                        teacherList: [{
                             teacherID: item.teacherID,
                             roleCode: item.userRoleInDpm,
                             statusCode: '02'
-                        },
+                        }],
                     };
 
-                    console.log(reqBody);
-                    console.table(item);
-                    
-
                     await requestService.request(API_PATH.TEACHER_DEPARTMENT_UPDATE, reqBody, false) as TEACHER_DEPARTMENT_LIST;
+                    this.departmentMemberInfo
                     this.$toast.add({ summary: 'Confirmed', detail: messageAcceptDetail, life: 1000 });
                 },
                 reject: () => {
