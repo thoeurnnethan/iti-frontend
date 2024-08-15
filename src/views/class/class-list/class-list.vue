@@ -44,6 +44,7 @@ export default defineComponent({
       pageSize: 10,
       pageNumber: 0,
       dataTable,
+      lastLevelClass: '',
       classInfoUpdate: {
         classID: '',
         departmentID: '',
@@ -77,9 +78,22 @@ export default defineComponent({
       }
       const response = (await requestService.request(API_PATH.CLASS_LIST, reqBody, false)) as CLASS_LIST_RES;
       this.classList = response.body?.classList.map((data , index) => {
+        let isLastClass = true;
+        response.body.classList.filter(subData => data.classID === subData.classID)
+          .forEach((mapData) =>{
+            if(Number(mapData.year) > Number(data.year)){
+              isLastClass = false
+            }else if(Number(mapData.semester) > Number(data.semester)){
+              isLastClass = false;
+            }
+            if(Number(data.year) >= 4 && Number(data.semester) >= 2){
+              isLastClass = false;
+            }
+          })
         return {
           ...data,
-          no: index + 1 + (this.pageSize) * this.pageNumber
+          no: index + 1 + (this.pageSize) * this.pageNumber,
+          isLast: isLastClass
         }
       });
       this.totalCount = response.body?.totalCount;
