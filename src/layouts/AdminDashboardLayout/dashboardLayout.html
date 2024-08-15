@@ -7,12 +7,10 @@
                 <img src="iti-logo.svg">
                 <div class="logo-name">{{ $t('common.itiName') }}</div>
             </div>
-            <ul class="sidebar-list nav flex-column b_shadow p-0 cursor-pointer">
-                <li v-for="item in menuList" :key="item.name"
-                    :class="['we_no_select', isActive(item) ? 'active-menu-item' : '']">
+            <ul class="sidebar-list nav d-flex flex-column b_shadow p-0 cursor-pointer">
+                <li v-for="item in menuList" :key="item.name" :class="['we_no_select', isActive(item) ? 'active-menu-item' : '']">
                     <!-- Main Menu Item -->
-                    <router-link style="padding: 10px;" v-if="!item.subMenuList" :to="item.path"
-                        class="nav-item link nav-link d-flex">
+                    <router-link style="padding: 10px;" v-if="!item.subMenuList" :to="item.path" class="nav-item link nav-link d-flex">
                         <div style="width: 25px;">
                             <i style="color: #252b3b; padding: 0 5px 0 0;">
                                 <font-awesome-icon :icon="item.iconClass" />
@@ -20,15 +18,11 @@
                         </div>
                         <span class="name" style="color: #252b3b;">{{ $t(`menu.${item.name}`) }}</span>
                     </router-link>
-
                     <!-- Dropdown Menu Item -->
                     <div v-else>
-                        <a style="padding: 10px;"
-                            :class="['nav-link', 'link', 'nav-item', isActive(item) ? 'active-menu-item' : '']"
-                            @click="toggleSubMenu(item.name)">
+                        <a style="padding: 10px;" :class="['nav-link', 'link', 'nav-item', isActive(item) ? 'active-menu-item' : '']" @click="toggleSubMenu(item.name)">
                             <div class="p-0 d-flex justify-content-between">
                                 <div class="d-flex">
-                                    
                                     <div style="width: 25px;">
                                         <i style="color: #252b3b;padding: 0 5px 0 0;">
                                             <font-awesome-icon :icon="item.iconClass" />
@@ -37,13 +31,10 @@
                                     <span style="color: #252b3b;" class="name">{{ $t(`menu.${item.name}`) }}</span>
                                 </div>
                                 <div>
-                                    <font-awesome-icon
-                                        :icon="item.open ? ['fas', 'chevron-down'] : ['fas', 'chevron-right']" />
+                                    <font-awesome-icon :icon="item.open ? ['fas', 'chevron-down'] : ['fas', 'chevron-right']" />
                                 </div>
                             </div>
                         </a>
-
-
                         <!-- Sub-menu Items -->
                         <ul v-if="item.open" class="nav flex-column">
                             <li style="padding: 10px 0;" v-for="subItem in item.subMenuList" :key="subItem.name"
@@ -61,8 +52,6 @@
                     </div>
                 </li>
             </ul>
-
-
         </div>
         <!-- Main side  -->
         <div class="main_side">

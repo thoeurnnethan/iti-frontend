@@ -56,7 +56,7 @@
             <Column field="departmentDesc" :header="$t('department.depDesc')"></Column>
             <Column field="statusCode" :header="$t('department.statusCode')">
                 <template #body="{ data }">
-                    {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
+                    {{ $codeConverter.codeToString(statusCodeList, data.statusCode, 'statusCode') }}
                 </template>
             </Column>
             <Column :header="$t('action.action')">

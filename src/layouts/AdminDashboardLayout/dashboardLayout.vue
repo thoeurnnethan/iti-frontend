@@ -41,11 +41,14 @@ export default defineComponent({
         }
     },
 
+    created(){
+        this.updateGreeting();
+        this.interval = setInterval(this.updateGreeting, 60000);
+    },
+
     mounted() {
         this.isCollapse = localStorage.getItem('collapse') === "true";
         this.getMenuList();
-        this.updateGreeting();
-        this.interval = setInterval(this.updateGreeting, 60000);
     },
 
     methods: {
@@ -72,11 +75,6 @@ export default defineComponent({
 
         getMenuList() {
             this.menuList = DashboardService.getMenuList();
-        },
-
-        isActive(item: { path: string; }) {
-            // Check if the current route matches the item's path
-            return this.$route.path.startsWith(item.path);
         },
 
         changeLanguage(lang: string) {

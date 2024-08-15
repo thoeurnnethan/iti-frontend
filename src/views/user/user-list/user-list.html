@@ -4,8 +4,8 @@
     <!-- header -->
     <div class="container-fluid p-0 d-flex justify-content-between">
         <div>
-            <font-awesome-icon :icon="['fa', 'users']" />&nbsp;
-            <span class="text_title">{{ $t('user.userList') }}</span>
+            <font-awesome-icon :icon="['fa', 'users']" />
+            <span class="text_title mx-2">{{ $t('user.userList') }}</span>
         </div>
         <div>
             <button type="button" class="btn btn-dark p-1 px-2" @click="exportToExcel">
@@ -91,7 +91,7 @@
             <Column field="nickName" :header="$t('user.nickName')"></Column>
             <Column field="gender" :header="$t('user.gender')">
                 <template #body="{ data }">
-                    {{ $codeConverter.codeToString(genderCodeList, data.gender) }}
+                    {{ $codeConverter.codeToString(genderCodeList, data.gender, 'genderCode') }}
                 </template>
             </Column>
             <Column :header="$t('user.dateOfBirth')">
@@ -110,7 +110,7 @@
             <Column field="passwd" :header="$t('user.password')"></Column>
             <Column field="statusCode" :header="$t('class.status')" style="min-width: 100px">
                 <template #body="{ data }">
-                    {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
+                    {{ $codeConverter.codeToString(statusCodeList, data.statusCode, 'statusCode') }}
                 </template>
             </Column>
             <Column :header="$t('class.edit')" class="text-center">

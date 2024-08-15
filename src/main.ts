@@ -142,7 +142,6 @@ import {
         faBoxArchive,
         faBuilding,
         faCalendarDays,
-        faCaretDown,
         faCaretRight,
         faChevronDown,
         faChevronRight,
@@ -157,7 +156,6 @@ import {
         faListOl,
         faMessage,
         faPencil,
-        faPerson,
         faPhone,
         faPlus,
         faRegistered,
@@ -228,9 +226,6 @@ const pinia = createPinia();
 const app = createApp(App)
         .use(i18n)
         .use(pinia).use(IonicVue)
-        .use(router)
-        .use(ConfirmationService)
-        .use(ToastService)
         .use(PrimeVue, { ripple: true  })
         .use(ConfirmationService)
         .use(ToastService)
