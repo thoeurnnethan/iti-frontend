@@ -45,7 +45,9 @@
         "editDepartment": "Edit Department Information",
         "firstRegisterDate": "First Register Date",
         "lastChangeDate": "Last Change Date",
-        "detail": "Department Detail​Information"
+        "detail": "Department Detail Information",
+        "addTeacher": "Add Teacher",
+        "teacherList": "Teacher List In Department"
     },
     "menu": {
         "home": "Home",
@@ -67,11 +69,13 @@
     "user": {
         "ID": "User ID",
         "role": "Role",
-        "title": "student list",
+        "title": "Student list",
         "studentID": "Student ID",
+        "teacherID": "Teacher ID",
         "firstName": "First Name",
         "lastName": "Last Name",
         "nickName": "Nick Name",
+        "name": "Name",
         "gender": "Gender",
         "dateOfBirth": "Date of Birth",
         "placeOfBirth": "Place of Birth",
@@ -183,6 +187,13 @@
         "genderCode":{
             "M": "Male",
             "F": "Female"
+        },
+        "userRoleCode":{
+            "all": "All",
+            "01": "Admin",
+            "02": "Department Manager",
+            "03": "Teacher",
+            "04": "Student"
         }
     }
 }

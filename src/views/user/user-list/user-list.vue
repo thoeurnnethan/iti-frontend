@@ -5,8 +5,7 @@ import { API_PATH } from '@/shared/common/api-path';
 import { USER_LIST_RES, USER_LIST, USER_DETAIL_RES } from '@/shared/types/user-list';
 import { defineComponent, ref } from 'vue';
 import { RequestService } from '@/shared/services/request-service';
-import { UserRoleList, GenderCodeList } from '@/shared/common/common';
-import { StandardCodeData } from '@/shared/types/standard-code';
+import { UserRoleList, GenderCodeList, globalStatusCodeList } from '@/shared/common/common';
 import user_detail from "@/views/user/user-detail/user-detail.vue";
 import { ExportExcel } from '@/shared/services/export-excel-class';
 
@@ -17,7 +16,6 @@ export default defineComponent({
     name: "user-list",
     inheritAttrs: false,
     components: {
-        // 
     },
 
     data() {
@@ -30,29 +28,33 @@ export default defineComponent({
             dataTable,
             customNoClass: 'table_no',
             searchKey: '',
-            roleID: '',
+            roleID: 'all',
             roleTitle: '',
             totalCount: 0,
             totalMale: 0,
             totalFemale: 0,
             pageSize: 10,
             pageNumber: 0,
-            statusCodeList: [
-                { codeValue: '01', codeValueDesc: 'Active' },
-                { codeValue: '09', codeValueDesc: 'Inactive' },
-            ] as StandardCodeData[],
+            statusCodeList: globalStatusCodeList
+        }
+    },
+
+    watch:{
+        '$i18n.locale'(){
+            this.updateTranslatedUserroleList()
         }
     },
 
     mounted() {
         this.getUserList()
+        this.updateTranslatedUserroleList()
     },
 
     methods: {
         async getUserList() {
             const body = {
                 searchKey: this.searchKey,
-                roleID: this.roleID,
+                roleID: this.roleID === 'all' ? '' : this.roleID,
                 statusCode: "",
                 pageSize: this.pageSize,
                 pageNumber: this.pageNumber + 1
@@ -140,6 +142,14 @@ export default defineComponent({
             ];
             exportExcel.exportSheet(exportExcelData, 'User info')
         },
+
+        updateTranslatedUserroleList() {
+            this.userRoleList = this.userRoleList.map(item => ({
+                codeValue: item.codeValue,
+                codeValueDesc: this.$codeConverter.codeToString(this.userRoleList, String(item.codeValue), 'userRoleCode')
+            }));
+        },
+
     },
 
 })

@@ -7,7 +7,7 @@
             <div class="cont">
                 <TabView>
                     <!-- Subject List Details Tab -->
-                    <TabPanel header="Department Details">
+                    <TabPanel :header="$t('department.detail')">
                         <div class="dlist05 type02 p-2" v-if="departmentInfo != ''">
                             <dl>
                                 <dt>{{ $t('department.depID') }}</dt>
@@ -27,7 +27,7 @@
                             </dl>
                             <dl>
                                 <dt>{{ $t('department.statusCode') }}</dt>
-                                <dd>{{ $codeConverter.codeToString(statusCodeList,departmentInfo.statusCode) }}</dd>
+                                <dd>{{ $codeConverter.codeToString(statusCodeList,departmentInfo.statusCode, 'statusCode') }}</dd>
                             </dl>
                             <dl>
                                 <dt>{{ $t('department.firstRegisterDate') }}</dt>
@@ -40,21 +40,21 @@
                         </div>
                         <table v-else>
                             <tr rowspan="3">
-                                <th>No data available.</th>
+                                <th>{{ $t('common.noData') }}</th>
                             </tr>
                         </table>
                     </TabPanel>
                     <!-- Student List Details Tab -->
-                    <TabPanel header="Department Members">
+                    <TabPanel :header="$t('department.teacherList')">
                         <DataTable v-if="departmentMemberInfo && departmentMemberInfo.length > 0" :value="departmentMemberInfo" stripedRows>
-                            <Column field="no" header="No" />
-                            <Column field="teacherID" header="Student ID" />
-                            <Column field="fullName" header="Full Name" />
-                            <Column field="gender" header="Gender" />
-                            <Column field="roleID" header="Role" />
+                            <Column field="no" :header="$t('common.no')" class="text-center"/>
+                            <Column field="teacherID" :header="$t('user.teacherID')" />
+                            <Column field="fullName" :header="$t('user.name')" />
+                            <Column field="gender" :header="$t('user.gender')" />
+                            <Column field="roleID" :header="$t('user.role')" />
                         </DataTable>
                         <table v-else>
-                            <tr> <th>No data available.</th> </tr>
+                            <tr> <th>{{ $t('common.noData') }}</th> </tr>
                         </table>
                     </TabPanel>
                 </TabView>

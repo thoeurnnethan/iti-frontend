@@ -98,13 +98,10 @@ export default defineComponent({
         },
 
         async onClickRow(item: DEPARTMENT_LIST) {
-
-            const body_2 = {
+            const reqBody = {
                 departmentID: this.departmentInfo.departmentID
             };
-            const responseDepartmentMember = await requestService.request(API_PATH.TEACHER_DEPARTMENT_LIST, body_2, false);
-
-
+            const responseDepartmentMember = await requestService.request(API_PATH.TEACHER_DEPARTMENT_LIST, reqBody, false);
             this.$popupService.onOpen({
                 component: department_detail,
                 dataProp: {
