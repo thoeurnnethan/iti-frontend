@@ -672,5 +672,5 @@ export default defineComponent({
 </script>
 
 <style>
-@import url('./user-register.scss');
+/* @import url('./user-register.scss'); */
 </style>
