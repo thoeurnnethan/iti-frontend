@@ -3,7 +3,7 @@ export interface TEACHER_DEPARTMENT_LIST {
 [x: string]: any
   teacherID?: string 
   roleID?: string 
-  firstName?: string 
+  firstName?: string z
   lastName?: string 
   gender?: string 
   dateOfBirth?: string 
