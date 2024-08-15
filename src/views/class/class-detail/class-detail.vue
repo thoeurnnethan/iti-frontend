@@ -41,7 +41,6 @@ export default defineComponent({
       no: index + 1,
       status: this.$codeConverter.codeToString(this.statusCodeList, student.statusCode),
       gender: this.$codeConverter.codeToString(this.GenderCodeList, student.gender),
-
     }));
   },
 

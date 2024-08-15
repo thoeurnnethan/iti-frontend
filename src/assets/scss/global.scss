@@ -101,6 +101,10 @@ table td, table th{
 
 }
 
+.dlist05 > dl dt{
+	padding: 0 !important;
+}
+
 // date
 .p-datepicker-group-container {
 	width: 300px;
