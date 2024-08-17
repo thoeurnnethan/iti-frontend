@@ -16,6 +16,19 @@ export const DashboardService = {
                 "path": "/class-list",
                 "iconClass": "fa-landmark",
                 "name": "classList",
+                "open": false,
+                "subMenuList":[
+                    {
+                        "path": "/class-list",
+                        "iconClass": "fa-landmark",
+                        "name": "classList",
+                    },
+                    {
+                        "path": "/score-list",
+                        "iconClass": "fa-caret-right",
+                        "name": "studentScore",
+                    }
+                ]
             },
             {
                 "path": "/subject-list",

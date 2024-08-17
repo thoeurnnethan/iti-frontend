@@ -66,7 +66,8 @@
         "userList": "User List",
         "userRegister": "User Register",
         "studentList": "Student List",
-        "studentRegister": "Student Register"
+        "studentRegister": "Student Register",
+        "studentScore": "Student Score"
     },
     "user": {
         "ID": "User ID",
