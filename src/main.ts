@@ -145,6 +145,7 @@ import {
         faCaretRight,
         faChevronDown,
         faChevronRight,
+        faCircleRight,
         faEye,
         faEyeSlash,
         faFileExcel,
@@ -213,6 +214,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
         library.add(faBoxArchive); 
         library.add(faCalendarDays); 
         library.add(faLandmark); 
+        library.add(faCircleRight); 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 //ionic

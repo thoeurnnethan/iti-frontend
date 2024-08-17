@@ -7,7 +7,7 @@ import { TEACHER_RES } from '@/shared/types/user-list';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
-import { GenderCodeList , globalStatusCodeList , UserRoleList } from '@/shared/common/common';
+import { GenderCodeList, globalStatusCodeList, UserRoleList } from '@/shared/common/common';
 import { modalController } from '@ionic/vue';
 
 const requestService = new RequestService();
@@ -15,12 +15,8 @@ const requestService = new RequestService();
 export default defineComponent({
     name: 'teacherDepartment_action',
     props: {
-        subjectInfoData: {
-            type: Object as PropType<TEACHER_DEPARTMENT_LIST>,
-            required: true
-        },
-        isInsert: {
-            type: Boolean,
+        teacherInfoData: {
+            type: Object as PropType<DEPARTMENT_LIST>,
             required: true
         },
     },
@@ -31,22 +27,20 @@ export default defineComponent({
                 departmentID: '',
             } as TEACHER_DEPARTMENT_LIST,
             subjectInfoUpdate: {} as TEACHER_DEPARTMENT_LIST,
-            subjectList: [] as TEACHER_DEPARTMENT_LIST[],
+            teacherList: [] as TEACHER_DEPARTMENT_LIST[],
             departmentList: [] as DEPARTMENT_LIST[],
             genderCodeList: GenderCodeList,
             statusCodeList: globalStatusCodeList,
             userRoleList: UserRoleList,
             searchKey: '',
             Loading: false,
-            totalCount: 0,
-            pageSize: 10,
-            pageNumber: 0,
-            teacherList: [] as TEACHER_RES[],
             selectedTeacher: [],
             searchQuery: '',
             tempSearchQuery: '',
+            teacherUpdateList: this.teacherInfoData.departmentID,
         };
     },
+
     computed: {
         filteredTeacherList() {
             if (!this.searchQuery) {
@@ -57,7 +51,7 @@ export default defineComponent({
                 teacher.fullName.toLowerCase().includes(query) ||
                 teacher.gender.toLowerCase().includes(query) ||
                 teacher.dateOfBirth.toLowerCase().includes(query) ||
-                teacher.phone.toLowerCase().includes(query) || 
+                teacher.phone.toLowerCase().includes(query) ||
                 teacher.roleID.toLowerCase().includes(query)
             );
         }
@@ -66,8 +60,28 @@ export default defineComponent({
         this.onDataLoad();
         this.onGetDepartmentList();
         this.onGetStudentList();
+        this.loadDepartmentTeachers();
     },
     methods: {
+
+        async loadDepartmentTeachers() {
+            const reqBody = {
+                teacherID: '',
+                departmentID: this.teacherInfoData.departmentID
+            };
+
+            const response = (await requestService.request(API_PATH.TEACHER_DEPARTMENT_LIST, reqBody, false)) ;
+
+            if (response.body && response.body.departmentList) {
+                this.teacherUpdateList = response.body.departmentList.map((teacher: { teacherID: any; firstName: any; lastName: any; }) => ({
+                    ...teacher,
+                    specificID: teacher.teacherID,
+                    storedIndex: undefined,
+                    fullName: `${teacher.firstName} ${teacher.lastName}`,
+                }));
+            } 
+        },
+
         onDataLoad() {
             if (!this.isInsert) {
                 this.teacherDepartmentInfo = { ...this.subjectInfoData };
@@ -106,21 +120,70 @@ export default defineComponent({
         },
 
         async saveData() {
-            const teacherList = this.selectedTeacher.map(teacher => ({
+            const teacherUpdateListData = this.teacherUpdateList.map((teacher: { specificID: any; originalRoleID: any; }) => ({
                 teacherID: teacher.specificID,
-                roleCode: teacher.originalRoleID
+                roleCode: teacher.originalRoleID,
+                statusCode: '01'
             }));
+
             const requestBody = {
-                departmentID: this.teacherDepartmentInfo.departmentID,
-                teacherList: teacherList
+                departmentID: this.teacherInfoData.departmentID,
+                teacherList: teacherUpdateListData
             };
 
-            await requestService.request(API_PATH.TEACHER_DEPARTMENT_REGISTER, requestBody, true);
+            await requestService.request(API_PATH.TEACHER_DEPARTMENT_UPDATE, requestBody, false);
+            this.$toast.add({ severity: 'success', summary: 'Success', detail: 'Data saved successfully!', life: 3000 });
             this.onClose();
         },
 
-        onSearch() {
-            this.searchQuery = this.tempSearchQuery;
+        onClickAddData(item: TEACHER_DEPARTMENT_LIST) {
+            const existsInUpdateList = this.teacherUpdateList.some((teacher: { specificID: any; }) => teacher.specificID === item.specificID);
+    
+            if (!existsInUpdateList) {
+                const filteredIndex = this.filteredTeacherList.findIndex(teacher => teacher.specificID === item.specificID);
+
+                if (filteredIndex !== -1) {
+                    item.storedIndex = filteredIndex;
+                    this.teacherUpdateList.push(item);
+                    this.filteredTeacherList.splice(filteredIndex, 1);
+                }
+
+                const originalIndex = this.teacherList.findIndex(teacher => teacher.specificID === item.specificID);
+                if (originalIndex !== -1) {
+                    this.teacherList.splice(originalIndex, 1);
+                }
+            }
+        },
+
+        onClickDelete(item: TEACHER_DEPARTMENT_LIST) {
+            const updateIndex = this.teacherUpdateList.findIndex((teacher: { specificID: any; }) => teacher.specificID === item.specificID);
+            if (updateIndex !== -1) {
+                this.teacherUpdateList.splice(updateIndex, 1);
+            }
+
+            const filteredIndex = this.filteredTeacherList.findIndex(teacher => teacher.specificID === item.specificID);
+            if (filteredIndex !== -1) {
+                this.filteredTeacherList.splice(filteredIndex, 1);
+            }
+
+            const teacherIndex = this.teacherList.findIndex(teacher => teacher.specificID === item.specificID);
+            if (teacherIndex === -1) {
+                if (item.storedIndex !== undefined) {
+                    this.teacherList.splice(item.storedIndex, 0, item);
+                } else {
+                    this.teacherList.push(item);
+                }
+            }
+
+            if (item.storedIndex !== undefined) {
+                const filteredItemIndex = this.filteredTeacherList.findIndex(teacher => teacher.specificID === item.specificID);
+                if (filteredItemIndex !== -1) {
+                    this.filteredTeacherList.splice(filteredItemIndex, 1);
+                }
+
+                this.filteredTeacherList.splice(item.storedIndex, 0, item);
+                delete item.storedIndex;
+            }
         },
 
         onClose() {

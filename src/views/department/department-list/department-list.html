@@ -8,13 +8,9 @@
             <span class="text_title mx-2">{{ $t('department.title') }}</span>
         </div>
         <div>
-            <button type="button" class="btn btn-dark p-1 px-2" @click="exportToExcel">
+            <button type="button" class="btn btn-dark p-1 px-2 mx-3" @click="exportToExcel">
                 <span class="mx-1">{{ $t('common.downloadExcel') }}</span>
                 <font-awesome-icon :icon="['fas', 'file-excel']" />
-            </button>
-            <button class="btn btn-info p-1 px-2 mx-3" @click="onClickInsertTeacher">
-                <span class="mx-1">{{ $t('department.addTeacher') }}</span>
-                <font-awesome-icon :icon="['fas', 'plus']" />
             </button>
             <button class="btn btn-primary p-1 px-2" @click="onClickAddNew" >
                 <span class="mx-1">{{ $t('common.addNew') }}</span>
@@ -71,6 +67,11 @@
                         <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '01')" :icon="['fas', 'fa-rotate-back']" class="text-white mx-2" :title="$t('action.active')" />
                         <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
                     </div>
+                </template>
+            </Column>
+            <Column header="Upgrade">
+                <template #body="{ data }">
+                    <button class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addTeacher') }}</button>
                 </template>
             </Column>
         </DataTable>
