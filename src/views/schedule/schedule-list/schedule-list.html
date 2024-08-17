@@ -79,7 +79,13 @@
         <div class="conainter-fluid d-flex flex-column justify-content-center align-items-center pt-2 pb-4">
             <p class="p-1 m-0 schedule_header">{{ $t('schedule.weekly') }}</p>
             <p class="p-1 m-0 schedule_header">{{ $t('schedule.year') }} {{ filterInfo.scheduleYear }}</p>
-            <p class="p-1 m-0 schedule_header">{{ $t('schedule.major') }} {{ scheduleHeader.className }} {{ $t('schedule.classYear') }} {{ scheduleHeader.classYear }} {{ $t('schedule.semester') }} {{ scheduleHeader.semester }} {{ $t('schedule.generation') }} {{ scheduleHeader.generation }}</p>
+            <div class="d-flex p-1 m-0 schedule_header">
+                <span>{{ $t('schedule.major') }} {{ scheduleHeader.className }}</span>
+                <span class="mx-2">{{ $t('schedule.classYear') }} {{ scheduleHeader.classYear }}</span>
+                <span>{{ $t('schedule.semester') }} {{ scheduleHeader.semester }}</span>
+                <span class="mx-2">{{ $t('schedule.generation') }} {{ scheduleHeader.generation }}</span>
+                <span>({{ $codeConverter.codeToString(classTypeList, scheduleHeader.classType, 'classType') }})</span>
+            </div>
         </div>
         <DataTable 
             v-model:selection="scheduleInfo" 
