@@ -192,7 +192,7 @@ export default defineComponent({
       }
       this.$confirm.require({
         message: 'Do you want to delete this record?',
-        header: 'Confirmation',
+        header: 'Confirmation', 
         accept: async () => {
           if(this.isInsert==true && this.isAdd==false){
             this.subjectList = this.subjectList.filter(item => item.no !== data.no);

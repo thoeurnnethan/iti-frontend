@@ -4,7 +4,7 @@
 import { defineComponent } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
-import { YearList, SemesterList, globalStatusCodeList, WeekdayList } from '@/shared/common/common';
+import { YearList, SemesterList, globalStatusCodeList, WeekdayList, ClassTypeList } from '@/shared/common/common';
 import MyLoading from '../../MyLoading.vue';
 import { SCHEDULE_LIST, SCHEDULE_LIST_REQ, SCHEDULE_LIST_RES, ScheduleColumn, ScheduleRow } from '@/shared/types/schedule-list';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
@@ -24,6 +24,7 @@ export default defineComponent({
             semesterList: SemesterList,
             statusCodeList: globalStatusCodeList,
             weekdayList: WeekdayList,
+            classTypeList: ClassTypeList,
             departmentList: [] as DEPARTMENT_LIST[],
             classList: [] as CLASS_LIST[],
             scheduleList: [] as SCHEDULE_LIST[],

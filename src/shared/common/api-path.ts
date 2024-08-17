@@ -46,4 +46,8 @@ export enum API_PATH {
     TEACHER_DEPARTMENT_LIST = "api/department-mngt/list",
     TEACHER_DEPARTMENT_UPDATE = "api/department-mngt/update",
     TEACHER_DEPARTMENT_REGISTER = "api/department-mngt/register",
+    //Student Score
+    SCORE_LIST = "api/score/list",
+    SCORE_REGISTR = "api/score/update",
+    SCORE_UPDATE = "api/score/register",
 }

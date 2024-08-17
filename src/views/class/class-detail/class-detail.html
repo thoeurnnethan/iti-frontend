@@ -9,41 +9,41 @@
                     <!-- Subject List Details Tab -->
                     <TabPanel :header="$t('class.subjectList')">
                         <DataTable v-if="classInfo && classInfo.length > 0" :value="classInfo" stripedRows>
-                            <Column field="no" header="No" :body="indexTemplate" />
+                            <Column field="no" header="No" :body="indexTemplate" class="text-center" />
                             <Column field="subjectName" header="Subject Name" />
                             <Column field="subjectDesc" header="Subject Description" />
                         </DataTable>
                         <table v-else>
                             <tr rowspan="3">
-                                <th>No data available.</th>
+                                <th class="text-danger">{{ $t('common.noData') }}</th>
                             </tr>
                         </table>
                     </TabPanel>
                     <!-- Student List Details Tab -->
                     <TabPanel :header="$t('class.studentList')">
                         <DataTable v-if="studentInfo && studentInfo.length > 0" :value="studentInfo" stripedRows>
-                            <Column field="no" header="No" />
-                            <Column field="studentID" header="Student ID" />
-                            <Column field="fullName" header="Full Name" />
-                            <Column field="gender" header="Gender" />
-                            <Column field="dateOfBirth" header="Date of Birth">
+                            <Column field="no" :header="$t('common.no')" class="text-center"  />
+                            <Column field="studentID" :header="$t('user.studentID')" />
+                            <Column field="fullName" :header="$t('user.name')" />
+                            <Column field="gender" :header="$t('user.gender')" />
+                            <Column field="dateOfBirth" :header="$t('user.dateOfBirth')">
                                 <template #body="{ data }">
                                     {{ $format.formatDateTime(data.dateOfBirth,'yyyy-mm-dd') }}
                                 </template>
                             </Column>
-                            <Column field="phoneNumber" header="Phone Number">
+                            <Column :header="$t('user.phone')">
                                 <template #body="{ data }">
                                     {{ $phoneNumberFormater.formatPhoneNumber(data.phoneNumber) }}
                                 </template>
                             </Column>
-                            <Column field="status" header="Status Code" />
+                            <Column :header="$t('common.status')" />
                             <template #body="{ data }">
                                 {{ $codeConverter.codeToString(studentInfo, data.statusCode) }}
                             </template>
                         </DataTable>
                         <table v-else>
                             <tr rowspan="7">
-                                <th>No data available.</th>
+                                <th class="text-danger">{{ $t('common.noData') }}</th>
                             </tr>
                         </table>
                     </TabPanel>

@@ -12,7 +12,6 @@ const router = createRouter({
             path: "/admin-dashboard",
             name: "dashboardLayout",
             component: () => import("@/layouts/AdminDashboardLayout/dashboardLayout.vue"),
-            // redirect: "/home",
             children:[
                 {
                     path: "/admin-dashboard",
@@ -78,6 +77,11 @@ const router = createRouter({
                     path: "/schedule-register",
                     name: "schedule-register",
                     component: () => import("@/views/schedule/schedule-register/schedule-register.vue")
+                },
+                {
+                    path: "/score-list",
+                    name: "score-list",
+                    component: () => import("@/views/score/score-list/score-list.vue")
                 }
             ]
         },

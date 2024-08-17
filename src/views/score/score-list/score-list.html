@@ -1,58 +1,46 @@
-<!-- header -->
-<div class="container-fluid p-0 d-flex justify-content-between">
-    <div>
-        <font-awesome-icon :icon="['fa', 'user']" />&nbsp;
-        <span class="text_title">Score List</span>
+<!-- <MyLoading v-if="Loading" /> -->
+<Toast />
+<ConfirmDialog></ConfirmDialog>
+<div class="container-fluid d-flex flex-column we_box" style="overflow: hidden;">
+    <div class="container-fluid p-0 d-flex justify-content-between">
+        <div class="breadcrumb">
+            <font-awesome-icon :icon="['fa', 'shop']" />
+            <span class="text_title mx-1">{{ $t('room.title') }}</span>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark p-1 px-2">
+                <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
+                <font-awesome-icon :icon="['fas', 'file-excel']" />
+            </button>&nbsp;
+            <button class="btn btn-primary p-1 px-2">
+                <span class="mx-1">{{ $t('common.addNew') }}</span>
+                <font-awesome-icon :icon="['fas', 'plus']" />
+            </button>
+        </div>
     </div>
-    <button class="btn btn-primary p-1 px-2" @click="onClickAddNew">
-        Add
-        <font-awesome-icon :icon="['fas', 'plus']" />
-    </button>
+    <div class="float-end mt-3">
+        <button type="button" class="rad_right btn btn-dark b_shadow p-2 px-2 float-end font_15">{{ $t('common.search') }}</button>
+        <InputGroup class="float-end w-25">
+            <InputText class="p-1 font_15 rad_left b_shadow c_input" v-model="searchKeyword"
+                :placeholder="$t('common.searchKey')" style="height: 40.5px;padding-left: 15px !important;" />
+        </InputGroup>
+    </div>
 </div>
-<!-- header -->
-    <div class="mt-3"></div>
-<ThemeSwitcher />
-<div class="card p-fluid">
-    <DataTable v-model:editingRows="editingRows" :value="products" editMode="row" dataKey="id" @row-edit-save="onRowEditSave"
-        :pt="{
-            table: { style: 'min-width: 50rem' },
-            column: {
-                bodycell: ({ state }) => ({
-                    style:  state['d_editing']&&'padding-top: 0.75rem; padding-bottom: 0.75rem'
-                })
-            }
-        }"
-    >
-        <Column field="code" header="Code" style="width: 20%">
-            <template #editor="{ data, field }">
-                <InputText v-model="data[field]" />
-            </template>
-        </Column>
-        <Column field="name" header="Name" style="width: 20%">
-            <template #editor="{ data, field }">
-                <InputText v-model="data[field]" />
-            </template>
-        </Column>
-        <Column field="inventoryStatus" header="Status" style="width: 20%">
-            <template #editor="{ data, field }">
-                <Select v-model="data[field]" :options="statuses" optionLabel="label" optionValue="value" placeholder="Select a Status">
-                    <template #option="slotProps">
-                        <Tag :value="slotProps.option.value" :severity="getStatusLabel(slotProps.option.value)" />
-                    </template>
-                </Select>
-            </template>
-            <template #body="slotProps">
-                <Tag :value="slotProps.data.inventoryStatus" :severity="getStatusLabel(slotProps.data.inventoryStatus)" />
-            </template>
-        </Column>
-        <Column field="price" header="Price" style="width: 20%">
-            <template #body="{ data, field }">
-                {{ formatCurrency(data[field]) }}
-            </template>
-            <template #editor="{ data, field }">
-                <InputNumber v-model="data[field]" mode="currency" currency="USD" locale="en-US" />
-            </template>
-        </Column>
-        <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></Column>
-    </DataTable>
+
+<div class="we_box mt-3">
+    <div class="b_shadow">
+        <DataTable :value="studentScoreList" responsiveLayout="scroll">
+            <Column field="studentID" header="Student ID"></Column>
+            <Column field="firstName" header="First Name"></Column>
+            <Column field="lastName" header="Last Name"></Column>
+            <Column field="gender" header="Gender"></Column>
+            <Column field="phoneNumber" header="Phone Number"></Column>
+            <Column v-for="subject in sujectList" 
+                :key="subject" 
+                :field="subject" 
+                :header="subject">
+            </Column>
+        </DataTable>
+    </div>
+    <div class="p-3"></div>
 </div>

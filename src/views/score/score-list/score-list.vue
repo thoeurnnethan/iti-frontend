@@ -1,51 +1,41 @@
 <template src="./score-list.html"></template>
 
-<script>
-import { ProductService } from './score-list.js';
+<script lang="ts">
+import { API_PATH } from '@/shared/common/api-path';
+import { RequestService } from '@/shared/services/request-service';
+import { SCORE_LIST } from '@/shared/types/student-score';
+
+const requestService = new RequestService();
 
 export default {
     data() {
         return {
-            products: null,
-            editingRows: [],
-            statuses: [
-                { label: 'In Stock', value: 'INSTOCK' },
-                { label: 'Low Stock', value: 'LOWSTOCK' },
-                { label: 'Out of Stock', value: 'OUTOFSTOCK' }
-            ]
-        };
+            studentScoreList: [],
+            sujectList: [],
+            studentScoreInfo: {} as SCORE_LIST[]
+        }
     },
     mounted() {
-        ProductService.getProductsMini().then((data) => (this.products = data));
+        this.onGetStudentScoreList()
     },
     methods: {
-        onRowEditSave(event) {
-            let { newData, index } = event;
-
-            this.products[index] = newData;
-        },
-        getStatusLabel(status) {
-            switch (status) {
-                case 'INSTOCK':
-                    return 'success';
-
-                case 'LOWSTOCK':
-                    return 'warn';
-
-                case 'OUTOFSTOCK':
-                    return 'danger';
-
-                default:
-                    return null;
+        async onGetStudentScoreList(){
+            const reqBody = {
+                classInfoID: 'CLS100111',
+                studentID: '',
+                subjectID: ''
             }
-        },
-        formatCurrency(value) {
-            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
+
+            const res = await requestService.request(API_PATH.SCORE_LIST, reqBody, false)
+            this.studentScoreList = res.body.data
+            this.sujectList = res.body.subjects
+            console.log('StudentList',this.studentScoreList);
+            console.log('Score',this.sujectList);
         }
     }
 };
 </script>
 
 <style scoped>
-@import url('./score-list.scss');
+/* @import url('./score-list.scss'); */
 </style>
