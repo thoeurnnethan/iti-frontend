@@ -2,43 +2,114 @@
 <Toast />
 <ConfirmDialog></ConfirmDialog>
 <div class="container-fluid d-flex flex-column we_box" style="overflow: hidden;">
-    <div class="container-fluid p-0 d-flex justify-content-between">
+    <div class="container-fluid p-1 d-flex justify-content-between">
         <div class="breadcrumb">
-            <font-awesome-icon :icon="['fa', 'shop']" />
-            <span class="text_title mx-1">{{ $t('room.title') }}</span>
+            <font-awesome-icon :icon="['fa', 'user-graduate']" />
+            <span class="text_title mx-1">{{ $t('score.title') }}</span>
         </div>
         <div>
-            <button type="button" class="btn btn-dark p-1 px-2">
+            <!-- <button type="button" class="btn btn-dark p-1 px-2">
                 <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
                 <font-awesome-icon :icon="['fas', 'file-excel']" />
-            </button>&nbsp;
+            </button>
+            <button class="btn btn-info p-1 px-2 mx-2">
+                <span class="mx-1">{{ $t('class.addStudent') }}</span>
+                <font-awesome-icon :icon="['fas', 'plus']" />
+            </button> -->
             <button class="btn btn-primary p-1 px-2">
                 <span class="mx-1">{{ $t('common.addNew') }}</span>
                 <font-awesome-icon :icon="['fas', 'plus']" />
             </button>
         </div>
     </div>
-    <div class="float-end mt-3">
-        <button type="button" class="rad_right btn btn-dark b_shadow p-2 px-2 float-end font_15">{{ $t('common.search') }}</button>
-        <InputGroup class="float-end w-25">
-            <InputText class="p-1 font_15 rad_left b_shadow c_input" v-model="searchKeyword"
-                :placeholder="$t('common.searchKey')" style="height: 40.5px;padding-left: 15px !important;" />
-        </InputGroup>
+    <div class="container-fluid px-0 py-2">
+        <div class="row">
+            <div class="col-md-3">
+                <label class="form-label font_14">{{ $t('class.selectDepartment') }}</label>
+                <select class="form-select" v-model="filterInfo.departmentID">
+                    <option value=""><span>{{ $t('common.all') }}</span></option>
+                    <option v-for="department in departmentList" :value="department.departmentID">
+                        <span>{{ department.departmentID }} - {{ department.departmentName }}</span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label font_14">{{ $t('schedule.selectYear') }}</label>
+                <select class="form-select" v-model="filterInfo.classYear" @change="getClassList">
+                    <option value="">{{ $t('common.all') }}</option>
+                    <option v-for="year in yearList" :value="year.codeValue">
+                        <span>{{ year.codeValueDesc }}</span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label font_14">{{ $t('class.selectSemester') }}</label>
+                <select class="form-select" v-model="filterInfo.semester" @change="getClassList">
+                    <option value="">{{ $t('common.all') }}</option>
+                    <option v-for="semester in semesterList" :value="semester.codeValue">
+                        <span>{{ semester.codeValueDesc }}</span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label font_14">{{ $t('class.selectClass') }}</label>
+                <select :class="['form-select', isSelectedClassID ? '': 'selectBorder']" v-model="filterInfo.classID" @change="getClassList">
+                    <option v-for="classInfo in classList" :value="classInfo.classID">
+                        <p class="m-0 p-0">{{ classInfo.className }}</p>
+                        <p class="m-0 p-0">-{{ $t('schedule.classYear') }} {{ classInfo.year }}</p>
+                        <p class="m-0 p-0">-{{ $t('schedule.semester') }} {{ classInfo.semester }}</p>
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="py-2"></div>
+        <div class="d-flex justify-content-between">
+            <button class="btn btn-info p-2 px-4 mx-1 float-end font_15" :disabled="!isValidFilterInfo" @click="onClearFilterInfo">{{ $t('common.clearFilter') }}</button>
+            <button class="btn btn-dark p-2 px-4 mx-1 float-end font_15" :disabled="isDisableSearchBtn" @click="onGetStudentScoreList">{{ $t('common.search') }}</button>
+        </div>
     </div>
 </div>
 
 <div class="we_box mt-3">
     <div class="b_shadow">
-        <DataTable :value="studentScoreList" responsiveLayout="scroll">
-            <Column field="studentID" header="Student ID"></Column>
-            <Column field="firstName" header="First Name"></Column>
-            <Column field="lastName" header="Last Name"></Column>
-            <Column field="gender" header="Gender"></Column>
-            <Column field="phoneNumber" header="Phone Number"></Column>
+        <DataTable 
+            :value="studentScoreList" 
+            responsiveLayout="scroll"
+            editMode="cell"
+            @cell-edit-complete="onCellEditComplete"
+                :pt="{
+                    table: { style: 'min-width: 50rem' },
+                    column: {
+                        bodycell: ({ state }) => ({
+                            class: [{ 'pt-0 pb-0': state['d_editing'] }]
+                        })
+                    }
+                }"
+            >
+            <Column field="seqNo" header="No" class="text-center" style="min-width: 50px;"></Column>
+            <Column field="studentID" header="Student ID" style="min-width: 120px;"></Column>
+            <Column field="fullName" header="Student Name" style="min-width: 200px;"></Column>
+            <Column field="gender" header="Gender" style="min-width: 80px;"></Column>
+            <Column field="phoneNumber" header="Phone Number" style="min-width: 150px;"></Column>
+            <Column header="Result" field="phoneNumber">
+                <template #editor="slotProps">
+                    <InputText autofocus v-model="slotProps.data[slotProps.column.field]"
+                        @click.stop="[onResultFocus(slotProps),toggle($event)]" />
+                </template>
+            </Column>
             <Column v-for="subject in sujectList" 
                 :key="subject" 
                 :field="subject" 
-                :header="subject">
+                :header="subject"
+                style="min-width: 200px;">
+                <template #body="{ data, field }">
+                    {{ data[field] }}
+                </template>
+                <template #editor="{ data, field }">
+                    <template>
+                        <InputNumber v-model="data[field]" />
+                    </template>
+                </template>
             </Column>
         </DataTable>
     </div>

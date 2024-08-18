@@ -26,7 +26,8 @@
         "noData": "No data records available.",
         "noScheduleData": "Cannot find Schedule Information. Did you register it yet?",
         "all": "All",
-        "status": "Status"
+        "status": "Status",
+        "clearFilter": "Clear Filter"
     },
     "action": {
         "edit": "Edit",
@@ -212,5 +213,8 @@
             "3": "Year 3",
             "4": "Year 4"
         }
+    },
+    "score":{
+        "title": "Score List"
     }
 }
