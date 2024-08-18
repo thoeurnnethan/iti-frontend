@@ -91,9 +91,18 @@ export default defineComponent({
             this.getDepartmentList();
         },
 
-        async onClickInsertTeacher() {
+        async onClickInsertTeacher(item: DEPARTMENT_LIST) {
             this.$popupService.onOpen({
                 component: teacherDepartment_action,
+                dataProp: {
+                    teacherInfoData: item,
+                },
+                callback: () => {
+                    this.getDepartmentList();
+                },
+                onClose: () => {
+                    this.getDepartmentList();
+                }
             })
         },
 

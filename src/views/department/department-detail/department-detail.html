@@ -46,7 +46,11 @@
                     </TabPanel>
                     <!-- Student List Details Tab -->
                     <TabPanel :header="$t('department.teacherList')">
-                        <DataTable v-if="departmentMemberInfo && departmentMemberInfo.length > 0" :value="departmentMemberInfo" stripedRows>
+                        <DataTable 
+                            v-if="departmentMemberInfo && departmentMemberInfo.length > 0" 
+                            :value="departmentMemberInfo" 
+                            stripedRows
+                        >
                             <Column field="no" :header="$t('common.no')" class="text-center"/>
                             <Column field="teacherID" :header="$t('user.teacherID')" />
                             <Column field="fullName" :header="$t('user.name')" />
