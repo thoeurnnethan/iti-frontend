@@ -72,46 +72,28 @@
 
 <div class="we_box mt-3">
     <div class="b_shadow">
+        <div class="my-5"></div>
         <DataTable 
             :value="studentScoreList" 
-            responsiveLayout="scroll"
-            editMode="cell"
-            @cell-edit-complete="onCellEditComplete"
-                :pt="{
-                    table: { style: 'min-width: 50rem' },
-                    column: {
-                        bodycell: ({ state }) => ({
-                            class: [{ 'pt-0 pb-0': state['d_editing'] }]
-                        })
-                    }
-                }"
-            >
+            responsiveLayout="scroll"  editMode="cell" @cell-edit-complete="onCellEditComplete">
             <Column field="seqNo" header="No" class="text-center" style="min-width: 50px;"></Column>
             <Column field="studentID" header="Student ID" style="min-width: 120px;"></Column>
             <Column field="fullName" header="Student Name" style="min-width: 200px;"></Column>
             <Column field="gender" header="Gender" style="min-width: 80px;"></Column>
             <Column field="phoneNumber" header="Phone Number" style="min-width: 150px;"></Column>
-            <Column header="Result" field="phoneNumber">
-                <template #editor="slotProps">
-                    <InputText autofocus v-model="slotProps.data[slotProps.column.field]"
-                        @click.stop="[onResultFocus(slotProps),toggle($event)]" />
-                </template>
-            </Column>
             <Column v-for="subject in sujectList" 
-                :key="subject" 
-                :field="subject" 
-                :header="subject"
+                :key="subject.subjectID" 
+                :field="subject.subjectName" 
+                :header="subject.subjectName"
                 style="min-width: 200px;">
-                <template #body="{ data, field }">
-                    {{ data[field] }}
+                <template #editor="{ data, field, key }">
+                    <InputNumber v-model="data[field]" autofocus :min="0" :max="100"/>
                 </template>
-                <template #editor="{ data, field }">
-                    <template>
-                        <InputNumber v-model="data[field]" />
-                    </template>
-                </template>
-            </Column>
+            </Column> 
         </DataTable>
+    </div>
+    <div class="container d-flex justify-content-end my-4">
+        <button class="btn btn-info px-5" @click="onClickSave">Save</button>
     </div>
     <div class="p-3"></div>
 </div>

@@ -17,6 +17,8 @@ export default {
             yearList: YearList,
             studentScoreList: [],
             sujectList: [],
+            subject: {},
+            request: [] as any,
             studentScoreInfo: {} as SCORE_LIST[],
             departmentList: [] as DEPARTMENT_LIST[],
             classList: [] as CLASS_LIST[],
@@ -60,6 +62,7 @@ export default {
     },
 
     mounted() {
+        this.onGetStudentScoreList()
         this.getDepartmentList()
         this.updateTranslatedYearList()
         this.updateTranslatedSemesterList()
@@ -67,8 +70,53 @@ export default {
     },
 
     methods: {
+        onCellEditComplete(event: { data: any; newValue: any; field: any;}) {
+            let { data, newValue, field } = event;
+            if(newValue === null || newValue === 0){
+                return
+            }else if(data[field] !== newValue){
+                data[field] = newValue
+                this.subject = this.sujectList.filter(data => data.subjectName === field)
+                const scoreObj = {
+                    studentID: data.studentID,
+                    subjectID: this.subject[0].subjectID,
+                    score: newValue
+                }
+                this.request.push(scoreObj)
+                this.request = Array.from(
+                    this.request.reduce((map: { set: (arg0: string, arg1: any) => void; }, item: { studentID: any; subjectID: any; }) => {
+                        const key = `${item.studentID}-${item.subjectID}`;
+                        map.set(key, item);
+                        return map;
+                    }, new Map()).values()
+                );
+            }
+        },
+
+        async onClickSave(){
+            const reqBody = {
+                classID: this.filterInfo.classID,
+                classYear: this.filterInfo.classYear,
+                semester: this.filterInfo.semester,
+                studentScoreList: this.request
+            }
+            const res = await requestService.request(API_PATH.SCORE_REGISTR, reqBody, true);
+            if(res.header.result){
+                this.sujectList = res.body.subjects
+                this.studentScoreList = res.body.data.map((data: any,index: number) =>{
+                    return {
+                        ...data,
+                        seqNo: index + 1,
+                        fullName:  `${data.firstName} ${data.lastName}`
+                    }
+                })
+                this.request = []
+            }
+        },
+
         async onGetStudentScoreList(){
             const reqBody = {
+                // classInfoID: 'CLS100131',
                 classInfoID: this.filterInfo.classID + this.filterInfo.classYear + this.filterInfo.semester,
                 studentID: '',
                 subjectID: ''
@@ -108,11 +156,6 @@ export default {
             }
             const response = (await requestService.request(API_PATH.CLASS_LIST, reqBody, false)) as CLASS_LIST_RES;
             this.classList = response.body?.classList
-        },
-
-        onCellEditComplete(event: { preventDefault?: any; data?: any; newValue?: any; field?: any; }) {
-            let { data, newValue, field } = event;
-            alert(newValue)
         },
 
         onClearFilterInfo(){
