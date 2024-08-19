@@ -34,158 +34,118 @@ export default defineComponent({
                 departmentID: '',
             } as TEACHER_DEPARTMENT_LIST,
             subjectInfoUpdate: {} as TEACHER_DEPARTMENT_LIST,
-            teacherList: [] as TEACHER_DEPARTMENT_LIST[],
+            subjectList: [] as TEACHER_DEPARTMENT_LIST[],
             departmentList: [] as DEPARTMENT_LIST[],
             genderCodeList: GenderCodeList,
             statusCodeList: globalStatusCodeList,
             userRoleList: UserRoleList,
             searchKey: '',
             Loading: false,
+            totalCount: 0,
+            pageSize: 10,
+            pageNumber: 0,
+            teacherList: [] as TEACHER_RES[],
             selectedTeacher: [],
             searchQuery: '',
             tempSearchQuery: '',
-            teacherUpdateList: this.teacherInfoData.departmentID,
         };
     },
-
     computed: {
-        filteredTeacherList() {
-            if (!this.searchQuery) {
-                return this.teacherList;
-            }
-            const query = this.searchQuery.toLowerCase();
-            return this.teacherList.filter(teacher =>
-                teacher.fullName.toLowerCase().includes(query) ||
-                teacher.gender.toLowerCase().includes(query) ||
-                teacher.dateOfBirth.toLowerCase().includes(query) ||
-                teacher.phone.toLowerCase().includes(query) ||
-                teacher.roleID.toLowerCase().includes(query)
-            );
+    filteredTeacherList() {
+        if (!this.searchQuery) {
+            return this.teacherList;
         }
-    },
 
+        const query = this.searchQuery.toLowerCase();
+        return this.teacherList.filter(teacher =>
+            teacher.fullName.toLowerCase().includes(query) ||
+            teacher.gender.toLowerCase().includes(query) ||
+            teacher.dateOfBirth.toLowerCase().includes(query) ||
+            teacher.phone.toLowerCase().includes(query) ||
+            teacher.roleID.toLowerCase().includes(query)
+        );
+    },
+    teachersInDepartment() {
+        const departmentTeacherIDs = new Set(this.departmentList.map(teacher => teacher.teacherID));
+        return this.filteredTeacherList.filter(teacher => !departmentTeacherIDs.has(teacher.specificID));
+    }
+}
+,
     mounted() {
-        this.onGetDepartmentList();
-        this.onGetStudentList();
-        this.loadDepartmentTeachers();
+        this.onGetTeacherList();
+        this.getTeacherInfoData();
     },
-
     methods: {
-        async loadDepartmentTeachers() {
-            const reqBody = {
-                teacherID: '',
-                departmentID: this.teacherInfoData.departmentID
-            };
-            const response = (await requestService.request(API_PATH.TEACHER_DEPARTMENT_LIST, reqBody, false));
-            if (response.body && response.body.departmentList) {
-                this.teacherUpdateList = response.body.departmentList.map((teacher: { teacherID: any; firstName: any; lastName: any; }) => ({
-                    ...teacher,
-                    specificID: teacher.teacherID,
-                    storedIndex: undefined,
-                    fullName: `${teacher.firstName} ${teacher.lastName}`,
-                }));
-            }
-        },
-
-        async onGetDepartmentList() {
-            const reqBody = {
-                searchKey: this.searchKey,
-                pageSize: 1000,
-                pageNumber: 1
-            };
-            const response = await requestService.request(API_PATH.DEPARTMENT_LIST, reqBody, false) as DEPARTMENT_LIST_RES;
-            this.departmentList = response.body?.departmentList;
-        },
-
-        async onGetStudentList() {
+        async onGetTeacherList() {
             const reqBody = {
                 searchKey: this.searchKey,
                 roleID: '',
                 pageSize: 1000,
                 pageNumber: 1
             };
-            const response = await requestService.request(API_PATH.USER_LIST, reqBody, false) as TEACHER_RES;
-            const filteredResponse = Array.isArray(response.body.userList) ? response.body.userList.filter(teacher => teacher.roleID !== '04') : [];
-            if (filteredResponse.length > 0) {
-                this.teacherList = filteredResponse.map(teacher => ({
+            try {
+                const response = await requestService.request(API_PATH.USER_LIST, reqBody, false) as TEACHER_RES;
+                const filteredResponse = Array.isArray(response.body.userList) ? response.body.userList.filter(teacher => teacher.roleID !== '04' && teacher.roleID !== '01') : [];
+                if (filteredResponse.length > 0) {
+                    this.teacherList = filteredResponse.map(teacher => ({
+                        ...teacher,
+                        fullName: `${teacher.firstName} ${teacher.lastName}`,
+                        gender: this.$codeConverter.codeToString(this.genderCodeList, teacher.gender),
+                        roleID: this.$codeConverter.codeToString(this.userRoleList, teacher.roleID),
+                        originalRoleID: teacher.roleID
+                    }));
+                }
+            } catch (error) {
+                console.error('Error fetching teacher list:', error);
+            }
+        },
+
+        async getTeacherInfoData() {
+            const reqBody = {
+                teacherID: '',
+                departmentID: this.teacherInfoData.departmentID,
+            };
+            try {
+                const response = await requestService.request(API_PATH.TEACHER_DEPARTMENT_LIST, reqBody, false) as TEACHER_DEPARTMENT_LIST_RES;
+                this.departmentList = response.body.departmentList.map((teacher: { firstName: any; lastName: any; }) => ({
                     ...teacher,
                     fullName: `${teacher.firstName} ${teacher.lastName}`,
-                    gender: this.$codeConverter.codeToString(this.genderCodeList, teacher.gender),
                     roleID: this.$codeConverter.codeToString(this.userRoleList, teacher.roleID),
-                    originalRoleID: teacher.roleID
                 }));
+            } catch (error) {
+                console.error('Error fetching department list:', error);
             }
         },
 
         async saveData() {
-            const teacherUpdateListData = this.teacherUpdateList.map((teacher: { specificID: any; originalRoleID: any; }) => ({
+            const teacherList = this.selectedTeacher.map(teacher => ({
                 teacherID: teacher.specificID,
                 roleCode: teacher.originalRoleID,
                 statusCode: '01'
             }));
-
             const requestBody = {
                 departmentID: this.teacherInfoData.departmentID,
-                teacherList: teacherUpdateListData
+                teacherList: teacherList
             };
 
-            await requestService.request(API_PATH.TEACHER_DEPARTMENT_UPDATE, requestBody, false);
-            this.$toast.add({ severity: 'success', summary: 'Success', detail: 'Data saved successfully!', life: 3000 });
-            this.onClose();
-        },
-
-        onClickAddData(item: TEACHER_DEPARTMENT_LIST) {
-            const existsInUpdateList = this.teacherUpdateList.some((teacher: { specificID: any; }) => teacher.specificID === item.specificID);
-
-            if (!existsInUpdateList) {
-                const filteredIndex = this.filteredTeacherList.findIndex(teacher => teacher.specificID === item.specificID);
-
-                if (filteredIndex !== -1) {
-                    item.storedIndex = filteredIndex;
-                    this.teacherUpdateList.push(item);
-                    this.filteredTeacherList.splice(filteredIndex, 1);
-                }
-
-                const originalIndex = this.teacherList.findIndex(teacher => teacher.specificID === item.specificID);
-                if (originalIndex !== -1) {
-                    this.teacherList.splice(originalIndex, 1);
-                }
+            try {
+                await requestService.request(API_PATH.TEACHER_DEPARTMENT_REGISTER, requestBody, true);
+                this.onClose();
+            } catch (error) {
+                console.error('Error saving teacher data:', error);
             }
         },
 
-        onClickDelete(item: TEACHER_DEPARTMENT_LIST) {
-            const updateIndex = this.teacherUpdateList.findIndex((teacher: { specificID: any; }) => teacher.specificID === item.specificID);
-            if (updateIndex !== -1) {
-                this.teacherUpdateList.splice(updateIndex, 1);
-            }
-
-            const filteredIndex = this.filteredTeacherList.findIndex(teacher => teacher.specificID === item.specificID);
-            if (filteredIndex !== -1) {
-                this.filteredTeacherList.splice(filteredIndex, 1);
-            }
-
-            const teacherIndex = this.teacherList.findIndex(teacher => teacher.specificID === item.specificID);
-            if (teacherIndex === -1) {
-                if (item.storedIndex !== undefined) {
-                    this.teacherList.splice(item.storedIndex, 0, item);
-                } else {
-                    this.teacherList.push(item);
-                }
-            }
-
-            if (item.storedIndex !== undefined) {
-                const filteredItemIndex = this.filteredTeacherList.findIndex(teacher => teacher.specificID === item.specificID);
-                if (filteredItemIndex !== -1) {
-                    this.filteredTeacherList.splice(filteredItemIndex, 1);
-                }
-
-                this.filteredTeacherList.splice(item.storedIndex, 0, item);
-                delete item.storedIndex;
-            }
+        onSearch() {
+            this.searchQuery = this.tempSearchQuery;
         },
 
         onClose() {
             modalController.dismiss();
+        },
+
+        rowClass(rowData: { isInDepartment: boolean }) {
+            return rowData.isInDepartment ? 'disable_row' : '';
         }
     },
 });

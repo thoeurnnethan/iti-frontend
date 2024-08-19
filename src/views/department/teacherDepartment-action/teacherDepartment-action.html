@@ -12,9 +12,11 @@
                 <div class="container-fluid p-0">
                     <div class="row">
                         <div class="col-12">
-                            <div class="d-flex justify-content-center align-items-center flex-column">
-                                <label class="form-label font_16">{{ $t('department.depName') }}</label>
-                                <span class="h5 alert alert-info p-2 px-5">{{ teacherInfoData.departmentName }}</span>
+                            <div class="row d-flex justify-content-start">
+                                <div class="col-lg-5 col-md-6">
+                                    <label class="form-label font_14">Department Name</label><br>
+                                    <h5>{{ teacherInfoData.departmentName }}</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -26,59 +28,79 @@
                                 <input type="text" v-model="searchQuery" class="form-control" :placeholder="$t('common.searchKey')"/>
                             </div>
                         </div>
-                        <div class="row ">
-                            <div class="col-md-8">
-                                <DataTable 
-                                    class="we_shadow"
-                                    v-model:selection="selectedTeacher" 
-                                    :value="filteredTeacherList"
-                                    :rows="5"
-                                    :paginator="true">
-                                    <Column field="fullName" :header="$t('user.name')"></Column>
-                                    <Column field="roleID" :header="$t('user.role')"></Column>
-                                    <Column field="gender" :header="$t('user.gender')"></Column>
-                                    <Column field="dateOfBirth" :header="$t('user.dateOfBirth')">
-                                        <template #body="{ data }">
-                                            {{ $format.formatDateTime(data.dateOfBirth,'yyyy-mm-dd') }}
-                                        </template>
-                                    </Column>
-                                    <Column field="phone" :header="$t('user.phone')">
-                                        <template #body="{ data }">
-                                            {{ $phoneNumberFormater.formatPhoneNumber(data.phone) }}
-                                        </template>
-                                    </Column>
-                                    <Column :header="$t('common.add')" class="text-center">
-                                        <template #body="{ data }">
-                                            <font-awesome-icon style="cursor: pointer;font-size: 23px;" icon="fas fa-circle-right" class="text-primary mx-2" title="Add" @click="onClickAddData(data)"/>
-                                        </template>
-                                    </Column>
-                                </DataTable>
+
+                        <div class="row">
+                            <div class="col-8">
+                                <label class="form-label font_15">All Teacher</label><br>
+                                <div class="we_shadow">
+
+                                    
+                                    <DataTable 
+                                        v-model:selection="selectedTeacher" 
+                                        :value="teachersInDepartment"
+                                        dataKey="specificID" 
+                                        :rowClass="rowClass"
+                                        scrollable 
+                                        scrollHeight="400px"
+                                    >
+                                        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+                                        <Column 
+                                            field="fullName" 
+                                            header="Teacher Full Name" 
+                                            :bodyClass="getBodyClass"
+                                        ></Column>
+                                        <Column field="roleID" header="Role"></Column>
+                                        <Column field="gender" header="Gender"></Column>
+                                        <Column field="dateOfBirth" header="Date of Birth">
+                                            <template #body="{ data }">
+                                                {{ $format.formatDateTime(data.dateOfBirth, 'yyyy-mm-dd') }}
+                                            </template>
+                                        </Column>
+                                        <Column field="phone" header="Phone Number">
+                                            <template #body="{ data }">
+                                                {{ $phoneNumberFormater.formatPhoneNumber(data.phone) }}
+                                            </template>
+                                        </Column>
+                                    </DataTable>
+                                
+
+                                </div>
+                                <div class="container-fluid w-100 mt-3 d-flex justify-content-end p-0">
+                                    <button class="btn03 mx-2" style="width:185px" @click="onClose">{{ $t('common.cancel') }}</button>
+                                    <button class="btn01" style="width:185px" @click="saveData()">
+                                        {{ $t('common.save') }}
+                                    </button> 
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <p class="alert alert-info">{{ $t('department.teacherList') }}</p>
-                                <DataTable 
-                                    v-if="teacherUpdateList.length > 0"
-                                    class="we_shadow"
-                                    :value="teacherUpdateList">
-                                    <Column field="fullName" :header="$t('user.name')"></Column>
-                                    <Column field="gender" :header="$t('user.gender')"></Column>
-                                    <Column :header="$t('common.remove')" class="text-center">
-                                        <template #body="{ data }">
-                                            <font-awesome-icon style="cursor: pointer;" icon="fa-solid fa-trash" class=" text-danger" title="Delete" @click="onClickDelete(data)"/>
-                                        </template>
-                                    </Column>
-                                </DataTable>
-                                <table v-else>
-                                    <tr>
-                                        <th class="text-secondary">{{ $t('user.name') }}</th>
-                                        <th class="text-secondary">{{ $t('user.name') }}</th>
-                                        <th class="text-secondary">{{ $t('common.remove') }}</th>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">{{ $t('common.noData') }}</td>
-                                    </tr>
-                                </table>
+
+                            <div class="col-4" v-if="departmentList.length > 0">
+                                <label class="form-label font_15">Current Member</label><br>
+                                <div class="we_shadow">
+                                    <DataTable 
+                                        :value="departmentList"
+                                        scrollable 
+                                        scrollHeight="400px"
+                                    >
+                                        <Column field="fullName" header="Teacher Full Name"></Column>
+                                        <Column field="roleID" header="Role"></Column>
+                                    </DataTable>
+                                </div>
                             </div>
+                            <div class="col-4" v-else>
+                                <label class="form-label font_15">Current Member</label><br>
+                                <div class="we_shadow">
+                                    <table>
+                                        <tr>
+                                            <th>Teacher Full Name</th>
+                                            <th>Role</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">No data display.</td> 
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -87,8 +109,7 @@
         <div class="pop_foot">
             <div class="footer_btn">
                 <div class="right_side">
-                    <button class="btn03" style="width:185px" @click="onClose">{{ $t('common.cancel') }}</button>
-                    <button class="btn01" style="width:185px" @click="saveData()"> {{ $t('common.save') }}</button> 
+                    
                 </div>
             </div>
         </div>

@@ -21,7 +21,7 @@ export default defineComponent({
         departmentMember: {
             type: Object as PropType<TEACHER_DEPARTMENT_LIST>,
             required: true
-        }
+        },
     },
 
     data() {
@@ -83,6 +83,7 @@ export default defineComponent({
                     await requestService.request(API_PATH.TEACHER_DEPARTMENT_UPDATE, reqBody, false) as TEACHER_DEPARTMENT_LIST;
                     this.departmentMemberInfo
                     this.$toast.add({ summary: 'Confirmed', detail: messageAcceptDetail, life: 1000 });
+                    modalController.dismiss();
                 },
                 reject: () => {
                     this.$toast.add({ severity: 'error', summary: 'Rejected', detail: messageRejectDetail, life: 1000 });

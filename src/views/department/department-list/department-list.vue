@@ -92,12 +92,20 @@ export default defineComponent({
         },
 
         async onClickInsertTeacher(item: DEPARTMENT_LIST) {
+
             this.$popupService.onOpen({
                 component: teacherDepartment_action,
                 dataProp: {
-                    teacherInfoData: item,
+                    teacherInfoData: item, 
+                },
+                callback: () => {
+                    this.getDepartmentList();
+                },
+                onClose: () => {
+                    this.getDepartmentList();
                 }
-            })
+            });
+
         },
 
         async onClickRow(item: DEPARTMENT_LIST) {
@@ -105,6 +113,7 @@ export default defineComponent({
                 departmentID: this.departmentInfo.departmentID
             };
             const responseDepartmentMember = await requestService.request(API_PATH.TEACHER_DEPARTMENT_LIST, reqBody, false);
+
             this.$popupService.onOpen({
                 component: department_detail,
                 dataProp: {
