@@ -7,7 +7,7 @@ import { TEACHER_RES } from '@/shared/types/user-list';
 import { CLASS_LIST, CLASS_LIST_RES } from '@/shared/types/class-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
-import { GenderCodeList , globalStatusCodeList } from '@/shared/common/common';
+import { GenderCodeList, globalStatusCodeList } from '@/shared/common/common';
 import { modalController } from '@ionic/vue';
 
 const requestService = new RequestService();
@@ -15,12 +15,8 @@ const requestService = new RequestService();
 export default defineComponent({
     name: 'studentClass_action',
     props: {
-        subjectInfoData: {
-            type: Object as PropType<STUDENT_CLASS_LIST>,
-            required: true
-        },
-        isInsert: {
-            type: Boolean,
+        studentInfoData: {
+            type: Object as PropType<CLASS_LIST>,
             required: true
         },
     },
@@ -30,8 +26,7 @@ export default defineComponent({
                 classID: '',
                 studentID: '',
             } as STUDENT_CLASS_LIST,
-            subjectInfoUpdate: {} as STUDENT_CLASS_LIST,
-            subjectList: [] as STUDENT_CLASS_LIST[],
+            classList: [] as CLASS_LIST[],
             genderCodeList: GenderCodeList,
             statusCodeList: globalStatusCodeList,
             searchKey: '',
@@ -39,14 +34,14 @@ export default defineComponent({
             totalCount: 0,
             pageSize: 10,
             pageNumber: 0,
-            classList: [] as CLASS_LIST[],
             studentList: [] as TEACHER_RES[],
-            selectedStudent: [],
+            selectedStudent: [] as TEACHER_RES[],
             searchQuery: '',
             tempSearchQuery: '',
         };
     },
     computed: {
+        // Filtered list based on search query
         filteredStudentList() {
             if (!this.searchQuery) {
                 return this.studentList;
@@ -58,40 +53,24 @@ export default defineComponent({
                 student.dateOfBirth.toLowerCase().includes(query) ||
                 student.phone.toLowerCase().includes(query)
             );
+        },
+        // Students not in the class (to be displayed in the first table)
+        studentsNotInClass() {
+            const classStudentIDs = new Set(this.classList.map(student => student.studentID));
+            return this.filteredStudentList.filter(student => !classStudentIDs.has(student.specificID));
         }
     },
+
+
     mounted() {
-        this.onDataLoad();
-        this.onGetClassList();
         this.onGetStudentList();
+        this.getStudentInfoData();
     },
     methods: {
-        onDataLoad() {
-            if (!this.isInsert) {
-                this.studentClassInfo = { ...this.subjectInfoData };
-                this.subjectInfoUpdate = { ...this.studentClassInfo };
-            }
-        },
-        
-        async onGetClassList() {
-            const reqBody = {
-                classID: '',
-                departmentID: '',
-                searchKey: this.searchKey,
-                year: '',
-                semester: '',
-                generation: '',
-                pageSize: 1000,
-                pageNumber: 1
-            };
-            const response = await requestService.request(API_PATH.CLASS_LIST, reqBody, false) as CLASS_LIST_RES;
-            this.classList = response.body?.classList;
-        },
-
         async onGetStudentList() {
             const reqBody = {
                 searchKey: this.searchKey,
-                roleID: '04',
+                roleID: '04', // Assuming '04' is the role ID for students
                 pageSize: 1000,
                 pageNumber: 1
             };
@@ -103,16 +82,35 @@ export default defineComponent({
                     gender: this.$codeConverter.codeToString(this.genderCodeList, student.gender, 'genderCode'),
                 }));
             }
+
         },
 
-        async saveStudent() {
+        async getStudentInfoData() {
+            const reqBody = {
+                classInfoID: this.studentInfoData.classInfoID,
+                studentID: '',
+            };
+
+            try {
+                const response = await requestService.request(API_PATH.STUDENT_CLASS_LIST, reqBody, false) as CLASS_LIST_RES;
+                this.classList = response.body.studentList.map((student: { firstName: string; lastName: string; }) => ({
+                    ...student,
+                    fullName: `${student.firstName} ${student.lastName}`,
+                }));
+            } catch (error) {
+                console.error('Error fetching student information:', error);
+            }
+        },
+
+        async saveData() {
             const studentList = this.selectedStudent.map(student => ({
                 studentID: student.specificID
             }));
             const requestBody = {
-                classInfoID: this.studentClassInfo.classID,
+                classInfoID: this.studentInfoData.classInfoID,
                 studentList: studentList
             };
+
             await requestService.request(API_PATH.STUDENT_CLASS_REGISTER, requestBody, true);
             this.onClose();
         },

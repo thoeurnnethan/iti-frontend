@@ -58,7 +58,9 @@
                             <Column field="roleID" :header="$t('user.role')" />
                             <Column :header="$t('action.action')">
                                 <template #body="{ data }">
-                                    <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+                                    <div class="d-flex justify-content-center">
+                                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+                                    </div>
                                 </template>
                             </Column>
                         </DataTable>

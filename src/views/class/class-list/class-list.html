@@ -9,13 +9,9 @@
             <span class="text_title mx-1">{{ $t('class.title') }}</span>
         </div>
         <div>
-            <button type="button" class="btn btn-dark p-1 px-2" @click="exportToExcel">
+            <button type="button" class="btn btn-dark p-1 px-2 mx-2" @click="exportToExcel">
                 <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
                 <font-awesome-icon :icon="['fas', 'file-excel']" />
-            </button>
-            <button class="btn btn-info p-1 px-2 mx-2" @click="onClickInsertStudent">
-                <span class="mx-1">{{ $t('class.addStudent') }}</span>
-                <font-awesome-icon :icon="['fas', 'plus']" />
             </button>
             <button class="btn btn-primary p-1 px-2" @click="onClickInsert()">
                 <span class="mx-1">{{ $t('common.addNew') }}</span>
@@ -114,14 +110,17 @@
                     </div>
                     <div v-else class="d-flex justify-content-center align-item-center">
                         <div style="width: 24px; height: 24px;"></div>
-                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '01')" :icon="['fas', 'fa-rotate-back']" class="text-white mx-2" :title="$t('action.active')" />
-                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
-                    </div>
+                            <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '01')" :icon="['fas', 'fa-rotate-back']" class="text-white mx-2" :title="$t('action.active')" />
+                            <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+                        </div>
                 </template>
             </Column>
             <Column :header="$t('class.upgrade')" style="min-width: 120px;">
                 <template #body="{ data }">
-                    <button class="btn btn-success p-0" @click="onClickUpgrade(data)" :disabled="!data.isLast">{{ $t('class.upgrade') }}</button>
+                    <div class="d-flex justify-content-center align-item-center">
+                        <button class="btn btn-success px-2 p-0 mx-2" @click="onClickUpgrade(data)" :disabled="!data.isLast">{{ $t('class.upgrade') }}</button>
+                        <button class="btn btn-info px-2 p-0"  @click="onClickInsertStudent(data)" >{{ $t('class.addStudent') }}</button>
+                    </div>
                 </template>
             </Column>
         </DataTable>

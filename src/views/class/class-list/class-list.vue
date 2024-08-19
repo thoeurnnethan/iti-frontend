@@ -222,10 +222,20 @@ export default defineComponent({
             })
         },
 
-        async onClickInsertStudent() {
+        async onClickInsertStudent(item: CLASS_LIST) {
+
             this.$popupService.onOpen({
                 component: studentClass_action,
-            })
+                dataProp: {
+                    studentInfoData: item, 
+                },
+                callback: () => {
+                    this.getClassList();
+                },
+                onClose: () => {
+                    this.getClassList();
+                }
+            });
         },
 
         async onClickEdit(item: CLASS_LIST) {

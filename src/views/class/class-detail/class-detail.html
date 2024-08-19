@@ -21,7 +21,11 @@
                     </TabPanel>
                     <!-- Student List Details Tab -->
                     <TabPanel :header="$t('class.studentList')">
-                        <DataTable v-if="studentInfo && studentInfo.length > 0" :value="studentInfo" stripedRows>
+                        <DataTable 
+                            v-if="studentInfo && studentInfo.length > 0" 
+                            :value="studentInfo" 
+                            stripedRows
+                        >
                             <Column field="no" :header="$t('common.no')" class="text-center"  />
                             <Column field="studentID" :header="$t('user.studentID')" />
                             <Column field="fullName" :header="$t('user.name')" />
@@ -37,6 +41,13 @@
                                 </template>
                             </Column>
                             <Column field="status" :header="$t('common.status')" />
+                            <Column :header="$t('action.action')">
+                                <template #body="{ data }">
+                                    <div class="d-flex justify-content-center">
+                                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+                                    </div>
+                                </template>
+                            </Column>
                         </DataTable>
                         <table v-else>
                             <tr rowspan="7">
