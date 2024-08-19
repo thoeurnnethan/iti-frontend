@@ -9,7 +9,7 @@
                 <div class="container-fluid p-0 mt-4">
                     <div class="row">
                         <div class="col-lg-3 col-md-4 mb-2" v-if="!isInsert">
-                            <label class="form-label font_15">{{ $t('class.classId') }}</label><br>
+                            <label class="form-label font_15">{{ $t('class.classId') }}</label>
                             <input type="text" class="form-control" v-model="classInfo.classID" disabled />
                         </div>
                         <div class="col-lg-3 col-md-4 mb-2">
@@ -25,16 +25,16 @@
                             </select>
                         </div>
                         <div class="col-lg-2 col-md-4 mb-2">
-                            <label class="form-label font_15">{{ $t('class.year') }}</label><br>
-                            <select class="form-select" v-model="classInfo.year">
+                            <label class="form-label font_15">{{ $t('class.year') }}</label>
+                            <select class="form-select" v-model="classInfo.year" :disabled="!isInsert">
                                 <option v-for="year in yearList" :value="year.codeValue" :style="{ display: !year.codeValue ? 'none' : 'block' }">
                                     <p v-if="year.codeValue">{{ year.codeValueDesc }}</p>
                                 </option>
                             </select>
                         </div>
                         <div class="col-lg-2 col-md-4 mb-2">
-                            <label class="form-label font_15">{{ $t('class.semester') }}</label><br>
-                            <select class="form-select" v-model="classInfo.semester" @change="semesterChangeType">
+                            <label class="form-label font_15">{{ $t('class.semester') }}</label>
+                            <select class="form-select" v-model="classInfo.semester" @change="semesterChangeType" :disabled="!isInsert">
                                 <option v-for="semester in semesterList" :value="semester.codeValue" :style="{ display: !semester.codeValue ? 'none' : 'block' }">
                                     <p v-if="semester.codeValue">{{ semester.codeValueDesc }}</p>
                                 </option>
@@ -44,19 +44,19 @@
                             <label class="form-label font_15">{{ $t('class.generation') }}</label>
                             <InputNumber v-model="classInfo.generation" inputId="integeronly" />
                         </div>
-                        <div class="col-lg-2 col-md-4 mb-2" v-if="!isInsert">
-                            <label class="form-label font_15">{{ $t('class.status') }}</label>
-                            <select class="form-select" v-model="classInfo.statusCode">
-                                <option v-for="status in statusCodeList" :value="status.codeValue">
-                                    {{ status.codeValueDesc }}
-                                </option>
-                            </select>
-                        </div>
                         <div class="col-lg-2 col-md-4 mb-2">
                             <label class="form-label font_15">{{ $t('class.classType') }}</label>
                             <select class="form-select" v-model="classInfo.classType">
                                 <option v-for="classInfo in classTypeList" :value="classInfo.codeValue">
                                     {{ classInfo.codeValueDesc }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2 col-md-4 mb-2" v-if="!isInsert">
+                            <label class="form-label font_15">{{ $t('class.status') }}</label>
+                            <select class="form-select" v-model="classInfo.statusCode">
+                                <option v-for="status in statusCodeList" :value="status.codeValue">
+                                    {{ status.codeValueDesc }}
                                 </option>
                             </select>
                         </div>

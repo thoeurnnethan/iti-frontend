@@ -9,9 +9,9 @@
                     <!-- Subject List Details Tab -->
                     <TabPanel :header="$t('class.subjectList')">
                         <DataTable v-if="classInfo && classInfo.length > 0" :value="classInfo" stripedRows>
-                            <Column field="no" header="No" :body="indexTemplate" class="text-center" />
-                            <Column field="subjectName" header="Subject Name" />
-                            <Column field="subjectDesc" header="Subject Description" />
+                            <Column field="no" :header="$t('common.no')" :body="indexTemplate" class="text-center" />
+                            <Column field="subjectName" :header="$t('subject.subjectName')" />
+                            <Column field="subjectDesc" :header="$t('subject.subjectDesc')" />
                         </DataTable>
                         <table v-else>
                             <tr rowspan="3">
@@ -36,10 +36,7 @@
                                     {{ $phoneNumberFormater.formatPhoneNumber(data.phoneNumber) }}
                                 </template>
                             </Column>
-                            <Column :header="$t('common.status')" />
-                            <template #body="{ data }">
-                                {{ $codeConverter.codeToString(studentInfo, data.statusCode) }}
-                            </template>
+                            <Column field="status" :header="$t('common.status')" />
                         </DataTable>
                         <table v-else>
                             <tr rowspan="7">
