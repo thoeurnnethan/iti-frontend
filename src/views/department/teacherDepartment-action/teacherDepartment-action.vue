@@ -2,24 +2,31 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { TEACHER_DEPARTMENT_LIST, TEACHER_DEPARTMENT_LIST_RES } from '@/shared/types/teacherDepartment-list';
+import { TEACHER_DEPARTMENT_LIST } from '@/shared/types/teacherDepartment-list';
 import { TEACHER_RES } from '@/shared/types/user-list';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { GenderCodeList, globalStatusCodeList, UserRoleList } from '@/shared/common/common';
 import { modalController } from '@ionic/vue';
+import Toast from 'primevue/toast';
+import ConfirmationDialog from 'primevue/confirmdialog';
 
 const requestService = new RequestService();
 
 export default defineComponent({
     name: 'teacherDepartment_action',
+    components: {
+        Toast,
+        ConfirmationDialog
+    },
     props: {
         teacherInfoData: {
             type: Object as PropType<DEPARTMENT_LIST>,
             required: true
         },
     },
+
     data() {
         return {
             teacherDepartmentInfo: {
@@ -56,22 +63,20 @@ export default defineComponent({
             );
         }
     },
+
     mounted() {
-        this.onDataLoad();
         this.onGetDepartmentList();
         this.onGetStudentList();
         this.loadDepartmentTeachers();
     },
-    methods: {
 
+    methods: {
         async loadDepartmentTeachers() {
             const reqBody = {
                 teacherID: '',
                 departmentID: this.teacherInfoData.departmentID
             };
-
-            const response = (await requestService.request(API_PATH.TEACHER_DEPARTMENT_LIST, reqBody, false)) ;
-
+            const response = (await requestService.request(API_PATH.TEACHER_DEPARTMENT_LIST, reqBody, false));
             if (response.body && response.body.departmentList) {
                 this.teacherUpdateList = response.body.departmentList.map((teacher: { teacherID: any; firstName: any; lastName: any; }) => ({
                     ...teacher,
@@ -79,13 +84,6 @@ export default defineComponent({
                     storedIndex: undefined,
                     fullName: `${teacher.firstName} ${teacher.lastName}`,
                 }));
-            } 
-        },
-
-        onDataLoad() {
-            if (!this.isInsert) {
-                this.teacherDepartmentInfo = { ...this.subjectInfoData };
-                this.subjectInfoUpdate = { ...this.teacherDepartmentInfo };
             }
         },
 
@@ -138,7 +136,7 @@ export default defineComponent({
 
         onClickAddData(item: TEACHER_DEPARTMENT_LIST) {
             const existsInUpdateList = this.teacherUpdateList.some((teacher: { specificID: any; }) => teacher.specificID === item.specificID);
-    
+
             if (!existsInUpdateList) {
                 const filteredIndex = this.filteredTeacherList.findIndex(teacher => teacher.specificID === item.specificID);
 

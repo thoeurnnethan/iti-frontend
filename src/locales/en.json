@@ -11,6 +11,7 @@
         "cancel": "Cancel",
         "ok": "Okay",
         "close": "Close",
+        "add": "Add",
         "addNew": "Add New",
         "username": "Username",
         "password": "Password",
@@ -27,7 +28,8 @@
         "noScheduleData": "Cannot find Schedule Information. Did you register it yet?",
         "all": "All",
         "status": "Status",
-        "clearFilter": "Clear Filter"
+        "clearFilter": "Clear Filter",
+        "remove": "Remove"
     },
     "action": {
         "edit": "Edit",
@@ -51,7 +53,8 @@
         "detail": "Department Detail Information",
         "addTeacher": "Add Teacher",
         "teacherList": "Teacher List In Department",
-        "teacher": "Teacher"
+        "teacher": "Teacher",
+        "addTeacherToDepartment": "Add Teacher To Department"
     },
     "menu": {
         "home": "Home",
@@ -89,7 +92,27 @@
         "email": "Email",
         "password": "Password",
         "imageUrl": "Image URL",
-        "userList": "User List"
+        "userList": "User List",
+        "studentDetail": "Student Information Detail",
+        "teacherDetail": "Teacher Information Detail",
+        "parentDetail": "Parents Detail",
+        "academicDetail": "Academics Detail",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "certificatedDate": "Certificated Date",
+        "job": "Job",
+        "academicName": "Academic Name",
+        "academicDesc": "Academic Description",
+        "qualDetail": "Qualifications Detail",
+        "qualName": "Qualification Name",
+        "qualDesc": "Qualification Description",
+        "addQual": "Add Qualification",
+        "register": "Register User",
+        "registerStudent": "Register Student",
+        "registerTeacher": "Register Teacher",
+        "update": "Update User Information",
+        "selectUserRole": "Select Role For User",
+        "selectTeacherRole": "Select Role For Teacher"
     },
     "class": {
         "title": "Class List",
@@ -101,7 +124,7 @@
         "status": "Status",
         "edit": "Edit",
         "editClass": "Edit Class Information",
-        "insertClass": "Insert Class Information",
+        "insertClass": "Register Class Information",
         "time": "Time",
         "year": "Year",
         "generation": "Generation",
@@ -118,7 +141,8 @@
         "addStudent": "Add Student",
         "classDetail": "Class Information Detail",
         "subjectList": "Subjects List",
-        "studentList": "Students List"
+        "studentList": "Students List",
+        "addStudentToClass": "Add Student To Class"
     },
     "room": {
         "title": "Room List",
@@ -142,7 +166,10 @@
         "editSub": "Edit Subject",
         "selectClass": "Select Class",
         "subjectInfo": "Subject Information",
-        "addSubject": "Add To List"
+        "addSubject": "Add To List",
+        "total": "Total Subjects",
+        "addMore": "Add More",
+        "addMoreSubject": "Add More Subject"
     },
     "home": {
         "welcomeAdmin": "Welcome to Admin Dashboard"

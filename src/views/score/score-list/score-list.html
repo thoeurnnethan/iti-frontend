@@ -75,12 +75,14 @@
         <div class="my-5"></div>
         <DataTable 
             :value="studentScoreList" 
-            responsiveLayout="scroll"  editMode="cell" @cell-edit-complete="onCellEditComplete">
-            <Column field="seqNo" header="No" class="text-center" style="min-width: 50px;"></Column>
-            <Column field="studentID" header="Student ID" style="min-width: 120px;"></Column>
-            <Column field="fullName" header="Student Name" style="min-width: 200px;"></Column>
-            <Column field="gender" header="Gender" style="min-width: 80px;"></Column>
-            <Column field="phoneNumber" header="Phone Number" style="min-width: 150px;"></Column>
+            responsiveLayout="scroll"
+            editMode="cell" 
+            @cell-edit-complete="onCellEditComplete">
+            <Column field="seqNo" :header="$t('common.no')" class="text-center" style="min-width: 80px;"></Column>
+            <Column field="studentID" :header="$t('user.studentID')" style="min-width: 150px;"></Column>
+            <Column field="fullName" :header="$t('user.name')" style="min-width: 200px;"></Column>
+            <Column field="gender" :header="$t('user.gender')" style="min-width: 80px;"></Column>
+            <Column field="phoneNumber" :header="$t('user.phone')" style="min-width: 150px;"></Column>
             <Column v-for="subject in sujectList" 
                 :key="subject.subjectID" 
                 :field="subject.subjectName" 
@@ -93,7 +95,7 @@
         </DataTable>
     </div>
     <div class="container d-flex justify-content-end my-4">
-        <button class="btn btn-info px-5" @click="onClickSave">Save</button>
+        <button class="btn btn-info px-5" @click="onClickSave">{{ $t('common.save') }}</button>
     </div>
     <div class="p-3"></div>
 </div>

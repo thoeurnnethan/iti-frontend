@@ -1,10 +1,10 @@
 <Toast />
-<ConfirmationDialog v-if="editConfirmationVisible" @confirm="confirmEdit" @cancel="cancelEdit" />
+<ConfirmationDialog/>
 <div class="popup">
     <div class="popWrap w90p">
         <div class="pop_head">
             <div class="w-100">
-                <h1 class="text-center text-dark">Register Teacher To Department</h1>
+                <h1 class="text-center text-dark">{{ $t('department.addTeacherToDepartment') }}</h1>
             </div>
         </div>
         <div class="pop_cont">
@@ -13,7 +13,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="d-flex justify-content-center align-items-center flex-column">
-                                <label class="form-label font_16">Department</label>
+                                <label class="form-label font_16">{{ $t('department.depName') }}</label>
                                 <span class="h5 alert alert-info p-2 px-5">{{ teacherInfoData.departmentName }}</span>
                             </div>
                         </div>
@@ -23,7 +23,7 @@
                     <div class="col-12">
                         <div class="container-fluid d-flex justify-content-start p-0 mb-3">
                             <div class="w-25">
-                                <input  type="text"  v-model="searchQuery"  class="form-control"  placeholder="Search here ..." @keydown.enter="onSearch" />
+                                <input type="text" v-model="searchQuery" class="form-control" :placeholder="$t('common.searchKey')"/>
                             </div>
                         </div>
                         <div class="row ">
@@ -34,20 +34,20 @@
                                     :value="filteredTeacherList"
                                     :rows="5"
                                     :paginator="true">
-                                    <Column field="fullName" header="Teacher Full Name"></Column>
-                                    <Column field="roleID" header="Role"></Column>
-                                    <Column field="gender" header="Gender"></Column>
-                                    <Column field="dateOfBirth" header="Date of Birth">
+                                    <Column field="fullName" :header="$t('user.name')"></Column>
+                                    <Column field="roleID" :header="$t('user.role')"></Column>
+                                    <Column field="gender" :header="$t('user.gender')"></Column>
+                                    <Column field="dateOfBirth" :header="$t('user.dateOfBirth')">
                                         <template #body="{ data }">
                                             {{ $format.formatDateTime(data.dateOfBirth,'yyyy-mm-dd') }}
                                         </template>
                                     </Column>
-                                    <Column field="phone" header="Phone Number">
+                                    <Column field="phone" :header="$t('user.phone')">
                                         <template #body="{ data }">
                                             {{ $phoneNumberFormater.formatPhoneNumber(data.phone) }}
                                         </template>
                                     </Column>
-                                    <Column header="Add" class="text-center">
+                                    <Column :header="$t('common.add')" class="text-center">
                                         <template #body="{ data }">
                                             <font-awesome-icon style="cursor: pointer;font-size: 23px;" icon="fas fa-circle-right" class="text-primary mx-2" title="Add" @click="onClickAddData(data)"/>
                                         </template>
@@ -59,9 +59,9 @@
                                     v-if="teacherUpdateList.length > 0"
                                     class="we_shadow"
                                     :value="teacherUpdateList">
-                                    <Column field="fullName" header="Teacher Full Name"></Column>
-                                    <Column field="gender" header="Gender"></Column>
-                                    <Column header="Remove" class="text-center">
+                                    <Column field="fullName" :header="$t('user.name')"></Column>
+                                    <Column field="gender" :header="$t('user.gender')"></Column>
+                                    <Column :header="$t('common.remove')" class="text-center">
                                         <template #body="{ data }">
                                             <font-awesome-icon style="cursor: pointer;" icon="fa-solid fa-trash" class=" text-danger" title="Delete" @click="onClickDelete(data)"/>
                                         </template>
@@ -69,28 +69,25 @@
                                 </DataTable>
                                 <table v-else>
                                     <tr>
-                                        <th class="text-secondary">Teacher Full Name</th>
-                                        <th class="text-secondary">Gender</th>
-                                        <th class="text-secondary">Remove</th>
+                                        <th class="text-secondary">{{ $t('user.name') }}</th>
+                                        <th class="text-secondary">{{ $t('user.name') }}</th>
+                                        <th class="text-secondary">{{ $t('common.remove') }}</th>
                                     </tr>
                                     <tr>
-                                        <td colspan="3">No data available to display.</td>
+                                        <td colspan="3">{{ $t('common.noData') }}</td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-        
             </div>
         </div>
         <div class="pop_foot">
             <div class="footer_btn">
                 <div class="right_side">
                     <button class="btn03" style="width:185px" @click="onClose">{{ $t('common.cancel') }}</button>
-                    <button class="btn01" style="width:185px" @click="saveData()">
-                        {{ $t('common.save') }}
-                    </button> 
+                    <button class="btn01" style="width:185px" @click="saveData()"> {{ $t('common.save') }}</button> 
                 </div>
             </div>
         </div>

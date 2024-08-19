@@ -1,10 +1,10 @@
 <Toast />
-<ConfirmationDialog v-if="editConfirmationVisible" @confirm="confirmEdit" @cancel="cancelEdit" />
+<ConfirmationDialog/>
 <div class="popup">
     <div class="popWrap w80p">
         <div class="pop_head">
             <div class="w-100">
-                <h1 class="text-center text-dark">Register Student To Classroom</h1>
+                <h1 class="text-center text-dark">{{ $t('class.addStudentToClass') }}</h1>
             </div>
         </div>
         <div class="pop_cont">
@@ -17,7 +17,7 @@
                                     <label class="form-label font_15">{{ $t('subject.selectClass') }}</label><br>
                                     <select class="form-select font-bold text-dark" v-model="studentClassInfo.classID">
                                         <option v-for="classItem in classList" :value="classItem.classInfoID">
-                                            {{ classItem.className }} - (Y: {{ classItem.year }} - S: {{ classItem.semester }})
+                                            {{ classItem.className }} - {{ $t('schedule.classYear') }} {{ classItem.year }} - {{ $t('schedule.semester') }} {{ classItem.semester }}
                                         </option>
                                     </select>
                                 </div>
@@ -29,22 +29,21 @@
                     <div class="col-12">
                         <div class="container-fluid d-flex justify-content-end p-0 mb-3">
                             <div class="w-25">
-                                <input type="text" v-model="searchQuery" class="form-control"
-                                    placeholder="Search student here ..." @keydown.enter="onSearch" />
+                                <input type="text" v-model="searchQuery" class="form-control" :placeholder="$t('common.searchKey')" @keydown.enter="onSearch" />
                             </div>
                         </div>
                         <div class="we_shadow">
                             <DataTable v-model:selection="selectedStudent" :value="filteredStudentList"
                                 dataKey="specificID">
                                 <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-                                <Column field="fullName" header="Student Full Name"></Column>
-                                <Column field="gender" header="Gender"></Column>
-                                <Column field="dateOfBirth" header="Date of Birth">
+                                <Column field="fullName" :header="$t('user.name')"></Column>
+                                <Column field="gender" :header="$t('user.name')"></Column>
+                                <Column field="dateOfBirth" :header="$t('user.dateOfBirth')">
                                     <template #body="{ data }">
                                         {{ $format.formatDateTime(data.dateOfBirth,'yyyy-mm-dd') }}
                                     </template>
                                 </Column>
-                                <Column field="phone" header="Phone Number">
+                                <Column field="phone" :header="$t('user.phone')">
                                     <template #body="{ data }">
                                         {{ $phoneNumberFormater.formatPhoneNumber(data.phone) }}
                                     </template>

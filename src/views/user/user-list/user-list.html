@@ -115,8 +115,8 @@
             </Column>
             <Column :header="$t('class.edit')" class="text-center">
                 <template #body="{ data }">
-                    <font-awesome-icon @click="editUser(data)" icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;
-                    <font-awesome-icon @click="deleteUser(data)" icon="fa-solid fa-trash" class="text-danger" title="Delete" />
+                    <font-awesome-icon @click="editUser(data)" icon="fas fa-pencil" class="text-primary mx-2" :title="$t('action.edit')" />
+                    <font-awesome-icon @click="deleteUser(data)" icon="fa-solid fa-trash" class="text-danger" :title="$t('action.delete')"/>
                 </template>
             </Column>
         </DataTable>

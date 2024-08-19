@@ -1,46 +1,46 @@
 <div class="popup">
     <div class="popWrap w90p">
         <div class="pop_head">
-            <h1 class="text-center">{{ isStudentRole ? 'Student' : 'Teacher' }} Information Detail</h1>
+            <h1 class="text-center">{{ isStudentRole ? $t('user.studentDetail') : $t('user.teacherDetail') }}</h1>
         </div>
         <div class="pop_cont">
             <div class="cont">
                 <div class="dlist05 ">
                     <div class="dlist05 type02">
                         <dl>
-                            <dt class="text-capitalize">Full Name</dt>
+                            <dt class="text-capitalize">{{ $t('user.name') }}</dt>
                             <dd>{{ userInfo.firstName }} {{ userInfo.lastName }}</dd>
                         </dl>
                         <dl>
-                            <dt class="text-capitalize">Nick Name</dt>
+                            <dt class="text-capitalize">{{ $t('user.nickName') }}</dt>
                             <dd>{{ userInfo.nickName }}</dd>
                         </dl>
                         <dl>
-                            <dt class="text-capitalize">Gender</dt>
+                            <dt class="text-capitalize">{{ $t('user.gender') }}</dt>
                             <dd>{{ $codeConverter.codeToString(genderCodeList,userInfo.gender)}}</dd>
                         </dl>
                         <dl>
-                            <dt class="text-capitalize">Date Of Birth</dt>
+                            <dt class="text-capitalize">{{ $t('user.dateOfBirth') }}</dt>
                             <dd>{{ userInfo.formatDOB }}</dd>
                         </dl>
                         <dl>
-                            <dt class="text-capitalize">place of birth</dt>
+                            <dt class="text-capitalize">{{ $t('user.placeOfBirth') }}</dt>
                             <dd>{{ userInfo.placeOfBirth }}</dd>
                         </dl>
                         <dl>
-                            <dt class="text-capitalize">address</dt>
+                            <dt class="text-capitalize">{{ $t('user.address') }}</dt>
                             <dd>{{ userInfo.address }}</dd>
                         </dl>
                         <dl>
-                            <dt class="text-capitalize">phone</dt>
+                            <dt class="text-capitalize">{{ $t('user.phone') }}</dt>
                             <dd>{{ $phoneNumberFormater.formatPhoneNumber(userInfo.phone) }}</dd>
                         </dl>
                         <dl>
-                            <dt class="text-capitalize">email</dt>
+                            <dt class="text-capitalize">{{ $t('user.email') }}</dt>
                             <dd>{{ userInfo.email }}</dd>
                         </dl>
                         <dl>
-                            <dt class="text-capitalize">password</dt>
+                            <dt class="text-capitalize">{{ $t('user.password') }}</dt>
                             <dd>{{ userInfo.password }}</dd>
                         </dl>
                     </div>
@@ -49,51 +49,49 @@
                 <!-- student -->
                 <div class="d-flex flex-column" v-if="isStudentRole">
                     <div class="mt-5">
-                        <p class="h5 text-capitalize">Parent Details</p>
+                        <p class="h5 text-capitalize">{{ $t('user.parentDetail') }}</p>
                         <table>
                             <thead>
                                 <tr class="text-capitalize">
-                                    <th>No</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Gender</th>
-                                    <th>Job</th>
-                                    <th>Address</th>
-                                    <th>Phone</th>
+                                    <th>{{ $t('common.no') }}</th>
+                                    <th>{{ $t('user.name') }}</th>
+                                    <th>{{ $t('user.gender') }}</th>
+                                    <th>{{ $t('user.job') }}</th>
+                                    <th>{{ $t('user.address') }}</th>
+                                    <th>{{ $t('user.phone') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="parentInfo in userInfo?.studentInfo?.parentList" :key="parentInfo.seqNo">
-                                    <td>{{ parentInfo.seqNo }}</td>
-                                    <td>{{ parentInfo.firstName }}</td>
-                                    <td>{{ parentInfo.lastName }}</td>
+                                    <td class="text-center">{{ parentInfo.seqNo }}</td>
+                                    <td>{{ parentInfo.firstName }} {{ parentInfo.lastName }}</td>
                                     <td>{{ $codeConverter.codeToString(genderCodeList, parentInfo.gender) }}</td>
                                     <td>{{ parentInfo.job }}</td>
                                     <td>{{ parentInfo.address }}</td>
                                     <td>{{ $phoneNumberFormater.formatPhoneNumber(parentInfo.phone) }}</td>
                                 </tr>
                                 <tr v-if="!userInfo?.studentInfo?.parentList">
-                                    <td colspan="7" class="text-danger">No parent records available.</td>
+                                    <td colspan="7" class="text-danger">{{ $t('common.noData') }}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="mt-5">
-                        <p class="h5 text-capitalize">academic Details</p>
+                        <p class="h5 text-capitalize">{{ $t('user.academicDetail') }}</p>
                         <table>
                             <thead>
                                 <tr class="text-capitalize">
-                                    <th>No</th>
-                                    <th>Academic Name</th>
-                                    <th>Academic Description</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>Certificated Date</th>
+                                    <th>{{ $t('common.no') }}</th>
+                                    <th>{{ $t('user.academicName') }}</th>
+                                    <th>{{ $t('user.academicDesc') }}</th>
+                                    <th>{{ $t('user.startDate') }}</th>
+                                    <th>{{ $t('user.endDate') }}</th>
+                                    <th>{{ $t('user.certificatedDate') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="academic in userInfo?.studentInfo?.academicList" :key="academic.seqNo">
-                                    <td>{{ academic.seqNo }}</td>
+                                    <td class="text-center">{{ academic.seqNo }}</td>
                                     <td>{{ academic.academicName }}</td>
                                     <td>{{ academic.academicDesc }}</td>
                                     <td>{{ $format.formatDateTime(academic.startDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
@@ -101,7 +99,7 @@
                                     <td>{{ academic.certificatedDate }}</td>
                                 </tr>
                                 <tr v-if="!userInfo?.studentInfo?.academicList">
-                                    <td colspan="6" class="text-danger">No parent records available.</td>
+                                    <td colspan="6" class="text-danger">{{ $t('common.noData') }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -111,16 +109,16 @@
 
                 <!-- Teacher -->
                 <div class="mt-5" v-else>
-                    <p class="h5 text-capitalize">Qualification Details</p>
+                    <p class="h5 text-capitalize">{{ $t('user.qualDetail') }}</p>
                     <table>
                         <thead>
                             <tr class="text-capitalize">
-                                <th class="text-center">No</th>
-                                <th>Qualification Name</th>
-                                <th>Qualification Description</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Certificated Date</th>
+                                <th class="text-center">{{ $t('common.no') }}</th>
+                                <th>{{ $t('user.qualName') }}</th>
+                                <th>{{ $t('user.qualDesc') }}</th>
+                                <th>{{ $t('user.startDate') }}</th>
+                                <th>{{ $t('user.endDate') }}</th>
+                                <th>{{ $t('user.certificatedDate') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -134,7 +132,7 @@
 
                             </tr>
                             <tr v-if="!userInfo?.teacherInfo?.qualificationList">
-                                <td colspan="6" class="text-danger">No qualification records available.</td>
+                                <td colspan="6" class="text-danger">{{ $t('common.noData') }}</td>
                             </tr>
                         </tbody>
                     </table>

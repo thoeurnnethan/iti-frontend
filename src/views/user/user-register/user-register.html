@@ -3,20 +3,24 @@
 <div class="container-fluid">
     <div class="we_box">
         <div class="container-fluid p-0 d-flex justify-content-between">
-            <span v-if="isRegisterRoute" class="text_title">User Register</span>
-            <span v-else class="text_title p-0 m-auto text-center">Update user information</span>
+            <span v-if="isRegisterRoute" class="text_title">
+                <font-awesome-icon :icon="['fas', 'user-plus']" />
+                <span class="mx-2">{{ $t('user.register') }}</span>
+            </span>
+            <span v-else class="text_title p-0 m-auto text-center">{{ $t("user.uUpdate") }}</span>
         </div>
         <div class="container-fluid px-0 py-3" v-if="isRegisterRoute">
             <div class="row">
-                <div class="col-sm-2">
-                    <label class="form-label font_14">Select Roles for User</label>
+                <div class="col-sm-3">
+                    <label class="form-label font_14">{{ $t('user.selectUserRole') }}</label>
                     <select class="form-select" v-model="userSelectedRole" @change="onChangeUserRoleRegister">
-                        <option value="03">Teacher</option>
-                        <option value="04">Student</option>
+                        <option v-for="uRole in userRole" :key="uRole.codeValue" :value="uRole.codeValue">
+                            {{ uRole.codeValueDesc }}
+                        </option>
                     </select>
                 </div>
                 <div class="col-md-3" v-if="!isRegisterStudent">
-                    <label class="form-label font_14">Select Roles for Teacher</label>
+                    <label class="form-label font_14">{{ $t('user.selectTeacherRole') }}</label>
                     <select class="form-select" v-model="teacherSelectedRole" @change="onChangeUserRoleRegister">
                         <option v-for="teacherRole in teacherRoleList" :key="teacherRole.codeValue" :value="teacherRole.codeValue">
                             {{ teacherRole.codeValueDesc }}
@@ -27,52 +31,51 @@
         </div>
     </div>
     <div class="mt-4 we_box">
-        <h5 v-if="!isRegisterStudent" class="p-0 m-auto text-center">Teacher</h5>
-        <h5 v-else>Student</h5>
+        <h5  class="p-0 m-auto text-center">{{ isRegisterStudent ? $t('user.registerStudent') : $t('user.registerTeacher') }}</h5>
         <hr>
         
         <!-- User Information -->
         <div class="container-fluid">
             <div class="row mt-4">
                 <div :class="customRowClass">
-                    <label :class="customFormClass">First Name</label><br>
+                    <label :class="customFormClass">{{ $t('user.firstName') }}</label>
                     <InputText :invalid="userInfoCheckFields.firstName" v-model="userInfo.firstName" @keyup="checkUserRequireFields" />
                 </div>
                 <div :class="customRowClass">
-                    <label :class="customFormClass">Last Name</label><br>
+                    <label :class="customFormClass">{{ $t('user.lastName') }}</label>
                     <InputText :invalid="userInfoCheckFields.lastName" v-model="userInfo.lastName" @keyup="checkUserRequireFields" />
                 </div>
                 <div :class="customRowClass">
-                    <label :class="customFormClass">Nick Name</label><br>
+                    <label :class="customFormClass">{{ $t('user.nickName') }}</label>
                     <InputText v-model="userInfo.nickName" />
                 </div>
                 <div :class="customRowClass">
-                    <label :class="customFormClass">Gender</label><br>
+                    <label :class="customFormClass">{{ $t('user.gender') }}</label>
                     <input type="radio" v-model="userInfo.gender" class="form-check-input" value="M"> Male
                     <input type="radio" v-model="userInfo.gender" class="form-check-input" value="F"> Female
                 </div>
                 <div :class="customRowClass">
-                    <label :class="customFormClass">Date of Birth</label><br>
+                    <label :class="customFormClass">{{ $t('user.dateOfBirth') }}</label>
                     <Calendar :invalid="userInfoCheckFields.dateOfBirth" v-model="userInfo.dateOfBirth" dateFormat="yy-mm-dd" @blur="checkUserRequireFields" />
                 </div>
                 <div :class="customRowClass">
-                    <label :class="customFormClass">Phone</label><br>
+                    <label :class="customFormClass">{{ $t('user.phone') }}</label>
                     <InputText :invalid="userInfoCheckFields.phone" v-model="userInfo.phone" @keyup="checkUserRequireFields" />
                 </div>
                 <div :class="customRowClass">
-                    <label :class="customFormClass">Email</label><br>
+                    <label :class="customFormClass">{{ $t('user.email') }}</label>
                     <InputText :invalid="userInfoCheckFields.email" v-model="userInfo.email" @keyup="checkUserRequireFields" />
                 </div>
                 <div :class="customRowClass">
-                    <label :class="customFormClass">Place of Birth</label><br>
+                    <label :class="customFormClass">{{ $t('user.placeOfBirth') }}</label>
                     <Textarea :invalid="userInfoCheckFields.placeOfBirth" v-model="userInfo.placeOfBirth" rows="5" cols="30" @keyup="checkUserRequireFields" />
                 </div>
                 <div :class="customRowClass">
-                    <label :class="customFormClass">Address</label><br>
+                    <label :class="customFormClass">{{ $t('user.address') }}</label>
                     <Textarea :invalid="userInfoCheckFields.address" v-model="userInfo.address" rows="5" cols="30" @keyup="checkUserRequireFields" />
                 </div>
                 <div :class="customRowClass" v-if="isRegisterStudent">
-                    <label :class="customFormClass">Select Class</label><br>
+                    <label :class="customFormClass">{{ $t('class.selectClass') }}</label>
                     <select class="form-select" v-model="userInfo.classInfoID" >
                         <option v-for="classInfo in classList" :key="classInfo.classInfoID" :value="classInfo.classInfoID">
                             {{ classInfo.className }} ឆ្នាំទី​ {{ classInfo.year }} ឆមាសទី {{ classInfo.semester }}
@@ -80,7 +83,7 @@
                     </select>
                 </div>
                 <div :class="customRowClass" v-else>
-                    <label :class="customFormClass">Select Department</label><br>
+                    <label :class="customFormClass">{{ $t('class.selectDepartment') }}</label>
                     <select class="form-select" v-model="userInfo.departmentID" >
                         <option v-for="department in departmentList" :key="department.departmentID" :value="department.departmentID">
                             {{ department.departmentName }}
@@ -93,35 +96,35 @@
         <div class="row mt-4">
             <!-- Teacher Qualify List -->
             <div class="col-12" v-if="!isRegisterStudent">
-                <h5 class="mt-4">Qualification List</h5>
+                <h5 class="mt-4">{{ $t('user.qualDetail') }}</h5>
                 <hr>
                 <!-- Qualify List -->
                 <div class="row">
                     <div :class="customRowClass">
-                        <label :class="customFormClass">Qualification Name</label><br>
+                        <label :class="customFormClass">{{ $t('user.qualName') }}</label>
                         <InputText v-model="qualificationInfo.qualificationName" :invalid="qualCheckFields.qualificationName" @keyup="checkQualRequireFields" />
                     </div>
                     <div :class="customRowClass">
-                        <label :class="customFormClass">Qualification Description</label><br>
+                        <label :class="customFormClass">{{ $t('user.qualDesc') }}</label>
                         <InputText v-model="qualificationInfo.qualificationDesc" />
                     </div>
                     <div :class="customRowClass">
-                        <label :class="customFormClass">Start Date</label><br>
+                        <label :class="customFormClass">{{ $t('user.startDate') }}</label>
                         <Calendar v-model="qualificationInfo.startDate" dateFormat="yy-mm-dd" :invalid="qualCheckFields.startDate" @blur="checkQualRequireFields"/>
                     </div>
                     <div :class="customRowClass">
-                        <label :class="customFormClass">End Date</label><br>
+                        <label :class="customFormClass">{{ $t('user.endDate') }}</label>
                         <Calendar v-model="qualificationInfo.endDate" dateFormat="yy-mm-dd" :invalid="qualCheckFields.endDate" @blur="checkQualRequireFields"/>
                     </div>
                     <div :class="customRowClass">
-                        <label :class="customFormClass">Certificated Date</label><br>
+                        <label :class="customFormClass">{{ $t('user.certificatedDate') }}</label>
                         <Calendar v-model="qualificationInfo.certificatedDate" dateFormat="yy-mm-dd" :invalid="qualCheckFields.certificatedDate"  @blur="checkQualRequireFields" />
                     </div>
                     <div class="row">
                         <div class="col-lg-4 col-sm-6 col-xl-3">
                             <button class="btn btn-info w-100 mt-3" @click="addQualificationToList">
                                 <font-awesome-icon :icon="['fa', 'plus']" />
-                                <span class="mx-2">Add Qualification</span>
+                                <span class="mx-2">{{ $t('user.addQual') }}</span>
                             </button>
                         </div>
                     </div>

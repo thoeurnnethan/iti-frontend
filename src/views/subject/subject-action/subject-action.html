@@ -4,7 +4,7 @@
     <div class="popWrap w70p">
         <div class="pop_head">
             <div v-if="isAdd" class="w-100">
-                <h1 class="text-center text-dark" v-if="isAdd">Add More Subject</h1>
+                <h1 class="text-center text-dark" v-if="isAdd">{{ $t('subject.addMoreSubject') }}</h1>
             </div>
             <div v-else class="w-100">
                 <h1 class="text-center text-dark" v-if="isInsert">{{ $t('subject.register') }}</h1>
@@ -23,7 +23,7 @@
                                     </center>
                                     <select class="form-select font-bold text-dark" v-model="subjectInfo.classInfoID" :disabled="isAdd || !isInsert">
                                         <option v-for="classItem in classList" :value="classItem.classInfoID">
-                                            {{ classItem.className }} - (Y: {{ classItem.year }} - S: {{ classItem.semester }})
+                                            {{ classItem.className }} - {{ $t('schedule.classYear') }} {{ classItem.year }} - {{ $t('schedule.semester') }} {{ classItem.semester }}
                                         </option>
                                     </select>
                                 </div>
@@ -68,8 +68,8 @@
                                 <Column field="subjectDesc" :header="$t('subject.subjectDesc')"></Column>
                                 <Column :header="$t('subject.edit')" class="text-center">
                                     <template #body="{ data }">
-                                        <font-awesome-icon style="cursor: pointer;" icon="fas fa-pencil" class="text-primary mx-2" title="Edit" @click="onClickEdit(data)"/>
-                                        <font-awesome-icon style="cursor: pointer;" icon="fa-solid fa-trash" class=" text-danger" title="Delete" @click="onClickDelete(data)"/>
+                                        <font-awesome-icon style="cursor: pointer;" icon="fas fa-pencil" class="text-primary mx-2" :title="$t('action.edit')" @click="onClickEdit(data)"/>
+                                        <font-awesome-icon style="cursor: pointer;" icon="fa-solid fa-trash" class=" text-danger" :title="$t('action.delete')" @click="onClickDelete(data)"/>
                                     </template>
                                 </Column>
                             </DataTable>
@@ -100,17 +100,17 @@
                     <button class="btn03" style="width:185px" @click="onClose">{{ $t('common.cancel') }}</button>
                     <div v-if="isInsert==true&&isAdd==false">
                         <button class="btn01" style="width:185px" @click="registerSubjectInfo()">
-                            {{ $t('common.save') }} Register
+                            {{ $t('common.save') }}
                         </button> 
                     </div>
                     <div v-if="isInsert==true&&isAdd==true">
                         <button class="btn01" style="width:185px" @click="addSubjectInfo()">
-                            {{ $t('common.save') }} Add
+                            {{ $t('common.save') }}
                         </button> 
                     </div>
                     <div v-if="isInsert==false&&isAdd==false">
                         <button class="btn01" style="width:185px" @click="updateSubjectInfo()">
-                            {{ $t('common.save') }} Update
+                            {{ $t('common.save') }}
                         </button> 
                     </div>
                 </div>
