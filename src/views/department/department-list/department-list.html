@@ -69,7 +69,7 @@
                     </div>
                 </template>
             </Column>
-            <Column header="Upgrade">
+            <Column :header="$t('department.teacher')">
                 <template #body="{ data }">
                     <button class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addTeacher') }}</button>
                 </template>

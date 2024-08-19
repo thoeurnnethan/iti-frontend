@@ -12,18 +12,13 @@
                 <div class="container-fluid p-0">
                     <div class="row">
                         <div class="col-12">
-                            <div class="row d-flex justify-content-start">
-                                <div class="col-lg-5 col-md-6 mb-2">
-                                    <label class="form-label font_16">Department Name : </label><br><br>
-                                    <span class="h5 alert alert-info p-2">{{ teacherInfoData.departmentName }}</span>
-                                </div>
+                            <div class="d-flex justify-content-center align-items-center flex-column">
+                                <label class="form-label font_16">Department</label>
+                                <span class="h5 alert alert-info p-2 px-5">{{ teacherInfoData.departmentName }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                {{ teacherInfoData }}
-
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="container-fluid d-flex justify-content-start p-0 mb-3">
@@ -31,7 +26,6 @@
                                 <input  type="text"  v-model="searchQuery"  class="form-control"  placeholder="Search here ..." @keydown.enter="onSearch" />
                             </div>
                         </div>
-
                         <div class="row ">
                             <div class="col-md-8">
                                 <DataTable 
@@ -39,8 +33,7 @@
                                     v-model:selection="selectedTeacher" 
                                     :value="filteredTeacherList"
                                     :rows="5"
-                                    :paginator="true"
-                                >
+                                    :paginator="true">
                                     <Column field="fullName" header="Teacher Full Name"></Column>
                                     <Column field="roleID" header="Role"></Column>
                                     <Column field="gender" header="Gender"></Column>
@@ -60,14 +53,12 @@
                                         </template>
                                     </Column>
                                 </DataTable>
-                                
                             </div>
                             <div class="col-md-4">
                                 <DataTable 
                                     v-if="teacherUpdateList.length > 0"
                                     class="we_shadow"
-                                    :value="teacherUpdateList"
-                                >
+                                    :value="teacherUpdateList">
                                     <Column field="fullName" header="Teacher Full Name"></Column>
                                     <Column field="gender" header="Gender"></Column>
                                     <Column header="Remove" class="text-center">

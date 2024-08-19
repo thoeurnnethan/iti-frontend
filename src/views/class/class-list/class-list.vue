@@ -8,7 +8,7 @@ import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import class_edit from '../class-edit/class-edit.vue';
 import { YearList, SemesterList, globalStatusCodeList, ClassTypeList } from '@/shared/common/common';
-import studentClass_action from '../../studentClass/studentClass-action/studentClass-action.vue';
+import studentClass_action from '@/views/class/studentClass-action/studentClass-action.vue';
 import class_upgrade from '../class-upgrade/class-upgrade.vue';
 import class_detail from '../class-detail/class-detail.vue';
 import MyLoading from '../../MyLoading.vue';

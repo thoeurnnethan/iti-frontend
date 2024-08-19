@@ -50,7 +50,8 @@
         "lastChangeDate": "Last Change Date",
         "detail": "Department Detail Information",
         "addTeacher": "Add Teacher",
-        "teacherList": "Teacher List In Department"
+        "teacherList": "Teacher List In Department",
+        "teacher": "Teacher"
     },
     "menu": {
         "home": "Home",
