@@ -172,7 +172,8 @@ import {
         faUsers,
         faX,
         faXmark,
-        faUserPlus
+        faUserPlus,
+        faMedal,
 } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
         library.add(faPhone); 
@@ -217,6 +218,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
         library.add(faLandmark); 
         library.add(faCircleRight);
         library.add(faUserPlus);
+        library.add(faMedal);
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 //ionic

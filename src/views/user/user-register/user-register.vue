@@ -116,18 +116,22 @@ export default defineComponent({
             routerName: this.$route.name,
         };
     },
-    
-    mounted() {
-        if (!this.isRegisterRoute) {
-            this.getUserDetailSummary();
-        }
-        if(this.isRegisterRoute){
-            if(this.isRegisterStudent){
+
+    watch:{
+        'userSelectedRole'(){
+            if(this.userSelectedRole !== '03'){
                 this.getClassList()
             }else{
                 this.getDepartmentList()
             }
         }
+    },
+    
+    mounted() {
+        if (!this.isRegisterRoute) {
+            this.getUserDetailSummary();
+        }
+        this.getDepartmentList()
     },
 
     beforeRouteEnter(to, from, next) {

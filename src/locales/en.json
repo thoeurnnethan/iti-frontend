@@ -29,7 +29,8 @@
         "all": "All",
         "status": "Status",
         "clearFilter": "Clear Filter",
-        "remove": "Remove"
+        "remove": "Remove",
+        "backToList": "Back To List"
     },
     "action": {
         "edit": "Edit",
@@ -112,7 +113,11 @@
         "registerTeacher": "Register Teacher",
         "update": "Update User Information",
         "selectUserRole": "Select Role For User",
-        "selectTeacherRole": "Select Role For Teacher"
+        "selectTeacherRole": "Select Role For Teacher",
+        "father": "Father",
+        "mother": "Mother",
+        "academic": "Academic",
+        "addAcademic": "Add Academic"
     },
     "class": {
         "title": "Class List",

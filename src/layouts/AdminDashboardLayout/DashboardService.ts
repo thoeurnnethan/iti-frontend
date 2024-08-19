@@ -20,7 +20,7 @@ export const DashboardService = {
                 "subMenuList":[
                     {
                         "path": "/class-list",
-                        "iconClass": "fa-landmark",
+                        "iconClass": "fa-caret-right",
                         "name": "classList",
                     },
                     {
