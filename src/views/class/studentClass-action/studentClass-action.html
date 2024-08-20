@@ -1,5 +1,5 @@
 <Toast />
-<ConfirmationDialog/>
+<ConfirmationDialog />
 <div class="popup">
     <div class="popWrap w90p">
         <div class="pop_head">
@@ -12,11 +12,9 @@
                 <div class="container-fluid p-0">
                     <div class="row">
                         <div class="col-12">
-                            <div class="row d-flex justify-content-start">
-                                <div class="col-lg-5 col-md-6">
-                                    <label class="form-label font_14">Class Name</label><br>
-                                    <h5>{{ studentInfoData.className }}</h5>
-                                </div>
+                            <div class="d-flex justify-content-center align-items-center flex-column">
+                                <label class="form-label font_14">{{ $t('class.className') }}</label>
+                                <span class="h5 alert alert-info p-2 px-5">{{ studentInfoData.className }}</span>
                             </div>
                         </div>
                     </div>
@@ -25,23 +23,20 @@
                     <div class="col-12">
                         <div class="container-fluid d-flex justify-content-start p-0 mb-3">
                             <div class="w-25">
-                                <input type="text" v-model="searchQuery" class="form-control" :placeholder="$t('common.searchKey')"/>
+                                <input type="text" v-model="searchQuery" class="form-control" :placeholder="$t('common.searchKey')" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-8">
-                                <label class="form-label font_15">All Students</label><br>
+                                <label class="form-label font_15 alert alert-info p-1">{{ $t('class.allStudent') }}</label>
                                 <div class="we_shadow">
-                                    <DataTable 
-                                        v-model:selection="selectedStudent" 
+                                    <DataTable v-model:selection="selectedStudent" 
                                         :value="studentsNotInClass"
                                         dataKey="specificID" 
-                                        :rowClass="rowClass"
-                                        scrollable 
-                                        scrollHeight="400px"
-                                    >
+                                        :rowClass="rowClass" 
+                                        scrollable scrollHeight="400px">
                                         <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-                                        <Column field="fullName" header="Full Name"></Column>
+                                        <Column field="fullName" :header="$t('user.name')"></Column>
                                         <Column field="gender" :header="$t('user.gender')"></Column>
                                         <Column field="dateOfBirth" :header="$t('user.dateOfBirth')">
                                             <template #body="{ data }">
@@ -56,21 +51,14 @@
                                     </DataTable>
                                 </div>
                                 <div class="container-fluid w-100 mt-3 d-flex justify-content-end p-0">
-                                    <button class="btn03 mx-2" style="width:185px" @click="onClose">{{ $t('common.cancel') }}</button>
-                                    <button class="btn01" style="width:185px" @click="saveData()">
-                                        {{ $t('common.save') }}
-                                    </button> 
+                                    <button class="btn01" style="width:185px" @click="saveData()">{{ $t('common.save') }}</button>
                                 </div>
                             </div>
                             <div class="col-4" v-if="studentList.length > 0">
-                                <label class="form-label font_15">Current Member</label><br>
+                                <label class="form-label font_15 alert alert-info p-1">{{ $t('class.studentListInClass') }}</label>
                                 <div class="we_shadow">
-                                    <DataTable 
-                                        :value="classList" 
-                                        scrollable 
-                                        scrollHeight="400px"
-                                    >
-                                        <Column field="fullName" header="Full Name"></Column>
+                                    <DataTable :value="classList" scrollable scrollHeight="400px">
+                                        <Column field="fullName" :header="$t('user.name')"></Column>
                                         <Column field="gender" :header="$t('user.gender')"></Column>
                                         <Column field="dateOfBirth" :header="$t('user.dateOfBirth')">
                                             <template #body="{ data }">
@@ -81,16 +69,16 @@
                                 </div>
                             </div>
                             <div class="col-4" v-else>
-                                <label class="form-label font_15">Current Member</label><br>
+                                <label class="form-label font_15 alert alert-info p-1">{{ $t('class.studentListInClass') }}</label>
                                 <div class="we_shadow">
                                     <table>
                                         <tr>
-                                            <th>Full Name</th>
+                                            <th>{{ $t('user.name') }}</th>
                                             <th>{{ $t('user.gender') }}</th>
                                             <th>{{ $t('user.dateOfBirth') }}</th>
                                         </tr>
                                         <tr>
-                                            <td colspan="2">No data display.</td> 
+                                            <td colspan="2">{{ $t('common.noData') }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -103,11 +91,9 @@
         <div class="pop_foot">
             <div class="footer_btn">
                 <div class="right_side">
+                    <button class="btn03 mx-2" style="width:185px" @click="onClose">{{ $t('common.close') }}</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-

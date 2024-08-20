@@ -1,8 +1,6 @@
-<!-- <MyLoading v-if="Loading" /> -->
 <Toast />
 <ConfirmDialog></ConfirmDialog>
 <div class="container-fluid d-flex flex-column we_box" style="overflow: hidden !important;">
-    <!-- header -->
     <div class="container-fluid p-1 d-flex justify-content-between">
         <div class="breadcrumb">
             <font-awesome-icon :icon="['fa', 'fa-landmark']" />
@@ -115,10 +113,16 @@
                         </div>
                 </template>
             </Column>
-            <Column :header="$t('class.upgrade')" style="min-width: 120px;">
+            <Column :header="$t('class.upgrade')" style="min-width: 150px;">
                 <template #body="{ data }">
                     <div class="d-flex justify-content-center align-item-center">
                         <button class="btn btn-success px-2 p-0 mx-2" @click="onClickUpgrade(data)" :disabled="!data.isLast">{{ $t('class.upgrade') }}</button>
+                    </div>
+                </template>
+            </Column>
+            <Column :header="$t('class.student')" style="min-width: 150px;">
+                <template #body="{ data }">
+                    <div class="d-flex justify-content-center align-item-center">
                         <button class="btn btn-info px-2 p-0"  @click="onClickInsertStudent(data)" >{{ $t('class.addStudent') }}</button>
                     </div>
                 </template>
