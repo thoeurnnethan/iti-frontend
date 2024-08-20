@@ -55,7 +55,8 @@
         "addTeacher": "Add Teacher",
         "teacherList": "Teacher List In Department",
         "teacher": "Teacher",
-        "addTeacherToDepartment": "Add Teacher To Department"
+        "addTeacherToDepartment": "Add Teacher To Department",
+        "allTeacher": "All Teacher"
     },
     "menu": {
         "home": "Home",
