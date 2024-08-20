@@ -4,7 +4,7 @@
 import { defineComponent, PropType } from 'vue';
 import { TEACHER_DEPARTMENT_LIST } from '@/shared/types/teacherDepartment-list';
 import { TEACHER_RES } from '@/shared/types/user-list';
-import { DEPARTMENT_LIST, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
+import { DEPARTMENT_LIST } from '@/shared/types/department-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { GenderCodeList, globalStatusCodeList, UserRoleList } from '@/shared/common/common';

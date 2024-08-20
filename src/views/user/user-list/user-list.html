@@ -110,10 +110,12 @@
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode, 'statusCode') }}
                 </template>
             </Column>
-            <Column :header="$t('class.edit')" class="text-center">
+            <Column :header="$t('class.edit')">
                 <template #body="{ data }">
-                    <font-awesome-icon @click="editUser(data)" icon="fas fa-pencil" class="text-primary mx-2" :title="$t('action.edit')" />
-                    <font-awesome-icon @click="deleteUser(data)" icon="fa-solid fa-trash" class="text-danger" :title="$t('action.delete')"/>
+                    <div class="d-flex justify-content-center">
+                        <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="editUser(data)" icon="fas fa-pencil" class="text-white" :title="$t('action.edit')" />&nbsp;
+                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="deleteUser(data)" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')"/>
+                    </div>
                 </template>
             </Column>
         </DataTable>

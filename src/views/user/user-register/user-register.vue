@@ -270,6 +270,7 @@ export default defineComponent({
                     startDate: this.formatDateDatabase(data.startDate),
                     endDate: this.formatDateDatabase(data.endDate),
                     certificatedDate: this.formatDateDatabase(data.certificatedDate),
+                    statusCode: "01"
                 }
             })
             const userInfoList = {
@@ -303,59 +304,75 @@ export default defineComponent({
             this.departmentList = response.body?.departmentList
         },
 
+
+
+
         addQualificationToList() {
-            this.qualCheckFields ={
+            // Reset the validation state
+            this.qualCheckFields = {
                 qualificationName: false,
                 startDate: false,
                 endDate: false,
                 certificatedDate: false
-            }
+            };
+
+            // Check if the qualification is valid before adding/updating
             if (!this.isValidQualification) {
-                this.checkQualSpecificErrorFields
-                return
+                this.checkQualSpecificErrorFields();
+                return;
             }
+
+            // Format the dates before updating the qualification
             const updatedQualification: QUALIFICATION_LIST = {
                 ...this.qualificationInfo,
                 startDate: this.formatDate(this.qualificationInfo.startDate),
                 endDate: this.formatDate(this.qualificationInfo.endDate),
                 certificatedDate: this.formatDate(this.qualificationInfo.certificatedDate)
             };
+
+            // If adding a new qualification
             if (this.editingIndex === -1) {
                 updatedQualification.seqNo = this.qualificationList.length + 1;
                 this.qualificationList.push(updatedQualification);
             } else {
+                // If editing an existing qualification, replace it in the list
                 this.qualificationList[this.editingIndex] = updatedQualification;
                 this.editingIndex = -1;
             }
 
+            // Update the sequence numbers
             this.updateQualificationSeqNo();
+
+            // Reset the form and state
             this.resetQualificationForm();
             this.addedButton = false;
         },
 
         onClickEditQualification(data: QUALIFICATION_LIST) {
-            if(this.isRegisterRoute){
+            if (this.isRegisterRoute) {
                 if (this.editingIndex !== -1) {
                     this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
                     return;
                 }
+
+                // Confirm before editing
                 this.$confirm.require({
                     message: 'Do you want to edit this record?',
                     header: 'Danger Zone',
                     accept: () => {
+                        // Load the selected qualification into the form for editing
                         this.qualificationInfo = { ...data };
                         this.editingIndex = this.qualificationList.findIndex(item => item.seqNo === data.seqNo);
-                        this.deleteQualification(data)
                         this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
                     },
                     reject: () => {
                         this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
                     }
-                })
-            }else{
+                });
+            } else {
+                // For non-register routes, just load the data into the form for editing
                 this.qualificationInfo = { ...data };
                 this.editingIndex = this.qualificationList.findIndex(item => item.seqNo === data.seqNo);
-                this.deleteQualification(data)
             }
         },
 
@@ -368,7 +385,29 @@ export default defineComponent({
                 this.$confirm.require({
                     message: 'Do you want to delete this record?',
                     header: 'Danger Zone',
-                    accept: () => {
+                    accept: async () => {
+
+
+                        const reqBody = {
+                            ...this.userInfo,
+                            teacherInfo:({
+                                qualificationList:({
+                                    ...item,
+                                    teacherID: this.userInfo.specificID,
+                                    statusCode: "02",
+                                    seqNo: item.seqNo,
+                                    certificatedDate: this.formatDateDatabase(item.certificatedDate),
+                                    startDate: this.formatDateDatabase(item.startDate),
+                                    endDate: this.formatDateDatabase(item.endDate)
+                                })
+                            })
+                        };
+
+
+                        console.log(reqBody);
+
+                        await requestService.request(API_PATH.USER_UPDATE, reqBody, false);
+
                         this.deleteQualification(item)
                         this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
                     },
@@ -380,6 +419,9 @@ export default defineComponent({
                 this.deleteQualification(item)
             }
         },
+
+
+
 
         deleteQualification(item: QUALIFICATION_LIST){
             this.qualificationList = this.qualificationList.filter(qual => qual.seqNo !== item.seqNo);
@@ -550,13 +592,32 @@ export default defineComponent({
         /* ======================= Update User =========================== */
         /* =============================================================== */
         async onClickUpdateUser(){
+
+            let qualificationList = [];
+
+            if (Array.isArray(this.qualificationList) && this.qualificationList.length > 0) {
+                qualificationList = this.qualificationList.map(item => ({
+                    teacherID: this.userInfo.specificID || '',
+                    ...item,
+                    startDate: this.formatDateDatabase(item.startDate),
+                    endDate: this.formatDateDatabase(item.endDate),
+                    certificatedDate: this.formatDateDatabase(item.certificatedDate),
+                    statusCode: "01"
+                }));
+            } 
+
             const reqBody = {
-                ...this.userInfo
-            }
+                ...this.userInfo,
+                teacherInfo: {
+                    qualificationList 
+                }
+            };
+
             const res = await requestService.request(API_PATH.USER_UPDATE, reqBody, true);
             if(res.header.result){
                 console.log(res)
             }
+            this.backToList();
         },
         backToList(){
             this.$router.push('/user-list')
@@ -569,15 +630,28 @@ export default defineComponent({
             const body = {
                 userID: this.userIDFromURl
             };
+            
+            // Requesting user details from the API
             const response = (await requestService.request(API_PATH.USER_DETAIL, body, false)) as USER_DETAIL_RES;
+
+            // Set user role and user information
             this.userSelectedRole = response.body.roleID;
-            this.userInfo = response.body
-            if(this.userSelectedRole === '04'){
-                this.fatherInfo = response.body?.studentInfo?.parentList[0]
-                this.motherInfo = response.body?.studentInfo?.parentList[1]
-                this.studentAcademicList = response.body?.studentInfo?.academicList
-            }else{
-                this.qualificationList = response.body?.teacherInfo?.qualificationList
+            this.userInfo = response.body;
+
+            // If the user is a student (role ID 04), set parent and academic information
+            if (this.userSelectedRole === '04') {
+                this.fatherInfo = response.body?.studentInfo?.parentList[0];
+                this.motherInfo = response.body?.studentInfo?.parentList[1];
+                this.studentAcademicList = response.body?.studentInfo?.academicList;
+
+            // If the user is a teacher, set qualification list and format certificatedDate
+            } else {
+                this.qualificationList = response.body?.teacherInfo?.qualificationList.map(qualification => ({
+                    ...qualification,
+                    certificatedDate: this.formatDate2(qualification.certificatedDate),
+                    startDate: this.formatDate2(qualification.startDate),
+                    endDate: this.formatDate2(qualification.endDate)
+                }));
             }
         },
 
@@ -611,6 +685,27 @@ export default defineComponent({
             const day = date.getDate().toString().padStart(2, '0');
             return `${year}-${month}-${day}`;
         },
+
+        formatDate2(dateString: string): string | number {
+            // Check if the date is already in YYYY-MM-DD format
+            const isFormatted = /^\d{4}-\d{2}-\d{2}$/.test(dateString);
+            
+            if (isFormatted) {
+                return 0; // Already formatted, return 0
+            }
+
+            // Ensure the unformatted date is exactly 8 characters long
+            if (dateString.length !== 8) return ''; // Invalid format, return empty string
+            
+            // Extract year, month, and day
+            const year = dateString.substring(0, 4);
+            const month = dateString.substring(4, 6);
+            const day = dateString.substring(6, 8);
+
+            // Return formatted date in YYYY-MM-DD format
+            return `${year}-${month}-${day}`;
+        },
+
 
         formatDateDatabase(dateString: string): string {
             const date = new Date(dateString);

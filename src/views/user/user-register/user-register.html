@@ -47,7 +47,7 @@
                     <InputText v-model="userInfo.nickName" />
                 </div>
                 <div :class="customRowClass">
-                    <label :class="customFormClass">{{ $t('user.gender') }}</label>
+                    <label :class="customFormClass">{{ $t('user.gender') }}</label><br>
                     <input type="radio" v-model="userInfo.gender" class="form-check-input" value="M"> Male
                     <input type="radio" v-model="userInfo.gender" class="form-check-input" value="F"> Female
                 </div>
@@ -129,7 +129,9 @@
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="we_shadow">
-                            <DataTable v-if="!isInvalidQualificationList" v-model:selection="qualificationInfo"
+                            <DataTable 
+                                v-if="!isInvalidQualificationList" 
+                                v-model:selection="qualificationInfo"
                                 :value="qualificationList">
                                 <Column field="seqNo" :header="$t('common.no')" :class="customNoClass"></Column>
                                 <Column field="qualificationName" :header="$t('user.qualName')"></Column>
