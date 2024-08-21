@@ -387,11 +387,10 @@ export default defineComponent({
                     header: 'Danger Zone',
                     accept: async () => {
 
-
                         const reqBody = {
                             ...this.userInfo,
                             teacherInfo:({
-                                qualificationList:({
+                                qualificationList:[{
                                     ...item,
                                     teacherID: this.userInfo.specificID,
                                     statusCode: "02",
@@ -399,10 +398,9 @@ export default defineComponent({
                                     certificatedDate: this.formatDateDatabase(item.certificatedDate),
                                     startDate: this.formatDateDatabase(item.startDate),
                                     endDate: this.formatDateDatabase(item.endDate)
-                                })
+                                }]
                             })
                         };
-
 
                         console.log(reqBody);
 
