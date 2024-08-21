@@ -304,9 +304,6 @@ export default defineComponent({
             this.departmentList = response.body?.departmentList
         },
 
-
-
-
         addQualificationToList() {
             // Reset the validation state
             this.qualCheckFields = {
@@ -402,8 +399,6 @@ export default defineComponent({
                             })
                         };
 
-                        console.log(reqBody);
-
                         await requestService.request(API_PATH.USER_UPDATE, reqBody, false);
 
                         this.deleteQualification(item)
@@ -417,9 +412,6 @@ export default defineComponent({
                 this.deleteQualification(item)
             }
         },
-
-
-
 
         deleteQualification(item: QUALIFICATION_LIST){
             this.qualificationList = this.qualificationList.filter(qual => qual.seqNo !== item.seqNo);
@@ -493,9 +485,12 @@ export default defineComponent({
             }
             const response = (await requestService.request(API_PATH.CLASS_LIST, reqBody, false)) as CLASS_LIST_RES;
             this.classList = response.body.classList
-            console.log(response);
-            
         },
+
+
+
+
+
 
         addAcademicToList() {
             this.academicCheckFields = {
@@ -562,7 +557,27 @@ export default defineComponent({
                 this.$confirm.require({
                     message: 'Do you want to delete this record?',
                     header: 'Danger Zone',
-                    accept: () => {
+                    accept: async () => {
+
+                        if (this.userInfo.roleID == "04") {
+                            var reqBody = {
+                                ...this.userInfo,
+                                studentInfo:({
+                                    ...this.userInfo.studentInfo,
+                                    academicList:[{
+                                        ...item,
+                                        studentID: this.userInfo.specificID,
+                                        statusCode: "02",
+                                        seqNo: item.seqNo,
+                                        certificatedDate: this.formatDateDatabase(item.certificatedDate),
+                                        startDate: this.formatDateDatabase(item.startDate),
+                                        endDate: this.formatDateDatabase(item.endDate)
+                                    }]
+                                })
+                            };
+                        }
+
+                        await requestService.request(API_PATH.USER_UPDATE, reqBody, false);
                         this.deleteAcademic(item)
                         this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
                     },
@@ -574,6 +589,11 @@ export default defineComponent({
                 this.deleteAcademic(item)
             }
         },
+
+
+
+
+
 
         updateAcademicSeqNo() {
             this.studentAcademicList.forEach((qual, index) => {
@@ -592,6 +612,7 @@ export default defineComponent({
         async onClickUpdateUser(){
 
             let qualificationList = [];
+            let studentAcademicList = [];
 
             if (Array.isArray(this.qualificationList) && this.qualificationList.length > 0) {
                 qualificationList = this.qualificationList.map(item => ({
@@ -604,18 +625,40 @@ export default defineComponent({
                 }));
             } 
 
-            const reqBody = {
-                ...this.userInfo,
-                teacherInfo: {
-                    qualificationList 
-                }
-            };
-
-            const res = await requestService.request(API_PATH.USER_UPDATE, reqBody, true);
-            if(res.header.result){
-                console.log(res)
+            if (Array.isArray(this.studentAcademicList) && this.studentAcademicList.length > 0) {
+                studentAcademicList = this.studentAcademicList.map(item => ({
+                    studentID: this.userInfo.specificID || '',
+                    ...item,
+                    startDate: this.formatDateDatabase(item.startDate),
+                    endDate: this.formatDateDatabase(item.endDate),
+                    certificatedDate: this.formatDateDatabase(item.certificatedDate),
+                    statusCode: "01"
+                }));
             }
-            this.backToList();
+
+            if (this.userInfo.roleID == "04") {
+                var reqBody = {
+                    ...this.userInfo,
+                    studentInfo: {
+                        ...this.userInfo.studentInfo,
+                        academicList: studentAcademicList // Ensure academicList is an array
+                    }
+                };
+            }
+            else{
+                var reqBody = {
+                    ...this.userInfo,
+                    teacherInfo: {
+                        qualificationList 
+                    }
+                };
+            }
+
+            // const res = await requestService.request(API_PATH.USER_UPDATE, reqBody, true);
+            // if(res.header.result){
+            //     console.log(res)
+            // }
+            // this.backToList();
         },
         backToList(){
             this.$router.push('/user-list')
@@ -640,7 +683,12 @@ export default defineComponent({
             if (this.userSelectedRole === '04') {
                 this.fatherInfo = response.body?.studentInfo?.parentList[0];
                 this.motherInfo = response.body?.studentInfo?.parentList[1];
-                this.studentAcademicList = response.body?.studentInfo?.academicList;
+                this.studentAcademicList = response.body?.studentInfo?.academicList.map(academicList => ({
+                    ...academicList,
+                    certificatedDate: this.formatDate2(academicList.certificatedDate),
+                    startDate: this.formatDate2(academicList.startDate),
+                    endDate: this.formatDate2(academicList.endDate)
+                }));
 
             // If the user is a teacher, set qualification list and format certificatedDate
             } else {
