@@ -5,6 +5,9 @@ export enum API_PATH {
     USER_DETAIL = "api/user/detail",
     USER_REGISTER = "api/user/register",
     USER_UPDATE = "api/user/update",
+    USER_LOGIN = "api/user/login",
+    USER_LOGOUT = "api/user/logout",
+    USER_CHANGE_PASSWORD = "api/user/change-password",
     //Department
     DEPARTMENT_LIST = "api/department/list",
     DEPARTMENT_LIST_DOWNLOAD = "api/department/list/download",

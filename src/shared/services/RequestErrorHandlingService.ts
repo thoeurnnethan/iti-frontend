@@ -41,4 +41,19 @@ export class RequestErrorHandlingService {
 			}, 300);
 		}
 	}
+
+	public static requestErrorHandlerOnlyError(res: any) {
+		if(!res.data.header.result){
+			setTimeout(async () => {
+				await dialog.onOpen({
+					showCancel: false,
+					title: res?.data?.header?.error_code,
+					content: res?.data?.header?.error_text,
+					callback: () => {
+						modalController.dismiss()
+					}
+				});
+			}, 300);
+		}
+	}
 }

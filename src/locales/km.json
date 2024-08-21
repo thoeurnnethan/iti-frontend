@@ -30,7 +30,12 @@
         "status": "ស្ថានភាព",
         "clearFilter": "សម្អាត Filter",
         "remove": "លុប",
-        "backToList": "ត្រឡប់ទៅកាន់បញ្ជី"
+        "backToList": "ត្រឡប់ទៅកាន់បញ្ជី",
+        "changePassword": "ផ្លាស់ប្តូរពាក្យសម្ងាត់",
+        "oldPassword": "ពាក្យសម្ងាត់ចាស់",
+        "newPassword": "ពាក្យសម្ងាត់ថ្មី",
+        "confirmPassword": "ផ្ទៀងផ្ទាត់ពាក្យសម្ងាត់",
+        "passwordNotMatch": "មិនត្រឹមត្រូវ"
     },
     "action": {
         "edit": "កែសម្រួល",

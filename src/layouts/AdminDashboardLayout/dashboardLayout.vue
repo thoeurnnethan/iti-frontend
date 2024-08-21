@@ -8,6 +8,10 @@ import { defineComponent } from 'vue';
 import { DashboardService } from './DashboardService';
 import Toast from 'primevue/toast';
 import SelectButton from 'primevue/selectbutton';
+import { RequestService } from '@/shared/services/request-service';
+import { API_PATH } from '@/shared/common/api-path';
+
+const requestService = new RequestService();
 
 export default defineComponent({
     name: "Dashboard",
@@ -49,6 +53,7 @@ export default defineComponent({
     mounted() {
         this.isCollapse = localStorage.getItem('collapse') === "true";
         this.getMenuList();
+        
     },
 
     methods: {
@@ -92,6 +97,16 @@ export default defineComponent({
                 this.greeting = 'common.goodEvening';
             } else {
                 this.greeting = 'common.goodNight';
+            }
+        },
+
+        async onClickLogout(){
+            const res = await requestService.request(API_PATH.USER_LOGOUT, null, false, true);
+            if(res.header.result){
+                this.$util.removeDataStorage('userInfo', true)
+                this.$router.push('/')
+            }else if(res.header.error_code === '401'){
+                
             }
         }
 

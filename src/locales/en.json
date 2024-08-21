@@ -30,7 +30,12 @@
         "status": "Status",
         "clearFilter": "Clear Filter",
         "remove": "Remove",
-        "backToList": "Back To List"
+        "backToList": "Back To List",
+        "changePassword": "Change Password",
+        "oldPassword": "Old Password",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm Password",
+        "passwordNotMatch": "Not Match"
     },
     "action": {
         "edit": "Edit",
