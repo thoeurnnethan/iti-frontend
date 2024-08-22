@@ -266,7 +266,9 @@
                     <div class="row mt-4">
                         <div class="col-12">
                             <div class="we_shadow">
-                                <DataTable v-if="!isInvalidAcademicList" v-model:selection="academicInfo"
+                                <DataTable 
+                                    v-if="!isInvalidAcademicList" 
+                                    v-model:selection="academicInfo"
                                     :value="studentAcademicList">
                                     <Column field="seqNo" :header="$t('common.no')" :class="customNoClass"></Column>
                                     <Column field="academicName" :header="$t('user.academicName')"></Column>
