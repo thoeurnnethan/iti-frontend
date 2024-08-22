@@ -55,13 +55,11 @@ export default defineComponent({
             const userInfo = this.$util.getDataStorage('userInfo',true);
             if(this.isValidForm){
                 const reqBody = {
-                    // ...this.passwordInfo,
                     userID: userInfo.userID,
                     oldPasswd: this.passwordInfo.oldPassword,
                     newPasswd: this.passwordInfo.newPassword
                 }
                 const res = (await requestService.request(API_PATH.USER_CHANGE_PASSWORD, reqBody, false, true)) as userLoginRes
-                console.log(res);
                 if(res.header.result){
                     this.isAuthenticated1 = true;
                     this.$router.push('admin-dashboard')

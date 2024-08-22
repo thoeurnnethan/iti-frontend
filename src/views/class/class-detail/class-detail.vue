@@ -78,7 +78,7 @@ export default defineComponent({
 
                 accept: async () => {
                     const reqBody = {
-                        classInfoID: item.classID+item.classYear+item.semester,
+                        classInfoID: item.classID + item.classYear + item.semester,
                         studentList: [{
                             studentID: item.studentID,
                             statusCode: '02'
@@ -86,9 +86,9 @@ export default defineComponent({
                     };
 
                     await requestService.request(API_PATH.STUDENT_CLASS_UPDATE, reqBody, false) as STUDENT_CLASS_LIST;
-                    this.studentInfo
+                    // this.studentInfo
                     this.$toast.add({ summary: 'Confirmed', detail: messageAcceptDetail, life: 1000 });
-                    modalController.dismiss();
+                    // modalController.dismiss();
                 },
                 reject: () => {
                     this.$toast.add({ severity: 'error', summary: 'Rejected', detail: messageRejectDetail, life: 1000 });

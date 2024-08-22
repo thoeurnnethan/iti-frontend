@@ -43,8 +43,8 @@ export enum API_PATH {
     SCHEDULE_REGISTER = "api/schedule/register",
     //StudentClass
     STUDENT_CLASS_LIST = "api/class-info/list/student",
-    STUDENT_CLASS_UPDATE = "api/class-info/register/student",
-    STUDENT_CLASS_REGISTER = "api/class-info/update/student",
+    STUDENT_CLASS_UPDATE = "api/class-info/update/student",
+    STUDENT_CLASS_REGISTER = "api/class-info/register/student",
     //teacherDepartment
     TEACHER_DEPARTMENT_LIST = "api/department-mngt/list",
     TEACHER_DEPARTMENT_UPDATE = "api/department-mngt/update",

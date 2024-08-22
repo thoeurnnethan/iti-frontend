@@ -23,7 +23,6 @@ export default defineComponent({
             } as UserInfo,
             userMockList: [] as UserInfo[],
             userResInfo: {} as userLoginResData,
-            isAuthenticated1: false,
             userRole: ''
         }
     },
@@ -48,13 +47,13 @@ export default defineComponent({
                         ...this.userResInfo,
                         loginSessionID: res.header.login_session_id
                     }
-                    this.$util.setDataStorage('userInfo',this.userResInfo,true)
+                    this.$util.setDataStorage('userInfo', this.userResInfo,true)
+                    this.$util.setDataStorage('isAuthenticated',true , true)
                     if(this.userResInfo.loginByUserYn === 'Y'){
                         this.$router.push('/admin-dashboard')
                     }else{
                         this.$router.push('/change-password')
                     }
-                    this.isAuthenticated1 = true;
                 }
             }
         }
