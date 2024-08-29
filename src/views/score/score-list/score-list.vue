@@ -2,26 +2,32 @@
 
 <script lang="ts">
 import { API_PATH } from '@/shared/common/api-path';
-import { SemesterList, YearList } from '@/shared/common/common';
+import { GenderCodeList, SemesterList, YearList } from '@/shared/common/common';
+import { ExportExcel } from '@/shared/services/export-excel-class';
 import { RequestService } from '@/shared/services/request-service';
 import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class-list';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
-import { SCORE_LIST } from '@/shared/types/student-score';
+import { SCORE_LIST,Subject } from '@/shared/types/student-score';
+import { ref } from 'vue';
 
 const requestService = new RequestService();
+const exportExcel = new ExportExcel();
 
 export default {
     data() {
+        const dataTable = ref<SCORE_LIST[]>([]);
         return {
+            dataTable,
             semesterList: SemesterList,
             yearList: YearList,
             studentScoreList: [],
-            sujectList: [],
+            subjectList: [] as Subject[],
             subject: {},
             request: [] as any,
             studentScoreInfo: {} as SCORE_LIST[],
             departmentList: [] as DEPARTMENT_LIST[],
             classList: [] as CLASS_LIST[],
+            classInfo: {} as CLASS_LIST,
             isSelectedClassID : false,
             filterInfo: {
                 departmentID: '',
@@ -38,8 +44,10 @@ export default {
             this.updateTranslatedSemesterList()
         },
         'filterInfo.departmentID'(){
-            this.getClassList()
             this.checkIsSelectClassID
+            this.getClassList()
+            this.studentScoreList = []
+            this.subjectList = []
         },
         'filterInfo.classID'(){
             this.checkIsSelectClassID
@@ -51,18 +59,28 @@ export default {
             this.isSelectedClassID = this.filterInfo.classID !== ''
         },
         isDisableSearchBtn(): boolean  {
-            return this.filterInfo.classID === ''
+            return this.filterInfo.classID === '' ||
+            this.filterInfo.classYear === '' ||
+            this.filterInfo.semester === ''
         },
         isValidFilterInfo(): boolean{
             return this.filterInfo.departmentID !== '' ||
             this.filterInfo.classID !== '' ||
             this.filterInfo.classYear !== '' ||
             this.filterInfo.semester !== ''
+        },
+        setData(){
+            this.filterInfo.departmentID = this.classInfo.departmentID
+            this.filterInfo.classID = this.classInfo.classID
+            this.filterInfo.classYear = this.classInfo.year
+            this.filterInfo.semester = this.classInfo.semester
+        },
+        checkTotal(): boolean{
+            return this.studentScoreList.length === 0;
         }
     },
 
     mounted() {
-        this.onGetStudentScoreList()
         this.getDepartmentList()
         this.updateTranslatedYearList()
         this.updateTranslatedSemesterList()
@@ -76,7 +94,7 @@ export default {
                 return
             }else if(data[field] !== newValue){
                 data[field] = newValue
-                this.subject = this.sujectList.filter(data => data.subjectName === field)
+                this.subject = this.subjectList.filter(data => data.subjectName === field)
                 const scoreObj = {
                     studentID: data.studentID,
                     subjectID: this.subject[0].subjectID,
@@ -102,7 +120,7 @@ export default {
             }
             const res = await requestService.request(API_PATH.SCORE_REGISTR, reqBody, true);
             if(res.header.result){
-                this.sujectList = res.body.subjects
+                this.subjectList = res.body.subjects
                 this.studentScoreList = res.body.data.map((data: any,index: number) =>{
                     return {
                         ...data,
@@ -116,14 +134,13 @@ export default {
 
         async onGetStudentScoreList(){
             const reqBody = {
-                // classInfoID: 'CLS100131',
                 classInfoID: this.filterInfo.classID + this.filterInfo.classYear + this.filterInfo.semester,
                 studentID: '',
                 subjectID: ''
             }
 
             const res = await requestService.request(API_PATH.SCORE_LIST, reqBody, false)
-            this.sujectList = res.body.subjects
+            this.subjectList = res.body.subjects
             this.studentScoreList = res.body.data.map((data: any,index: number) =>{
                 return {
                     ...data,
@@ -131,6 +148,12 @@ export default {
                     fullName:  `${data.firstName} ${data.lastName}`
                 }
             })
+            this.dataTable = res.body?.data.map((data: any, index: number) => {
+                return {
+                    no: index + 1,
+                    ...data
+                }
+            });
         },
 
         async getDepartmentList() {
@@ -147,8 +170,8 @@ export default {
         async getClassList() {
             const reqBody: CLASS_LIST_REQ = {
                 classID: '',
-                departmentID: this.filterInfo.departmentID,
                 searchKey: '',
+                departmentID: this.filterInfo.departmentID,
                 year: this.filterInfo.classYear,
                 semester: this.filterInfo.semester,
                 pageSize: 1000,
@@ -159,6 +182,9 @@ export default {
         },
 
         onClearFilterInfo(){
+            this.classInfo = {} as CLASS_LIST
+            this.studentScoreList = []
+            this.subjectList = []
             this.filterInfo = {
                 departmentID: '',
                 classID: '',
@@ -179,6 +205,35 @@ export default {
                 codeValue: item.codeValue,
                 codeValueDesc: this.$codeConverter.codeToString(this.yearList, String(item.codeValue), 'yearCode')
             }));
+        },
+
+        async exportToExcel() {
+            const excelData = this.dataTable.map(student => {
+                const subjectScores = this.subjectList.reduce((scores, subject) => {
+                    const score = student[subject.subjectName];
+                    if (score !== undefined) {
+                        scores[subject.subjectName] = score;
+                    }
+                    return scores;
+                }, {} as { [key: string]: number });
+                return {
+                    "No": student.no,
+                    "Student ID": student.studentID,
+                    "Student Name": `${student.firstName} ${student.lastName}`,
+                    "Gender": this.$codeConverter.codeToString(GenderCodeList,student.gender),
+                    "Phone Number": this.$phoneNumberFormater.formatPhoneNumber(student.phoneNumber),
+                    ...subjectScores, 
+                    "Total Score": student.totalScore,
+                    "Average": student.average,
+                    "Grade": student.grade
+                };
+            });
+            const exportExcelData = [
+                {
+                    data: excelData
+                },
+            ];
+            exportExcel.exportSheet(exportExcelData, 'student-score')
         },
     }
 };

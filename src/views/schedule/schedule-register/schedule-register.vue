@@ -16,7 +16,7 @@ import { ROOM_LIST, ROOM_LIST_REQ, ROOM_LIST_RES } from '@/shared/types/room-lis
 const requestService = new RequestService();
 
 export default defineComponent({
-    name: "class-list",
+    name: "schedule-register",
     inheritAttrs: false,
     components: {
         MyLoading
@@ -29,7 +29,9 @@ export default defineComponent({
             weekdayList: WeekdayList,
             departmentList: [] as DEPARTMENT_LIST[],
             classList: [] as CLASS_LIST[],
+            classInfo: {} as CLASS_LIST,
             scheduleList: [] as SCHEDULE_LIST[],
+            originalScheduleList: [] as SCHEDULE_LIST[],
             rowData: {} as SCHEDULE_LIST,
             columns: [] as ScheduleColumn[],
             rows: [] as ScheduleRow[],
@@ -59,7 +61,8 @@ export default defineComponent({
                 roomID: '',
             } as SCHEDULE_LIST,
             checkedAllTeacher: true,
-            isValidateFail: true,
+            isClickDeleteBtn: false,
+            originalTotalSchedule: 0,
             lastEndTime: '',
             pageSize: 10,
             pageNumber: 0,
@@ -123,9 +126,18 @@ export default defineComponent({
                 this.subjectInfo.subjectID !== undefined &&
                 this.roomInfo.roomID !== undefined
         },
-
         isDisableDeleteBtn(): boolean {
             return this.scheduleList.length <= 0;
+        },
+        onSetData(){
+            this.filterInfo.classID = this.classInfo.classID
+            this.filterInfo.classYear = this.classInfo.year
+            this.filterInfo.semester = this.classInfo.semester
+            this.getSubjectList()
+        },
+        checkEnableSaveBtn(): boolean{
+            if(this.isClickDeleteBtn) return false;
+            return this.originalTotalSchedule === this.scheduleList.length
         }
     },
 
@@ -147,6 +159,14 @@ export default defineComponent({
                     schDay: data.scheduleDay
                 }
             })
+            this.originalScheduleList = this.scheduleList
+            this.originalTotalSchedule = this.scheduleList.length
+            if(this.scheduleList.length > 0){
+                const lastScheduleInfo = this.scheduleList[(this.scheduleList.length -1)]
+                this.lastEndTime = lastScheduleInfo.endTime
+                this.resetFormSchedule(false)
+                this.filterTimeList(this.lastEndTime, true)
+            }
             this.columns = Object.keys(response.body.scheduleList[0]).map(day => ({
                 field: day,
                 header: day
@@ -234,6 +254,7 @@ export default defineComponent({
         },
 
         onClickBtnDelete() {
+            this.isClickDeleteBtn = true
             const lastItem = this.scheduleList[this.scheduleList.length - 1];
             this.scheduleList = this.scheduleList.filter(data => data.seqNo !== lastItem.seqNo)
             this.lastEndTime = lastItem.startTime
@@ -273,6 +294,8 @@ export default defineComponent({
                 subjectID: '',
                 roomID: this.roomInfo.roomID,
             } as SCHEDULE_LIST
+            this.classList = []
+            this.classInfo = {} as CLASS_LIST
             this.resetFormSchedule(true)
         },
 
@@ -347,7 +370,7 @@ export default defineComponent({
             } else {
                 this.roomInfo = {} as ROOM_LIST
                 this.scheduleList = [],
-                    this.startTimeList = this.endTimeList = this.generateScheduleTime()
+                this.startTimeList = this.endTimeList = this.generateScheduleTime()
             }
         }
     }

@@ -257,6 +257,9 @@
         }
     },
     "score":{
-        "title": "Score List"
+        "title": "Score List",
+        "totalScore": "Total Score",
+        "average": "Average",
+        "grade": "Grade"
     }
 }

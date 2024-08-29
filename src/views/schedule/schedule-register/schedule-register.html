@@ -12,7 +12,7 @@
             </div>
             <div class="col-md-3 mb-2">
                 <label class="form-label font_14">{{ $t('schedule.selectYear') }}</label>
-                <select class="form-select" v-model="filterInfo.classYear">
+                <select class="form-select" v-model="filterInfo.classYear" @change="getClassList">
                     <option v-for="year in yearList" :value="year.codeValue" :style="{ display: !year.codeValue ? 'none' : 'block' }">
                         <p v-if="year.codeValue">{{ year.codeValueDesc }}</p>
                     </option>
@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-3 mb-2">
                 <label class="form-label font_14">{{ $t('class.selectSemester') }}</label>
-                <select class="form-select" v-model="filterInfo.semester">
+                <select class="form-select" v-model="filterInfo.semester" @change="getClassList">
                     <option v-for="semester in semesterList" :value="semester.codeValue" :style="{ display: !semester.codeValue ? 'none' : 'block' }">
                         <p v-if="semester.codeValue">{{ semester.codeValueDesc }}</p>
                     </option>
@@ -36,9 +36,11 @@
             </div>
             <div class="col-md-3 mb-2">
                 <label class="form-label font_14">{{ $t('class.selectClass') }}</label>
-                <select class="form-select" v-model="filterInfo.classID">
-                    <option v-for="classInfo in classList" :key="classInfo.classID" :value="classInfo.classID">
-                        {{ classInfo.classID }} - {{ classInfo.className }}
+                <select class="form-select" v-model="classInfo" @change="onSetData">
+                    <option v-for="classInfo in classList" :key="classInfo.classID" :value="classInfo">
+                        <p class="m-0 p-0">{{ classInfo.className }}</p>
+                        <p class="m-0 p-0">-{{ $t('schedule.classYear') }} {{ classInfo.year }}</p>
+                        <p class="m-0 p-0">-{{ $t('schedule.semester') }} {{ classInfo.semester }}</p>
                     </option>
                 </select>
             </div>
@@ -143,7 +145,7 @@
             <div class="container-fluid my-3">
                 <div class="row">
                     <div class="col-md-1">
-                        <button class="btn btn-outline-success" @click="onClickSave" :disabled="isDisableDeleteBtn">{{ $t('common.save') }}</button>
+                        <button class="btn btn-outline-success" @click="onClickSave" :disabled="isDisableDeleteBtn || checkEnableSaveBtn">{{ $t('common.save') }}</button>
                     </div>
                 </div>
             </div>

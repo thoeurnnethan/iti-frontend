@@ -8,18 +8,10 @@
             <span class="text_title mx-1">{{ $t('score.title') }}</span>
         </div>
         <div>
-            <!-- <button type="button" class="btn btn-dark p-1 px-2">
+            <button type="button" class="btn btn-dark p-1 px-2" @click="exportToExcel" :disabled="checkTotal">
                 <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
                 <font-awesome-icon :icon="['fas', 'file-excel']" />
             </button>
-            <button class="btn btn-info p-1 px-2 mx-2">
-                <span class="mx-1">{{ $t('class.addStudent') }}</span>
-                <font-awesome-icon :icon="['fas', 'plus']" />
-            </button> -->
-            <!-- <button class="btn btn-primary p-1 px-2">
-                <span class="mx-1">{{ $t('common.addNew') }}</span>
-                <font-awesome-icon :icon="['fas', 'plus']" />
-            </button> -->
         </div>
     </div>
     <div class="container-fluid px-0 py-2">
@@ -53,8 +45,8 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label font_14">{{ $t('class.selectClass') }}</label>
-                <select :class="['form-select', isSelectedClassID ? '': 'selectBorder']" v-model="filterInfo.classID" @change="getClassList">
-                    <option v-for="classInfo in classList" :value="classInfo.classID">
+                <select :class="['form-select', isSelectedClassID ? '': 'selectBorder']" v-model="classInfo" @change="setData()">
+                    <option v-for="classInfo in classList" :value="classInfo">
                         <p class="m-0 p-0">{{ classInfo.className }}</p>
                         <p class="m-0 p-0">-{{ $t('schedule.classYear') }} {{ classInfo.year }}</p>
                         <p class="m-0 p-0">-{{ $t('schedule.semester') }} {{ classInfo.semester }}</p>
@@ -83,7 +75,7 @@
             <Column field="fullName" :header="$t('user.name')" style="min-width: 200px;"></Column>
             <Column field="gender" :header="$t('user.gender')" style="min-width: 80px;"></Column>
             <Column field="phoneNumber" :header="$t('user.phone')" style="min-width: 150px;"></Column>
-            <Column v-for="subject in sujectList" 
+            <Column v-for="subject in subjectList" 
                 :key="subject.subjectID" 
                 :field="subject.subjectName" 
                 :header="subject.subjectName"
@@ -92,6 +84,9 @@
                     <InputNumber v-model="data[field]" autofocus :min="0" :max="100"/>
                 </template>
             </Column> 
+            <Column field="totalScore" :header="$t('score.totalScore')" class="text-danger text-center" style="min-width: 150px;"></Column>
+            <Column field="average" :header="$t('score.average')" class=" text-center text-danger" style="min-width: 150px;"></Column>
+            <Column field="grade" :header="$t('score.grade')" class="text-center text-danger" style="min-width: 150px;"></Column>
         </DataTable>
     </div>
     <div class="container d-flex justify-content-end my-4">

@@ -96,7 +96,7 @@
                                     <td>{{ academic.academicDesc }}</td>
                                     <td>{{ $format.formatDateTime(academic.startDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
                                     <td>{{ $format.formatDateTime(academic.endDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
-                                    <td>{{ academic.certificatedDate }}</td>
+                                    <td>{{ $format.formatDateTime(academic.certificatedDate,'yyyy-mm-dd','Slash', 'FullMonth') }}</td>
                                 </tr>
                                 <tr v-if="!userInfo?.studentInfo?.academicList">
                                     <td colspan="6" class="text-danger">{{ $t('common.noData') }}</td>

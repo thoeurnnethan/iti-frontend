@@ -257,4 +257,22 @@ export class DateFormat {
             return time;
         }
     }
+
+    public convertTo24HourFormat(time: string) {
+        try {
+            const [timePart, suffix] = time.split(' ');
+            let [hour, minutes] = timePart.split(':').map(Number);
+            
+            if (suffix.toUpperCase() === 'PM' && hour !== 12) {
+                hour += 12;
+            }
+            if (suffix.toUpperCase() === 'AM' && hour === 12) {
+                hour = 0;
+            }
+            const hourString = hour.toString().padStart(2, '0');
+            return `${hourString}${minutes.toString().padStart(2, '0')}`;
+        } catch (error) {
+            return time;
+        }
+    }
 }

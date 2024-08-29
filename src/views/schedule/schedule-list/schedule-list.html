@@ -7,16 +7,12 @@
             <font-awesome-icon :icon="['fa', 'shop']" />
             <span class="text_title mx-1">{{ $t('schedule.title') }}</span>
         </div>
-        <!-- <div>
+        <div>
             <button type="button" class="btn btn-dark p-1 px-2" @click="exportToExcel">
                 <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
                 <font-awesome-icon :icon="['fas', 'file-excel']" />
-            </button>&nbsp;
-            <button class="btn btn-primary p-1 px-2" @click="onClickInsert()">
-                <span class="mx-1">{{ $t('common.addNew') }}</span>
-                <font-awesome-icon :icon="['fas', 'plus']" />
             </button>
-        </div> -->
+        </div>
     </div>
     <div class="container-fluid px-0 py-4">
         <div class="row">
@@ -46,7 +42,7 @@
                 <label class="form-label font_14">{{ $t('class.selectDepartment') }}</label>
                 <select class="form-select" v-model="filterInfo.departmentID">
                     <option v-for="department in departmentList" :key="department.departmentID" :value="department.departmentID">
-                        {{ department.departmentID }} - {{ department.departmentName }}
+                        <span>{{ department.departmentID }} - {{ department.departmentName }}</span>
                     </option>
                 </select>
             </div>
@@ -88,14 +84,13 @@
             </div>
         </div>
         <DataTable 
-            v-model:selection="scheduleInfo" 
             :value="rows"
             selectionMode="single" 
             tableStyle="min-width: 150px"
             stripedRows 
             scrollable
             :metaKeySelection="true"
-            :lazy="false" >
+            :lazy="false">
             <Column v-for="col in columns" :key="col.field" :field="col.field" :header="col.header" style="min-width: 300px;">
                 <template #body="slotProps">
                     <div class="container" v-if="slotProps.data[col.field].subjectName">
