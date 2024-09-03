@@ -1,4 +1,5 @@
 import i18n from "@/i18n";
+import { StandardCodeData } from "../types/standard-code";
 
 export class ConvertCode {
     /**
@@ -21,5 +22,25 @@ export class ConvertCode {
             return 'Unknown';
         }
         return code
+    }
+
+    public codeToStringList(list: any[], prefix?: string): StandardCodeData[] {
+        const _list= [] as StandardCodeData[]
+        if (list && list.length > 0) {
+            list.forEach(item =>{
+                let data:StandardCodeData = {
+                    codeValue: '',
+                    codeValueDesc: 'Unknown'
+                }
+                data.codeValue = item.codeValue
+                if(prefix !== undefined){
+                    data.codeValueDesc = i18n.global.t(`commonCode.${prefix}.${item.codeValue}`, item.codeValueDesc)
+                }else{
+                    data.codeValueDesc = item.codeValueDesc
+                }
+                _list.push(data)
+            })
+        }
+        return _list
     }
 }

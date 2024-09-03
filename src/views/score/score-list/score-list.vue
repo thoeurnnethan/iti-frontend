@@ -19,6 +19,7 @@ export default {
         return {
             dataTable,
             semesterList: SemesterList,
+            genderCodeList: GenderCodeList,
             yearList: YearList,
             studentScoreList: [],
             subjectList: [] as Subject[],
@@ -29,6 +30,7 @@ export default {
             classList: [] as CLASS_LIST[],
             classInfo: {} as CLASS_LIST,
             isSelectedClassID : false,
+            isClickBtnSearch: false,
             filterInfo: {
                 departmentID: '',
                 classID: '',
@@ -39,9 +41,9 @@ export default {
     },
 
     watch:{
-        'i18n.locale'(){
-            this.updateTranslatedYearList()
-            this.updateTranslatedSemesterList()
+        '$i18n.locale'(){
+            this.yearList = this.$codeConverter.codeToStringList(this.yearList,'yearCode')
+            this.semesterList = this.$codeConverter.codeToStringList(this.semesterList,'semesterCode')
         },
         'filterInfo.departmentID'(){
             this.checkIsSelectClassID
@@ -51,6 +53,9 @@ export default {
         },
         'filterInfo.classID'(){
             this.checkIsSelectClassID
+        }, 
+        isDisableSearchBtn(){
+            this.isClickBtnSearch = false
         }
     },
 
@@ -74,6 +79,7 @@ export default {
             this.filterInfo.classID = this.classInfo.classID
             this.filterInfo.classYear = this.classInfo.year
             this.filterInfo.semester = this.classInfo.semester
+            this.onClearFilterInfo(false)
         },
         checkTotal(): boolean{
             return this.studentScoreList.length === 0;
@@ -82,9 +88,9 @@ export default {
 
     mounted() {
         this.getDepartmentList()
-        this.updateTranslatedYearList()
-        this.updateTranslatedSemesterList()
         this.getClassList()
+        this.yearList = this.$codeConverter.codeToStringList(this.yearList,'yearCode')
+        this.semesterList = this.$codeConverter.codeToStringList(this.semesterList,'semesterCode')
     },
 
     methods: {
@@ -133,6 +139,7 @@ export default {
         },
 
         async onGetStudentScoreList(){
+            this.isClickBtnSearch = true
             const reqBody = {
                 classInfoID: this.filterInfo.classID + this.filterInfo.classYear + this.filterInfo.semester,
                 studentID: '',
@@ -140,20 +147,22 @@ export default {
             }
 
             const res = await requestService.request(API_PATH.SCORE_LIST, reqBody, false)
-            this.subjectList = res.body.subjects
-            this.studentScoreList = res.body.data.map((data: any,index: number) =>{
-                return {
-                    ...data,
-                    seqNo: index + 1,
-                    fullName:  `${data.firstName} ${data.lastName}`
-                }
-            })
-            this.dataTable = res.body?.data.map((data: any, index: number) => {
-                return {
-                    no: index + 1,
-                    ...data
-                }
-            });
+            if(res.body.data){
+                this.subjectList = res.body.subjects
+                this.studentScoreList = res.body.data.map((data: any,index: number) =>{
+                    return {
+                        ...data,
+                        seqNo: index + 1,
+                        fullName:  `${data.firstName} ${data.lastName}`
+                    }
+                })
+                this.dataTable = res.body?.data.map((data: any, index: number) => {
+                    return {
+                        no: index + 1,
+                        ...data
+                    }
+                });
+            }
         },
 
         async getDepartmentList() {
@@ -181,30 +190,18 @@ export default {
             this.classList = response.body?.classList
         },
 
-        onClearFilterInfo(){
-            this.classInfo = {} as CLASS_LIST
+        onClearFilterInfo(isClearFilter: boolean){
             this.studentScoreList = []
             this.subjectList = []
-            this.filterInfo = {
-                departmentID: '',
-                classID: '',
-                classYear: '',
-                semester: ''
+            if(isClearFilter){
+                this.classInfo = {} as CLASS_LIST
+                this.filterInfo = {
+                    departmentID: '',
+                    classID: '',
+                    classYear: '',
+                    semester: ''
+                }
             }
-        },
-
-        updateTranslatedSemesterList() {
-            this.semesterList = this.semesterList.map(item => ({
-                codeValue: item.codeValue,
-                codeValueDesc: this.$codeConverter.codeToString(this.semesterList, String(item.codeValue), 'semesterCode')
-            }));
-        },
-
-        updateTranslatedYearList() {
-            this.yearList = this.yearList.map(item => ({
-                codeValue: item.codeValue,
-                codeValueDesc: this.$codeConverter.codeToString(this.yearList, String(item.codeValue), 'yearCode')
-            }));
         },
 
         async exportToExcel() {
@@ -220,7 +217,7 @@ export default {
                     "No": student.no,
                     "Student ID": student.studentID,
                     "Student Name": `${student.firstName} ${student.lastName}`,
-                    "Gender": this.$codeConverter.codeToString(GenderCodeList,student.gender),
+                    "Gender": this.$codeConverter.codeToString(this.genderCodeList,student.gender),
                     "Phone Number": this.$phoneNumberFormater.formatPhoneNumber(student.phoneNumber),
                     ...subjectScores, 
                     "Total Score": student.totalScore,

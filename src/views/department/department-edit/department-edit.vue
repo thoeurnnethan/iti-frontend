@@ -42,6 +42,12 @@ export default defineComponent({
         };
     },
 
+    watch: {
+        '$i18n.locale'(){
+            this.statusCodeList = this.$codeConverter.codeToStringList(this.statusCodeList, 'statusCode')
+        }
+    },
+
     computed: {
         isValidRegister(): boolean {
             return this.departmentInfo.departmentName !== '' &&
@@ -58,6 +64,7 @@ export default defineComponent({
 
     mounted() {
         this.onInitData();
+        this.statusCodeList = this.$codeConverter.codeToStringList(this.statusCodeList, 'statusCode')
     },
 
     methods: {
