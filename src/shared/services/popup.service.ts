@@ -7,7 +7,7 @@ class PopupService {
         //
     }
 
-    async onOpen({ dataProp, component/* , callback, onClose  */}: DefaultPopup) {
+    async onOpen({ dataProp, component, callback, onClose }: DefaultPopup) {
         const popup = await modalController.create({
             component: markRaw(component),
             cssClass: "",
@@ -15,13 +15,13 @@ class PopupService {
         });
 
         await popup.present();
-
         // const { role, data } = await popup.onWillDismiss();
-        // if (role === "confirm" && callback) {
-        //     callback(data)
-        // } else if (role === "close" && onClose) {
-        //     onClose(data)
-        // }
+        const { data } = await popup.onWillDismiss();
+        if (callback) {
+            callback(data)
+        } else if (onClose) {
+            onClose(data)
+        }
     }
 
 }

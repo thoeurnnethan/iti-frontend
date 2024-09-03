@@ -1,0 +1,9 @@
+tr{
+    th,td{
+        font-size: 14px !important;
+        white-space: nowrap;
+    }
+}
+.p-datatable td {
+    user-select: text;
+}

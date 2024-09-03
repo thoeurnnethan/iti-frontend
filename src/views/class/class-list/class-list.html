@@ -1,0 +1,133 @@
+<Toast />
+<ConfirmDialog></ConfirmDialog>
+<div class="container-fluid d-flex flex-column we_box" style="overflow: hidden !important;">
+    <div class="container-fluid p-1 d-flex justify-content-between">
+        <div class="breadcrumb">
+            <font-awesome-icon :icon="['fa', 'fa-landmark']" />
+            <span class="text_title mx-1">{{ $t('class.title') }}</span>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark p-1 px-2 mx-2" @click="exportToExcel">
+                <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
+                <font-awesome-icon :icon="['fas', 'file-excel']" />
+            </button>
+            <button class="btn btn-primary p-1 px-2" @click="onClickInsert()">
+                <span class="mx-1">{{ $t('common.addNew') }}</span>
+                <font-awesome-icon :icon="['fas', 'plus']" />
+            </button>
+        </div>
+    </div>
+    <div class="container-fluid px-0 py-4">
+        <div class="row">
+            <div class="col-md-3">
+                <label class="form-label font_14">{{ $t('class.selectDepartment') }}</label>
+                <select class="form-select" v-model="selectedDepartment" @change="getClassList">
+                    <option value=""><span>{{ $t('common.all') }}</span></option>
+                    <option v-for="department in departmentList" :value="department.departmentID">
+                        <span>{{ department.departmentName }}</span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label font_14">{{ $t('class.selectYear') }}</label>
+                <select class="form-select" v-model="selectedYear" @change="getClassList">
+                    <option value=""><span>{{ $t('common.all') }}</span></option>
+                    <option v-for="year in yearList" :value="year.codeValue">
+                        <span>{{ year.codeValueDesc }}</span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label font_14">{{ $t('class.selectSemester') }}</label>
+                <select class="form-select" v-model="selectSemester" @change="getClassList">
+                    <option value=""><span>{{ $t('common.all') }}</span></option>
+                    <option v-for="semester in semesterList" :value="semester.codeValue">
+                        {{ semester.codeValueDesc }}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="cointainer-fluid d-flex flex-row justify-content-around">
+            <InputGroup style="max-width: 30% !important;">
+                <button type="button" class="rad_left btn btn-dark b_shadow p-2 px-2 float-end font_15" @click="getClassList">{{ $t('common.search') }}</button>
+                <InputText @keyup.enter="getClassList()" class="p-1 font_15 rad_right b_shadow c_input" v-model="classID"
+                    :placeholder="$t('common.searchByClassID')" style="height: 40.5px;padding-left: 15px !important;" />
+            </InputGroup>
+            <InputGroup style="max-width: 30% !important;">
+                <button type="button" class="rad_left btn btn-dark b_shadow p-2 px-2 float-end font_15" @click="getClassList">{{ $t('common.search') }}</button>
+                <InputText @keyup.enter="getClassList()" class="p-1 font_15 rad_right b_shadow c_input" v-model="searchKey"
+                    :placeholder="$t('common.searchKey')" style="height: 40.5px;padding-left: 15px !important;" />
+            </InputGroup>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3 we_box">
+    <div class="b_shadow">
+        <DataTable 
+            v-model:selection="classInfo" 
+            @row-dblclick="onClickRow(classInfo)" 
+            tableStyle="min-width: 50rem" 
+            selectionMode="single" 
+            scrollable
+            :value="classList" 
+            :metaKeySelection="true" 
+            :rows="pageSize" 
+            :lazy="true"
+            :paginator="true"
+            :totalRecords="totalCount" 
+            :rowsPerPageOptions="[10, 20, 50]" 
+            @page="onPage" 
+            :rowClass="rowClass">
+            <Column field="no" :header="$t('common.no')" :class="['text-center']" style="min-width: 100px;"></Column>
+            <Column field="classID" :header="$t('class.classId')" style="min-width: 150px;"></Column>
+            <Column field="className" :header="$t('class.className')" style="min-width: 120px;"></Column>
+            <Column field="departmentName" :header="$t('department.depName')" style="min-width: 120px;"></Column>
+            <Column field="year" :header="$t('class.year')"></Column>
+            <Column field="semester" :header="$t('class.semester')"></Column>
+            <Column field="generation" :header="$t('class.generation')"></Column>
+            <Column field="classDesc" :header="$t('class.classDesc')" style="min-width: 150px;"></Column>
+            <Column :header="$t('class.classType')" style="min-width: 120px;">
+                <template #body="{ data }">
+                    {{ $codeConverter.codeToString(classTypeList, data.classType, 'classType') }}
+                </template>
+            </Column>
+            <Column field="statusCode" :header="$t('class.status')" style="min-width: 100px">
+                <template #body="{ data }">
+                    {{ $codeConverter.codeToString(statusCodeList, data.statusCode, 'statusCode') }}
+                </template>
+            </Column>
+            <Column :header="$t('action.action')" style="min-width: 120px;">
+                <template #body="{ data }">
+                    <div v-if="data.statusCode === '01'" class="d-flex justify-content-center align-item-center">
+                        <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" icon="fas fa-pencil" class="text-white" :title="$t('action.edit')" />
+                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '09')" :icon="['fas', 'fa-archive']" class="text-white mx-2" :title="$t('action.inactive')" />
+                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+                    </div>
+                    <div v-else class="d-flex justify-content-center align-item-center">
+                        <div style="width: 24px; height: 24px;"></div>
+                            <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '01')" :icon="['fas', 'fa-rotate-back']" class="text-white mx-2" :title="$t('action.active')" />
+                            <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+                        </div>
+                </template>
+            </Column>
+            <Column :header="$t('class.upgrade')" style="min-width: 150px;">
+                <template #body="{ data }">
+                    <div class="d-flex justify-content-center align-item-center">
+                        <button class="btn btn-success px-2 p-0 mx-2" @click="onClickUpgrade(data)" :disabled="!data.isLast">{{ $t('class.upgrade') }}</button>
+                    </div>
+                </template>
+            </Column>
+            <Column :header="$t('class.student')" style="min-width: 150px;">
+                <template #body="{ data }">
+                    <div class="d-flex justify-content-center align-item-center">
+                        <button class="btn btn-info px-2 p-0"  @click="onClickInsertStudent(data)" >{{ $t('class.addStudent') }}</button>
+                    </div>
+                </template>
+            </Column>
+        </DataTable>
+    </div>
+    <div class="p-1"></div>
+</div>

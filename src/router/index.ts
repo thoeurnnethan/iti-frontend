@@ -9,25 +9,49 @@ const router = createRouter({
             component: () => import("@/layouts/Login/login.vue"),
         },
         {
+            path: "/change-password",
+            name: "change-password",
+            component: () => import("@/layouts/change-password/change-password.vue"),
+        },
+        {
             path: "/admin-dashboard",
             name: "dashboardLayout",
             component: () => import("@/layouts/AdminDashboardLayout/dashboardLayout.vue"),
-            redirect: "/home",
             children:[
                 {
-                    path: "/home",
+                    path: "/admin-dashboard",
                     name: "home",
                     component: () => import("@/views/home/home.vue")
                 },
                 {
-                    path: "/student-list",
-                    name: "student-list",
-                    component: () => import("@/views/student/student-list/student-list.vue")
+                    path: "/user-list",
+                    name: "user-list",
+                    component: () => import("@/views/user/user-list/user-list.vue")
                 },
                 {
-                    path: "/student-register",
-                    name: "student-register",
-                    component: () => import("@/views/student/student-register/student-register.vue")
+                    path: "/user-register",
+                    name: "user-register",
+                    component: () => import("@/views/user/user-register/user-register.vue")
+                },
+                {
+                    path: "/user-update/:userID",
+                    name: "user-update",
+                    component: () => import("@/views/user/user-register/user-register.vue")
+                },
+                {
+                    path: "/class-list",
+                    name: "class-list",
+                    component: () => import("@/views/class/class-list/class-list.vue")
+                },
+                {
+                    path: "/class-register",
+                    name: "class-register",
+                    component: () => import("@/views/class/class-insert/class-insert.vue")
+                },
+                {
+                    path: "/room-list",
+                    name: "room-list",
+                    component: () => import("@/views/room/room-list/room-list.vue")
                 },
                 {
                     path: "/department-list",
@@ -38,6 +62,31 @@ const router = createRouter({
                     path: "/department-insert",
                     name: "department-insert",
                     component: () => import("@/views/department/department-insert/department-insert.vue")
+                },
+                {
+                    path: "/score-list",
+                    name: "score-list",
+                    component: () => import("@/views/score/score-list/score-list.vue")
+                },
+                {
+                    path: "/subject-list",
+                    name: "subject-list",
+                    component: () => import("@/views/subject/subject-list/subject-list.vue")
+                },
+                {
+                    path: "/schedule-list",
+                    name: "schedule-list",
+                    component: () => import("@/views/schedule/schedule-list/schedule-list.vue")
+                },
+                {
+                    path: "/schedule-register",
+                    name: "schedule-register",
+                    component: () => import("@/views/schedule/schedule-register/schedule-register.vue")
+                },
+                {
+                    path: "/score-list",
+                    name: "score-list",
+                    component: () => import("@/views/score/score-list/score-list.vue")
                 }
             ]
         },

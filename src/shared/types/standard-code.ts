@@ -1,4 +1,4 @@
 export interface StandardCodeData {
-    codeValue: string
+    codeValue: string | number
     codeValueDesc: string
 }

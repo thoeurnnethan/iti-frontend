@@ -1,0 +1,331 @@
+<Toast />
+<ConfirmDialog></ConfirmDialog>
+<div class="container-fluid">
+    <div class="we_box">
+        <div class="container-fluid p-0 d-flex justify-content-between">
+            <span v-if="isRegisterRoute" class="text_title">
+                <font-awesome-icon :icon="['fas', 'user-plus']" />
+                <span class="mx-2">{{ $t('user.register') }}</span>
+            </span>
+            <span v-else class="text_title p-0 m-auto text-center">{{ $t("user.update") }}</span>
+        </div>
+        <div class="container-fluid px-0 py-3" v-if="isRegisterRoute">
+            <div class="row">
+                <div class="col-sm-3">
+                    <label class="form-label font_14">{{ $t('user.selectUserRole') }}</label>
+                    <select class="form-select" v-model="userSelectedRole" @change="onChangeUserRoleRegister">
+                        <option v-for="uRole in userRole" :key="uRole.codeValue" :value="uRole.codeValue">
+                            {{ uRole.codeValueDesc }}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3" v-if="!isRegisterStudent">
+                    <label class="form-label font_14">{{ $t('user.selectTeacherRole') }}</label>
+                    <select class="form-select" v-model="teacherSelectedRole" @change="onChangeUserRoleRegister">
+                        <option v-for="teacherRole in teacherRoleList" :key="teacherRole.codeValue" :value="teacherRole.codeValue">
+                            {{ teacherRole.codeValueDesc }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 we_box">
+        <!-- User Information -->
+        <div class="container-fluid">
+            <div class="row mt-4">
+                <div :class="customRowClass">
+                    <label :class="customFormClass">{{ $t('user.firstName') }}</label>
+                    <InputText :invalid="userInfoCheckFields.firstName" v-model="userInfo.firstName" @keyup="checkUserRequireFields" />
+                </div>
+                <div :class="customRowClass">
+                    <label :class="customFormClass">{{ $t('user.lastName') }}</label>
+                    <InputText :invalid="userInfoCheckFields.lastName" v-model="userInfo.lastName" @keyup="checkUserRequireFields" />
+                </div>
+                <div :class="customRowClass">
+                    <label :class="customFormClass">{{ $t('user.nickName') }}</label>
+                    <InputText v-model="userInfo.nickName" />
+                </div>
+                <div :class="customRowClass">
+                    <label :class="customFormClass">{{ $t('user.gender') }}</label><br>
+                    <input type="radio" v-model="userInfo.gender" class="form-check-input" value="M"> Male
+                    <input type="radio" v-model="userInfo.gender" class="form-check-input" value="F"> Female
+                </div>
+                <div :class="customRowClass">
+                    <label :class="customFormClass">{{ $t('user.dateOfBirth') }}</label>
+                    <Calendar :invalid="userInfoCheckFields.dateOfBirth" v-model="userInfo.dateOfBirth" dateFormat="yy-mm-dd" @blur="checkUserRequireFields" />
+                </div>
+                <div :class="customRowClass">
+                    <label :class="customFormClass">{{ $t('user.phone') }}</label>
+                    <InputText :invalid="userInfoCheckFields.phone" v-model="userInfo.phone" @keyup="checkUserRequireFields" />
+                </div>
+                <div :class="customRowClass">
+                    <label :class="customFormClass">{{ $t('user.email') }}</label>
+                    <InputText :invalid="userInfoCheckFields.email" v-model="userInfo.email" @keyup="checkUserRequireFields" />
+                </div>
+                <div :class="customRowClass">
+                    <label :class="customFormClass">{{ $t('user.placeOfBirth') }}</label>
+                    <Textarea :invalid="userInfoCheckFields.placeOfBirth" v-model="userInfo.placeOfBirth" rows="5" cols="30" @keyup="checkUserRequireFields" />
+                </div>
+                <div :class="customRowClass">
+                    <label :class="customFormClass">{{ $t('user.address') }}</label>
+                    <Textarea :invalid="userInfoCheckFields.address" v-model="userInfo.address" rows="5" cols="30" @keyup="checkUserRequireFields" />
+                </div>
+                <div :class="customRowClass" v-if="isRegisterStudent">
+                    <label :class="customFormClass">{{ $t('class.selectClass') }}</label>
+                    <select class="form-select" v-model="userInfo.classInfoID" >
+                        <option v-for="classInfo in classList" :key="classInfo.classInfoID" :value="classInfo.classInfoID">
+                            {{ classInfo.className }} ឆ្នាំទី​ {{ classInfo.year }} ឆមាសទី {{ classInfo.semester }}
+                        </option>
+                    </select>
+                </div>
+                <div :class="customRowClass" v-else>
+                    <label :class="customFormClass">{{ $t('class.selectDepartment') }}</label>
+                    <select class="form-select" v-model="userInfo.departmentID" >
+                        <option v-for="department in departmentList" :key="department.departmentID" :value="department.departmentID">
+                            {{ department.departmentName }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Teacher Qualify List -->
+            <div class="col-12" v-if="!isRegisterStudent">
+                <h5 class="mt-4">{{ $t('user.qualDetail') }}</h5>
+                <hr>
+                <!-- Qualify List -->
+                <div class="row">
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">{{ $t('user.qualName') }}</label>
+                        <InputText v-model="qualificationInfo.qualificationName" :invalid="qualCheckFields.qualificationName" @keyup="checkQualRequireFields" />
+                    </div>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">{{ $t('user.qualDesc') }}</label>
+                        <InputText v-model="qualificationInfo.qualificationDesc" />
+                    </div>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">{{ $t('user.startDate') }}</label>
+                        <Calendar v-model="qualificationInfo.startDate" dateFormat="yy-mm-dd" :invalid="qualCheckFields.startDate" @blur="checkQualRequireFields"/>
+                    </div>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">{{ $t('user.endDate') }}</label>
+                        <Calendar v-model="qualificationInfo.endDate" dateFormat="yy-mm-dd" :invalid="qualCheckFields.endDate" @blur="checkQualRequireFields"/>
+                    </div>
+                    <div :class="customRowClass">
+                        <label :class="customFormClass">{{ $t('user.certificatedDate') }}</label>
+                        <Calendar v-model="qualificationInfo.certificatedDate" dateFormat="yy-mm-dd" :invalid="qualCheckFields.certificatedDate"  @blur="checkQualRequireFields" />
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 col-xl-3">
+                            <button class="btn btn-info w-100 mt-3" @click="addQualificationToList">
+                                <span class="mx-2">{{ $t('user.addQual') }}</span>
+                                <font-awesome-icon :icon="['fa', 'plus']" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="we_shadow">
+                            <DataTable 
+                                v-if="!isInvalidQualificationList" 
+                                v-model:selection="qualificationInfo"
+                                :value="qualificationList">
+                                <Column field="seqNo" :header="$t('common.no')" :class="customNoClass"></Column>
+                                <Column field="qualificationName" :header="$t('user.qualName')"></Column>
+                                <Column field="qualificationDesc" :header="$t('user.qualDesc')"></Column>
+                                <Column field="startDate" :header="$t('user.startDate')"></Column>
+                                <Column field="endDate" :header="$t('user.endDate')"></Column>
+                                <Column field="certificatedDate" :header="$t('user.certificatedDate')"></Column>
+                                <Column :header="$t('action.edit')" class="text-center">
+                                    <template #body="{ data }">
+                                        <font-awesome-icon style="cursor: pointer;" @click="onClickEditQualification(data)"
+                                            icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;
+                                        <font-awesome-icon style="cursor: pointer;" @click="onClickDeleteQualification(data)"
+                                            icon="fa-solid fa-trash" class=" text-danger" title="Delete" />
+                                    </template>
+                                </Column>
+                            </DataTable>
+                            <table v-else>
+                                <thead>
+                                    <tr class="text-capitalize">
+                                        <th class="we_text_color">{{ $t('common.no') }}</th>
+                                        <th class="we_text_color">{{ $t('user.qualName') }}</th>
+                                        <th class="we_text_color">{{ $t('user.qualDesc') }}</th>
+                                        <th class="we_text_color">{{ $t('user.startDate') }}</th>
+                                        <th class="we_text_color">{{ $t('user.endDate') }}</th>
+                                        <th class="we_text_color">{{ $t('user.certificatedDate') }}</th>
+                                        <th class="we_text_color">{{ $t('action.edit') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="7" class="text-danger">{{ $t('common.noData') }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12" v-else>
+                <!-- Student parent list -->
+                <div class="col-12">
+                    <h5 class="mt-4">{{ $t('user.parentDetail') }}</h5>
+                    <hr>
+                    <fieldset class="border rounded-3 pb-2">
+                        <legend class="float-none w-auto m_left20 px-2 h5">{{ $t('user.father') }}</legend>
+                        <div class="row  m-0">
+                            <div :class="customRowClass">
+                                <label :class="customFormClass">{{ $t('user.firstName') }}</label>
+                                <InputText :invalid="fatherCheckFields.firstName" v-model="fatherInfo.firstName" @keyup="checkFatherInfoRequireFields" />
+                            </div>
+                            <div :class="customRowClass">
+                                <label :class="customFormClass">{{ $t('user.lastName') }}</label>
+                                <InputText :invalid="fatherCheckFields.lastName" v-model="fatherInfo.lastName" @keyup="checkFatherInfoRequireFields" />
+                            </div>
+                            <div :class="customRowClass">
+                                <label :class="customFormClass">{{ $t('user.job') }}</label>
+                                <InputText v-model="fatherInfo.job" />
+                            </div>
+                            <div :class="customRowClass">
+                                <label :class="customFormClass">{{ $t('user.phone') }}</label>
+                                <InputText :invalid="fatherCheckFields.phone" v-model="fatherInfo.phone" @keyup="checkFatherInfoRequireFields" />
+                            </div>
+                            <div :class="customRowClass">
+                                <label :class="customFormClass">{{ $t('user.address') }}</label>
+                                <Textarea v-model="fatherInfo.address" rows="5" cols="30" />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="border rounded-3 mt-3 pb-2">
+                        <legend class="float-none w-auto m_left20 px-2 h5">{{ $t('user.mother') }}</legend>
+                        <div class="row  m-0">
+                            <div :class="customRowClass">
+                                <label :class="customFormClass">{{ $t('user.firstName') }}</label>
+                                <InputText :invalid="motherCheckFields.firstName" v-model="motherInfo.firstName" @keyup="checkMotherInfoRequireFields" />
+                            </div>
+                            <div :class="customRowClass">
+                                <label :class="customFormClass">{{ $t('user.lastName') }}</label>
+                                <InputText :invalid="motherCheckFields.lastName" v-model="motherInfo.lastName" @keyup="checkMotherInfoRequireFields" />
+                            </div>
+                            <div :class="customRowClass">
+                                <label :class="customFormClass">{{ $t('user.job') }}</label>
+                                <InputText v-model="motherInfo.job" />
+                            </div>
+                            <div :class="customRowClass">
+                                <label :class="customFormClass">{{ $t('user.phone') }}</label>
+                                <InputText :invalid="motherCheckFields.phone" v-model="motherInfo.phone" @keyup="checkMotherInfoRequireFields" />
+                            </div>
+                            <div :class="customRowClass">
+                                <label :class="customFormClass">{{ $t('user.address') }}</label>
+                                <Textarea v-model="motherInfo.address" rows="5" cols="30" />
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <!--Student Academic List -->
+                <div class="col-12">
+                    <h5 class="mt-4">{{ $t('user.academicDetail') }}</h5>
+                    <hr>
+                    <fieldset class="border rounded-3 pb-2">
+                        <legend class="float-none w-auto m_left20 px-2 h5">{{ $t('user.academic') }}</legend>
+                        <div class="row m-0">
+                            <div :class="customRowClass">
+                                <label :class="customFormClass">{{ $t('user.academicName') }}</label>
+                                <InputText v-model="academicInfo.academicName" :invalid="academicCheckFields.academicName" @keyup="checkAcademicRequireFields" />
+                            </div>
+                            <div :class="customRowClass">
+                                <label :class="customFormClass">{{ $t('user.academicDesc') }}</label>
+                                <InputText v-model="academicInfo.academicDesc" />
+                            </div>
+                            <div :class="customRowClass">
+                                <label :class="customFormClass">{{ $t('user.startDate') }}</label>
+                                <Calendar v-model="academicInfo.startDate" :invalid="academicCheckFields.startDate" @blur="checkAcademicRequireFields" dateFormat="yy-mm-dd" />
+                            </div>
+                            <div :class="customRowClass">
+                                <label :class="customFormClass">{{ $t('user.endDate') }}</label>
+                                <Calendar v-model="academicInfo.endDate" :invalid="academicCheckFields.endDate" @blur="checkAcademicRequireFields" dateFormat="yy-mm-dd" />
+                            </div>
+                            <div :class="customRowClass">
+                                <label :class="customFormClass">{{ $t('user.certificatedDate') }}</label>
+                                <Calendar v-model="academicInfo.certificatedDate" :invalid="academicCheckFields.certificatedDate" @blur="checkAcademicRequireFields" dateFormat="yy-mm-dd" />
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6 col-xl-3">
+                                    <button class="btn btn-info w-100 mt-3" @click="addAcademicToList">
+                                        <span class="mx-2">{{ $t('user.addAcademic') }}</span>
+                                        <font-awesome-icon :icon="['fa', 'plus']" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="we_shadow">
+                                <DataTable 
+                                    v-if="!isInvalidAcademicList" 
+                                    v-model:selection="academicInfo"
+                                    :value="studentAcademicList">
+                                    <Column field="seqNo" :header="$t('common.no')" :class="customNoClass"></Column>
+                                    <Column field="academicName" :header="$t('user.academicName')"></Column>
+                                    <Column field="academicDesc" :header="$t('user.academicDesc')"></Column>
+                                    <Column field="startDate" :header="$t('user.startDate')"></Column>
+                                    <Column field="endDate" :header="$t('user.endDate')"></Column>
+                                    <Column field="certificatedDate" :header="$t('user.certificatedDate')"></Column>
+                                    <Column :header="$t('action.edit')" class="text-center">
+                                        <template #body="{ data }">
+                                            <font-awesome-icon style="cursor: pointer;" @click="onClickEditAcademic(data)"
+                                                icon="fas fa-pencil" class="text-primary" :title="$t('action.edit')" />
+                                            <font-awesome-icon style="cursor: pointer;" @click="onClickDeleteAcademic(data)"
+                                                icon="fa-solid fa-trash" class="mx-2 text-danger" :title="$t('action.delete')" />
+                                        </template>
+                                    </Column>
+                                </DataTable>
+                                <table v-else>
+                                    <thead>
+                                        <tr class="text-capitalize text-center">
+                                            <th class="we_text_color">{{ $t('common.no') }}</th>
+                                            <th class="we_text_color">{{ $t('user.academicName') }}</th>
+                                            <th class="we_text_color">{{ $t('user.academicDesc') }}</th>
+                                            <th class="we_text_color">{{ $t('user.startDate') }}</th>
+                                            <th class="we_text_color">{{ $t('user.endDate') }}</th>
+                                            <th class="we_text_color">{{ $t('user.certificatedDate') }}</th>
+                                            <th class="we_text_color">{{ $t('action.edit') }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="7" class="text-danger">{{ $t('common.noData') }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div :class="isRegisterRoute ? 'col-md-3' : 'col-md-10'">
+                <span v-if="!isRegisterRoute">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button class="btn btn-success w-100" @click="onClickUpdateUser">{{ $t('common.update') }}</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-info" @click="backToList">{{ $t('common.backToList') }}</button>
+                        </div>
+                    </div>
+                </span>
+                <span v-else>
+                    <button v-if="isRegisterStudent" class="btn btn-success w-100" @click="studentRegister">{{ $t('common.save') }}</button>
+                    <button v-else class="btn btn-success w-100" @click="teacherRegister">{{ $t('common.save') }}</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,7 @@ import router from './router';
 import PopupService from './shared/services/popup.service';
 import { DateFormat } from './shared/services/date-time';
 import { ConvertCode } from './shared/services/code-convert';
+import { PhoneNumberFormat } from './shared/services/phone-number';
 import Utils from './shared/util';
 
 /* Global Style */
@@ -133,21 +134,46 @@ import VirtualScroller from 'primevue/virtualscroller';
 /* Font awesome */
 import {
         faArrowRightFromBracket,
+        faArrowRotateLeft,
         faBars,
         faBarsProgress,
         faBell,
+        faBookOpen,
+        faBoxArchive,
+        faBuilding,
+        faCalendarDays,
+        faCaretRight,
+        faChevronDown,
         faChevronRight,
+        faCircleRight,
+        faEye,
+        faEyeSlash,
+        faFileExcel,
         faGear,
+        faHouse,
         faHouseUser,
+        faLandmark,
         faLayerGroup,
         faListOl,
         faMessage,
+        faPencil,
         faPhone,
+        faPlus,
         faRegistered,
         faRightToBracket,
+        faRotateBack,
+        faRotateLeft,
         faSchool,
         faShieldHalved,
-        faUser
+        faShop,
+        faTrash,
+        faUser,
+        faUserGraduate,
+        faUsers,
+        faX,
+        faXmark,
+        faUserPlus,
+        faMedal,
 } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
         library.add(faPhone); 
@@ -162,10 +188,37 @@ import { library } from '@fortawesome/fontawesome-svg-core';
         library.add(faGear); 
         library.add(faArrowRightFromBracket); 
         library.add(faLayerGroup); 
+        library.add(faPlus); 
         library.add(faListOl); 
-        library.add(faChevronRight); 
+        library.add(faChevronRight);
+        library.add(faHouse); 
+        library.add(faFileExcel);
+        library.add(faBuilding);
+        library.add(faPencil);
+        library.add(faCalendarDays);
+        library.add(faTrash);
         library.add(faBars); 
         library.add(faMessage); 
+        library.add(faXmark); 
+        library.add(faEye); 
+        library.add(faUser); 
+        library.add(faChevronDown); 
+        library.add(faEyeSlash); 
+        library.add(faRotateBack); 
+        library.add(faArrowRotateLeft); 
+        library.add(faRotateLeft); 
+        library.add(faShop); 
+        library.add(faX); 
+        library.add(faUserGraduate); 
+        library.add(faBookOpen); 
+        library.add(faCaretRight); 
+        library.add(faUsers); 
+        library.add(faBoxArchive); 
+        library.add(faCalendarDays); 
+        library.add(faLandmark); 
+        library.add(faCircleRight);
+        library.add(faUserPlus);
+        library.add(faMedal);
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 //ionic
@@ -179,9 +232,6 @@ const pinia = createPinia();
 const app = createApp(App)
         .use(i18n)
         .use(pinia).use(IonicVue)
-        .use(router)
-        .use(ConfirmationService)
-        .use(ToastService)
         .use(PrimeVue, { ripple: true  })
         .use(ConfirmationService)
         .use(ToastService)
@@ -197,6 +247,7 @@ app.component("font-awesome-icon", FontAwesomeIcon)
 app.config.globalProperties.$format = new DateFormat();
 app.config.globalProperties.$popupService = new PopupService();
 app.config.globalProperties.$codeConverter = new ConvertCode();
+app.config.globalProperties.$phoneNumberFormater = new PhoneNumberFormat();
 app.config.globalProperties.$util = new Utils();
 
 

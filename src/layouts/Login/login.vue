@@ -1,13 +1,16 @@
 <template src="./login.html"></template>
 
 <script lang="ts">
-import { UserInfo } from '@/shared/types/user-type';
+import { UserInfo, userLoginRes, userLoginResData } from '@/shared/types/user-type';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { defineComponent } from 'vue';
-import { LoginService } from './LoginService';
+import { RequestService } from '@/shared/services/request-service';
+import { API_PATH } from '@/shared/common/api-path';
+
+const requestService = new RequestService();
 
 export default defineComponent({
-    name: "Dashboard",
+    name: "login",
     components: {
         FontAwesomeIcon,
     },
@@ -15,48 +18,42 @@ export default defineComponent({
     data() {
         return {
             userLogin: {
-                roleID: '',
-                username: '',
+                userID: '',
                 password: ''
             } as UserInfo,
-            userMockList: [] as UserInfo[]
+            userMockList: [] as UserInfo[],
+            userResInfo: {} as userLoginResData,
+            userRole: ''
         }
     },
 
     computed:{
         isValidForm() : boolean {
-            return this.userLogin.username !== ''
+            return this.userLogin.userID !== ''
                 && this.userLogin.password !== ''
         }
     },
 
-    mounted() {
-        this.getUserMockList();
-    },
-
     methods: {
-        getUserMockList(){
-            this.userMockList = LoginService.getUserMockList();
-        },
-
-        onClickLogin(){
-            let isAuthenticated = false;
-            let role= '' as string;
-            this.userMockList.forEach(user => {
-                if (user.username === this.userLogin.username && user.password === this.userLogin.password) {
-                    isAuthenticated = true;
-                    role = user?.roleID
-                    this.$util.setDataStorage('userInfo',this.userLogin,true)
+        async onClickLoginServer(){
+            if(this.isValidForm){
+                const reqBody = {
+                    ...this.userLogin
                 }
-            });
-
-            if(isAuthenticated){
-                if(role === 'admin'){
-                    this.$router.push('/admin-dashboard');
-                }else if(role === 'teacher'){
-                    this.$router.push('/teacher-dashboard');
-                }else{
-                    this.$router.push('/student-dashboard');
+                const res = (await requestService.request(API_PATH.USER_LOGIN, reqBody, false, true)) as userLoginRes
+                if(res.header.result){
+                    this.userResInfo = res.body
+                    this.userResInfo ={
+                        ...this.userResInfo,
+                        loginSessionID: res.header.login_session_id
+                    }
+                    this.$util.setDataStorage('userInfo', this.userResInfo,true)
+                    this.$util.setDataStorage('isAuthenticated',true , true)
+                    if(this.userResInfo.loginByUserYn === 'Y'){
+                        this.$router.push('/admin-dashboard')
+                    }else{
+                        this.$router.push('/change-password')
+                    }
                 }
             }
         }
@@ -65,5 +62,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-    @import "./login.scss";
+    // @import "./login.scss";
 </style>

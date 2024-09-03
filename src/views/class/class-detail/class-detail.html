@@ -1,0 +1,69 @@
+<div class="popup">
+    <div class="popWrap w90p">
+        <div class="pop_head">
+            <h1 class="text-center text-primary">{{ $t('class.classDetail') }}</h1>
+        </div>
+        <div class="pop_cont">
+            <div class="cont">
+                <TabView>
+                    <!-- Subject List Details Tab -->
+                    <TabPanel :header="$t('class.subjectList')">
+                        <DataTable v-if="classInfo && classInfo.length > 0" :value="classInfo" stripedRows>
+                            <Column field="no" :header="$t('common.no')" :body="indexTemplate" class="text-center" />
+                            <Column field="subjectName" :header="$t('subject.subjectName')" />
+                            <Column field="subjectDesc" :header="$t('subject.subjectDesc')" />
+                        </DataTable>
+                        <table v-else>
+                            <tr rowspan="3">
+                                <th class="text-danger">{{ $t('common.noData') }}</th>
+                            </tr>
+                        </table>
+                    </TabPanel>
+                    <!-- Student List Details Tab -->
+                    <TabPanel :header="$t('class.studentList')">
+                        <DataTable 
+                            v-if="studentInfo && studentInfo.length > 0" 
+                            :value="studentInfo" 
+                            stripedRows
+                        >
+                            <Column field="no" :header="$t('common.no')" class="text-center"  />
+                            <Column field="studentID" :header="$t('user.studentID')" />
+                            <Column field="fullName" :header="$t('user.name')" />
+                            <Column field="gender" :header="$t('user.gender')" />
+                            <Column field="dateOfBirth" :header="$t('user.dateOfBirth')">
+                                <template #body="{ data }">
+                                    {{ $format.formatDateTime(data.dateOfBirth,'yyyy-mm-dd') }}
+                                </template>
+                            </Column>
+                            <Column :header="$t('user.phone')">
+                                <template #body="{ data }">
+                                    {{ $phoneNumberFormater.formatPhoneNumber(data.phoneNumber) }}
+                                </template>
+                            </Column>
+                            <Column field="status" :header="$t('common.status')" />
+                            <Column :header="$t('action.action')">
+                                <template #body="{ data }">
+                                    <div class="d-flex justify-content-center">
+                                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+                                    </div>
+                                </template>
+                            </Column>
+                        </DataTable>
+                        <table v-else>
+                            <tr rowspan="7">
+                                <th class="text-danger">{{ $t('common.noData') }}</th>
+                            </tr>
+                        </table>
+                    </TabPanel>
+                </TabView>
+            </div>
+        </div>
+        <div class="pop_foot">
+            <div class="footer_btn">
+                <div class="right_side">
+                    <button class="btn03" @click="handleClose"><span>{{ $t('common.close') }}</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

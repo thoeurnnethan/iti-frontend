@@ -26,18 +26,5 @@ export type MonthSign = 'long' | 'short';
 export type formatDateTime = 'Time' | 'Date' | 'DateTime';
 export type FormatList = 'Minize' | 'Slash' | 'Dot';
 export type FormatStyle = 'FullMonth' | 'Number' | 'ShortMonth';
-export type currencyCode = 'USD' | 'KHR' | 'KRW' | 'VND' | 'EUR' | 'THB' | 'JPY' | 'CNY' | 'SGD';
 
-export type ColumnType = 'date' | 'USD' | 'KHR';
 
-export type toastType = 'danger' | 'success' | 'info' | 'warning';
-
-export type roleType =
-    | 'Viewer'
-    | 'Maker'
-    | 'Checker'
-    | 'Authorizer'
-    | 'FinalAuthorizer'
-    | 'Both'
-    | 'STP'
-    | 'Admin';

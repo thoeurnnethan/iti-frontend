@@ -18,13 +18,28 @@ export default defineComponent({
     data() {
         return {
             language: localStorage.getItem('lang') || 'en',
+            isAuthenticated: this.$util.getDataStorage('isAuthenticated', true)
         };
+    },
+
+    beforeMount(){
+        if(this.isAuthenticated === false || this.isAuthenticated === undefined){
+            this.$router.push('/')
+        }else if(this.isAuthenticated === true){
+            this.$router.push('admin-dashboard')
+        }
+
     },
 
     watch: {
         language(newLanguage) {
             i18n.locale = newLanguage;
         },
+        isAthenticated(newValue){
+            if(newValue === false){
+                this.$router.push('/')
+            }
+        }
     },
 })
 </script>

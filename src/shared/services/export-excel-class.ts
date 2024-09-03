@@ -4,11 +4,11 @@ import { ExportSheet } from "@/shared/types/export-excel.type";
 export class ExportExcel {
   exportSheet(exportData: ExportSheet[], fileName?: string) {
     const cellColor = {
-      fill: { fgColor: { rgb: "1e81c6" } },
+      fill: { fgColor: { rgb: "3dc2ff" } },
     };
 
     const headerColor = {
-      font: { sz: 13, color: { rgb: "ffffff" }, bold: true },
+      font: { sz: 13, color: { rgb: "00000" }, bold: true },
     };
 
     const cellBorder = {

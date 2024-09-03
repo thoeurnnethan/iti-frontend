@@ -1,47 +1,80 @@
 <div class="popup">
-    <div class="popWrap w920">
+    <div class="popWrap w70p">
         <div class="pop_head">
-            <h1 class="text-center text-primary">Department Information</h1>
-            <!-- <button class="btn_pop_close" @click="handleClose">Close</button> -->
+            <h1 class="text-center text-primary">{{ $t('department.detail') }}</h1>
         </div>
         <div class="pop_cont">
             <div class="cont">
-                <div class="dlist05 type02 p-2">
-                    <dl>
-                        <dt>Department ID</dt>
-                        <dd>{{ departmentInfo.departmentID }}</dd>
-                    </dl>
-                    <dl>
-                        <dt>Department Name</dt>
-                        <dd>{{ departmentInfo.departmentName }}</dd>
-                    </dl>
-                    <dl>
-                        <dt>Department Description</dt>
-                        <dd>{{ departmentInfo.departmentDesc }}</dd>
-                    </dl>
-                    <dl>
-                        <dt>Department Manager</dt>
-                        <dd>{{ departmentInfo.firstName }}-{{ departmentInfo.lastName}}</dd>
-                    </dl>
-                    <dl>
-                        <dt>Department Status</dt>
-                        <dd>{{ $codeConverter.codeToString(statusCodeList,departmentInfo.statusCode) }}</dd>
-                    </dl>
-                    <dl>
-                        <dt>First Register Date</dt>
-                        <dd>{{ $format.formatDateTime(department.firstRegisterDate,'yyyy-mm-dd') }}</dd>
-                    </dl>
-                    <dl>
-                        <dt>Last Change Date</dt>
-                        <dd>{{ $format.formatDateTime(department.lastChangeDate,'yyyy-mm-dd') }}</dd>
-                    </dl>
-                </div>
+                <TabView>
+                    <!-- Subject List Details Tab -->
+                    <TabPanel :header="$t('department.detail')">
+                        <div class="dlist05 type02 p-2" v-if="departmentInfo != ''">
+                            <dl>
+                                <dt>{{ $t('department.depID') }}</dt>
+                                <dd>{{ departmentInfo.departmentID }}</dd>
+                            </dl>
+                            <dl>
+                                <dt>{{ $t('department.depName') }}</dt>
+                                <dd>{{ departmentInfo.departmentName }}</dd>
+                            </dl>
+                            <dl>
+                                <dt>{{ $t('department.depDesc') }}</dt>
+                                <dd>{{ departmentInfo.departmentDesc }}</dd>
+                            </dl>
+                            <dl>
+                                <dt>{{ $t('department.depManager') }}</dt>
+                                <dd>{{ departmentInfo.firstName }}-{{ departmentInfo.lastName}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>{{ $t('department.statusCode') }}</dt>
+                                <dd>{{ $codeConverter.codeToString(statusCodeList,departmentInfo.statusCode, 'statusCode') }}</dd>
+                            </dl>
+                            <dl>
+                                <dt>{{ $t('department.firstRegisterDate') }}</dt>
+                                <dd>{{ $format.formatDateTime(department.firstRegisterDate,'yyyy-mm-dd') }}</dd>
+                            </dl>
+                            <dl>
+                                <dt>{{ $t('department.lastChangeDate') }}</dt>
+                                <dd>{{ $format.formatDateTime(department.lastChangeDate,'yyyy-mm-dd') }}</dd>
+                            </dl>
+                        </div>
+                        <table v-else>
+                            <tr rowspan="3">
+                                <th>{{ $t('common.noData') }}</th>
+                            </tr>
+                        </table>
+                    </TabPanel>
+                    <!-- Student List Details Tab -->
+                    <TabPanel :header="$t('department.teacherList')">
+                        <DataTable 
+                            v-if="departmentMemberInfo && departmentMemberInfo.length > 0" 
+                            :value="departmentMemberInfo" 
+                            stripedRows
+                        >
+                            <Column field="no" :header="$t('common.no')" class="text-center"/>
+                            <Column field="teacherID" :header="$t('user.teacherID')" />
+                            <Column field="fullName" :header="$t('user.name')" />
+                            <Column field="gender" :header="$t('user.gender')" />
+                            <Column field="roleID" :header="$t('user.role')" />
+                            <Column :header="$t('action.action')">
+                                <template #body="{ data }">
+                                    <div class="d-flex justify-content-center">
+                                        <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
+                                    </div>
+                                </template>
+                            </Column>
+                        </DataTable>
+                        <table v-else>
+                            <tr> <th>{{ $t('common.noData') }}</th> </tr>
+                        </table>
+                    </TabPanel>
+                </TabView>
             </div>
         </div>
         <div class="pop_foot">
             <div class="footer_btn">
                 <div class="right_side">
-                    <button class="btn03" @click="handleClose"><span>Close</span></button>
+                    <button class="btn03" @click="handleClose"><span>{{ $t('common.close') }}</span></button>
                 </div>
             </div>
         </div>
