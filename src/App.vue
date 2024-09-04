@@ -7,7 +7,6 @@
 <script lang="ts">
 import { IonApp } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import i18n from './i18n';
 
 export default defineComponent({
     name: 'App',
@@ -33,7 +32,7 @@ export default defineComponent({
 
     watch: {
         language(newLanguage) {
-            i18n.locale = newLanguage;
+            this.$i18n.locale = newLanguage;
         },
         isAthenticated(newValue){
             if(newValue === false){

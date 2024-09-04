@@ -9,7 +9,7 @@
                     <!-- Subject List Details Tab -->
                     <TabPanel :header="$t('class.subjectList')">
                         <DataTable v-if="classInfo && classInfo.length > 0" :value="classInfo" stripedRows>
-                            <Column field="no" :header="$t('common.no')" :body="indexTemplate" class="text-center" />
+                            <Column field="no" :header="$t('common.no')" class="text-center" />
                             <Column field="subjectName" :header="$t('subject.subjectName')" />
                             <Column field="subjectDesc" :header="$t('subject.subjectDesc')" />
                         </DataTable>
@@ -29,7 +29,11 @@
                             <Column field="no" :header="$t('common.no')" class="text-center"  />
                             <Column field="studentID" :header="$t('user.studentID')" />
                             <Column field="fullName" :header="$t('user.name')" />
-                            <Column field="gender" :header="$t('user.gender')" />
+                            <Column field="gender" :header="$t('user.gender')">
+                                <template #body="{ data }">
+                                    {{ $codeConverter.codeToString(genderCodeList, data.gender, 'genderCode')}}
+                                </template>
+                            </Column>
                             <Column field="dateOfBirth" :header="$t('user.dateOfBirth')">
                                 <template #body="{ data }">
                                     {{ $format.formatDateTime(data.dateOfBirth,'yyyy-mm-dd') }}

@@ -315,7 +315,7 @@ export default defineComponent({
 
             // Check if the qualification is valid before adding/updating
             if (!this.isValidQualification) {
-                this.checkQualSpecificErrorFields();
+                this.checkQualSpecificErrorFields
                 return;
             }
 
@@ -479,7 +479,6 @@ export default defineComponent({
                 searchKey: '',
                 year: '',
                 semester: '',
-                generation: '',
                 pageSize: 1000,
                 pageNumber:  1
             }

@@ -204,7 +204,6 @@ export default defineComponent({
 })
 </script>
 
-
 <style scoped>
-@import url('./subject-list.scss');
+/* @import url('./subject-list.scss'); */
 </style>

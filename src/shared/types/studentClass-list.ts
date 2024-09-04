@@ -1,6 +1,6 @@
 
 export interface STUDENT_CLASS_LIST {
-    classID?: string
+    classID: string
     classYear?: string
     semester?: string
     generation?: string

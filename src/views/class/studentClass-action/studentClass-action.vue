@@ -2,7 +2,6 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { STUDENT_CLASS_LIST } from '@/shared/types/studentClass-list';
 import { TEACHER_RES } from '@/shared/types/user-list';
 import { CLASS_LIST, CLASS_LIST_RES } from '@/shared/types/class-list';
 import { API_PATH } from '@/shared/common/api-path';
@@ -22,10 +21,6 @@ export default defineComponent({
     },
     data() {
         return {
-            studentClassInfo: {
-                classID: '',
-                studentID: '',
-            } as STUDENT_CLASS_LIST,
             classList: [] as CLASS_LIST[],
             genderCodeList: GenderCodeList,
             statusCodeList: globalStatusCodeList,
@@ -48,13 +43,12 @@ export default defineComponent({
             }
             const query = this.searchQuery.toLowerCase();
             return this.studentList.filter(student =>
-                student.fullName.toLowerCase().includes(query) ||
+                student.firstName.toLowerCase().includes(query) ||
                 student.gender.toLowerCase().includes(query) ||
                 student.dateOfBirth.toLowerCase().includes(query) ||
                 student.phone.toLowerCase().includes(query)
             );
         },
-        // Students not in the class (to be displayed in the first table)
         studentsNotInClass() {
             const classStudentIDs = new Set(this.classList.map(student => student.studentID));
             return this.filteredStudentList.filter(student => !classStudentIDs.has(student.specificID));
