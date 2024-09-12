@@ -80,10 +80,15 @@ export default defineComponent({
                         }],
                     };
 
-                    await requestService.request(API_PATH.TEACHER_DEPARTMENT_UPDATE, reqBody, false) as TEACHER_DEPARTMENT_LIST;
-                    this.departmentMemberInfo
+                    const res = await requestService.request(API_PATH.TEACHER_DEPARTMENT_UPDATE, reqBody, false) as any;
+                    this.departmentMemberInfo = res.body.teacherList.map((member: { firstName: any; lastName: any, gender: any, roleID: any }, index: number) => ({
+                        ...member,
+                        fullName: `${member.firstName} ${member.lastName}`,
+                        no: index + 1,
+                        gender: this.$codeConverter.codeToString(this.GenderCodeList, member.gender),
+                        roleID: this.$codeConverter.codeToString(this.UserRoleList, member.roleID),
+                    }));
                     this.$toast.add({ summary: 'Confirmed', detail: messageAcceptDetail, life: 1000 });
-                    modalController.dismiss();
                 },
                 reject: () => {
                     this.$toast.add({ severity: 'error', summary: 'Rejected', detail: messageRejectDetail, life: 1000 });
