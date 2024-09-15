@@ -90,7 +90,7 @@ export default defineComponent({
                         return {
                             no: index + 1,
                             fullName: `${data.firstName} ${data.lastName}`,
-                            status: this.$codeConverter.codeToString(this.statusCodeList, data.statusCode || '', 'statusCode'),
+                            status: this.$codeConverter.codeToString(this.statusCodeList, data.statusCode || '', 'statusCode'), 
                             ...data
                         }
                     })

@@ -34,11 +34,7 @@
                                     {{ $codeConverter.codeToString(genderCodeList, data.gender, 'genderCode')}}
                                 </template>
                             </Column>
-                            <Column field="dateOfBirth" :header="$t('user.dateOfBirth')">
-                                <template #body="{ data }">
-                                    {{ $format.formatDateTime(data.dateOfBirth,'yyyy-mm-dd') }}
-                                </template>
-                            </Column>
+                            <Column field="dateOfBirth" :header="$t('user.dateOfBirth')"/>
                             <Column :header="$t('user.phone')">
                                 <template #body="{ data }">
                                     {{ $phoneNumberFormater.formatPhoneNumber(data.phoneNumber) }}
