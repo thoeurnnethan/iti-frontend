@@ -9,7 +9,7 @@ export interface STUDENT_CLASS_LIST {
     studentID?: string
     firstName?: string
     lastName?: string
-    dateOfBirth?: string
+    dateOfBirth: string
     gender?: string
     phoneNumber?: string
     statusCode?: string

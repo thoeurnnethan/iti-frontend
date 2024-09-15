@@ -138,9 +138,9 @@ export default defineComponent({
         async onClickRow() {
             const body_1 = {
                 classID: this.classInfo?.classID,
-                classYear: this.classInfo?.year,
-                semester: this.classInfo?.semester,
-            };
+                classYear: this.classInfo?.year, 
+                semester: this.classInfo?.semester, 
+            }; 
             const responseSubject = await requestService.request(API_PATH.SUBJECT_LIST, body_1, false);
 
             const body_2 = {
@@ -148,14 +148,28 @@ export default defineComponent({
             };
             const responseStudent = await requestService.request(API_PATH.STUDENT_CLASS_LIST, body_2, false);
 
+            // Format the dateOfBirth in studentList
+            const formattedStudentList = responseStudent.body.studentList.map(student => {
+                const formattedDate = student.dateOfBirth ? 
+                    `${student.dateOfBirth.slice(0, 4)}-${student.dateOfBirth.slice(4, 6)}-${student.dateOfBirth.slice(6, 8)}` 
+                    : null;
+                return {
+                    ...student,
+                    dateOfBirth: formattedDate // Set the formatted date
+                };
+            });
+
             this.$popupService.onOpen({
                 component: class_detail,
                 dataProp: {
                     subjectDetails: responseSubject.body.subjectList,
-                    studentDetails: responseStudent.body.studentList
-                }
-            })
+                    studentDetails: formattedStudentList  // Pass the formatted list
+                } 
+            });
+            console.log(formattedStudentList);
+            
         },
+
 
         onPage(event: { page: number; rows: number; }) {
             this.pageNumber = event.page;
