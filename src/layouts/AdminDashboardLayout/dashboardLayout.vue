@@ -114,6 +114,7 @@ export default defineComponent({
                     const res = await requestService.request(API_PATH.USER_LOGOUT, null, false, true);
                     if(res.header.result){
                         this.$util.removeDataStorage('userInfo', true)
+                        this.$util.removeDataStorage('lastRoute', true)
                         this.$util.removeDataStorage('isAuthenticated', true)
                         this.$router.push('/')
                     }else if(res.header.error_code === '401'){

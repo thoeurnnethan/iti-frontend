@@ -1,4 +1,7 @@
+import Utils from '@/shared/util';
 import { createRouter, createWebHistory } from 'vue-router'
+
+const util = new Utils();
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -81,6 +84,13 @@ const router = createRouter({
             ]
         },
     ]
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.path !== '/') {
+        util.setDataStorage('lastRoute', to.fullPath,true)
+    }
+    next();
 });
 
 export default router

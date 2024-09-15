@@ -136,9 +136,21 @@
                                 <Column field="seqNo" :header="$t('common.no')" :class="customNoClass"></Column>
                                 <Column field="qualificationName" :header="$t('user.qualName')"></Column>
                                 <Column field="qualificationDesc" :header="$t('user.qualDesc')"></Column>
-                                <Column field="startDate" :header="$t('user.startDate')"></Column>
-                                <Column field="endDate" :header="$t('user.endDate')"></Column>
-                                <Column field="certificatedDate" :header="$t('user.certificatedDate')"></Column>
+                                <Column :header="$t('user.startDate')">
+                                    <template #body="{ data }">
+                                        <span>{{ $format.formatDateTime(data.startDate, 'yyyy-mm-dd','Slash','FullMonth') }}</span>
+                                    </template>
+                                </Column>
+                                <Column :header="$t('user.endDate')">
+                                    <template #body="{ data }">
+                                        <span>{{ $format.formatDateTime(data.endDate, 'yyyy-mm-dd','Slash','FullMonth') }}</span>
+                                    </template>
+                                </Column>
+                                <Column :header="$t('user.certificatedDate')">
+                                    <template #body="{ data }">
+                                        <span>{{ $format.formatDateTime(data.certificatedDate, 'yyyy-mm-dd','Slash','FullMonth') }}</span>
+                                    </template>
+                                </Column>
                                 <Column :header="$t('action.edit')" class="text-center">
                                     <template #body="{ data }">
                                         <font-awesome-icon style="cursor: pointer;" @click="onClickEditQualification(data)"
@@ -273,9 +285,21 @@
                                     <Column field="seqNo" :header="$t('common.no')" :class="customNoClass"></Column>
                                     <Column field="academicName" :header="$t('user.academicName')"></Column>
                                     <Column field="academicDesc" :header="$t('user.academicDesc')"></Column>
-                                    <Column field="startDate" :header="$t('user.startDate')"></Column>
-                                    <Column field="endDate" :header="$t('user.endDate')"></Column>
-                                    <Column field="certificatedDate" :header="$t('user.certificatedDate')"></Column>
+                                    <Column :header="$t('user.startDate')">
+                                        <template #body="{ data }">
+                                            <span>{{ $format.formatDateTime(data.startDate, 'yyyy-mm-dd','Slash','FullMonth') }}</span>
+                                        </template>
+                                    </Column>
+                                    <Column :header="$t('user.endDate')">
+                                        <template #body="{ data }">
+                                            <span>{{ $format.formatDateTime(data.endDate, 'yyyy-mm-dd','Slash','FullMonth') }}</span>
+                                        </template>
+                                    </Column>
+                                    <Column :header="$t('user.certificatedDate')">
+                                        <template #body="{ data }">
+                                            <span>{{ $format.formatDateTime(data.certificatedDate, 'yyyy-mm-dd','Slash','FullMonth') }}</span>
+                                        </template>
+                                    </Column>
                                     <Column :header="$t('action.edit')" class="text-center">
                                         <template #body="{ data }">
                                             <font-awesome-icon style="cursor: pointer;" @click="onClickEditAcademic(data)"
@@ -308,7 +332,6 @@
                     </div>
                 </div>
             </div>
-            {{ studentAcademicList }}
         </div>
         <div class="row mt-5">
             {{ !isRegisterRoute }}

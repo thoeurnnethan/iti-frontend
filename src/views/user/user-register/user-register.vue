@@ -318,13 +318,12 @@ export default defineComponent({
                 this.checkQualSpecificErrorFields
                 return;
             }
-
             // Format the dates before updating the qualification
             const updatedQualification: QUALIFICATION_LIST = {
                 ...this.qualificationInfo,
-                startDate: this.formatDate(this.qualificationInfo.startDate),
-                endDate: this.formatDate(this.qualificationInfo.endDate),
-                certificatedDate: this.formatDate(this.qualificationInfo.certificatedDate)
+                startDate: this.checkDateFormatYYYYMMDD(this.qualificationInfo.startDate) ? this.qualificationInfo.startDate : this.formatDate(this.qualificationInfo.startDate),
+                endDate: this.checkDateFormatYYYYMMDD(this.qualificationInfo.endDate) ? this.qualificationInfo.endDate : this.formatDate(this.qualificationInfo.endDate),
+                certificatedDate: this.checkDateFormatYYYYMMDD(this.qualificationInfo.certificatedDate) ? this.qualificationInfo.certificatedDate : this.formatDate(this.qualificationInfo.certificatedDate)
             };
 
             // If adding a new qualification
@@ -500,9 +499,10 @@ export default defineComponent({
             }
             const updatedAcademic: ACADEMIC_LIST = {
                 ...this.academicInfo,
-                startDate: this.formatDate(this.academicInfo.startDate),
-                endDate: this.formatDate(this.academicInfo.endDate),
-                certificatedDate: this.formatDate(this.academicInfo.certificatedDate)
+                studentID: this.userInfo.specificID,
+                startDate: this.checkDateFormatYYYYMMDD(this.academicInfo.startDate) ? this.academicInfo.startDate : this.formatDate(this.academicInfo.startDate),
+                endDate: this.checkDateFormatYYYYMMDD(this.academicInfo.endDate) ? this.academicInfo.endDate : this.formatDate(this.academicInfo.endDate),
+                certificatedDate: this.checkDateFormatYYYYMMDD(this.academicInfo.certificatedDate) ? this.academicInfo.certificatedDate : this.formatDate(this.academicInfo.certificatedDate)
             }
             if (this.editingIndexAcademic === -1) {
                 updatedAcademic.seqNo = this.studentAcademicList.length + 1;
@@ -603,9 +603,9 @@ export default defineComponent({
                 qualificationList = this.qualificationList.map(item => ({
                     teacherID: this.userInfo.specID || '',
                     ...item,
-                    startDate: this.formatDateDatabase(item.startDate),
-                    endDate: this.formatDateDatabase(item.endDate),
-                    certificatedDate: this.formatDateDatabase(item.certificatedDate),
+                    startDate: item.startDate,
+                    endDate: item.endDate,
+                    certificatedDate: item.certificatedDate,
                     statusCode: "01"
                 }));
             } 
@@ -614,9 +614,9 @@ export default defineComponent({
                 studentAcademicList = this.studentAcademicList.map(item => ({
                     studentID: this.userInfo.specID || '',
                     ...item,
-                    startDate: this.formatDateDatabase(item.startDate),
-                    endDate: this.formatDateDatabase(item.endDate),
-                    certificatedDate: this.formatDateDatabase(item.certificatedDate),
+                    startDate: item.startDate,
+                    endDate: item.endDate,
+                    certificatedDate: item.certificatedDate,
                     statusCode: "01"
                 }));
             }
@@ -671,19 +671,13 @@ export default defineComponent({
                 this.fatherInfo = response.body?.studentInfo?.parentList[0];
                 this.motherInfo = response.body?.studentInfo?.parentList[1];
                 this.studentAcademicList = response.body?.studentInfo?.academicList.map(academicList => ({
-                    ...academicList,
-                    // certificatedDate: this.formatDate2(academicList.certificatedDate),
-                    // startDate: this.formatDate2(academicList.startDate),
-                    // endDate: this.formatDate2(academicList.endDate)
+                    ...academicList
                 }));
 
             // If the user is a teacher, set qualification list and format certificatedDate
             } else {
                 this.qualificationList = response.body?.teacherInfo?.qualificationList.map(qualification => ({
                     ...qualification,
-                    // certificatedDate: this.formatDate2(qualification.certificatedDate),
-                    // startDate: this.formatDate2(qualification.startDate),
-                    // endDate: this.formatDate2(qualification.endDate)
                 }));
             }
         },
@@ -710,13 +704,18 @@ export default defineComponent({
             this.checkMotherSpecificErrorFields
         },
 
+        checkDateFormatYYYYMMDD(dateInput: string):boolean {
+            const regex = /^\d{4}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])$/;
+            return regex.test(dateInput);
+        },      
+
         formatDate(dateString: string): string {
             const date = new Date(dateString);
             if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
             const year = date.getFullYear();
             const month = (date.getMonth() + 1).toString().padStart(2, '0');
             const day = date.getDate().toString().padStart(2, '0');
-            return `${year}-${month}-${day}`;
+            return `${year}${month}${day}`;
         },
 
         formatDate2(dateString: string): string | number {

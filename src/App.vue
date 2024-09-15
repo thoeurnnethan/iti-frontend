@@ -17,6 +17,8 @@ export default defineComponent({
     data() {
         return {
             language: localStorage.getItem('lang') || 'en',
+            lastRoute: this.$util.getDataStorage('lastRoute',true),
+            userInfo: this.$util.getDataStorage('userInfo',true),
             isAuthenticated: this.$util.getDataStorage('isAuthenticated', true)
         };
     },
@@ -24,7 +26,9 @@ export default defineComponent({
     beforeMount(){
         if(this.isAuthenticated === false || this.isAuthenticated === undefined){
             this.$router.push('/')
-        }else if(this.isAuthenticated === true){
+        }else if(this.isAuthenticated === true && this.userInfo){
+            this.$router.push(this.lastRoute)
+        }else{
             this.$router.push('admin-dashboard')
         }
 
