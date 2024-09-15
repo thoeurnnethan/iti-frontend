@@ -71,9 +71,10 @@ export default defineComponent({
         ...this.roomInfo,
         floor: this.roomInfo.floor + ''
       };
-      const res = await requestService.request(API_PATH.ROOM_REGISTER, reqBody, true) as ROOM_LIST;
+      const res = await requestService.request(API_PATH.ROOM_REGISTER, reqBody, false) as ROOM_LIST;
       this.roomInfo = res;
       if (res) {
+        this.$toast.add({ summary: 'Confirmed', detail: 'Data has been Inserted.', life: 3000 });
         modalController.dismiss();
       }
     },
@@ -83,7 +84,7 @@ export default defineComponent({
         ...this.roomInfo,
         floor: this.roomInfo.floor + ''
       };
-      const res = await requestService.request(API_PATH.ROOM_UPDATE, reqBody, true) as ROOM_LIST;
+      const res = await requestService.request(API_PATH.ROOM_UPDATE, reqBody, false) as ROOM_LIST;
       this.roomInfo = res;
       if (res) {
         modalController.dismiss();
