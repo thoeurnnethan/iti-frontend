@@ -19,7 +19,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mt-4">
+                <div class="row">
                     <div class="col-12">
                         <div class="container-fluid d-flex justify-content-start p-0 mb-3">
                             <div class="w-25">
@@ -34,7 +34,7 @@
                                         :value="studentsNotInClass"
                                         dataKey="specificID" 
                                         :rowClass="rowClass" 
-                                        scrollable scrollHeight="400px">
+                                        scrollable scrollHeight="290px">
                                         <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
                                         <Column field="fullName" :header="$t('user.name')"></Column>
                                         <Column field="gender" :header="$t('user.gender')"></Column>
@@ -88,7 +88,7 @@
                 </div>
             </div>
         </div>
-        <div class="pop_foot">
+        <div class="pop_foot" style="padding: 20px 20px 20px !important;">
             <div class="footer_btn">
                 <div class="right_side">
                     <button class="btn03 mx-2" style="width:185px" @click="onClose">{{ $t('common.close') }}</button>

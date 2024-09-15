@@ -44,6 +44,7 @@ export default defineComponent({
             const query = this.searchQuery.toLowerCase();
             return this.studentList.filter(student =>
                 student.firstName.toLowerCase().includes(query) ||
+                student.lastName.toLowerCase().includes(query) ||
                 student.gender.toLowerCase().includes(query) ||
                 student.dateOfBirth.toLowerCase().includes(query) ||
                 student.phone.toLowerCase().includes(query)
