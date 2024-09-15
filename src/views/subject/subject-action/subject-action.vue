@@ -70,7 +70,7 @@ export default defineComponent({
             },
             immediate: true,
             deep: true
-        }
+        },
     },
 
 
@@ -98,6 +98,7 @@ export default defineComponent({
     mounted() {
         this.onDataLoad();
         this.onGetClassList();
+        this.updateSeqNo();
     },
 
     methods: {
@@ -249,7 +250,7 @@ export default defineComponent({
                 subjectList: dataList,
             };
 
-            await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, true);
+            await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false);
             this.resetForm();
             this.onClose();
         },

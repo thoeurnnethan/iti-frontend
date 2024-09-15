@@ -166,7 +166,6 @@ export default defineComponent({
                     studentDetails: formattedStudentList  // Pass the formatted list
                 } 
             });
-            console.log(formattedStudentList);
             
         },
 
