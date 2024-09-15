@@ -34,6 +34,10 @@
         <!-- User Information -->
         <div class="container-fluid">
             <div class="row mt-4">
+                <div :class="customRowClass" v-if="!isRegisterRoute">
+                    <label :class="customFormClass">{{ $t('user.userID') }}</label>
+                    <InputText class="text-info" v-model="userInfo.userID" disabled/>
+                </div>
                 <div :class="customRowClass">
                     <label :class="customFormClass">{{ $t('user.firstName') }}</label>
                     <InputText :invalid="userInfoCheckFields.firstName" v-model="userInfo.firstName" @keyup="checkUserRequireFields" />
@@ -50,6 +54,14 @@
                     <label :class="customFormClass">{{ $t('user.gender') }}</label><br>
                     <input type="radio" v-model="userInfo.gender" class="form-check-input" value="M"> {{ $t('user.male') }}
                     <input type="radio" v-model="userInfo.gender" class="form-check-input" value="F"> {{ $t('user.female') }}
+                </div>
+                <div :class="customRowClass" v-if="!isRegisterRoute">
+                    <label :class="customFormClass">{{ $t('user.role') }}</label>
+                    <select class="form-select text-info" v-model="userInfo.roleID" disabled>
+                        <option v-for="uRole in userRoleList" :key="uRole.codeValue" :value="uRole.codeValue">
+                            <span>{{ uRole.codeValueDesc }}</span>
+                        </option>
+                    </select>
                 </div>
                 <div :class="customRowClass">
                     <label :class="customFormClass">{{ $t('user.dateOfBirth') }}</label>
@@ -71,15 +83,17 @@
                     <label :class="customFormClass">{{ $t('user.address') }}</label>
                     <Textarea :invalid="userInfoCheckFields.address" v-model="userInfo.address" rows="5" cols="30" @keyup="checkUserRequireFields" />
                 </div>
-                <div :class="customRowClass" v-if="isRegisterStudent">
+                <div :class="customRowClass" v-if="isRegisterStudent && isRegisterRoute">
                     <label :class="customFormClass">{{ $t('class.selectClass') }}</label>
                     <select class="form-select" v-model="userInfo.classInfoID" >
                         <option v-for="classInfo in classList" :key="classInfo.classInfoID" :value="classInfo.classInfoID">
-                            {{ classInfo.className }} ឆ្នាំទី​ {{ classInfo.year }} ឆមាសទី {{ classInfo.semester }}
+                            <p class="m-0 p-0">{{ classInfo.className }}</p>
+                            <p class="m-0 p-0">-{{ $t('schedule.classYear') }} {{ classInfo.year }}</p>
+                            <p class="m-0 p-0">-{{ $t('schedule.semester') }} {{ classInfo.semester }}</p>
                         </option>
                     </select>
                 </div>
-                <div :class="customRowClass" v-else>
+                <div :class="customRowClass" v-else-if="!isRegisterStudent && isRegisterRoute">
                     <label :class="customFormClass">{{ $t('class.selectDepartment') }}</label>
                     <select class="form-select" v-model="userInfo.departmentID" >
                         <option v-for="department in departmentList" :key="department.departmentID" :value="department.departmentID">

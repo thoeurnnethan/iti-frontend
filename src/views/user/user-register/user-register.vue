@@ -5,7 +5,7 @@ import { API_PATH } from '@/shared/common/api-path';
 import { USER_LIST, QUALIFICATION_LIST, PARENT_LIST, ACADEMIC_LIST, USER_DETAIL_RES, USER_LIST_FORM_CHECK, QUALIFICATION_LIST_FORM_CHECK, ACADEMIC_LIST_FORM_CHECK, PARENT_LIST_FORM_CHECK } from '@/shared/types/user-list';
 import { RequestService } from '@/shared/services/request-service';
 import { defineComponent } from 'vue';
-import { TeacherRoleList,UserRole } from '@/shared/common/common';
+import { TeacherRoleList,UserRole, UserRoleList } from '@/shared/common/common';
 import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class-list';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 const requestService = new RequestService();
@@ -20,6 +20,7 @@ export default defineComponent({
             studentAcademicList: [] as ACADEMIC_LIST[],
             teacherRoleList: TeacherRoleList,
             userRole: UserRole,
+            userRoleList: UserRoleList,
             userInfo: {
                 firstName: '',
                 lastName: '',
@@ -124,10 +125,18 @@ export default defineComponent({
             }else{
                 this.getDepartmentList()
             }
+        },
+        '$i18n.locale'(){
+            this.userRole = this.$codeConverter.codeToStringList(this.userRole, 'userRoleCode')
+            this.teacherRoleList = this.$codeConverter.codeToStringList(this.teacherRoleList, 'userRoleCode')
+            this.userRoleList = this.$codeConverter.codeToStringList(this.userRoleList, 'userRoleCode')
         }
     },
     
     mounted() {
+        this.userRole = this.$codeConverter.codeToStringList(this.userRole, 'userRoleCode')
+        this.teacherRoleList = this.$codeConverter.codeToStringList(this.teacherRoleList, 'userRoleCode')
+        this.userRoleList = this.$codeConverter.codeToStringList(this.userRoleList, 'userRoleCode')
         if (!this.isRegisterRoute) {
             this.getUserDetailSummary();
         }

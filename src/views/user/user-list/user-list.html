@@ -78,6 +78,7 @@
             @page="onPage">
             <Column field="no" :header="$t('common.no')" :class="['text-center']"></Column>
             <Column field="specificID" :header="$t('user.ID')"></Column>
+            <Column field="userID" :header="$t('user.userID')"></Column>
             <Column :header="$t('user.role')">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(userRoleList, data.roleID) }}

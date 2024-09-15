@@ -73,7 +73,7 @@
                                 <tr v-for="parentInfo in userInfo?.studentInfo?.parentList" :key="parentInfo.seqNo">
                                     <td class="text-center">{{ parentInfo.seqNo }}</td>
                                     <td>{{ parentInfo.firstName }} {{ parentInfo.lastName }}</td>
-                                    <td>{{ $codeConverter.codeToString(genderCodeList, parentInfo.gender) }}</td>
+                                    <td>{{ $codeConverter.codeToString(genderCodeList, parentInfo.gender,'genderCode') }}</td>
                                     <td>{{ parentInfo.job }}</td>
                                     <td>{{ parentInfo.address }}</td>
                                     <td>{{ $phoneNumberFormater.formatPhoneNumber(parentInfo.phone) }}</td>
