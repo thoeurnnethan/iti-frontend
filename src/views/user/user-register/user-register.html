@@ -48,8 +48,8 @@
                 </div>
                 <div :class="customRowClass">
                     <label :class="customFormClass">{{ $t('user.gender') }}</label><br>
-                    <input type="radio" v-model="userInfo.gender" class="form-check-input" value="M"> Male
-                    <input type="radio" v-model="userInfo.gender" class="form-check-input" value="F"> Female
+                    <input type="radio" v-model="userInfo.gender" class="form-check-input" value="M"> {{ $t('user.male') }}
+                    <input type="radio" v-model="userInfo.gender" class="form-check-input" value="F"> {{ $t('user.female') }}
                 </div>
                 <div :class="customRowClass">
                     <label :class="customFormClass">{{ $t('user.dateOfBirth') }}</label>
@@ -308,8 +308,10 @@
                     </div>
                 </div>
             </div>
+            {{ studentAcademicList }}
         </div>
         <div class="row mt-5">
+            {{ !isRegisterRoute }}
             <div :class="isRegisterRoute ? 'col-md-3' : 'col-md-10'">
                 <span v-if="!isRegisterRoute">
                     <div class="row">

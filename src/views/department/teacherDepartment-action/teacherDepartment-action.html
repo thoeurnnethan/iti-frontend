@@ -38,7 +38,7 @@
                                         scrollable 
                                         scrollHeight="400px">
                                         <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-                                        <Column field="fullName" :header="$t('user.name')" :bodyClass="getBodyClass">
+                                        <Column field="fullName" :header="$t('user.name')">
                                         </Column>
                                         <Column field="roleID" :header="$t('user.role')"></Column>
                                         <Column field="gender" :header="$t('user.gender')"></Column>
@@ -55,14 +55,17 @@
                                     </DataTable>
                                 </div>
                                 <div class="container-fluid w-100 mt-3 d-flex justify-content-end p-0">
-                                    <button class="btn01" style="width:185px" @click="saveData()">{{ $t('common.save') }}</button>
+                                    <button :class="checkSelectedTeacher ? 'btn01' : 'btn03'" style="width:185px" 
+                                    @click="saveData()" 
+                                    :disabled="!checkSelectedTeacher">{{ $t('common.save') }}</button>
                                 </div>
                             </div>
-                            <div class="col-4" v-if="departmentList.length > 0">
+                            <div class="col-4" v-if="teacherDepList.length > 0">
                                 <label class="form-label font_15 alert alert-info p-1">{{ $t('department.teacherList') }}</label>
                                 <div class="we_shadow">
-                                    <DataTable :value="departmentList" scrollable scrollHeight="400px">
+                                    <DataTable :value="teacherDepList" scrollable scrollHeight="400px">
                                         <Column field="fullName" :header="$t('user.name')"></Column>
+                                        <Column field="gender" :header="$t('user.gender')"></Column>
                                         <Column field="roleID" :header="$t('user.role')"></Column>
                                     </DataTable>
                                 </div>

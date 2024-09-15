@@ -99,6 +99,8 @@
         "email": "Email",
         "password": "Password",
         "imageUrl": "Image URL",
+        "male": "Male",
+        "female": "Female",
         "userList": "User List",
         "studentDetail": "Student Information Detail",
         "teacherDetail": "Teacher Information Detail",

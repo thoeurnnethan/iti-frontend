@@ -389,7 +389,7 @@ export default defineComponent({
                             teacherInfo:({
                                 qualificationList:[{
                                     ...item,
-                                    teacherID: this.userInfo.specificID,
+                                    teacherID: this.userInfo.specID,
                                     statusCode: "02",
                                     seqNo: item.seqNo,
                                     certificatedDate: this.formatDateDatabase(item.certificatedDate),
@@ -486,11 +486,6 @@ export default defineComponent({
             this.classList = response.body.classList
         },
 
-
-
-
-
-
         addAcademicToList() {
             this.academicCheckFields = {
                 academicName: false,
@@ -557,7 +552,6 @@ export default defineComponent({
                     message: 'Do you want to delete this record?',
                     header: 'Danger Zone',
                     accept: async () => {
-
                         if (this.userInfo.roleID == "04") {
                             var reqBody = {
                                 ...this.userInfo,
@@ -565,7 +559,7 @@ export default defineComponent({
                                     ...this.userInfo.studentInfo,
                                     academicList:[{
                                         ...item,
-                                        studentID: this.userInfo.specificID,
+                                        studentID: this.userInfo.specID,
                                         statusCode: "02",
                                         seqNo: item.seqNo,
                                         certificatedDate: this.formatDateDatabase(item.certificatedDate),
@@ -574,9 +568,8 @@ export default defineComponent({
                                     }]
                                 })
                             };
+                            await requestService.request(API_PATH.USER_UPDATE, reqBody, false);
                         }
-
-                        await requestService.request(API_PATH.USER_UPDATE, reqBody, false);
                         this.deleteAcademic(item)
                         this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
                     },
@@ -588,11 +581,6 @@ export default defineComponent({
                 this.deleteAcademic(item)
             }
         },
-
-
-
-
-
 
         updateAcademicSeqNo() {
             this.studentAcademicList.forEach((qual, index) => {
@@ -609,13 +597,11 @@ export default defineComponent({
         /* ======================= Update User =========================== */
         /* =============================================================== */
         async onClickUpdateUser(){
-
-            let qualificationList = [];
-            let studentAcademicList = [];
-
+            let qualificationList = [] as any[];
+            let studentAcademicList = [] as any[];
             if (Array.isArray(this.qualificationList) && this.qualificationList.length > 0) {
                 qualificationList = this.qualificationList.map(item => ({
-                    teacherID: this.userInfo.specificID || '',
+                    teacherID: this.userInfo.specID || '',
                     ...item,
                     startDate: this.formatDateDatabase(item.startDate),
                     endDate: this.formatDateDatabase(item.endDate),
@@ -626,7 +612,7 @@ export default defineComponent({
 
             if (Array.isArray(this.studentAcademicList) && this.studentAcademicList.length > 0) {
                 studentAcademicList = this.studentAcademicList.map(item => ({
-                    studentID: this.userInfo.specificID || '',
+                    studentID: this.userInfo.specID || '',
                     ...item,
                     startDate: this.formatDateDatabase(item.startDate),
                     endDate: this.formatDateDatabase(item.endDate),
@@ -634,9 +620,10 @@ export default defineComponent({
                     statusCode: "01"
                 }));
             }
-
+            
+            var reqBody = {}
             if (this.userInfo.roleID == "04") {
-                var reqBody = {
+                reqBody = {
                     ...this.userInfo,
                     studentInfo: {
                         ...this.userInfo.studentInfo,
@@ -645,7 +632,7 @@ export default defineComponent({
                 };
             }
             else{
-                var reqBody = {
+                reqBody = {
                     ...this.userInfo,
                     teacherInfo: {
                         qualificationList 
@@ -653,12 +640,13 @@ export default defineComponent({
                 };
             }
 
-            // const res = await requestService.request(API_PATH.USER_UPDATE, reqBody, true);
-            // if(res.header.result){
-            //     console.log(res)
-            // }
+            const res = await requestService.request(API_PATH.USER_UPDATE, reqBody, true);
+            if(res.header.result){
+                console.log(res)
+            }
             // this.backToList();
         },
+        
         backToList(){
             this.$router.push('/user-list')
         },
@@ -684,18 +672,18 @@ export default defineComponent({
                 this.motherInfo = response.body?.studentInfo?.parentList[1];
                 this.studentAcademicList = response.body?.studentInfo?.academicList.map(academicList => ({
                     ...academicList,
-                    certificatedDate: this.formatDate2(academicList.certificatedDate),
-                    startDate: this.formatDate2(academicList.startDate),
-                    endDate: this.formatDate2(academicList.endDate)
+                    // certificatedDate: this.formatDate2(academicList.certificatedDate),
+                    // startDate: this.formatDate2(academicList.startDate),
+                    // endDate: this.formatDate2(academicList.endDate)
                 }));
 
             // If the user is a teacher, set qualification list and format certificatedDate
             } else {
                 this.qualificationList = response.body?.teacherInfo?.qualificationList.map(qualification => ({
                     ...qualification,
-                    certificatedDate: this.formatDate2(qualification.certificatedDate),
-                    startDate: this.formatDate2(qualification.startDate),
-                    endDate: this.formatDate2(qualification.endDate)
+                    // certificatedDate: this.formatDate2(qualification.certificatedDate),
+                    // startDate: this.formatDate2(qualification.startDate),
+                    // endDate: this.formatDate2(qualification.endDate)
                 }));
             }
         },
@@ -750,7 +738,6 @@ export default defineComponent({
             // Return formatted date in YYYY-MM-DD format
             return `${year}-${month}-${day}`;
         },
-
 
         formatDateDatabase(dateString: string): string {
             const date = new Date(dateString);

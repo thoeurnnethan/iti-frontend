@@ -165,7 +165,7 @@ export default defineComponent({
         generateYears() {
             const currentYear = new Date().getFullYear();
             const startYear = 2020;
-            const years = [];
+            const years = [] as any[];
 
             for (let year = currentYear; year >= startYear; year--) {
                 years.push({ codeValue: year.toString(), codeValueDesc: year });

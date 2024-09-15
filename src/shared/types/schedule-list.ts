@@ -23,28 +23,34 @@ export interface SCHEDULE_LIST {
     floor: string,
     startTime: string,
     endTime: string
+    Monday?: any
+    Tuesday?: any
+    Wednesday?: any
+    Thursday?: any
+    Friday?: any
+    Saturday?: any
 }
 
 export interface SCHEDULE_INFO {
     scheduleYear?: string
     scheduleDay: string
-    seqNo: number,
-    teacherID: string,
-    firstName: string,
-    lastName: string,
+    seqNo: number
+    teacherID: string
+    firstName: string
+    lastName: string
     phoneNumber: string
-    subjectID: string,
-    subjectName: string,
-    roomID: string,
-    roomName: string,
-    building: string,
-    floor: string,
-    startTime: string,
+    subjectID: string
+    subjectName: string
+    roomID: string
+    roomName: string
+    building: string
+    floor: string
+    startTime: string
     endTime: string
 }
 
 export interface ScheduleRow {
-    startTime: string,
+    startTime: string
     endTime: string
     Monday?: SCHEDULE_INFO
     Tuesday?: SCHEDULE_INFO

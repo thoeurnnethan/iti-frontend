@@ -58,8 +58,8 @@ export default defineComponent({
             this.totalCount = response.body?.totalCount;
             this.subjectList = response.body?.subjectList.map((data) => {
                 return {
-                    ...data,
-                    no: data.subjectID?.substring(data.subjectID.length - 1, data.subjectID.length)
+                    // no: data.subjectID?.substring(data.subjectID.length - 1, data.subjectID.length),
+                    ...data
                 }
             });
             this.Loading = false;

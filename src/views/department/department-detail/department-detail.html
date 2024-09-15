@@ -56,6 +56,11 @@
                             <Column field="fullName" :header="$t('user.name')" />
                             <Column field="gender" :header="$t('user.gender')" />
                             <Column field="roleID" :header="$t('user.role')" />
+                            <Column :header="$t('user.phone')">
+                                <template #body="{ data }">
+                                    <span>{{ $phoneNumberFormater.formatPhoneNumber(data.phone) }}</span>
+                                </template>
+                            </Column>
                             <Column :header="$t('action.action')">
                                 <template #body="{ data }">
                                     <div class="d-flex justify-content-center">

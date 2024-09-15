@@ -40,8 +40,8 @@ export default defineComponent({
             ...member,
             fullName: `${member.firstName} ${member.lastName}`,
             no: index + 1,
-            gender: this.$codeConverter.codeToString(this.GenderCodeList, member.gender),
-            roleID: this.$codeConverter.codeToString(this.UserRoleList, member.roleID),
+            gender: this.$codeConverter.codeToString(this.GenderCodeList, member.gender,'genderCode'),
+            roleID: this.$codeConverter.codeToString(this.UserRoleList, member.roleID,'userRoleCode'),
         }));
     },
 
@@ -80,7 +80,7 @@ export default defineComponent({
                         }],
                     };
 
-                    const res = await requestService.request(API_PATH.TEACHER_DEPARTMENT_UPDATE, reqBody, false) as any;
+                    const res = await requestService.request(API_PATH.TEACHER_DEPARTMENT_UPDATE, reqBody, false,true) as any;
                     this.departmentMemberInfo = res.body.teacherList.map((member: { firstName: any; lastName: any, gender: any, roleID: any }, index: number) => ({
                         ...member,
                         fullName: `${member.firstName} ${member.lastName}`,
