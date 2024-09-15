@@ -4,7 +4,7 @@
 import { modalController } from '@ionic/vue';
 import { defineComponent, PropType } from 'vue';
 import { USER_LIST } from '@/shared/types/user-list';
-import { GenderCodeList } from '@/shared/common/common';
+import { GenderCodeList, UserRoleList } from '@/shared/common/common';
 
 export default defineComponent({
     name: "user-detail",
@@ -19,6 +19,7 @@ export default defineComponent({
         return {
             userInfo: {} as any,
             genderCodeList: GenderCodeList,
+            userRoleList: UserRoleList,
             userRole: ''
         }
     },
@@ -31,8 +32,8 @@ export default defineComponent({
 
     mounted(){
         this.userInfo = {
-            formatDOB: this.$format.formatDateTime(this.userDetail.dateOfBirth,'yyyy-mm-dd','Slash','FullMonth'),
-            ...this.userDetail
+            ...this.userDetail,
+            dateOfBirth: this.$format.formatDateTime(this.userDetail.dateOfBirth,'yyyy-mm-dd','Slash','FullMonth'),
             
         }
         this.userRole = this.userDetail.roleID

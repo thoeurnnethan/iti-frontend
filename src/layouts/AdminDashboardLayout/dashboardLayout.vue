@@ -101,7 +101,7 @@ export default defineComponent({
         },
 
         async onClickLogout(){
-
+            var reqBody ={}
             this.$confirm.require({
                 message: "Are you sure want to logout?",
                 header: 'Please Confirm',
@@ -109,9 +109,8 @@ export default defineComponent({
                 acceptClass: 'btn btn-danger',
                 rejectLabel: 'No',
                 rejectClass: 'btn btn-secondary',                
-
                 accept: async () => {
-                    const res = await requestService.request(API_PATH.USER_LOGOUT, null, false, true);
+                    const res = await requestService.request(API_PATH.USER_LOGOUT, reqBody, false, true);
                     if(res.header.result){
                         this.$util.removeDataStorage('userInfo', true)
                         this.$util.removeDataStorage('lastRoute', true)
@@ -128,9 +127,7 @@ export default defineComponent({
                     return
                 }
             });
-
         }
-
     },
 
     beforeDestroy() {

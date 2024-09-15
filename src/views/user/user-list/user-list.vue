@@ -88,8 +88,10 @@ export default defineComponent({
 
         async deleteUser(_item: USER_LIST) {
             this.$confirm.require({
-                message: 'Do you want to hide this record?',
-                header: 'Danger Zone',
+                message: 'Do you want to delete this record?',
+                header: 'Please Comfirm',
+                acceptClass: 'btn btn-danger',
+                rejectClass: 'btn btn-secondary',
                 accept: async () => {
                     const reqBody = {
                         userID: _item.userID,

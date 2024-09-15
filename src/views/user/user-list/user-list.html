@@ -93,7 +93,7 @@
             </Column>
             <Column :header="$t('user.dateOfBirth')">
                 <template #body="{ data }">
-                    {{ $format.formatDateTime(data.dateOfBirth,'yyyy-mm-dd') }}
+                    {{ $format.formatDateTime(data.dateOfBirth,'yyyy-mm-dd','Slash','FullMonth') }}
                 </template>
             </Column>
             <Column field="placeOfBirth" :header="$t('user.placeOfBirth')"></Column>

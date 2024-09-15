@@ -154,9 +154,9 @@
                                 <Column :header="$t('action.edit')" class="text-center">
                                     <template #body="{ data }">
                                         <font-awesome-icon style="cursor: pointer;" @click="onClickEditQualification(data)"
-                                            icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;
+                                            icon="fas fa-pencil" class="btn btn-secondary text-white p-1" title="Edit" />&nbsp;
                                         <font-awesome-icon style="cursor: pointer;" @click="onClickDeleteQualification(data)"
-                                            icon="fa-solid fa-trash" class=" text-danger" title="Delete" />
+                                            icon="fa-solid fa-trash" class="btn btn-danger text-white p-1" title="Delete" />
                                     </template>
                                 </Column>
                             </DataTable>
@@ -276,6 +276,7 @@
                         </div>
                     </fieldset>
                     <div class="row mt-4">
+                        {{ studentAcademicList }}
                         <div class="col-12">
                             <div class="we_shadow">
                                 <DataTable 
@@ -334,7 +335,6 @@
             </div>
         </div>
         <div class="row mt-5">
-            {{ !isRegisterRoute }}
             <div :class="isRegisterRoute ? 'col-md-3' : 'col-md-10'">
                 <span v-if="!isRegisterRoute">
                     <div class="row">

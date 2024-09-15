@@ -135,11 +135,11 @@ export default defineComponent({
     },
 
     beforeRouteEnter(to, from, next) {
-        next(vm => vm.resetForm());
+        next(vm => vm.resetForm(true));
     },
 
     beforeRouteUpdate(to, from, next) {
-        this.resetForm();
+        this.resetForm(true);
         next();
     },
 
@@ -242,7 +242,7 @@ export default defineComponent({
         },
 
         onChangeUserRoleRegister(): void{
-            this.resetForm();
+            this.resetForm(false);
         },
     },
 
@@ -267,9 +267,9 @@ export default defineComponent({
                 return {
                     qualificationName: data.qualificationName,
                     qualificationDesc: data.qualificationDesc,
-                    startDate: this.formatDateDatabase(data.startDate),
-                    endDate: this.formatDateDatabase(data.endDate),
-                    certificatedDate: this.formatDateDatabase(data.certificatedDate),
+                    startDate: data.startDate,
+                    endDate: data.endDate,
+                    certificatedDate: data.certificatedDate,
                     statusCode: "01"
                 }
             })
@@ -288,9 +288,8 @@ export default defineComponent({
             }
             const res = await requestService.request(API_PATH.USER_REGISTER, reqBody, true)
             if(res.header.result){
-                this.resetForm()
+                this.resetForm(true)
             }
-            // this.$router.push('/user-list');
         },
 
         async getDepartmentList() {
@@ -380,9 +379,10 @@ export default defineComponent({
                 }
                 this.$confirm.require({
                     message: 'Do you want to delete this record?',
-                    header: 'Danger Zone',
+                    header: 'Please Confirm !',
+                    acceptClass: 'btn btn-danger',
+                    rejectClass: 'btn btn-secondary',
                     accept: async () => {
-
                         const reqBody = {
                             ...this.userInfo,
                             teacherInfo:({
@@ -441,14 +441,13 @@ export default defineComponent({
                 this.checkAcademicSpecificErrorFields
                 return
             }
-
             const academicList = this.studentAcademicList.map((data) => {
                 return {
                     academicName: data.academicName,
                     academicDesc: data.academicDesc,
-                    startDate: this.formatDateDatabase(data.startDate),
-                    endDate: this.formatDateDatabase(data.endDate),
-                    certificatedDate: this.formatDateDatabase(data.certificatedDate),
+                    startDate: data.startDate,
+                    endDate: data.endDate,
+                    certificatedDate: data.certificatedDate,
                 };
             });
             const userInfoList = {
@@ -468,7 +467,10 @@ export default defineComponent({
             const reqBody = {
                 userList: this.userList
             };
-            await requestService.request(API_PATH.USER_REGISTER, reqBody, true);
+            const res = await requestService.request(API_PATH.USER_REGISTER, reqBody, true);
+            if(res.header.result){
+                this.resetForm(true)
+            }
         },
 
         async getClassList() {
@@ -528,7 +530,6 @@ export default defineComponent({
                     accept: () => {
                         this.academicInfo = { ...data };
                         this.editingIndexAcademic = this.studentAcademicList.findIndex(item => item.seqNo === data.seqNo);
-                        this.deleteAcademic(data)
                         this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
                     },
                     reject: () => {
@@ -538,7 +539,6 @@ export default defineComponent({
             }else{
                 this.academicInfo = { ...data };
                 this.editingIndexAcademic = this.studentAcademicList.findIndex(item => item.seqNo === data.seqNo);
-                this.deleteAcademic(data)
             }
         },
 
@@ -752,19 +752,21 @@ export default defineComponent({
             return emailPattern.test(email);
         },
         
-        resetForm() {
-            this.userInfo = {
-                firstName: '',
-                lastName: '',
-                gender: '',
-                dateOfBirth: '',
-                placeOfBirth: '',
-                address: '',
-                phone: '',
-                email: '',
-                classInfoID: '',
-                departmentID: ''
-            } as USER_LIST
+        resetForm(isResetUserInfo: boolean) {
+            if(isResetUserInfo){
+                this.userInfo = {
+                    firstName: '',
+                    lastName: '',
+                    gender: '',
+                    dateOfBirth: '',
+                    placeOfBirth: '',
+                    address: '',
+                    phone: '',
+                    email: '',
+                    classInfoID: '',
+                    departmentID: ''
+                } as USER_LIST
+            }
             this.routerName = this.$route.name
             this.userInfoCheckFields= {
                 firstName: false,
@@ -777,6 +779,23 @@ export default defineComponent({
                 email: false,
             } as USER_LIST_FORM_CHECK,
             this.qualificationList = []
+            this.studentAcademicList = []
+            this.fatherInfo= {
+                firstName: '',
+                lastName: '',
+                job: '',
+                phone: '',
+                gender: 'M',
+                address: ''
+            } as PARENT_LIST,
+            this.motherInfo= {
+                firstName: '',
+                lastName: '',
+                job: '',
+                phone: '',
+                gender: 'F',
+                address: ''
+            } as PARENT_LIST
         },
 
         resetQualificationForm() {

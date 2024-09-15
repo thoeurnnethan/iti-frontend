@@ -16,12 +16,16 @@
                             <dd>{{ userInfo.nickName }}</dd>
                         </dl>
                         <dl>
+                            <dt class="text-capitalize">{{ $t('user.role') }}</dt>
+                            <dd>{{ $codeConverter.codeToString(userRoleList,userInfo.roleID,'userRoleCode')}}</dd>
+                        </dl>
+                        <dl>
                             <dt class="text-capitalize">{{ $t('user.gender') }}</dt>
-                            <dd>{{ $codeConverter.codeToString(genderCodeList,userInfo.gender)}}</dd>
+                            <dd>{{ $codeConverter.codeToString(genderCodeList,userInfo.gender,'genderCode')}}</dd>
                         </dl>
                         <dl>
                             <dt class="text-capitalize">{{ $t('user.dateOfBirth') }}</dt>
-                            <dd>{{ userInfo.formatDOB }}</dd>
+                            <dd>{{ userInfo.dateOfBirth }}</dd>
                         </dl>
                         <dl>
                             <dt class="text-capitalize">{{ $t('user.placeOfBirth') }}</dt>
@@ -39,9 +43,13 @@
                             <dt class="text-capitalize">{{ $t('user.email') }}</dt>
                             <dd>{{ userInfo.email }}</dd>
                         </dl>
+                        <!-- <dl>
+                            <dt class="text-capitalize">{{ $t('user.password') }}</dt>
+                            <dd>{{ userInfo.userID }}</dd>
+                        </dl> -->
                         <dl>
                             <dt class="text-capitalize">{{ $t('user.password') }}</dt>
-                            <dd>{{ userInfo.password }}</dd>
+                            <dd>{{ userInfo.passwd }}</dd>
                         </dl>
                     </div>
                 </div>
