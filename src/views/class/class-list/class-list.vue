@@ -194,7 +194,7 @@ export default defineComponent({
                         cyear: item.year,
                         statusCode: statusCode
                     }
-                    const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, true);
+                    const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false);
                     if (res.header.result) {
                         this.getClassList();
                         this.$toast.add({ summary: 'Confirmed', detail: messageAcceptDetail, life: 1000 });
