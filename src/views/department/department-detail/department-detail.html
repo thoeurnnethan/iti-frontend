@@ -1,7 +1,7 @@
 <div class="popup">
     <div class="popWrap w70p">
         <div class="pop_head">
-            <h1 class="text-center text-primary">{{ $t('department.detail') }}</h1>
+            <h1 class="text-center text-dark">{{ $t('department.detail') }}</h1>
         </div>
         <div class="pop_cont">
             <div class="cont">
@@ -70,7 +70,9 @@
                             </Column>
                         </DataTable>
                         <table v-else>
-                            <tr> <th>{{ $t('common.noData') }}</th> </tr>
+                            <tr>
+                                <th class="text-danger">{{ $t('common.noData') }}</th>
+                            </tr>
                         </table>
                     </TabPanel>
                 </TabView>

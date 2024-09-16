@@ -2,6 +2,7 @@
 export enum API_PATH {
     //User
     USER_LIST = "api/user/list",
+    USER_LIST_DOWNLOAD = "api/user/list/download",
     USER_DETAIL = "api/user/detail",
     USER_REGISTER = "api/user/register",
     USER_UPDATE = "api/user/update",

@@ -84,11 +84,11 @@
             <Column field="no" :header="$t('common.no')" :class="['text-center']" style="min-width: 100px;"></Column>
             <Column field="classID" :header="$t('class.classId')" style="min-width: 150px;"></Column>
             <Column field="className" :header="$t('class.className')" style="min-width: 120px;"></Column>
-            <Column field="departmentName" :header="$t('department.depName')" style="min-width: 120px;"></Column>
+            <Column field="departmentName" :header="$t('department.depName')" style="min-width: 150px;"></Column>
             <Column field="year" :header="$t('class.year')"></Column>
             <Column field="semester" :header="$t('class.semester')"></Column>
             <Column field="generation" :header="$t('class.generation')"></Column>
-            <Column field="classDesc" :header="$t('class.classDesc')" style="min-width: 150px;"></Column>
+            <Column field="classDesc" :header="$t('class.classDesc')" style="min-width: 350px;"></Column>
             <Column :header="$t('class.classType')" style="min-width: 120px;">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(classTypeList, data.classType, 'classType') }}
@@ -113,14 +113,14 @@
                         </div>
                 </template>
             </Column>
-            <Column :header="$t('class.upgrade')" style="min-width: 150px;">
+            <Column :header="$t('class.upgrade')" style="min-width: 200px;">
                 <template #body="{ data }">
                     <div class="d-flex justify-content-center align-item-center">
                         <button class="btn btn-success px-2 p-0 mx-2" @click="onClickUpgrade(data)" :disabled="!data.isLast">{{ $t('class.upgrade') }}</button>
                     </div>
                 </template>
             </Column>
-            <Column :header="$t('class.student')" style="min-width: 150px;">
+            <Column :header="$t('class.student')" style="min-width: 200px;">
                 <template #body="{ data }">
                     <div class="d-flex justify-content-center align-item-center">
                         <button class="btn btn-info px-2 p-0"  @click="onClickInsertStudent(data)" >{{ $t('class.addStudent') }}</button>

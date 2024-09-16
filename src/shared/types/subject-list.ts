@@ -11,6 +11,18 @@ export interface SUBJECT_LIST {
     statusCode?: string
 }
 
+export interface SUBJECT_LIST_DOWNLOAD {
+    classID: string
+    classInfoID: string
+    className: string
+    year: string
+    semester: string
+    subjectID: string
+    subjectName: string
+    subjectDesc: string
+    statusCode: string
+}
+
 export interface SUBJECT_LIST_REQ {
     classID: string
     classYear: string,
@@ -23,8 +35,7 @@ export interface SUBJECT_LIST_REQ {
 export interface SUBJECT_LIST_RES {
     body: {
         totalCount: number
-        // classID: string
-        subjectList: Array<SUBJECT_LIST>
+        subjectList: Array<SUBJECT_LIST_DOWNLOAD>
     }
 }
 

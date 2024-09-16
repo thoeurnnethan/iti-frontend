@@ -121,15 +121,27 @@ export default defineComponent({
         },
 
         //download excel
-        exportToExcel() {
+        async exportToExcel() {
+            const body = {
+                searchKey: this.searchKey,
+                roleID: this.roleID === 'all' ? '' : this.roleID,
+                statusCode: "",
+                pageSize: this.pageSize,
+                pageNumber: this.pageNumber + 1
+            }
+            const response = (await requestService.request(API_PATH.USER_LIST_DOWNLOAD, body, false)) as USER_LIST_RES;
+            this.dataTable = response.body.userList
             const excelData = this.dataTable.map((data, index) => {
                 return {
                     "No": index + 1,
+                    "System User ID": data.userID,
+                    "User ID": data.specificID,
                     "First Name": data.firstName,
                     "Last Name": data.lastName,
                     "Nickname": data.nickName,
-                    "Gender": data.gender,
-                    "Date of birth": data.dateOfBirth,
+                    "User Role": this.$codeConverter.codeToString(this.userRoleList, data.roleID),
+                    "Gender": this.$codeConverter.codeToString(this.genderCodeList, data.gender),
+                    "Date of birth": this.$format.formatDateTime(data.dateOfBirth ,'yyyy-mm-dd','Slash','FullMonth'),
                     "Place of birth": data.placeOfBirth,
                     "Address": data.address,
                     "Phone": data.phone,

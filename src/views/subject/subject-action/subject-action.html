@@ -66,10 +66,12 @@
                                 <Column field="no" :header="$t('common.no')" class="text-center"></Column>
                                 <Column field="subjectName" :header="$t('subject.subjectName')"></Column>
                                 <Column field="subjectDesc" :header="$t('subject.subjectDesc')"></Column>
-                                <Column :header="$t('subject.edit')" class="text-center">
+                                <Column :header="$t('subject.edit')" class="text-center" v-if="isAdd === false">
                                     <template #body="{ data }">
-                                        <font-awesome-icon style="cursor: pointer;" icon="fas fa-pencil" class="text-primary mx-2" :title="$t('action.edit')" @click="onClickEdit(data)"/>
-                                        <font-awesome-icon style="cursor: pointer;" icon="fa-solid fa-trash" class=" text-danger" :title="$t('action.delete')" @click="onClickDelete(data)"/>
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <font-awesome-icon style="cursor: pointer; background-color: #272727;padding: 4px;border-radius: 8px;" icon="fas fa-pencil" class="text-white mx-2" :title="$t('action.edit')" @click="onClickEdit(data)"/>
+                                            <font-awesome-icon style="cursor: pointer; background-color: #dc3545;padding: 4px;border-radius: 8px;" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" @click="onClickDelete(data)"/>
+                                        </div>
                                     </template>
                                 </Column>
                             </DataTable>
@@ -79,7 +81,7 @@
                                         <th class="we_text_color">{{ $t('common.no') }}</th>
                                         <th class="we_text_color">{{ $t('subject.subjectName') }}</th>
                                         <th class="we_text_color">{{ $t('subject.subjectDesc') }}</th>
-                                        <th class="we_text_color">{{ $t('subject.edit') }}</th>
+                                        <th class="we_text_color" v-if="isAdd === false">{{ $t('subject.edit') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -91,7 +93,6 @@
                         </div>
                     </div>
                 </div>
-        
             </div>
         </div>
         <div class="pop_foot">

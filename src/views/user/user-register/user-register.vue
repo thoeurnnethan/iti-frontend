@@ -478,13 +478,18 @@ export default defineComponent({
                     academicList: academicList
                 }
             };
-            this.userList.push(userInfoList);
+            if(this.isSaveSuccess){
+                this.userList.push(userInfoList);
+            }
             const reqBody = {
                 userList: this.userList
             };
             const res = await requestService.request(API_PATH.USER_REGISTER, reqBody, true);
+            this.isSaveSuccess = res.header.result
             if(res.header.result){
                 this.resetForm(true)
+                this.isSaveSuccess = true
+                this.userList = []
             }
         },
 

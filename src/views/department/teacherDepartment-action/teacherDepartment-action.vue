@@ -95,7 +95,7 @@ export default defineComponent({
                     ...teacher,
                     fullName: `${teacher.specificID}-${teacher.firstName} ${teacher.lastName}`,
                     gender: this.$codeConverter.codeToString(this.genderCodeList, teacher.gender,'genderCode'),
-                    roleID: this.$codeConverter.codeToString(this.userRoleList, teacher.roleID),
+                    roleID: this.$codeConverter.codeToString(this.userRoleList, teacher.roleID, 'userRoleCode'),
                     originalRoleID: teacher.roleID
                 }));
             }
@@ -109,9 +109,9 @@ export default defineComponent({
             const response = await requestService.request(API_PATH.TEACHER_DEPARTMENT_LIST, reqBody, false) as any;
             this.teacherDepList = response.body.departmentList.map((teacher) => ({
                 ...teacher,
-                fullName: `${teacher.teacherID}-${teacher.firstName} ${teacher.lastName}`,
+                fullName: `${teacher.firstName} ${teacher.lastName}`,
                 gender: this.$codeConverter.codeToString(this.genderCodeList,teacher.gender,'genderCode'),
-                roleID: this.$codeConverter.codeToString(this.userRoleList, teacher.roleID || ''),
+                roleID: this.$codeConverter.codeToString(this.userRoleList, teacher.roleID, 'userRoleCode'),
             }));
             
         },

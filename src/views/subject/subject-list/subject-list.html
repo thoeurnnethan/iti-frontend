@@ -86,7 +86,7 @@
                 <Column field="subjectDesc" :header="$t('subject.subjectDesc')" style="min-width: 150px"></Column>
                 <Column field="statusCode" :header="$t('subject.statusCode')" style="max-width: 100px">
                     <template #body="{ data }">
-                        {{ $codeConverter.codeToString(statusCodeList, data.statusCode) }}
+                        {{ $codeConverter.codeToString(statusCodeList, data.statusCode, 'statusCode') }}
                     </template>
                 </Column>
                 <!-- Action Column -->

@@ -1,10 +1,10 @@
 <template src="./subject-list.html"></template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
-import { SUBJECT_LIST, SUBJECT_LIST_REQ, SUBJECT_LIST_RES } from '@/shared/types/subject-list';
+import { SUBJECT_LIST, SUBJECT_LIST_DOWNLOAD, SUBJECT_LIST_REQ, SUBJECT_LIST_RES } from '@/shared/types/subject-list';
 import subject_action from '../subject-action/subject-action.vue';
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import { YearList, SemesterList, globalStatusCodeList } from '@/shared/common/common';
@@ -20,6 +20,7 @@ export default defineComponent({
         MyLoading
     },
     data() {
+        const dataTable = ref<SUBJECT_LIST_DOWNLOAD[]>([]);
         return {
             yearList: YearList,
             semesterList: SemesterList,
@@ -34,7 +35,8 @@ export default defineComponent({
             pageNumber: 0,
             startingIndex: 1,
             expandedRowGroups: null,
-            selectClassId: ''
+            selectClassId: '',
+            dataTable
         }
     },
 
@@ -56,12 +58,8 @@ export default defineComponent({
             }
             const response = (await requestService.request(API_PATH.SUBJECT_LIST, reqBody, false)) as SUBJECT_LIST_RES;
             this.totalCount = response.body?.totalCount;
-            this.subjectList = response.body?.subjectList.map((data) => {
-                return {
-                    // no: data.subjectID?.substring(data.subjectID.length - 1, data.subjectID.length),
-                    ...data
-                }
-            });
+            this.subjectList = response.body?.subjectList
+            this.dataTable = response.body.subjectList
             this.Loading = false;
         },
 
@@ -184,12 +182,14 @@ export default defineComponent({
         },
 
         exportToExcel() {
-            const excelData = this.subjectList.map((data, index) => {
+            const excelData = this.dataTable.map((data, index) => {
                 return {
                     "No": index + 1,
-                    "ID": data.classID,
-                    "Class Name": data.subjectName,
-                    "Generation": data.subjectDesc,
+                    "Class Name": data.className,
+                    "Year": data.year,
+                    "Semester": data.semester,
+                    "Subject Name": data.subjectName,
+                    "Subject Description": data.subjectDesc
                 };
             })
             const exportExcelData = [
@@ -197,7 +197,7 @@ export default defineComponent({
                     data: excelData
                 },
             ];
-            exportExcel.exportSheet(exportExcelData, 'Class info')
+            exportExcel.exportSheet(exportExcelData, 'Subject info')
         },
 
     },

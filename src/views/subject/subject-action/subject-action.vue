@@ -73,7 +73,6 @@ export default defineComponent({
         },
     },
 
-
     computed: {
         isValidInsert(): boolean {
             return (
@@ -166,22 +165,27 @@ export default defineComponent({
 
         async onClickEdit(data: SUBJECT_LIST) {
             if (this.isEditing || this.editConfirmationVisible) {
-                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 3000 });
+                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Please finish editing the current record first.', life: 1000 });
                 return;
             }
             this.editConfirmationVisible = true;
             this.$confirm.require({
                 message: 'Do you want to edit this record?',
-                header: 'Confirmation',
+                header: 'Please Comfirm !',
+                acceptClass: "btn btn-warning",
+                rejectClass: 'btn btn-secondary',
                 accept: () => {
-                    this.subjectInfo = { ...data };
+                    this.subjectInfo = { 
+                        ...data ,
+                        classInfoID: this.subjectInfo.classInfoID
+                    };
                     this.editingIndex = this.subjectList.findIndex(item => item.subjectID === data.subjectID);
                     this.editConfirmationVisible = false;
-                    this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
+                    this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 1000 });
                 },
                 reject: () => {
                     this.editConfirmationVisible = false;
-                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 1000 });
                 }
             });
         },
@@ -193,12 +197,14 @@ export default defineComponent({
             }
             this.$confirm.require({
                 message: 'Do you want to delete this record?',
-                header: 'Confirmation',
+                header: 'Please Comfirm !',
+                acceptClass: "btn btn-danger",
+                rejectClass: 'btn btn-secondary',
                 accept: async () => {
                     if (this.isInsert == true && this.isAdd == false) {
                         this.subjectList = this.subjectList.filter(item => item.no !== data.no);
 
-                        this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+                        this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 1000 });
                         this.updateSeqNo();
                     }
                     if (this.isInsert == true && this.isAdd == true) {
@@ -213,14 +219,14 @@ export default defineComponent({
                         }
                         const res = await requestService.request(API_PATH.SUBJECT_UPDATE, reqBody, false) as SUBJECT_LIST_RES;
                         this.subjectList = res.body.subjectList;
-                        this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+                        this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 1000 });
                         console.log(res);
 
                         this.updateSeqNo();
                     }
                 },
                 reject: () => {
-                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 1000 });
                 }
             });
         },

@@ -150,12 +150,9 @@ export default defineComponent({
 
             // Format the dateOfBirth in studentList
             const formattedStudentList = responseStudent.body.studentList.map(student => {
-                const formattedDate = student.dateOfBirth ? 
-                    `${student.dateOfBirth.slice(0, 4)}-${student.dateOfBirth.slice(4, 6)}-${student.dateOfBirth.slice(6, 8)}` 
-                    : null;
                 return {
                     ...student,
-                    dateOfBirth: formattedDate // Set the formatted date
+                    dateOfBirth: this.$format.formatDateTime(student.dateOfBirth,'yyyy-mm-dd','Slash','FullMonth')
                 };
             });
 
@@ -163,7 +160,7 @@ export default defineComponent({
                 component: class_detail,
                 dataProp: {
                     subjectDetails: responseSubject.body.subjectList,
-                    studentDetails: formattedStudentList  // Pass the formatted list
+                    studentDetails: formattedStudentList
                 } 
             });
             
