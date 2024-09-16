@@ -74,12 +74,16 @@
                 <Column field="seqNo" :header="$t('common.no')" class="text-center" style="min-width: 80px;"></Column>
                 <Column sortable field="studentID" :header="$t('user.studentID')" style="min-width: 180px;"></Column>
                 <Column sortable field="fullName" :header="$t('user.name')" style="min-width: 200px;"></Column>
-                <Column field="gender" :header="$t('user.gender')" style="min-width: 80px;">
+                <Column :header="$t('user.gender')" style="min-width: 80px;">
                     <template #body="{ data }">
                         <span>{{ $codeConverter.codeToString(genderCodeList,data.gender, 'genderCode') }}</span>
                     </template>
                 </Column>
-                <Column field="phoneNumber" :header="$t('user.phone')" style="min-width: 150px;"></Column>
+                <Column :header="$t('user.phone')" style="min-width: 150px;">
+                    <template #body="{ data }">
+                        <span>{{ $phoneNumberFormater.formatPhoneNumber(data.phoneNumber) }}</span>
+                    </template>
+                </Column>
                 <Column v-for="subject in subjectList" 
                     sortable
                     :key="subject.subjectID" 

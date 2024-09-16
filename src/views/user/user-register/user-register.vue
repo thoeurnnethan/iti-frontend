@@ -109,6 +109,7 @@ export default defineComponent({
             customNoClass: 'table_no',
             addedButton: false,
             academicButton: false,
+            isSaveSuccess: true,
             
             editingIndex: -1,
             editingIndexAcademic: -1,
@@ -291,13 +292,18 @@ export default defineComponent({
                     qualificationList: qualList
                 }
             }
-            this.userList.push(userInfoList)
+            if(this.isSaveSuccess){
+                this.userList.push(userInfoList)
+            }
             const reqBody = {
                 userList: this.userList
             }
             const res = await requestService.request(API_PATH.USER_REGISTER, reqBody, true)
-            if(res.header.result){
+            this.isSaveSuccess = res.header.result
+            if(this.isSaveSuccess){
                 this.resetForm(true)
+                this.isSaveSuccess = true
+                this.userList = []
             }
         },
 
@@ -766,6 +772,7 @@ export default defineComponent({
                 this.userInfo = {
                     firstName: '',
                     lastName: '',
+                    nickName: '',
                     gender: '',
                     dateOfBirth: '',
                     placeOfBirth: '',

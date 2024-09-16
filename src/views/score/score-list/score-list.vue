@@ -135,6 +135,7 @@ export default {
                     }
                 })
                 this.request = []
+                this.onGetStudentScoreList()
             }
         },
 

@@ -135,6 +135,9 @@ table th {
 .p-datepicker-header {
     padding: 0;
 }
+.p-datatable td {
+    user-select: text !important;
+}
 
 // date
 
