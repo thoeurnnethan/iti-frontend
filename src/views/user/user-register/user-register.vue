@@ -2,7 +2,8 @@
 
 <script lang="ts">
 import { API_PATH } from '@/shared/common/api-path';
-import { USER_LIST, QUALIFICATION_LIST, PARENT_LIST, ACADEMIC_LIST, USER_DETAIL_RES, USER_LIST_FORM_CHECK, QUALIFICATION_LIST_FORM_CHECK, ACADEMIC_LIST_FORM_CHECK, PARENT_LIST_FORM_CHECK } from '@/shared/types/user-list';
+import { USER_LIST, QUALIFICATION_LIST, PARENT_LIST, ACADEMIC_LIST, USER_DETAIL_RES, USER_LIST_FORM_CHECK,
+    QUALIFICATION_LIST_FORM_CHECK, ACADEMIC_LIST_FORM_CHECK, PARENT_LIST_FORM_CHECK } from '@/shared/types/user-list';
 import { RequestService } from '@/shared/services/request-service';
 import { defineComponent } from 'vue';
 import { TeacherRoleList,UserRole, UserRoleList } from '@/shared/common/common';
@@ -115,7 +116,7 @@ export default defineComponent({
             editingIndexAcademic: -1,
 
             userIDFromURl: this.$route.params.userID,
-            routerName: this.$route.name,
+            routerName: this.$route.name as string,
         };
     },
 
@@ -131,6 +132,9 @@ export default defineComponent({
             this.userRole = this.$codeConverter.codeToStringList(this.userRole, 'userRoleCode')
             this.teacherRoleList = this.$codeConverter.codeToStringList(this.teacherRoleList, 'userRoleCode')
             this.userRoleList = this.$codeConverter.codeToStringList(this.userRoleList, 'userRoleCode')
+        },
+        'routerName'(newValue){
+            if(newValue) this.resetForm(true)
         }
     },
     
@@ -145,7 +149,11 @@ export default defineComponent({
     },
 
     beforeRouteEnter(to, from, next) {
-        next(vm => vm.resetForm(true));
+        next((vm: any) => {
+            if (vm) {
+                vm.resetForm(true);
+            }
+        });
     },
 
     beforeRouteUpdate(to, from, next) {
@@ -245,6 +253,10 @@ export default defineComponent({
 
         isRegisterRoute(): boolean {
             return this.routerName === 'user-register'
+        },
+
+        isUpdateRoute(): boolean{
+            return this.routerName.includes('user-update')
         },
 
         isRegisterStudent(): boolean {
@@ -678,7 +690,6 @@ export default defineComponent({
             const body = {
                 userID: this.userIDFromURl
             };
-            
             // Requesting user details from the API
             const response = (await requestService.request(API_PATH.USER_DETAIL, body, false)) as USER_DETAIL_RES;
 
@@ -773,6 +784,7 @@ export default defineComponent({
         },
         
         resetForm(isResetUserInfo: boolean) {
+            this.userSelectedRole = '03'
             if(isResetUserInfo){
                 this.userInfo = {
                     firstName: '',
@@ -788,7 +800,7 @@ export default defineComponent({
                     departmentID: ''
                 } as USER_LIST
             }
-            this.routerName = this.$route.name
+            this.routerName = this.$route.name as string
             this.userInfoCheckFields= {
                 firstName: false,
                 lastName: false,
