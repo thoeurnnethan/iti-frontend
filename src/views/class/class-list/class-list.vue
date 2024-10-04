@@ -232,8 +232,7 @@ export default defineComponent({
             })
         },
 
-        async onClickInsertStudent(item: CLASS_LIST) {
-
+        onClickInsertStudent(item: CLASS_LIST) {
             this.$popupService.onOpen({
                 component: studentClass_action,
                 dataProp: {

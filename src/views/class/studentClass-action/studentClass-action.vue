@@ -2,7 +2,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { TEACHER_RES, USER_LIST } from '@/shared/types/user-list';
+import { TEACHER_RES } from '@/shared/types/user-list';
 import { CLASS_LIST, CLASS_LIST_RES } from '@/shared/types/class-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
@@ -55,14 +55,13 @@ export default defineComponent({
         checkSelectedStudent(): boolean{
             return this.selectedStudent.length > 0;
         }
-        
     },
-
 
     mounted() {
         this.onGetStudentList();
-        this.getStudentDataInClass();
+        this.getStudentListInClass();
     },
+
     methods: {
         async onGetStudentList() {
             const reqBody = {
@@ -81,20 +80,21 @@ export default defineComponent({
             }
         },
 
-        async getStudentDataInClass() {
+        async getStudentListInClass() {
             const reqBody = {
                 classInfoID: this.studentInfoData.classInfoID,
                 studentID: '',
             };
 
             const response = await requestService.request(API_PATH.STUDENT_CLASS_LIST, reqBody, false) as CLASS_LIST_RES;
-            this.studentClassList = response.body.studentList.map((student: { firstName: string; lastName: string; }) => ({
+            this.studentClassList = response.body.studentList.map((student) => ({
                 ...student,
                 fullName: `${student.firstName} ${student.lastName}`,
+                gender: this.$codeConverter.codeToString(this.genderCodeList, student.gender, 'genderCode'),
             }));
         },
 
-        async saveData() {
+        async onAddStudentToClass() {
             const studentList = this.selectedStudent.map(student => ({
                 studentID: student.specificID
             }));
@@ -102,8 +102,12 @@ export default defineComponent({
                 classInfoID: this.studentInfoData.classInfoID,
                 studentList: studentList
             };
-            const res = await requestService.request(API_PATH.STUDENT_CLASS_REGISTER, requestBody, true) as any;
-            this.studentList = res.body.studentList
+            const response = await requestService.request(API_PATH.STUDENT_CLASS_REGISTER, requestBody, true) as any;
+            this.studentClassList = response.body.studentList.map((student) => ({
+                ...student,
+                fullName: `${student.firstName} ${student.lastName}`,
+                gender: this.$codeConverter.codeToString(this.genderCodeList, student.gender, 'genderCode'),
+            }));
         },
 
         onClose() {

@@ -31,11 +31,11 @@
                             </dl>
                             <dl>
                                 <dt>{{ $t('department.firstRegisterDate') }}</dt>
-                                <dd>{{ $format.formatDateTime(department.firstRegisterDate,'yyyy-mm-dd') }}</dd>
+                                <dd>{{ $format.formatDateTime(department.firstRegisterDate,'yyyy-mm-dd','Slash','FullMonth') }}</dd>
                             </dl>
                             <dl>
                                 <dt>{{ $t('department.lastChangeDate') }}</dt>
-                                <dd>{{ $format.formatDateTime(department.lastChangeDate,'yyyy-mm-dd') }}</dd>
+                                <dd>{{ $format.formatDateTime(department.lastChangeDate,'yyyy-mm-dd','Slash','FullMonth') }}</dd>
                             </dl>
                         </div>
                         <table v-else>

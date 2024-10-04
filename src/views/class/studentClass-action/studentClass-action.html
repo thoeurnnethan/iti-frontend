@@ -1,5 +1,5 @@
 <Toast />
-<ConfirmationDialog />
+<ConfirmDialog />
 <div class="popup">
     <div class="popWrap w90p">
         <div class="pop_head">
@@ -32,8 +32,7 @@
                                 <div class="we_shadow">
                                     <DataTable v-model:selection="selectedStudent" 
                                         :value="studentsNotInClass"
-                                        dataKey="specificID" 
-                                        :rowClass="rowClass" 
+                                        dataKey="specificID"
                                         scrollable scrollHeight="290px">
                                         <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
                                         <Column field="fullName" :header="$t('user.name')"></Column>
@@ -52,7 +51,7 @@
                                 </div>
                                 <div class="container-fluid w-100 mt-3 d-flex justify-content-end p-0">
                                     <button :class="checkSelectedStudent ? 'btn01' : 'btn03'" style="width:185px" 
-                                    @click="saveData()" 
+                                    @click="onAddStudentToClass()" 
                                     :disabled="!checkSelectedStudent">{{ $t('common.save') }}</button>
                                 </div>
                             </div>

@@ -113,10 +113,9 @@ export default defineComponent({
                 gender: this.$codeConverter.codeToString(this.genderCodeList,teacher.gender,'genderCode'),
                 roleID: this.$codeConverter.codeToString(this.userRoleList, teacher.roleID, 'userRoleCode'),
             }));
-            
         },
 
-        async saveData() {
+        async onAddTeacherToDept() {
             const teacherList = this.selectedTeacher.map(teacher => ({
                 teacherID: teacher.specificID,
                 roleCode: teacher.originalRoleID,

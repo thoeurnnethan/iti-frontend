@@ -7,10 +7,10 @@ import { userLoginResData } from '../types/user-type';
 const util = new Utils();
 
 export class RequestService {
-    baseUrl = import.meta.env.VITE_APP_SERVER_URL;
-    private defaultHeaders: any;
+    baseUrl = import.meta.env.VITE_APP_SERVER_URL
+    private defaultHeaders: any
     private userInfo = util.getDataStorage('userInfo', true) as userLoginResData
-
+    private isAuthenticated = util.getDataStorage('isAuthenticated', true)
 
     constructor() {
         this.defaultHeaders = {
@@ -19,8 +19,11 @@ export class RequestService {
     }
 
     private getHeaders() {
+        if(this.isAuthenticated) {
+            this.defaultHeaders['Authorization'] = 'Bearer ' + this.userInfo.jwtToken
+        }
         return {
-            ...this.defaultHeaders,
+            ...this.defaultHeaders
         };
     }
 

@@ -42,9 +42,8 @@ export default defineComponent({
                 }
                 const res = (await requestService.request(API_PATH.USER_LOGIN, reqBody, false, true)) as userLoginRes
                 if(res.header.result){
-                    this.userResInfo = res.body
-                    this.userResInfo ={
-                        ...this.userResInfo,
+                    this.userResInfo = {
+                        ...res.body,
                         loginSessionID: res.header.login_session_id
                     }
                     this.$util.setDataStorage('userInfo', this.userResInfo,true)
