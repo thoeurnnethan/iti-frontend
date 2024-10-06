@@ -81,10 +81,11 @@ export default defineComponent({
             const reqBody = {
                 ...this.departmentInfo,
             }
-            const res = await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, true) as DEPARTMENT_LIST;
+            const res = await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, false) as DEPARTMENT_LIST;
             this.departmentInfo = res;
             if (res) {
                 modalController.dismiss();
+                this.$toast.add({ summary: 'Confirmed', detail: 'The record has been updated.', life: 1000 });
             }
         },
 
@@ -92,10 +93,11 @@ export default defineComponent({
             const reqBody = {
                 ...this.departmentInfo,
             }
-            const res = await requestService.request(API_PATH.DEPARTMENT_REGISTER, reqBody, true) as DEPARTMENT_LIST;
+            const res = await requestService.request(API_PATH.DEPARTMENT_REGISTER, reqBody, false) as DEPARTMENT_LIST;
             this.departmentInfo = res;
             if (res) {
                 modalController.dismiss();
+                this.$toast.add({ summary: 'Confirmed', detail: 'The record has been inserted.', life: 1000 });
             }
         },
 

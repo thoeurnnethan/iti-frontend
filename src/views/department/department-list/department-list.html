@@ -71,7 +71,8 @@
             </Column>
             <Column :header="$t('department.teacher')">
                 <template #body="{ data }">
-                    <button class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addTeacher') }}</button>
+                    <button v-if="data.statusCode === '01'" class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addTeacher') }}</button>
+                    <button v-else disabled class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addTeacher') }}</button>
                 </template>
             </Column>
         </DataTable>

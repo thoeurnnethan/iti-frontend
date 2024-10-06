@@ -86,6 +86,10 @@ export default defineComponent({
             })
         },
 
+        onClickAddNew() {
+            this.$router.push('/user-register');
+        },
+
         async deleteUser(_item: USER_LIST) {
             this.$confirm.require({
                 message: 'Do you want to delete this record?',

@@ -8,9 +8,13 @@
             <span class="text_title mx-2">{{ $t('user.userList') }}</span>
         </div>
         <div>
-            <button type="button" class="btn btn-dark p-1 px-2" @click="exportToExcel">
+            <button type="button" class="btn btn-dark p-1 px-2 mx-3" @click="exportToExcel">
                 <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
                 <font-awesome-icon :icon="['fas', 'file-excel']" />
+            </button>
+            <button class="btn btn-primary p-1 px-2" @click="onClickAddNew" >
+                <span class="mx-1">{{ $t('common.addNew') }}</span>
+                <font-awesome-icon :icon="['fas', 'plus']" />
             </button>
         </div>
     </div>
