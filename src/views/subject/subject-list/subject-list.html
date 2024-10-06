@@ -84,17 +84,17 @@
                 <Column field="classInfoID" :header="$t('subject.classID')" style="min-width:100px"></Column>
                 <Column field="subjectName" :header="$t('subject.subjectName')" style="min-width: 150px"></Column>
                 <Column field="subjectDesc" :header="$t('subject.subjectDesc')" style="min-width: 150px"></Column>
-                <Column field="statusCode" :header="$t('subject.statusCode')" style="max-width: 100px">
+                <!-- <Column field="statusCode" :header="$t('subject.statusCode')" style="max-width: 100px">
                     <template #body="{ data }">
                         {{ $codeConverter.codeToString(statusCodeList, data.statusCode, 'statusCode') }}
                     </template>
-                </Column>
+                </Column> -->
                 <!-- Action Column -->
                 <Column :header="$t('action.action')">
                     <template #body="{ data }">
                         <div v-if="data.statusCode === '01'" class="d-flex justify-content-center align-item-center">
-                            <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-white" :title="$t('action.edit')" />
-                            <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '09')" :icon="['fas', 'fa-archive']" class="text-white mx-2" :title="$t('action.inactive')" />
+                            <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;margin-right: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-white" :title="$t('action.edit')" />
+                            <!-- <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '09')" :icon="['fas', 'fa-archive']" class="text-white mx-2" :title="$t('action.inactive')" /> -->
                             <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" :icon="['fas', 'fa-trash']" class="text-white" :title="$t('action.delete')" />
                         </div>
                         <div v-else class="d-flex justify-content-center align-item-center">

@@ -37,18 +37,18 @@
                                 <label class="form-label font_15">{{ $t('subject.subjectName') }}</label><br>
                                 <InputText v-model="subjectInfo.subjectName" :invalid="fieldNameValidate" />
                             </div>
-                            <div class="col-lg-6 col-md-4 mb-2">
+                            <div class="col-lg-9 col-md-4 mb-2">
                                 <label class="form-label font_15">{{ $t('subject.subjectDesc') }}</label><br>
                                 <Textarea v-model="subjectInfo.subjectDesc" rows="5" cols="30" :invalid="fieldDesValidate" />
                             </div>
-                            <div class="col-lg-3 col-md-4 mb-2" v-if="!isInsert">
+                            <!-- <div class="col-lg-3 col-md-4 mb-2" v-if="!isInsert">
                                 <label class="form-label font_15">{{ $t('subject.statusCode') }}</label><br>
                                 <select class="form-select" v-model="subjectInfo.statusCode">
                                     <option v-for="status in statusCodeList" :value="status.codeValue">
                                         {{ status.codeValueDesc }}
                                     </option>
                                 </select>
-                            </div>
+                            </div> -->
                             <div class="col-lg-3 col-md-4 mb-2" v-if="isInsert">
                                 <button class="btn btn-info w-100" style="margin-top: 30.5px;" @click="onAddSubjectToList">
                                     <font-awesome-icon :icon="['fa', 'plus']" />

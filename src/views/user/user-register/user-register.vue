@@ -32,7 +32,7 @@ export default defineComponent({
                 phone: '',
                 email: '',
                 classInfoID: '',
-                departmentID: '',
+                // departmentID: '',
             } as USER_LIST,
             fatherInfo: {
                 firstName: '',

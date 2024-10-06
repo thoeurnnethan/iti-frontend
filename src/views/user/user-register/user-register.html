@@ -93,14 +93,14 @@
                         </option>
                     </select>
                 </div>
-                <div :class="customRowClass" v-else-if="!isRegisterStudent && isRegisterRoute">
+                <!-- <div :class="customRowClass" v-else-if="!isRegisterStudent && isRegisterRoute">
                     <label :class="customFormClass">{{ $t('class.selectDepartment') }}</label>
                     <select class="form-select" v-model="userInfo.departmentID" >
                         <option v-for="department in departmentList" :key="department.departmentID" :value="department.departmentID">
                             {{ department.departmentName }}
                         </option>
                     </select>
-                </div>
+                </div> -->
             </div>
         </div>
 

@@ -115,10 +115,11 @@ export default defineComponent({
                 generation: this.classInfo.generation + ''
             };
 
-            const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, true) as CLASS_LIST;
+            const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false,true) as CLASS_LIST;0
             this.classInfo = res;
             if (res) {
                 modalController.dismiss();
+                this.$toast.add({ summary: 'Confirmed', detail: 'The information has been updated.', life: 1500 });
             }
         },
 
