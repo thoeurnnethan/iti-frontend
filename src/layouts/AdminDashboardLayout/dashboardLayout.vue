@@ -53,7 +53,6 @@ export default defineComponent({
     mounted() {
         this.isCollapse = localStorage.getItem('collapse') === "true";
         this.getMenuList();
-        
     },
 
     methods: {
