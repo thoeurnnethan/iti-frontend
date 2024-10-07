@@ -5,6 +5,7 @@ import type {
     FormatList,
     FormatStyle,
 } from "../types/common.type";
+import dayjs from 'dayjs';
 
 export class DateFormat {
     //FormatDateTime (value:string = date,mode:DateFormats = Date format form Ex:yyyymmdd, format:FormatList = format style Ex: yyyy/mm/dd or yyyy-mm-dd,style:FormtStyle= month format )
@@ -257,7 +258,6 @@ export class DateFormat {
             return time;
         }
     }
-
     public convertTo24HourFormat(time: string) {
         try {
             const [timePart, suffix] = time.split(' ');
@@ -274,5 +274,8 @@ export class DateFormat {
         } catch (error) {
             return time;
         }
+    }
+    public getDate(): string {
+        return dayjs().format('YYYYMMDDHHmmssSSS');
     }
 }

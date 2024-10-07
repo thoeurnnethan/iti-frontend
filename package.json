@@ -24,6 +24,7 @@
         "bootstrap": "^5.3.2",
         "bootstrap-vue": "^2.23.1",
         "core-js": "^3.6.5",
+        "dayjs": "^1.11.13",
         "iti-thesis": "file:",
         "jquery": "^3.7.1",
         "jwt-decode": "^4.0.0",

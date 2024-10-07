@@ -33,12 +33,13 @@ export default defineComponent({
 
     watch:{
         'passwordInfo.confirmPassword'(){
-            if(this.passwordInfo.newPassword !== this.passwordInfo.confirmPassword){
-                this.isPasswordMatch = false
-            }else{
-                this.isPasswordMatch = true;
-            }
+            this.validatePassword()
+            this.isPasswordMatch = this.checkPasswordMatch()
         },
+        'passwordInfo.newPassword'(){
+            this.validatePassword()
+            this.isPasswordMatch = this.checkPasswordMatch()
+        }
     },
 
     computed:{
@@ -47,7 +48,11 @@ export default defineComponent({
                 && this.passwordInfo.newPassword !== ''
                 && this.passwordInfo.confirmPassword !== ''
         },
-
+        isEnableChange() : boolean {
+            return !this.isValidForm
+            || (this.checkPasswordMatch() == false)
+            || (!this.passwordRegex.test(this.passwordInfo.newPassword))
+        }
     },
 
     methods: {
@@ -59,7 +64,7 @@ export default defineComponent({
                     oldPasswd: this.passwordInfo.oldPassword,
                     newPasswd: this.passwordInfo.newPassword
                 }
-                const res = (await requestService.request(API_PATH.USER_CHANGE_PASSWORD, reqBody, false, true)) as userLoginRes
+                const res = (await requestService.request(API_PATH.USER_CHANGE_PASSWORD, reqBody, false)) as userLoginRes
                 if(res.header.result){
                     this.isAuthenticated1 = true;
                     this.$router.push('admin-dashboard')
@@ -74,6 +79,9 @@ export default defineComponent({
                 this.validationMessage = 'Password is not Valid!';
             }
         },
+        checkPasswordMatch(): boolean { 
+            return this.passwordInfo.newPassword === this.passwordInfo.confirmPassword
+        }
     },
 })
 </script>

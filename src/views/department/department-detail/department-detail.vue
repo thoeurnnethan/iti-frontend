@@ -80,7 +80,7 @@ export default defineComponent({
                         }],
                     };
 
-                    const res = await requestService.request(API_PATH.TEACHER_DEPARTMENT_UPDATE, reqBody, false,true) as any;
+                    const res = await requestService.request(API_PATH.TEACHER_DEPARTMENT_UPDATE, reqBody, false) as any;
                     this.departmentMemberInfo = res.body.teacherList.map((member: { firstName: any; lastName: any, gender: any, roleID: any }, index: number) => ({
                         ...member,
                         fullName: `${member.firstName} ${member.lastName}`,

@@ -115,7 +115,7 @@ export default defineComponent({
                 generation: this.classInfo.generation + ''
             };
 
-            const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false,true) as CLASS_LIST;0
+            const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false) as CLASS_LIST;
             this.classInfo = res;
             if (res) {
                 modalController.dismiss();

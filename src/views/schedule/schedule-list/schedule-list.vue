@@ -92,15 +92,6 @@ export default defineComponent({
     },
 
     methods: {
-        formatSchedule(schedule: { firstName?: any; lastName?: any; subjectName?: any; roomName?: any; building?: any; startTime?: any; endTime?: any; }) {
-            if (!schedule || Object.keys(schedule).length === 0) return '';
-            return `Time: ${this.formatTime(schedule.startTime)} - ${this.formatTime(schedule.endTime)}\nSubject: ${schedule.subjectName}\nTeacher: ${schedule.firstName} ${schedule.lastName}\nRoom: ${schedule.roomName}\nBuilding: ${schedule.building}`;
-        },
-
-        formatTime(time: string | any[]) {
-            return `${time.slice(0, 2)}:${time.slice(2)}`;
-        },
-
         async onGetScheduleListDynamicColumn() {
             const reqBody = this.filterInfo
             const response = (await requestService.request(API_PATH.SCHEDULE_LIST, reqBody, false)) as SCHEDULE_LIST_RES;
@@ -166,11 +157,20 @@ export default defineComponent({
             const currentYear = new Date().getFullYear();
             const startYear = 2020;
             const years = [] as any[];
-
             for (let year = currentYear; year >= startYear; year--) {
                 years.push({ codeValue: year.toString(), codeValueDesc: year });
             }
             return years;
+
+        },
+
+        formatSchedule(schedule: { firstName?: any; lastName?: any; subjectName?: any; roomName?: any; building?: any; startTime?: any; endTime?: any; }) {
+            if (!schedule || Object.keys(schedule).length === 0) return '';
+            return `Time: ${this.formatTime(schedule.startTime)} - ${this.formatTime(schedule.endTime)}\nSubject: ${schedule.subjectName}\nTeacher: ${schedule.firstName} ${schedule.lastName}\nRoom: ${schedule.roomName}\nBuilding: ${schedule.building}`;
+        },
+
+        formatTime(time: string | any[]) {
+            return `${time.slice(0, 2)}:${time.slice(2)}`;
         },
 
         exportToExcel() {
