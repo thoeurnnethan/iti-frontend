@@ -45,7 +45,6 @@ export default defineComponent({
     },
 
     methods: {
-
         async getSubjectList() {
             this.Loading = true;
             const reqBody: SUBJECT_LIST_REQ = {

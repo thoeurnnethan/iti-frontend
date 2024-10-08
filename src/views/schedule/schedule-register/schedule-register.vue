@@ -274,7 +274,6 @@ export default defineComponent({
                 scheduleList: this.scheduleList
             }
             const res = await requestService.request(API_PATH.SCHEDULE_REGISTER, reqBody, true);
-            console.log(res);
         },
 
         onClickClearFilter() {
