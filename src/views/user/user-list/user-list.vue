@@ -41,13 +41,13 @@ export default defineComponent({
 
     watch:{
         '$i18n.locale'(){
-            this.updateTranslatedUserroleList()
+            this.userRoleList = this.$codeUtil.translateUserRoleList()
         }
     },
 
     mounted() {
         this.getUserList()
-        this.updateTranslatedUserroleList()
+        this.userRoleList = this.$codeUtil.translateUserRoleList()
     },
 
     methods: {
@@ -159,13 +159,6 @@ export default defineComponent({
                 },
             ];
             exportExcel.exportSheet(exportExcelData, 'User info')
-        },
-
-        updateTranslatedUserroleList() {
-            this.userRoleList = this.userRoleList.map(item => ({
-                codeValue: item.codeValue,
-                codeValueDesc: this.$codeConverter.codeToString(this.userRoleList, String(item.codeValue), 'userRoleCode')
-            }));
         },
 
     },

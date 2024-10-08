@@ -10,6 +10,7 @@ import { DateFormat } from './shared/services/date-time';
 import { ConvertCode } from './shared/services/code-convert';
 import { PhoneNumberFormat } from './shared/services/phone-number';
 import Utils from './shared/util';
+import { TranslateCodeUtil } from './shared/services/translate-code-list';
 
 /* Global Style */
 import "../src/assets/scss/global.scss";
@@ -166,6 +167,7 @@ app.config.globalProperties.$popupService = new PopupService();
 app.config.globalProperties.$codeConverter = new ConvertCode();
 app.config.globalProperties.$phoneNumberFormater = new PhoneNumberFormat();
 app.config.globalProperties.$util = new Utils();
+app.config.globalProperties.$codeUtil = new TranslateCodeUtil();
 
 
 app.directive('tooltip', Tooltip)

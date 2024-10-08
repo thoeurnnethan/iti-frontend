@@ -44,7 +44,7 @@ export default defineComponent({
 
     watch: {
         '$i18n.locale'(){
-            this.statusCodeList = this.$codeConverter.codeToStringList(this.statusCodeList, 'statusCode')
+            this.statusCodeList = this.$codeUtil.translateStatusCodelist()
         }
     },
 
@@ -64,7 +64,7 @@ export default defineComponent({
 
     mounted() {
         this.onInitData();
-        this.statusCodeList = this.$codeConverter.codeToStringList(this.statusCodeList, 'statusCode')
+        this.statusCodeList = this.$codeUtil.translateStatusCodelist()
     },
 
     methods: {
@@ -115,13 +115,6 @@ export default defineComponent({
                     fullName: data.firstName.concat(' - ', data.lastName)
                 }
             })
-        },
-
-        updateTranslatedStatusCodes() {
-            this.statusCodeList = this.statusCodeList.map(item => ({
-                codeValue: item.codeValue,
-                codeValueDesc: this.$codeConverter.codeToString(this.statusCodeList, String(item.codeValue), 'statusCode')
-            }));
         },
 
         handleClose() {

@@ -37,6 +37,9 @@
             tableStyle="min-width: 50rem"
             selectionMode="single" 
             scrollable
+            resizableColumns 
+            columnResizeMode="fit" 
+            showGridlines
             :value="departmentList" 
             :metaKeySelection="true" 
             :rows="pageSize"
@@ -45,7 +48,7 @@
             :totalRecords="totalCount"
             :rowsPerPageOptions="[10, 20, 50]" 
             @page="onPage"
-            :rowClass="rowClass">
+            :rowClass="rowClass1">
             <Column field="no" :header="$t('common.no')" :class="['text-center']"></Column>
             <Column field="departmentID" :header="$t('department.depID')"></Column>
             <Column field="departmentName" :header="$t('department.depName')"></Column>
