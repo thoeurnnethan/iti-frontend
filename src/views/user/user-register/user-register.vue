@@ -129,9 +129,9 @@ export default defineComponent({
             }
         },
         '$i18n.locale'(){
-            this.userRole = this.$codeConverter.codeToStringList(this.userRole, 'userRoleCode')
-            this.teacherRoleList = this.$codeConverter.codeToStringList(this.teacherRoleList, 'userRoleCode')
-            this.userRoleList = this.$codeConverter.codeToStringList(this.userRoleList, 'userRoleCode')
+            this.userRole = this.$codeUtil.translateAllUserRoleList()
+            this.teacherRoleList = this.$codeUtil.translateTeacherRoleList()
+            this.userRoleList = this.$codeUtil.translateUserRoleList()
         },
         'routerName'(newValue){
             if(newValue) this.resetForm(true)
@@ -139,9 +139,9 @@ export default defineComponent({
     },
     
     mounted() {
-        this.userRole = this.$codeConverter.codeToStringList(this.userRole, 'userRoleCode')
-        this.teacherRoleList = this.$codeConverter.codeToStringList(this.teacherRoleList, 'userRoleCode')
-        this.userRoleList = this.$codeConverter.codeToStringList(this.userRoleList, 'userRoleCode')
+        this.userRole = this.$codeUtil.translateAllUserRoleList()
+        this.teacherRoleList = this.$codeUtil.translateTeacherRoleList()
+        this.userRoleList = this.$codeUtil.translateUserRoleList()
         if (!this.isRegisterRoute) {
             this.getUserDetailSummary();
         }

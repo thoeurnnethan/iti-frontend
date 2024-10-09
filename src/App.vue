@@ -30,14 +30,12 @@ export default defineComponent({
         if(userInfo == undefined) {
             this.handleExpiredToken
         }else{
-            if (userInfo.jwtToken) {
+            if (userInfo.token) {
                 try {
-                    const decoded = jwtDecode(userInfo.jwtToken)
-                    console.log(decoded);
+                    const decoded = jwtDecode(userInfo.token)
                     const currentTime = Date.now() / 1000;
-                    if (decoded.exp < currentTime) {
-                        console.log('Token is expired123')
-                        console.log('handleExpiredToken')
+                    if (decoded && typeof decoded.exp === 'number' && decoded.exp < currentTime) {
+                        console.log('Token is expired')
                         this.$util.setDataStorage('isAuthenticated', false, true)
                         this.$util.setDataStorage('lastRoute', '/', true)
                         this.$router.push('/')
@@ -80,10 +78,7 @@ export default defineComponent({
 
     methods: {  
         handleExpiredToken() {
-            console.log('handleExpiredToken');
-            // this.$util.setDataStorage('isAuthenticated',false,true)
-            // this.$util.setDataStorage('lastRoute','/',true)
-            // this.$router.push('/')
+            console.log('handleExpiredToken')
         }
     }
 })

@@ -42,8 +42,8 @@ export default {
 
     watch:{
         '$i18n.locale'(){
-            this.yearList = this.$codeConverter.codeToStringList(this.yearList,'yearCode')
-            this.semesterList = this.$codeConverter.codeToStringList(this.semesterList,'semesterCode')
+            this.semesterList = this.$codeUtil.translateSemesterlist()
+            this.yearList = this.$codeUtil.translateYearlist()
         },
         'filterInfo.departmentID'(){
             this.checkIsSelectClassID
@@ -89,8 +89,8 @@ export default {
     mounted() {
         this.getDepartmentList()
         this.getClassList()
-        this.yearList = this.$codeConverter.codeToStringList(this.yearList,'yearCode')
-        this.semesterList = this.$codeConverter.codeToStringList(this.semesterList,'semesterCode')
+        this.semesterList = this.$codeUtil.translateSemesterlist()
+        this.yearList = this.$codeUtil.translateYearlist()
     },
 
     methods: {
@@ -232,7 +232,7 @@ export default {
                 },
             ];
             exportExcel.exportSheet(exportExcelData, 'student-score')
-        },
+        }
     }
 };
 </script>

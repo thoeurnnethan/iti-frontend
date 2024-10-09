@@ -20,7 +20,7 @@ interface userLoginResData{
     address: string
     phone: string
     email: string
-    jwtToken: string
+    token: string
     imageUrl: string
     loginByUserYn: string
     loginSessionID?: string

@@ -71,7 +71,7 @@ export default defineComponent({
             }
             const response = (await requestService.request(API_PATH.DEPARTMENT_LIST, reqBody, false)) as DEPARTMENT_LIST_RES;
             this.totalCount = response.body?.totalCount;
-            this.departmentList = response.body?.departmentList.map((data, index) => {
+            this.departmentList = response.body.departmentList.map((data, index) => {
                 return {
                     ...data,
                     no: index + 1 + (this.pageSize) * this.pageNumber
@@ -82,6 +82,9 @@ export default defineComponent({
 
         rowClass(data: { statusCode: string; }) {
             return data.statusCode === '09' ? 'we_bg_row' : '';
+        },
+        rowClass1(data) {
+            return [{ 'we_bg_row': data.statusCode === '09' }];
         },
 
         // Handle page size page number

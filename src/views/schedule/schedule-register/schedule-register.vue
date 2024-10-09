@@ -206,7 +206,7 @@ export default defineComponent({
                 teacherID: '',
                 departmentID: this.checkedAllTeacher ? this.filterInfo.departmentID : ''
             }
-            const res = await requestService.request(API_PATH.DEPARTMENT_MNGT_LIST, reqBody, false) as TEACHER_LIST_RES;
+            const res = await requestService.request(API_PATH.TEACHER_DEPARTMENT_LIST, reqBody, false) as TEACHER_LIST_RES;
             this.teacherList = res.body.departmentList
         },
 
@@ -274,7 +274,6 @@ export default defineComponent({
                 scheduleList: this.scheduleList
             }
             const res = await requestService.request(API_PATH.SCHEDULE_REGISTER, reqBody, true);
-            console.log(res);
         },
 
         onClickClearFilter() {

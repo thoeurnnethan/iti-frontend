@@ -85,7 +85,7 @@ export default defineComponent({
                             statusCode: '02'
                         }],
                     };
-                    const res = await requestService.request(API_PATH.STUDENT_CLASS_UPDATE, reqBody, false, true);
+                    const res = await requestService.request(API_PATH.STUDENT_CLASS_UPDATE, reqBody, false);
                     this.studentInfo = res.body.studentList.map((data,index) =>{
                         return {
                             no: index + 1,
