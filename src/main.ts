@@ -155,7 +155,8 @@ import {
 const pinia = createPinia();
 const app = createApp(App)
     .use(i18n)
-    .use(pinia).use(IonicVue)
+    .use(pinia)
+    .use(IonicVue)
     .use(PrimeVue, { ripple: true })
     .use(ConfirmationService)
     .use(ToastService)
@@ -203,5 +204,4 @@ app.component('Badge', Badge)
     .component("useIonRouter", useIonRouter)
     .component("loadingController", loadingController)
     .component("toastController", toastController)
-
 app.mount('#app')

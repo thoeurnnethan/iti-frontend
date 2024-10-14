@@ -67,7 +67,7 @@
                             :options="languageList" aria-labelledby="basic" />
                     </div>
                 </div>
-                <button class="btn btn-warning p-2" @click="onClickLogout">Logout</button>
+                <button class="btn btn-warning p-2" @click="onClickLogout">{{ $t('common.logout') }}</button>
             </div>
             <div class="main_content m-3">
                 <router-view></router-view>

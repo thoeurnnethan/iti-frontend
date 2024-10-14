@@ -4,6 +4,7 @@ import { RequestErrorHandlingService } from './RequestErrorHandlingService';
 import Utils from '../util';
 import { userLoginResData } from '../types/user-type';
 import { DateFormat } from './date-time';
+import router from '@/router';
 
 const util = new Utils();
 const dateTime = new DateFormat();
@@ -21,15 +22,16 @@ export class RequestService {
     }
 
     private getHeaders() {
-        if(this.isAuthenticated) {
-            this.defaultHeaders['Authorization'] = 'Bearer ' + this.userInfo.token
+        if(this.isAuthenticated && this.isAuthenticated === true) {
+            const token = this.userInfo.token ? this.userInfo.token : ''
+            this.defaultHeaders['Authorization'] = 'Bearer ' + token
         }
         return {
             ...this.defaultHeaders
         };
     }
 
-    public async request(apiPath: string, requestBody: any, isShowMessage = true): Promise<any> {
+    public async request(apiPath: string, requestBody: any, isShowMessage = false) {
         const fullReqBody = {
             header: {
                 error_code: "",
@@ -44,12 +46,11 @@ export class RequestService {
 
         const url = `${this.baseUrl}/${apiPath}`;
         const config: AxiosRequestConfig = {
-            headers: this.getHeaders(),
-            withCredentials: true
+            headers: this.getHeaders()
         };
         try {
             const res = await axios.post(url, fullReqBody, config);
-            if (res.data.header.result){
+            if (res && res.data.header.result){
                 if(isShowMessage) RequestErrorHandlingService.requestErrorHandler(res)
             } else {
                 RequestErrorHandlingService.requestErrorHandlerOnlyError(res)

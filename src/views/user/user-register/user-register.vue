@@ -657,6 +657,7 @@ export default defineComponent({
             if (this.userInfo.roleID == "04") {
                 reqBody = {
                     ...this.userInfo,
+                    dateOfBirth: this.formatDateDatabase(this.userInfo.dateOfBirth),
                     studentInfo: {
                         ...this.userInfo.studentInfo,
                         academicList: studentAcademicList // Ensure academicList is an array
@@ -666,6 +667,7 @@ export default defineComponent({
             else{
                 reqBody = {
                     ...this.userInfo,
+                    dateOfBirth: this.formatDateDatabase(this.userInfo.dateOfBirth),
                     teacherInfo: {
                         qualificationList 
                     }
@@ -771,7 +773,7 @@ export default defineComponent({
 
         formatDateDatabase(dateString: string): string {
             const date = new Date(dateString);
-            if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
+            if (isNaN(date.getTime())) return dateString; // Return empty string if invalid date
             const year = date.getFullYear();
             const month = (date.getMonth() + 1).toString().padStart(2, '0');
             const day = date.getDate().toString().padStart(2, '0');

@@ -115,7 +115,7 @@ export default defineComponent({
                     if(res.header.result){
                         this.$util.removeDataStorage('userInfo', true)
                         this.$util.removeDataStorage('lastRoute', true)
-                        this.$util.setDataStorage('isAuthenticated',false, true)
+                        this.$util.setDataStorage('isAuthenticated', false, true)
                         this.$router.push('/')
                     }else if(res.header.error_code === '401'){
                         this.$util.removeDataStorage('userInfo', true)

@@ -9,6 +9,8 @@ import subject_action from '../subject-action/subject-action.vue';
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import { YearList, SemesterList, globalStatusCodeList } from '@/shared/common/common';
 import MyLoading from '../../MyLoading.vue';
+import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class-list';
+import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 
 const requestService = new RequestService();
 const exportExcel = new ExportExcel();
@@ -27,6 +29,9 @@ export default defineComponent({
             statusCodeList: globalStatusCodeList,
             subjectList: [] as SUBJECT_LIST[],
             subjectInfo: {} as SUBJECT_LIST,
+            classList: [] as CLASS_LIST[],
+            classInfo: {} as CLASS_LIST,
+            departmentList: [] as DEPARTMENT_LIST[],
             selectTime: '',
             searchKey: '',
             Loading: false,
@@ -36,23 +41,52 @@ export default defineComponent({
             startingIndex: 1,
             expandedRowGroups: null,
             selectClassId: '',
-            dataTable
+            dataTable,
+            isSelectedClassID : false,
+            filterInfo: {
+                departmentID: '',
+                classID: '',
+                classYear: '',
+                semester: ''
+            }
         }
     },
 
+    watch:{
+        '$i18n.locale'(){
+            this.semesterList = this.$codeUtil.translateSemesterlist()
+            this.yearList = this.$codeUtil.translateYearlist()
+        },
+        'filterInfo.departmentID'(){
+            this.getClassList()
+        }
+    },
+
+    computed:{
+        setData(){
+            this.filterInfo.departmentID = this.classInfo.departmentID
+            this.filterInfo.classID = this.classInfo.classID
+            this.filterInfo.classYear = this.classInfo.year
+            this.filterInfo.semester = this.classInfo.semester
+        },
+    },
+
     mounted() {
+        this.getClassList()
         this.getSubjectList();
+        this.getDepartmentList();
+        this.yearList = this.$codeUtil.translateYearlist()
+        this.semesterList = this.$codeUtil.translateSemesterlist()
+        this.yearList = this.$codeUtil.translateYearlist()
     },
 
     methods: {
         async getSubjectList() {
             this.Loading = true;
             const reqBody: SUBJECT_LIST_REQ = {
-                classID: this.selectClassId,
-                classYear: '',
-                semester: '',
-                pageSize: this.pageSize,
-                pageNumber: this.pageNumber + 1,
+                classID: this.filterInfo.classID,
+                classYear: this.filterInfo.classYear,
+                semester: this.filterInfo.semester,
                 searchKey: this.searchKey,
             }
             const response = (await requestService.request(API_PATH.SUBJECT_LIST, reqBody, false)) as SUBJECT_LIST_RES;
@@ -60,6 +94,31 @@ export default defineComponent({
             this.subjectList = response.body?.subjectList
             this.dataTable = response.body.subjectList
             this.Loading = false;
+        },
+
+        async getDepartmentList() {
+            const reqBody: DEPARTMENT_LIST_REQ = {
+                userID: '',
+                searchKey: '',
+                pageSize: 1000,
+                pageNumber: 1
+            }
+            const response = (await requestService.request(API_PATH.DEPARTMENT_LIST, reqBody, false)) as DEPARTMENT_LIST_RES;
+            this.departmentList = response.body?.departmentList
+        },
+
+        async getClassList() {
+            const reqBody: CLASS_LIST_REQ = {
+                classID: '',
+                searchKey: '',
+                departmentID: this.filterInfo.departmentID,
+                year: this.filterInfo.classYear,
+                semester: this.filterInfo.semester,
+                pageSize: 1000,
+                pageNumber: 1
+            }
+            const response = (await requestService.request(API_PATH.CLASS_LIST, reqBody, false)) as CLASS_LIST_RES;
+            this.classList = response.body?.classList
         },
 
         calculateTotalSubjects(classInfoID: string) {

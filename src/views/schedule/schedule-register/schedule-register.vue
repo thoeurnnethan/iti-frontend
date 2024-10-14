@@ -215,8 +215,6 @@ export default defineComponent({
                 classID: this.filterInfo.classID,
                 classYear: this.filterInfo.classYear,
                 semester: this.filterInfo.semester,
-                pageSize: 1000,
-                pageNumber: 1,
                 searchKey: '',
             }
             const response = (await requestService.request(API_PATH.SUBJECT_LIST, reqBody, false)) as SUBJECT_LIST_RES;
@@ -262,6 +260,9 @@ export default defineComponent({
                 const lastSchedule = this.scheduleList[this.scheduleList.length - 1];
                 this.lastEndTime = lastSchedule.endTime
                 this.filterStartTime(this.lastEndTime)
+            }else{
+                this.startTimeList = this.generateScheduleTime()
+                this.endTimeList = this.generateScheduleTime()
             }
         },
 
