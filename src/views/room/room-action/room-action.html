@@ -24,14 +24,14 @@
                             <label class="form-label font_15">{{ $t('room.floor') }}</label><br>
                             <InputNumber v-model="roomInfo.floor" inputId="integeronly" />
                         </div>
-                        <div class="col-lg-3 col-md-4 mb-2" v-if="!isInsert">
+                        <!-- <div class="col-lg-3 col-md-4 mb-2" v-if="!isInsert">
                             <label class="form-label font_15">{{ $t('room.statusCode') }}</label><br>
                             <select class="form-select" v-model="roomInfo.statusCode">
                                 <option v-for="status in statusCodeList" :value="status.codeValue">
                                     {{ status.codeValueDesc }}
                                 </option>
                             </select>
-                        </div>
+                        </div> -->
                         <div class="col-lg-12">
                             <label class="form-label font_15">{{ $t('room.roomDesc') }}</label><br>
                             <textarea class="form-control" v-model="roomInfo.roomDesc" rows="5" cols="30"></textarea>
