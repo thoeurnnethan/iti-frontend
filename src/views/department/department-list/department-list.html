@@ -57,6 +57,12 @@
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode, 'statusCode') }}
                 </template>
             </Column>
+            <Column :header="$t('action.function')">
+                <template #body="{ data }">
+                    <button v-if="data.statusCode === '01'" class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addTeacher') }}</button>
+                    <button v-else disabled class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addTeacher') }}</button>
+                </template>
+            </Column>
             <Column :header="$t('action.action')">
                 <template #body="{ data }">
                     <div v-if="data.statusCode === '01'" class="d-flex justify-content-center align-item-center">
@@ -69,12 +75,6 @@
                         <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '01')" :icon="['fas', 'fa-rotate-back']" class="text-white mx-2" :title="$t('action.active')" />
                         <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
                     </div>
-                </template>
-            </Column>
-            <Column :header="$t('department.teacher')">
-                <template #body="{ data }">
-                    <button v-if="data.statusCode === '01'" class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addTeacher') }}</button>
-                    <button v-else disabled class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addTeacher') }}</button>
                 </template>
             </Column>
         </DataTable>

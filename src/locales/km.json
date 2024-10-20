@@ -150,7 +150,7 @@
         "selectSemester": "ជ្រើសរើសឆមាស",
         "selectClass": "ជ្រើសរើសថ្នាក់រៀន",
         "selectDepartment": "ជ្រើសរើសដេប៉ាតឺម៉ង់",
-        "upgrade": "បង្កើនកម្រិត",
+        "upgradeClass": "បង្កើនកម្រិតថ្នាក់រៀន",
         "newYear": "ឆ្នាំថ្មី",
         "newSemester": "ឆមាសថ្មី",
         "from": "ពី",
@@ -162,7 +162,9 @@
         "classDetail": "ព័ត៌មានលម្អិតរបស់ថ្នាក់រៀន",
         "subjectList": "បញ្ជីមុខវិជ្ចា",
         "studentList": "បញ្ជីសិស្ស",
-        "addStudentToClass": "បញ្ចូលសិស្ស/និស្សិតទៅក្នុងថ្នាក់រៀន"
+        "addStudentToClass": "បញ្ចូលសិស្ស/និស្សិតទៅក្នុងថ្នាក់រៀន",
+        "addSubject": "បន្ថែមមុខវិជ្ជា"
+
     },
     "room": {
         "title": "បញ្ជីបន្ទប់",

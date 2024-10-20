@@ -335,4 +335,76 @@ export default defineComponent({
 
 <style scoped>
 @import url('./class-list.scss');
+
+.not_allow{
+    cursor: not-allowed !important;
+}
+.btn_success {
+    display: inline-block;
+    font-weight: 400;
+    color: #fff; /* Default text color */
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    user-select: none;
+    padding: 0.375rem 0.75rem; /* Vertical | Horizontal Padding */
+    border: 1px solid transparent; /* Border */
+    border-radius: 0.25rem; /* Rounded corners */
+    transition: all 0.15s ease-in-out; /* Transition effects */
+    background-color: #198754 !important;
+}
+
+.btn_success:disabled {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529 !important; /* Default text color */
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    user-select: none;
+    padding: 0.375rem 0.75rem; /* Vertical | Horizontal Padding */
+    border: 1px solid transparent; /* Border */
+    border-radius: 0.25rem; /* Rounded corners */
+    transition: all 0.15s ease-in-out; /* Transition effects */
+    background-color: #a0eac8 !important;
+}
+
+.btn_success:hover {
+    text-decoration: none; /* No underline on hover */
+}
+
+.btn_primary {
+    display: inline-block;
+    font-weight: 400;
+    color: #fff; /* Default text color */
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    user-select: none;
+    padding: 0.375rem 0.75rem; /* Vertical | Horizontal Padding */
+    border: 1px solid transparent; /* Border */
+    border-radius: 0.25rem; /* Rounded corners */
+    transition: all 0.15s ease-in-out; /* Transition effects */
+    background-color: #007bff !important; /* Bootstrap primary color */
+}
+
+.btn_primary:disabled {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529 !important; /* Default text color */
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    user-select: none;
+    padding: 0.375rem 0.75rem; /* Vertical | Horizontal Padding */
+    border: 1px solid transparent; /* Border */
+    border-radius: 0.25rem; /* Rounded corners */
+    transition: all 0.15s ease-in-out; /* Transition effects */
+    background-color: #80bdff !important; /* Light blue for disabled state */
+}
+
+.btn_primary:hover {
+    text-decoration: none; /* No underline on hover */
+}
+
 </style>

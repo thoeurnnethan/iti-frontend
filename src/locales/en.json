@@ -150,7 +150,7 @@
         "selectSemester": "Select Semester",
         "selectClass": "Select Class",
         "selectDepartment": "Select Department",
-        "upgrade": "Upgrade",
+        "upgradeClass": "Upgrade Class",
         "newYear": "New Year",
         "newSemester": "New Semester",
         "from": "FROM",
@@ -162,7 +162,8 @@
         "classDetail": "Class Information Detail",
         "subjectList": "Subjects List",
         "studentList": "Students List",
-        "addStudentToClass": "Add Student To Class"
+        "addStudentToClass": "Add Student To Class",
+        "addSubject": "Add Subject"
     },
     "room": {
         "title": "Room List",
