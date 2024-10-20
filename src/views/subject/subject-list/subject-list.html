@@ -21,17 +21,17 @@
         <div class="row">
             <div class="col-md-3">
                 <label class="form-label font_14">{{ $t('class.selectDepartment') }}</label>
-                <select class="form-select" v-model="selectedDepartment" @change="getClassList">
+                <select class="form-select" v-model="filterInfo.departmentID">
                     <option value=""><span>{{ $t('common.all') }}</span></option>
                     <option v-for="department in departmentList" :value="department.departmentID">
-                        <span>{{ department.departmentName }}</span>
+                        <span>{{ department.departmentID }} - {{ department.departmentName }}</span>
                     </option>
                 </select>
             </div>
             <div class="col-md-3">
-                <label class="form-label font_14">{{ $t('class.selectYear') }}</label>
-                <select class="form-select" v-model="selectedYear" @change="getClassList">
-                    <option value=""><span>{{ $t('common.all') }}</span></option>
+                <label class="form-label font_14">{{ $t('schedule.selectYear') }}</label>
+                <select class="form-select" v-model="filterInfo.classYear" @change="getClassList">
+                    <option value="">{{ $t('common.all') }}</option>
                     <option v-for="year in yearList" :value="year.codeValue">
                         <span>{{ year.codeValueDesc }}</span>
                     </option>
@@ -39,14 +39,25 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label font_14">{{ $t('class.selectSemester') }}</label>
-                <select class="form-select" v-model="selectSemester" @change="getClassList">
-                    <option value=""><span>{{ $t('common.all') }}</span></option>
+                <select class="form-select" v-model="filterInfo.semester" @change="getClassList">
+                    <option value="">{{ $t('common.all') }}</option>
                     <option v-for="semester in semesterList" :value="semester.codeValue">
-                        {{ semester.codeValueDesc }}
+                        <span>{{ semester.codeValueDesc }}</span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label font_14">{{ $t('class.selectClass') }}</label>
+                <select class="form-select" v-model="classInfo" @change="setData">
+                    <option v-for="classInfo in classList" :value="classInfo">
+                        <p class="m-0 p-0">{{ classInfo.className }}</p>
+                        <p class="m-0 p-0">-{{ $t('schedule.classYear') }} {{ classInfo.year }}</p>
+                        <p class="m-0 p-0">-{{ $t('schedule.semester') }} {{ classInfo.semester }}</p>
                     </option>
                 </select>
             </div>
         </div>
+        <div class="py-2"></div>
     </div>
     <div class="float-end">
         <button type="button" class="rad_right btn btn-dark p-2 px-2 float-end font_15" @click.prevent="getSubjectList()">{{ $t('common.search') }}</button>
@@ -110,6 +121,7 @@
                     </div>
                 </template>
             </DataTable>
+            <span class="text-danger mx-auto py-2" v-if="subjectList.length <= 0">{{ $t('common.noData') }}</span>
         </div>
     </div>
     <div class="p-1"></div>

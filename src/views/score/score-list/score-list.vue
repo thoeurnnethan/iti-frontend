@@ -87,8 +87,8 @@ export default {
     },
 
     mounted() {
-        this.getDepartmentList()
         this.getClassList()
+        this.getDepartmentList()
         this.semesterList = this.$codeUtil.translateSemesterlist()
         this.yearList = this.$codeUtil.translateYearlist()
     },

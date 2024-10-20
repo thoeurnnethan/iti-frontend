@@ -28,8 +28,6 @@ export interface SUBJECT_LIST_REQ {
     classYear: string,
     semester: string,
     searchKey: string
-    pageSize: number
-    pageNumber: number
 }
 
 export interface SUBJECT_LIST_RES {
