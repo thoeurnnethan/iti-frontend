@@ -101,10 +101,11 @@ export default defineComponent({
                 generation: this.classInfo.generation + ''
             }
 
-            const res = await requestService.request(API_PATH.CLASS_REGISTER, reqBody, true) as CLASS_LIST;
+            const res = await requestService.request(API_PATH.CLASS_REGISTER, reqBody, false) as CLASS_LIST;
             this.classInfo = res;
             if (res) {
                 modalController.dismiss();
+                this.$toast.add({ summary: 'Confirmed', detail: 'The information has been inserted.', life: 1500 });
             }
         },
 

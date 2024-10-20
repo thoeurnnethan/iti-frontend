@@ -26,6 +26,10 @@ export default defineComponent({
             type: Boolean,
             required: true
         },
+        isClassList: {
+            type: Boolean,
+            required: true
+        },
     },
     data() {
         return {
@@ -76,16 +80,12 @@ export default defineComponent({
     computed: {
         isValidInsert(): boolean {
             return (
-                this.subjectInfo.subjectName !== '' &&
-                this.subjectInfo.subjectDesc !== '' &&
-                this.subjectInfo.statusCode !== ''
+                this.subjectInfo.subjectName !== ''
             );
         },
         isValidUpdate(): boolean {
             return (
-                this.subjectInfo.subjectName !== this.subjectInfoUpdate.subjectName ||
-                this.subjectInfo.subjectDesc !== this.subjectInfoUpdate.subjectDesc ||
-                this.subjectInfo.statusCode !== this.subjectInfoUpdate.statusCode
+                this.subjectInfo.subjectName !== this.subjectInfoUpdate.subjectName
             );
         },
         isEditing(): boolean {
@@ -125,7 +125,7 @@ export default defineComponent({
 
         onAddSubjectToList() {
             this.fieldNameValidate = this.subjectInfo.subjectName === '';
-            if (this.fieldNameValidate || this.fieldDesValidate) {
+            if (this.fieldNameValidate) {
                 return;
             }
 

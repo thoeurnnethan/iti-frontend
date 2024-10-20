@@ -102,12 +102,16 @@ export default defineComponent({
                 classInfoID: this.studentInfoData.classInfoID,
                 studentList: studentList
             };
-            const response = await requestService.request(API_PATH.STUDENT_CLASS_REGISTER, requestBody, true) as any;
+            const response = await requestService.request(API_PATH.STUDENT_CLASS_REGISTER, requestBody, false) as any;
             this.studentClassList = response.body.studentList.map((student) => ({
                 ...student,
                 fullName: `${student.firstName} ${student.lastName}`,
                 gender: this.$codeConverter.codeToString(this.genderCodeList, student.gender, 'genderCode'),
             }));
+
+            if(response){
+                this.$toast.add({ summary: 'Confirmed', detail: 'The information has been added successfully.', life: 1500 });
+            }
         },
 
         onClose() {
