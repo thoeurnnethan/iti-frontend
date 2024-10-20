@@ -60,8 +60,8 @@
             <Column :header="$t('action.action')">
                 <template #body="{ data }">
                     <div v-if="data.statusCode === '01'" class="d-flex justify-content-center align-item-center">
-                        <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-white" :title="$t('action.edit')" />
-                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '09')" :icon="['fas', 'fa-box-archive']" class="text-white mx-2" :title="$t('action.inactive')" />
+                        <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;margin-right: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-white" :title="$t('action.edit')" />
+                        <!-- <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '09')" :icon="['fas', 'fa-box-archive']" class="text-white mx-2" :title="$t('action.inactive')" /> -->
                         <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" :icon="['fas', 'fa-trash']" class="text-white" :title="$t('action.delete')" />
                     </div>
                     <div v-else class="d-flex justify-content-center align-item-center">

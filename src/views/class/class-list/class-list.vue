@@ -5,6 +5,7 @@ import { defineComponent, ref } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class-list';
+import subject_action from '../../subject/subject-action/subject-action.vue';
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import class_edit from '../class-edit/class-edit.vue';
 import { YearList, SemesterList, globalStatusCodeList, ClassTypeList } from '@/shared/common/common';
@@ -204,11 +205,11 @@ export default defineComponent({
                     const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false);
                     if (res.header.result) {
                         this.getClassList();
-                        this.$toast.add({ summary: 'Confirmed', detail: messageAcceptDetail, life: 1000 });
+                        this.$toast.add({ summary: 'Confirmed', detail: messageAcceptDetail, life: 1500 });
                     }
                 },
                 reject: () => {
-                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: messageRejectDetail, life: 1000 });
+                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: messageRejectDetail, life: 1500 });
                 }
             });
         },
@@ -242,6 +243,20 @@ export default defineComponent({
                     this.getClassList();
                 }
             });
+        },
+
+        onClickInsertSubject(item: CLASS_LIST) {
+            console.log(item);
+
+            this.$popupService.onOpen({
+                component: subject_action,                
+                dataProp: {
+                    subjectInfoData: item,
+                    isInsert: true,
+                    isAdd: true,
+                    isClassList: true
+                }
+            })
         },
 
         async onClickEdit(item: CLASS_LIST) {

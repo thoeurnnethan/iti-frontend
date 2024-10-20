@@ -4,7 +4,8 @@
     <div class="popWrap w70p">
         <div class="pop_head">
             <div v-if="isAdd" class="w-100">
-                <h1 class="text-center text-dark" v-if="isAdd">{{ $t('subject.addMoreSubject') }}</h1>
+                <h1 class="text-center text-dark" v-if="isClassList">{{ $t('subject.register') }}</h1>
+                <h1 class="text-center text-dark" v-else-if="isAdd">{{ $t('subject.addMoreSubject') }}</h1>
             </div>
             <div v-else class="w-100">
                 <h1 class="text-center text-dark" v-if="isInsert">{{ $t('subject.register') }}</h1>
