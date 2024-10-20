@@ -125,7 +125,6 @@ export default defineComponent({
 
         onAddSubjectToList() {
             this.fieldNameValidate = this.subjectInfo.subjectName === '';
-            this.fieldDesValidate = this.subjectInfo.subjectDesc === '';
             if (this.fieldNameValidate || this.fieldDesValidate) {
                 return;
             }
