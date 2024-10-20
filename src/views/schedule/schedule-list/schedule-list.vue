@@ -94,14 +94,16 @@ export default defineComponent({
     methods: {
         async onGetScheduleListDynamicColumn() {
             const reqBody = this.filterInfo
-            const response = (await requestService.request(API_PATH.SCHEDULE_LIST, reqBody, false)) as SCHEDULE_LIST_RES;
-            this.scheduleHeader = response.body
-            this.columns = Object.keys(response.body.scheduleList[0]).map(day => ({
-                field: day,
-                header: day
-            })) as ScheduleColumn[];
-            this.rows = response.body.scheduleList
-            this.dataTable = response.body.scheduleList
+            const response = await requestService.request(API_PATH.SCHEDULE_LIST, reqBody, false) as SCHEDULE_LIST_RES;
+            if(response.body.scheduleList.length > 0){
+                this.scheduleHeader = response.body
+                this.columns = Object.keys(response.body.scheduleList[0]).map(day => ({
+                    field: day,
+                    header: day
+                })) as ScheduleColumn[];
+                this.rows = response.body.scheduleList
+                this.dataTable = response.body.scheduleList
+            }
         },
 
         async getDepartmentList() {
@@ -154,7 +156,7 @@ export default defineComponent({
         },
 
         generateYears() {
-            const currentYear = new Date().getFullYear();
+            const currentYear = new Date().getFullYear() + 1;
             const startYear = 2020;
             const years = [] as any[];
             for (let year = currentYear; year >= startYear; year--) {

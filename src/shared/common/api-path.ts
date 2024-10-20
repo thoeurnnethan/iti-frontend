@@ -35,6 +35,7 @@ export enum API_PATH {
     SCHEDULE_VALIDATE = "api/schedule/register/validate",
     SCHEDULE_UPDATE = "api/schedule/update",
     SCHEDULE_REGISTER = "api/schedule/register",
+    SCHEDULE_DELETE = "api/schedule/delete",
     //StudentClass
     STUDENT_CLASS_LIST = "api/class-info/list/student",
     STUDENT_CLASS_UPDATE = "api/class-info/update/student",

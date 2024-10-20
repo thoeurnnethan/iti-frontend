@@ -89,6 +89,11 @@ export default defineComponent({
             if (this.isSelectedValidClass) {
                 this.getSubjectList()
             }
+            if (this.isValidFilterInfo) {
+                this.onGetScheduleListDynamicColumn()
+                this.startTimeList = this.generateScheduleTime()
+                this.endTimeList = this.generateScheduleTime()
+            }
         },
         'checkedAllTeacher'() {
             this.onGetTeacherList()
@@ -129,22 +134,22 @@ export default defineComponent({
         isDisableDeleteBtn(): boolean {
             return this.scheduleList.length <= 0;
         },
-        onSetData(){
+        onSetData() {
             this.filterInfo.classID = this.classInfo.classID
             this.filterInfo.classYear = this.classInfo.year
             this.filterInfo.semester = this.classInfo.semester
             this.getSubjectList()
         },
-        checkEnableSaveBtn(): boolean{
-            if(this.isClickDeleteBtn) return false;
-            return this.originalTotalSchedule === this.scheduleList.length
+        checkEnableSaveBtn(): boolean {
+            if (this.isClickDeleteBtn) return true;
+            return this.originalTotalSchedule !== this.scheduleList.length
         }
     },
 
     mounted() {
-        this.getDepartmentList()
-        this.generateYears()
         this.getRoomList()
+        this.generateYears()
+        this.getDepartmentList()
         this.startTimeList = this.generateScheduleTime()
         this.endTimeList = this.generateScheduleTime()
     },
@@ -161,17 +166,18 @@ export default defineComponent({
             })
             this.originalScheduleList = this.scheduleList
             this.originalTotalSchedule = this.scheduleList.length
-            if(this.scheduleList.length > 0){
-                const lastScheduleInfo = this.scheduleList[(this.scheduleList.length -1)]
+            if (this.scheduleList.length > 0) {
+                const lastScheduleInfo = this.scheduleList[(this.scheduleList.length - 1)]
                 this.lastEndTime = lastScheduleInfo.endTime
                 this.resetFormSchedule(false)
                 this.filterTimeList(this.lastEndTime, true)
+                this.columns = Object.keys(response.body.scheduleList[0]).map(day => ({
+                    field: day,
+                    header: day
+                })) as ScheduleColumn[];
+                this.rows = response.body.scheduleList
             }
-            this.columns = Object.keys(response.body.scheduleList[0]).map(day => ({
-                field: day,
-                header: day
-            })) as ScheduleColumn[];
-            this.rows = response.body.scheduleList
+            this.isClickDeleteBtn = false
         },
 
         async getDepartmentList() {
@@ -251,22 +257,30 @@ export default defineComponent({
             this.resetFormSchedule(false)
         },
 
-        onClickBtnDelete() {
+        async onClickBtnDelete() {
             this.isClickDeleteBtn = true
             const lastItem = this.scheduleList[this.scheduleList.length - 1];
             this.scheduleList = this.scheduleList.filter(data => data.seqNo !== lastItem.seqNo)
+            const reqBody = {
+                scheduleID: this.filterInfo.scheduleYear + this.filterInfo.classID + this.filterInfo.classYear + this.filterInfo.semester,
+                scheduleDay: this.filterInfo.scheduleDay,
+                seqNo: lastItem.seqNo
+            }
+            console.log(reqBody);
+            const result = await requestService.request(API_PATH.SCHEDULE_DELETE, reqBody, true);
+            console.log(result);
             this.lastEndTime = lastItem.startTime
             if (this.scheduleList.length > 0) {
                 const lastSchedule = this.scheduleList[this.scheduleList.length - 1];
                 this.lastEndTime = lastSchedule.endTime
                 this.filterStartTime(this.lastEndTime)
-            }else{
+            } else {
                 this.startTimeList = this.generateScheduleTime()
                 this.endTimeList = this.generateScheduleTime()
             }
         },
 
-        async onClickSave() {
+        onClickSave() {
             const reqBody = {
                 schYear: this.filterInfo.scheduleYear,
                 classID: this.filterInfo.classID,
@@ -274,7 +288,7 @@ export default defineComponent({
                 semester: this.filterInfo.semester,
                 scheduleList: this.scheduleList
             }
-            const res = await requestService.request(API_PATH.SCHEDULE_REGISTER, reqBody, true);
+            requestService.request(API_PATH.SCHEDULE_REGISTER, reqBody, true)
         },
 
         onClickClearFilter() {
@@ -308,8 +322,8 @@ export default defineComponent({
         },
 
         generateYears() {
+            const currentYear = new Date().getFullYear() + 1;
             const startYear = 2020;
-            const currentYear = new Date().getFullYear();
             const years = [] as any[];
             for (let year = currentYear; year >= startYear; year--) {
                 years.push({ codeValue: year.toString(), codeValueDesc: year });
@@ -370,7 +384,7 @@ export default defineComponent({
             } else {
                 this.roomInfo = {} as ROOM_LIST
                 this.scheduleList = [],
-                this.startTimeList = this.endTimeList = this.generateScheduleTime()
+                    this.startTimeList = this.endTimeList = this.generateScheduleTime()
             }
         }
     }

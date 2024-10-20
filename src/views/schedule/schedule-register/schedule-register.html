@@ -145,7 +145,7 @@
             <div class="container-fluid my-3">
                 <div class="row">
                     <div class="col-md-1">
-                        <button class="btn btn-outline-success" @click="onClickSave" :disabled="isDisableDeleteBtn || checkEnableSaveBtn">{{ $t('common.save') }}</button>
+                        <button class="btn btn-outline-success" @click="onClickSave" :disabled="!checkEnableSaveBtn">{{ $t('common.save') }}</button>
                     </div>
                 </div>
             </div>
