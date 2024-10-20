@@ -99,7 +99,7 @@
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode, 'statusCode') }}
                 </template>
             </Column> -->
-            <Column header="function" style="min-width: 200px;">
+            <Column :header="$t('action.function')" style="min-width: 200px;">
                 <template #body="{ data }">
                     <div class="d-flex justify-content-center align-item-center mb-1">
                         <button class="btn btn-success px-2 p-0" @click="onClickUpgrade(data)" :disabled="!data.isLast">Upgrade Class</button>
@@ -110,8 +110,6 @@
                     <div class="d-flex justify-content-center align-item-center">
                         <button class="btn btn-primary px-2 p-0"  @click="onClickInsertSubject(data)" :disabled="!data.isLast" >Add Subject</button>
                     </div>
-                    {{ data }}
-
                 </template>
             </Column>
             <Column :header="$t('action.action')" style="min-width: 120px;">

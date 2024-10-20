@@ -43,7 +43,9 @@
         "active": "Set to active",
         "inactive": "Set to inactive",
         "delete": "Delete",
-        "action": "Action"
+        "action": "Action",
+        "function": "Function"
+        
     },
     "department": {
         "title": "Department list",
