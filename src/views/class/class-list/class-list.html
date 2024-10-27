@@ -53,7 +53,7 @@
             <InputGroup style="max-width: 30% !important;">
                 <button type="button" class="rad_left btn btn-dark b_shadow p-2 px-2 float-end font_15" @click="getClassList">{{ $t('common.search') }}</button>
                 <InputText @keyup.enter="getClassList()" class="p-1 font_15 rad_right b_shadow c_input" v-model="classID"
-                    :placeholder="$t('common.searchByClassID')" style="height: 40.5px;padding-left: 15px !important;" />
+                    :placeholder="$t('common.searchForUpgradeClass')" style="height: 40.5px;padding-left: 15px !important;" />
             </InputGroup>
             <InputGroup style="max-width: 30% !important;">
                 <button type="button" class="rad_left btn btn-dark b_shadow p-2 px-2 float-end font_15" @click="getClassList">{{ $t('common.search') }}</button>
@@ -85,9 +85,9 @@
             <Column field="classID" :header="$t('class.classId')" style="min-width: 150px;"></Column>
             <Column field="className" :header="$t('class.className')" style="min-width: 120px;"></Column>
             <Column field="departmentName" :header="$t('department.depName')" style="min-width: 150px;"></Column>
-            <Column field="year" :header="$t('class.year')"></Column>
-            <Column field="semester" :header="$t('class.semester')"></Column>
-            <Column field="generation" :header="$t('class.generation')"></Column>
+            <Column class="text-center" field="year" :header="$t('class.year')"></Column>
+            <Column class="text-center" field="semester" :header="$t('class.semester')"></Column>
+            <Column class="text-center" field="generation" :header="$t('class.generation')"></Column>
             <Column field="classDesc" :header="$t('class.classDesc')" style="min-width: 240px;"></Column>
             <Column :header="$t('class.classType')" style="min-width: 120px;">
                 <template #body="{ data }">

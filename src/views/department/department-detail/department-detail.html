@@ -25,10 +25,10 @@
                                 <dt>{{ $t('department.depManager') }}</dt>
                                 <dd>{{ departmentInfo.firstName }}-{{ departmentInfo.lastName}}</dd>
                             </dl>
-                            <dl>
+                            <!-- <dl>
                                 <dt>{{ $t('department.statusCode') }}</dt>
                                 <dd>{{ $codeConverter.codeToString(statusCodeList,departmentInfo.statusCode, 'statusCode') }}</dd>
-                            </dl>
+                            </dl> -->
                             <dl>
                                 <dt>{{ $t('department.firstRegisterDate') }}</dt>
                                 <dd>{{ $format.formatDateTime(department.firstRegisterDate,'yyyy-mm-dd','Slash','FullMonth') }}</dd>

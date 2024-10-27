@@ -52,15 +52,15 @@
             <Column field="departmentID" :header="$t('department.depID')"></Column>
             <Column field="departmentName" :header="$t('department.depName')"></Column>
             <Column field="departmentDesc" :header="$t('department.depDesc')"></Column>
-            <Column field="statusCode" :header="$t('department.statusCode')">
+            <!-- <Column field="statusCode" :header="$t('department.statusCode')">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode, 'statusCode') }}
                 </template>
-            </Column>
+            </Column> -->
             <Column :header="$t('action.function')">
                 <template #body="{ data }">
-                    <button v-if="data.statusCode === '01'" class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addTeacher') }}</button>
-                    <button v-else disabled class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addTeacher') }}</button>
+                    <button v-if="data.statusCode === '01'" class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addMember') }}</button>
+                    <button v-else disabled class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addMember') }}</button>
                 </template>
             </Column>
             <Column :header="$t('action.action')">

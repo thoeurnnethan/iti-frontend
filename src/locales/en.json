@@ -1,5 +1,6 @@
 {
     "common": {
+        "searchForUpgradeClass": "Search by ID for upgrade Class...",
         "itiName": "Industrial Technical Institute",
         "Home": "Home",
         "no": "No",
@@ -60,7 +61,7 @@
         "firstRegisterDate": "First Register Date",
         "lastChangeDate": "Last Change Date",
         "detail": "Department Detail Information",
-        "addTeacher": "Add Teacher",
+        "addMember": "Add Member",
         "teacherList": "Teacher List In Department",
         "teacher": "Teacher",
         "addTeacherToDepartment": "Add Teacher To Department",
