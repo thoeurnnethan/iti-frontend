@@ -32,8 +32,8 @@ export class RequestErrorHandlingService {
 			setTimeout(async () => {
 				await dialog.onOpen({
 					showCancel: false,
-					title: 'Success',
-					content: 'successfully',
+					title: 'Successfully',
+					content: 'Completed the process',
 					callback: () => {
 						modalController.dismiss()
 					}
