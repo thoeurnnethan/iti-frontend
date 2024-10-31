@@ -24,7 +24,7 @@
                 <select class="form-select" v-model="selectedDepartment" @change="getClassList">
                     <option value=""><span>{{ $t('common.all') }}</span></option>
                     <option v-for="department in departmentList" :value="department.departmentID">
-                        <span>{{ department.departmentName }}</span>
+                        <span>{{ department.departmentID }} - {{ department.departmentName }}</span>
                     </option>
                 </select>
             </div>

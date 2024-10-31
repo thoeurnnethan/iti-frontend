@@ -104,6 +104,11 @@ export default defineComponent({
                 this.startTimeList = this.generateScheduleTime()
                 this.endTimeList = this.generateScheduleTime()
             }
+        },
+        '$i18n.locale'(){
+            this.yearList = this.$codeUtil.translateYearlist()
+            this.semesterList = this.$codeUtil.translateSemesterlist()
+            this.statusCodeList = this.$codeUtil.translateStatusCodelist()
         }
     },
 
@@ -152,6 +157,9 @@ export default defineComponent({
         this.getDepartmentList()
         this.startTimeList = this.generateScheduleTime()
         this.endTimeList = this.generateScheduleTime()
+        this.yearList = this.$codeUtil.translateYearlist()
+        this.semesterList = this.$codeUtil.translateSemesterlist()
+        this.statusCodeList = this.$codeUtil.translateStatusCodelist()
     },
 
     methods: {
@@ -221,6 +229,7 @@ export default defineComponent({
                 classID: this.filterInfo.classID,
                 classYear: this.filterInfo.classYear,
                 semester: this.filterInfo.semester,
+                departID: this.filterInfo.departmentID,
                 searchKey: '',
             }
             const response = (await requestService.request(API_PATH.SUBJECT_LIST, reqBody, false)) as SUBJECT_LIST_RES;

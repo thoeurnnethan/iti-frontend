@@ -25,8 +25,9 @@ export interface SUBJECT_LIST_DOWNLOAD {
 
 export interface SUBJECT_LIST_REQ {
     classID: string
-    classYear: string,
-    semester: string,
+    classYear: string
+    semester: string
+    departID: String
     searchKey: string
 }
 

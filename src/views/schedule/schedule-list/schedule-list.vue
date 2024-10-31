@@ -59,7 +59,12 @@ export default defineComponent({
             if (this.isValidFilter) {
                 this.onGetScheduleListDynamicColumn()
             }
-        }
+        },
+        '$i18n.locale'(){
+            this.yearList = this.$codeUtil.translateYearlist()
+            this.semesterList = this.$codeUtil.translateSemesterlist()
+            this.statusCodeList = this.$codeUtil.translateStatusCodelist()
+        },
     },
 
     computed: {
@@ -89,6 +94,9 @@ export default defineComponent({
     mounted() {
         this.getDepartmentList()
         this.generateYears()
+        this.yearList = this.$codeUtil.translateYearlist()
+        this.semesterList = this.$codeUtil.translateSemesterlist()
+        this.statusCodeList = this.$codeUtil.translateStatusCodelist()
     },
 
     methods: {
@@ -142,7 +150,7 @@ export default defineComponent({
                 classID: '',
                 searchKey: ''
             },
-                this.resetTable
+            this.resetTable
             this.classList = []
         },
 
@@ -182,9 +190,8 @@ export default defineComponent({
                     data: excelData
                 },
             ];
-            exportExcel.exportSheet(exportExcelData, 'Schedule')
+            exportExcel.exportSheet(exportExcelData, 'Schedule Info')
         }
-
     },
 })
 </script>

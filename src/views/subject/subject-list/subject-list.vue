@@ -87,6 +87,7 @@ export default defineComponent({
                 classID: this.filterInfo.classID,
                 classYear: this.filterInfo.classYear,
                 semester: this.filterInfo.semester,
+                departID: this.filterInfo.departmentID,
                 searchKey: this.searchKey,
             }
             const response = (await requestService.request(API_PATH.SUBJECT_LIST, reqBody, false)) as SUBJECT_LIST_RES;

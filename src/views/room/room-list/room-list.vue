@@ -167,7 +167,7 @@ export default defineComponent({
                     data: excelData
                 },
             ];
-            exportExcel.exportSheet(exportExcelData, 'Class info')
+            exportExcel.exportSheet(exportExcelData, 'Room info')
         },
 
     },

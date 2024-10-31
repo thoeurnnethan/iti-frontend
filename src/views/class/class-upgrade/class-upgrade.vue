@@ -68,7 +68,6 @@ export default defineComponent({
         onClose() {
             modalController.dismiss();
         },
-
     }
 });
 </script>
