@@ -218,7 +218,7 @@ export default {
                     "No": student.no,
                     "Student ID": student.studentID,
                     "Student Name": `${student.firstName} ${student.lastName}`,
-                    "Gender": this.$codeConverter.codeToString(this.genderCodeList,student.gender),
+                    "Gender": this.$codeConverter.codeToString(this.genderCodeList,student.gender,'genderCode'),
                     "Phone Number": this.$phoneNumberFormater.formatPhoneNumber(student.phoneNumber),
                     ...subjectScores, 
                     "Total Score": student.totalScore,

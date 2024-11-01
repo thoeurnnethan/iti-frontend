@@ -300,9 +300,9 @@ export default defineComponent({
                     "ឆមាស": data.semester,
                     "ជ៉នាន់": data.generation,
                     "លម្អិតអំពីថ្នាក់រៀន": data.classDesc,
-                    "ប្រភេទថ្នាក់រៀន": this.$codeConverter.codeToString(this.classTypeList, data.classType),
+                    "ប្រភេទថ្នាក់រៀន": this.$codeConverter.codeToString(this.classTypeList, data.classType,'classType'),
                     "ឈ្មោះដេប៉ាតឺម៉ង់": data.departmentName,
-                    "ស្ថានភាព": this.$codeConverter.codeToString(this.statusCodeList, data.statusCode),
+                    "ស្ថានភាព": this.$codeConverter.codeToString(this.statusCodeList, data.statusCode,'statusCode'),
                     "ថ្ងៃចុះបញ្ជីដំបូង": this.$format.formatDateTime(data.firstRegisterDate ? data.firstRegisterDate : '', 'yyyy-mm-dd'),
                     "ថ្ងៃផ្លាស់ប្តូរចុងក្រោយ": this.$format.formatDateTime(data.lastChangeDate ? data.lastChangeDate : '', 'yyyy-mm-dd')
                 };
