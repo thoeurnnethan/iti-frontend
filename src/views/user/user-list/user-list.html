@@ -110,11 +110,11 @@
             </Column>
             <Column field="email" :header="$t('user.email')"></Column>
             <Column field="passwd" :header="$t('user.password')"></Column>
-            <Column field="statusCode" :header="$t('class.status')" style="min-width: 100px">
+            <!-- <Column field="statusCode" :header="$t('class.status')" style="min-width: 100px">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode, 'statusCode') }}
                 </template>
-            </Column>
+            </Column> -->
             <Column :header="$t('class.edit')">
                 <template #body="{ data }">
                     <div class="d-flex justify-content-center">
