@@ -19,7 +19,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mt-4">
+                <div class="row">
                     <div class="col-12">
                         <div class="container-fluid d-flex justify-content-start p-0 mb-3">
                             <div class="w-25">
@@ -36,9 +36,9 @@
                                         dataKey="specificID" 
                                         :rowClass="rowClass" 
                                         scrollable 
-                                        scrollHeight="400px">
+                                        scrollHeight="345px">
                                         <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-                                        <Column field="fullName" :header="$t('user.name')" :bodyClass="getBodyClass">
+                                        <Column field="fullName" :header="$t('user.name')">
                                         </Column>
                                         <Column field="roleID" :header="$t('user.role')"></Column>
                                         <Column field="gender" :header="$t('user.gender')"></Column>
@@ -54,15 +54,13 @@
                                         </Column>
                                     </DataTable>
                                 </div>
-                                <div class="container-fluid w-100 mt-3 d-flex justify-content-end p-0">
-                                    <button class="btn01" style="width:185px" @click="saveData()">{{ $t('common.save') }}</button>
-                                </div>
                             </div>
-                            <div class="col-4" v-if="departmentList.length > 0">
+                            <div class="col-4" v-if="teacherDepList.length > 0">
                                 <label class="form-label font_15 alert alert-info p-1">{{ $t('department.teacherList') }}</label>
                                 <div class="we_shadow">
-                                    <DataTable :value="departmentList" scrollable scrollHeight="400px">
+                                    <DataTable :value="teacherDepList" scrollable scrollHeight="345px">
                                         <Column field="fullName" :header="$t('user.name')"></Column>
+                                        <Column field="gender" :header="$t('user.gender')"></Column>
                                         <Column field="roleID" :header="$t('user.role')"></Column>
                                     </DataTable>
                                 </div>
@@ -76,7 +74,7 @@
                                             <th>{{ $t('user.role') }}</th>
                                         </tr>
                                         <tr>
-                                            <td colspan="2">{{ $t('common.noData') }}</td>
+                                            <td colspan="2" class="text-danger">{{ $t('common.noData') }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -86,10 +84,11 @@
                 </div>
             </div>
         </div>
-        <div class="pop_foot">
+        <div class="pop_foot" style="padding: 20px !important;">
             <div class="footer_btn">
                 <div class="right_side">
-                    <button class="btn03 mx-2" style="width:185px" @click="onClose">{{ $t('common.close') }}</button>
+                    <button class="btn03 mx-2 bg-danger text-white" style="width:185px" @click="onClose">{{ $t('common.close') }}</button>
+                    <button :class="checkSelectedTeacher ? 'btn01' : 'btn03'" style="width:185px" @click="onAddTeacherToDept()" :disabled="!checkSelectedTeacher">{{ $t('common.save') }}</button>
                 </div>
             </div>
         </div>

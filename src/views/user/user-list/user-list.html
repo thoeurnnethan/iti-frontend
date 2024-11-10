@@ -8,9 +8,13 @@
             <span class="text_title mx-2">{{ $t('user.userList') }}</span>
         </div>
         <div>
-            <button type="button" class="btn btn-dark p-1 px-2" @click="exportToExcel">
+            <button type="button" class="btn btn-dark p-1 px-2 mx-3" @click="exportToExcel">
                 <span class="mx-2">{{ $t('common.downloadExcel') }}</span>
                 <font-awesome-icon :icon="['fas', 'file-excel']" />
+            </button>
+            <button class="btn btn-primary p-1 px-2" @click="onClickAddNew" >
+                <span class="mx-1">{{ $t('common.addNew') }}</span>
+                <font-awesome-icon :icon="['fas', 'plus']" />
             </button>
         </div>
     </div>
@@ -70,7 +74,7 @@
             scrollable
             :value="userList" 
             :metaKeySelection="true" 
-            :rows="pageSize" 
+            :rows="pageSize"
             :lazy="true" 
             :paginator="true"
             :totalRecords="totalCount" 
@@ -78,6 +82,7 @@
             @page="onPage">
             <Column field="no" :header="$t('common.no')" :class="['text-center']"></Column>
             <Column field="specificID" :header="$t('user.ID')"></Column>
+            <Column field="userID" :header="$t('user.userID')"></Column>
             <Column :header="$t('user.role')">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(userRoleList, data.roleID) }}
@@ -93,7 +98,7 @@
             </Column>
             <Column :header="$t('user.dateOfBirth')">
                 <template #body="{ data }">
-                    {{ $format.formatDateTime(data.dateOfBirth,'yyyy-mm-dd') }}
+                    {{ $format.formatDateTime(data.dateOfBirth,'yyyy-mm-dd','Slash','FullMonth') }}
                 </template>
             </Column>
             <Column field="placeOfBirth" :header="$t('user.placeOfBirth')"></Column>
@@ -105,11 +110,11 @@
             </Column>
             <Column field="email" :header="$t('user.email')"></Column>
             <Column field="passwd" :header="$t('user.password')"></Column>
-            <Column field="statusCode" :header="$t('class.status')" style="min-width: 100px">
+            <!-- <Column field="statusCode" :header="$t('class.status')" style="min-width: 100px">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode, 'statusCode') }}
                 </template>
-            </Column>
+            </Column> -->
             <Column :header="$t('class.edit')">
                 <template #body="{ data }">
                     <div class="d-flex justify-content-center">

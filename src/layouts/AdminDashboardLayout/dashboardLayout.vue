@@ -10,6 +10,7 @@ import Toast from 'primevue/toast';
 import SelectButton from 'primevue/selectbutton';
 import { RequestService } from '@/shared/services/request-service';
 import { API_PATH } from '@/shared/common/api-path';
+import { UserRoleList } from '@/shared/common/common';
 
 const requestService = new RequestService();
 
@@ -24,6 +25,7 @@ export default defineComponent({
     data() {
         return {
             userInfo: this.$util.getDataStorage('userInfo', true),
+            userRoleList: UserRoleList,
             responseData: [] as USER_LIST[],
             totalCount: 0 as Number,
             pageSize: 100 as Number,
@@ -53,7 +55,6 @@ export default defineComponent({
     mounted() {
         this.isCollapse = localStorage.getItem('collapse') === "true";
         this.getMenuList();
-        
     },
 
     methods: {
@@ -101,7 +102,7 @@ export default defineComponent({
         },
 
         async onClickLogout(){
-
+            var reqBody ={}
             this.$confirm.require({
                 message: "Are you sure want to logout?",
                 header: 'Please Confirm',
@@ -109,12 +110,12 @@ export default defineComponent({
                 acceptClass: 'btn btn-danger',
                 rejectLabel: 'No',
                 rejectClass: 'btn btn-secondary',                
-
                 accept: async () => {
-                    const res = await requestService.request(API_PATH.USER_LOGOUT, null, false, true);
+                    const res = await requestService.request(API_PATH.USER_LOGOUT, reqBody, false);
                     if(res.header.result){
                         this.$util.removeDataStorage('userInfo', true)
-                        this.$util.removeDataStorage('isAuthenticated', true)
+                        this.$util.removeDataStorage('lastRoute', true)
+                        this.$util.setDataStorage('isAuthenticated', false, true)
                         this.$router.push('/')
                     }else if(res.header.error_code === '401'){
                         this.$util.removeDataStorage('userInfo', true)
@@ -127,9 +128,7 @@ export default defineComponent({
                     return
                 }
             });
-
         }
-
     },
 
     beforeDestroy() {

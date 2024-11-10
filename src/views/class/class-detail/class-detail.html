@@ -1,7 +1,7 @@
 <div class="popup">
     <div class="popWrap w90p">
         <div class="pop_head">
-            <h1 class="text-center text-primary">{{ $t('class.classDetail') }}</h1>
+            <h1 class="text-center text-dark">{{ $t('class.classDetail') }}</h1>
         </div>
         <div class="pop_cont">
             <div class="cont">
@@ -9,7 +9,7 @@
                     <!-- Subject List Details Tab -->
                     <TabPanel :header="$t('class.subjectList')">
                         <DataTable v-if="classInfo && classInfo.length > 0" :value="classInfo" stripedRows>
-                            <Column field="no" :header="$t('common.no')" :body="indexTemplate" class="text-center" />
+                            <Column field="no" :header="$t('common.no')" class="text-center" />
                             <Column field="subjectName" :header="$t('subject.subjectName')" />
                             <Column field="subjectDesc" :header="$t('subject.subjectDesc')" />
                         </DataTable>
@@ -29,18 +29,18 @@
                             <Column field="no" :header="$t('common.no')" class="text-center"  />
                             <Column field="studentID" :header="$t('user.studentID')" />
                             <Column field="fullName" :header="$t('user.name')" />
-                            <Column field="gender" :header="$t('user.gender')" />
-                            <Column field="dateOfBirth" :header="$t('user.dateOfBirth')">
+                            <Column field="gender" :header="$t('user.gender')">
                                 <template #body="{ data }">
-                                    {{ $format.formatDateTime(data.dateOfBirth,'yyyy-mm-dd') }}
+                                    {{ $codeConverter.codeToString(genderCodeList, data.gender, 'genderCode')}}
                                 </template>
                             </Column>
+                            <Column field="dateOfBirth" :header="$t('user.dateOfBirth')"/>
                             <Column :header="$t('user.phone')">
                                 <template #body="{ data }">
                                     {{ $phoneNumberFormater.formatPhoneNumber(data.phoneNumber) }}
                                 </template>
                             </Column>
-                            <Column field="status" :header="$t('common.status')" />
+                            <!-- <Column field="status" :header="$t('common.status')" /> -->
                             <Column :header="$t('action.action')">
                                 <template #body="{ data }">
                                     <div class="d-flex justify-content-center">

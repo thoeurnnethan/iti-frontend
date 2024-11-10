@@ -2,10 +2,11 @@
 
 <script lang="ts">
 import { API_PATH } from '@/shared/common/api-path';
-import { USER_LIST, QUALIFICATION_LIST, PARENT_LIST, ACADEMIC_LIST, USER_DETAIL_RES, USER_LIST_FORM_CHECK, QUALIFICATION_LIST_FORM_CHECK, ACADEMIC_LIST_FORM_CHECK, PARENT_LIST_FORM_CHECK } from '@/shared/types/user-list';
+import { USER_LIST, QUALIFICATION_LIST, PARENT_LIST, ACADEMIC_LIST, USER_DETAIL_RES, USER_LIST_FORM_CHECK,
+    QUALIFICATION_LIST_FORM_CHECK, ACADEMIC_LIST_FORM_CHECK, PARENT_LIST_FORM_CHECK } from '@/shared/types/user-list';
 import { RequestService } from '@/shared/services/request-service';
 import { defineComponent } from 'vue';
-import { TeacherRoleList,UserRole } from '@/shared/common/common';
+import { TeacherRoleList,UserRole, UserRoleList } from '@/shared/common/common';
 import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class-list';
 import { DEPARTMENT_LIST, DEPARTMENT_LIST_REQ, DEPARTMENT_LIST_RES } from '@/shared/types/department-list';
 const requestService = new RequestService();
@@ -20,6 +21,7 @@ export default defineComponent({
             studentAcademicList: [] as ACADEMIC_LIST[],
             teacherRoleList: TeacherRoleList,
             userRole: UserRole,
+            userRoleList: UserRoleList,
             userInfo: {
                 firstName: '',
                 lastName: '',
@@ -30,7 +32,7 @@ export default defineComponent({
                 phone: '',
                 email: '',
                 classInfoID: '',
-                departmentID: '',
+                // departmentID: '',
             } as USER_LIST,
             fatherInfo: {
                 firstName: '',
@@ -108,12 +110,13 @@ export default defineComponent({
             customNoClass: 'table_no',
             addedButton: false,
             academicButton: false,
+            isSaveSuccess: true,
             
             editingIndex: -1,
             editingIndexAcademic: -1,
 
             userIDFromURl: this.$route.params.userID,
-            routerName: this.$route.name,
+            routerName: this.$route.name as string,
         };
     },
 
@@ -124,10 +127,21 @@ export default defineComponent({
             }else{
                 this.getDepartmentList()
             }
+        },
+        '$i18n.locale'(){
+            this.userRole = this.$codeUtil.translateAllUserRoleList()
+            this.teacherRoleList = this.$codeUtil.translateTeacherRoleList()
+            this.userRoleList = this.$codeUtil.translateUserRoleList()
+        },
+        'routerName'(newValue){
+            if(newValue) this.resetForm(true)
         }
     },
     
     mounted() {
+        this.userRole = this.$codeUtil.translateAllUserRoleList()
+        this.teacherRoleList = this.$codeUtil.translateTeacherRoleList()
+        this.userRoleList = this.$codeUtil.translateUserRoleList()
         if (!this.isRegisterRoute) {
             this.getUserDetailSummary();
         }
@@ -135,11 +149,15 @@ export default defineComponent({
     },
 
     beforeRouteEnter(to, from, next) {
-        next(vm => vm.resetForm());
+        next((vm: any) => {
+            if (vm) {
+                vm.resetForm(true);
+            }
+        });
     },
 
     beforeRouteUpdate(to, from, next) {
-        this.resetForm();
+        this.resetForm(true);
         next();
     },
 
@@ -237,12 +255,16 @@ export default defineComponent({
             return this.routerName === 'user-register'
         },
 
+        isUpdateRoute(): boolean{
+            return this.routerName.includes('user-update')
+        },
+
         isRegisterStudent(): boolean {
             return this.userSelectedRole === '04'
         },
 
         onChangeUserRoleRegister(): void{
-            this.resetForm();
+            this.resetForm(false);
         },
     },
 
@@ -267,9 +289,9 @@ export default defineComponent({
                 return {
                     qualificationName: data.qualificationName,
                     qualificationDesc: data.qualificationDesc,
-                    startDate: this.formatDateDatabase(data.startDate),
-                    endDate: this.formatDateDatabase(data.endDate),
-                    certificatedDate: this.formatDateDatabase(data.certificatedDate),
+                    startDate: data.startDate,
+                    endDate: data.endDate,
+                    certificatedDate: data.certificatedDate,
                     statusCode: "01"
                 }
             })
@@ -282,15 +304,19 @@ export default defineComponent({
                     qualificationList: qualList
                 }
             }
-            this.userList.push(userInfoList)
+            if(this.isSaveSuccess){
+                this.userList.push(userInfoList)
+            }
             const reqBody = {
                 userList: this.userList
             }
             const res = await requestService.request(API_PATH.USER_REGISTER, reqBody, true)
-            if(res.header.result){
-                this.resetForm()
+            this.isSaveSuccess = res.header.result
+            if(this.isSaveSuccess){
+                this.resetForm(true)
+                this.isSaveSuccess = true
+                this.userList = []
             }
-            // this.$router.push('/user-list');
         },
 
         async getDepartmentList() {
@@ -315,16 +341,15 @@ export default defineComponent({
 
             // Check if the qualification is valid before adding/updating
             if (!this.isValidQualification) {
-                this.checkQualSpecificErrorFields();
+                this.checkQualSpecificErrorFields
                 return;
             }
-
             // Format the dates before updating the qualification
             const updatedQualification: QUALIFICATION_LIST = {
                 ...this.qualificationInfo,
-                startDate: this.formatDate(this.qualificationInfo.startDate),
-                endDate: this.formatDate(this.qualificationInfo.endDate),
-                certificatedDate: this.formatDate(this.qualificationInfo.certificatedDate)
+                startDate: this.checkDateFormatYYYYMMDD(this.qualificationInfo.startDate) ? this.qualificationInfo.startDate : this.formatDate(this.qualificationInfo.startDate),
+                endDate: this.checkDateFormatYYYYMMDD(this.qualificationInfo.endDate) ? this.qualificationInfo.endDate : this.formatDate(this.qualificationInfo.endDate),
+                certificatedDate: this.checkDateFormatYYYYMMDD(this.qualificationInfo.certificatedDate) ? this.qualificationInfo.certificatedDate : this.formatDate(this.qualificationInfo.certificatedDate)
             };
 
             // If adding a new qualification
@@ -381,15 +406,16 @@ export default defineComponent({
                 }
                 this.$confirm.require({
                     message: 'Do you want to delete this record?',
-                    header: 'Danger Zone',
+                    header: 'Please Confirm !',
+                    acceptClass: 'btn btn-danger',
+                    rejectClass: 'btn btn-secondary',
                     accept: async () => {
-
                         const reqBody = {
                             ...this.userInfo,
                             teacherInfo:({
                                 qualificationList:[{
                                     ...item,
-                                    teacherID: this.userInfo.specificID,
+                                    teacherID: this.userInfo.specID,
                                     statusCode: "02",
                                     seqNo: item.seqNo,
                                     certificatedDate: this.formatDateDatabase(item.certificatedDate),
@@ -442,14 +468,13 @@ export default defineComponent({
                 this.checkAcademicSpecificErrorFields
                 return
             }
-
             const academicList = this.studentAcademicList.map((data) => {
                 return {
                     academicName: data.academicName,
                     academicDesc: data.academicDesc,
-                    startDate: this.formatDateDatabase(data.startDate),
-                    endDate: this.formatDateDatabase(data.endDate),
-                    certificatedDate: this.formatDateDatabase(data.certificatedDate),
+                    startDate: data.startDate,
+                    endDate: data.endDate,
+                    certificatedDate: data.certificatedDate,
                 };
             });
             const userInfoList = {
@@ -465,11 +490,19 @@ export default defineComponent({
                     academicList: academicList
                 }
             };
-            this.userList.push(userInfoList);
+            if(this.isSaveSuccess){
+                this.userList.push(userInfoList);
+            }
             const reqBody = {
                 userList: this.userList
             };
-            await requestService.request(API_PATH.USER_REGISTER, reqBody, true);
+            const res = await requestService.request(API_PATH.USER_REGISTER, reqBody, true);
+            this.isSaveSuccess = res.header.result
+            if(res.header.result){
+                this.resetForm(true)
+                this.isSaveSuccess = true
+                this.userList = []
+            }
         },
 
         async getClassList() {
@@ -479,18 +512,12 @@ export default defineComponent({
                 searchKey: '',
                 year: '',
                 semester: '',
-                generation: '',
                 pageSize: 1000,
                 pageNumber:  1
             }
             const response = (await requestService.request(API_PATH.CLASS_LIST, reqBody, false)) as CLASS_LIST_RES;
             this.classList = response.body.classList
         },
-
-
-
-
-
 
         addAcademicToList() {
             this.academicCheckFields = {
@@ -506,9 +533,10 @@ export default defineComponent({
             }
             const updatedAcademic: ACADEMIC_LIST = {
                 ...this.academicInfo,
-                startDate: this.formatDate(this.academicInfo.startDate),
-                endDate: this.formatDate(this.academicInfo.endDate),
-                certificatedDate: this.formatDate(this.academicInfo.certificatedDate)
+                studentID: this.userInfo.specificID,
+                startDate: this.checkDateFormatYYYYMMDD(this.academicInfo.startDate) ? this.academicInfo.startDate : this.formatDate(this.academicInfo.startDate),
+                endDate: this.checkDateFormatYYYYMMDD(this.academicInfo.endDate) ? this.academicInfo.endDate : this.formatDate(this.academicInfo.endDate),
+                certificatedDate: this.checkDateFormatYYYYMMDD(this.academicInfo.certificatedDate) ? this.academicInfo.certificatedDate : this.formatDate(this.academicInfo.certificatedDate)
             }
             if (this.editingIndexAcademic === -1) {
                 updatedAcademic.seqNo = this.studentAcademicList.length + 1;
@@ -534,7 +562,6 @@ export default defineComponent({
                     accept: () => {
                         this.academicInfo = { ...data };
                         this.editingIndexAcademic = this.studentAcademicList.findIndex(item => item.seqNo === data.seqNo);
-                        this.deleteAcademic(data)
                         this.$toast.add({ summary: 'Confirmed', detail: 'Record edit', life: 3000 });
                     },
                     reject: () => {
@@ -544,7 +571,6 @@ export default defineComponent({
             }else{
                 this.academicInfo = { ...data };
                 this.editingIndexAcademic = this.studentAcademicList.findIndex(item => item.seqNo === data.seqNo);
-                this.deleteAcademic(data)
             }
         },
 
@@ -558,7 +584,6 @@ export default defineComponent({
                     message: 'Do you want to delete this record?',
                     header: 'Danger Zone',
                     accept: async () => {
-
                         if (this.userInfo.roleID == "04") {
                             var reqBody = {
                                 ...this.userInfo,
@@ -566,7 +591,7 @@ export default defineComponent({
                                     ...this.userInfo.studentInfo,
                                     academicList:[{
                                         ...item,
-                                        studentID: this.userInfo.specificID,
+                                        studentID: this.userInfo.specID,
                                         statusCode: "02",
                                         seqNo: item.seqNo,
                                         certificatedDate: this.formatDateDatabase(item.certificatedDate),
@@ -575,9 +600,8 @@ export default defineComponent({
                                     }]
                                 })
                             };
+                            await requestService.request(API_PATH.USER_UPDATE, reqBody, false);
                         }
-
-                        await requestService.request(API_PATH.USER_UPDATE, reqBody, false);
                         this.deleteAcademic(item)
                         this.$toast.add({ summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
                     },
@@ -589,11 +613,6 @@ export default defineComponent({
                 this.deleteAcademic(item)
             }
         },
-
-
-
-
-
 
         updateAcademicSeqNo() {
             this.studentAcademicList.forEach((qual, index) => {
@@ -610,35 +629,35 @@ export default defineComponent({
         /* ======================= Update User =========================== */
         /* =============================================================== */
         async onClickUpdateUser(){
-
-            let qualificationList = [];
-            let studentAcademicList = [];
-
+            let qualificationList = [] as any[];
+            let studentAcademicList = [] as any[];
             if (Array.isArray(this.qualificationList) && this.qualificationList.length > 0) {
                 qualificationList = this.qualificationList.map(item => ({
-                    teacherID: this.userInfo.specificID || '',
+                    teacherID: this.userInfo.specID || '',
                     ...item,
-                    startDate: this.formatDateDatabase(item.startDate),
-                    endDate: this.formatDateDatabase(item.endDate),
-                    certificatedDate: this.formatDateDatabase(item.certificatedDate),
+                    startDate: item.startDate,
+                    endDate: item.endDate,
+                    certificatedDate: item.certificatedDate,
                     statusCode: "01"
                 }));
             } 
 
             if (Array.isArray(this.studentAcademicList) && this.studentAcademicList.length > 0) {
                 studentAcademicList = this.studentAcademicList.map(item => ({
-                    studentID: this.userInfo.specificID || '',
+                    studentID: this.userInfo.specID || '',
                     ...item,
-                    startDate: this.formatDateDatabase(item.startDate),
-                    endDate: this.formatDateDatabase(item.endDate),
-                    certificatedDate: this.formatDateDatabase(item.certificatedDate),
+                    startDate: item.startDate,
+                    endDate: item.endDate,
+                    certificatedDate: item.certificatedDate,
                     statusCode: "01"
                 }));
             }
-
+            
+            var reqBody = {}
             if (this.userInfo.roleID == "04") {
-                var reqBody = {
+                reqBody = {
                     ...this.userInfo,
+                    dateOfBirth: this.formatDateDatabase(this.userInfo.dateOfBirth),
                     studentInfo: {
                         ...this.userInfo.studentInfo,
                         academicList: studentAcademicList // Ensure academicList is an array
@@ -646,20 +665,22 @@ export default defineComponent({
                 };
             }
             else{
-                var reqBody = {
+                reqBody = {
                     ...this.userInfo,
+                    dateOfBirth: this.formatDateDatabase(this.userInfo.dateOfBirth),
                     teacherInfo: {
                         qualificationList 
                     }
                 };
             }
 
-            // const res = await requestService.request(API_PATH.USER_UPDATE, reqBody, true);
-            // if(res.header.result){
-            //     console.log(res)
-            // }
+            const res = await requestService.request(API_PATH.USER_UPDATE, reqBody, true);
+            if(res.header.result){
+                console.log(res)
+            }
             // this.backToList();
         },
+        
         backToList(){
             this.$router.push('/user-list')
         },
@@ -671,7 +692,6 @@ export default defineComponent({
             const body = {
                 userID: this.userIDFromURl
             };
-            
             // Requesting user details from the API
             const response = (await requestService.request(API_PATH.USER_DETAIL, body, false)) as USER_DETAIL_RES;
 
@@ -684,19 +704,13 @@ export default defineComponent({
                 this.fatherInfo = response.body?.studentInfo?.parentList[0];
                 this.motherInfo = response.body?.studentInfo?.parentList[1];
                 this.studentAcademicList = response.body?.studentInfo?.academicList.map(academicList => ({
-                    ...academicList,
-                    certificatedDate: this.formatDate2(academicList.certificatedDate),
-                    startDate: this.formatDate2(academicList.startDate),
-                    endDate: this.formatDate2(academicList.endDate)
+                    ...academicList
                 }));
 
             // If the user is a teacher, set qualification list and format certificatedDate
             } else {
                 this.qualificationList = response.body?.teacherInfo?.qualificationList.map(qualification => ({
                     ...qualification,
-                    certificatedDate: this.formatDate2(qualification.certificatedDate),
-                    startDate: this.formatDate2(qualification.startDate),
-                    endDate: this.formatDate2(qualification.endDate)
                 }));
             }
         },
@@ -723,13 +737,18 @@ export default defineComponent({
             this.checkMotherSpecificErrorFields
         },
 
+        checkDateFormatYYYYMMDD(dateInput: string):boolean {
+            const regex = /^\d{4}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])$/;
+            return regex.test(dateInput);
+        },      
+
         formatDate(dateString: string): string {
             const date = new Date(dateString);
             if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
             const year = date.getFullYear();
             const month = (date.getMonth() + 1).toString().padStart(2, '0');
             const day = date.getDate().toString().padStart(2, '0');
-            return `${year}-${month}-${day}`;
+            return `${year}${month}${day}`;
         },
 
         formatDate2(dateString: string): string | number {
@@ -752,10 +771,9 @@ export default defineComponent({
             return `${year}-${month}-${day}`;
         },
 
-
         formatDateDatabase(dateString: string): string {
             const date = new Date(dateString);
-            if (isNaN(date.getTime())) return ''; // Return empty string if invalid date
+            if (isNaN(date.getTime())) return dateString; // Return empty string if invalid date
             const year = date.getFullYear();
             const month = (date.getMonth() + 1).toString().padStart(2, '0');
             const day = date.getDate().toString().padStart(2, '0');
@@ -767,20 +785,24 @@ export default defineComponent({
             return emailPattern.test(email);
         },
         
-        resetForm() {
-            this.userInfo = {
-                firstName: '',
-                lastName: '',
-                gender: '',
-                dateOfBirth: '',
-                placeOfBirth: '',
-                address: '',
-                phone: '',
-                email: '',
-                classInfoID: '',
-                departmentID: ''
-            } as USER_LIST
-            this.routerName = this.$route.name
+        resetForm(isResetUserInfo: boolean) {
+            this.userSelectedRole = '03'
+            if(isResetUserInfo){
+                this.userInfo = {
+                    firstName: '',
+                    lastName: '',
+                    nickName: '',
+                    gender: '',
+                    dateOfBirth: '',
+                    placeOfBirth: '',
+                    address: '',
+                    phone: '',
+                    email: '',
+                    classInfoID: '',
+                    departmentID: ''
+                } as USER_LIST
+            }
+            this.routerName = this.$route.name as string
             this.userInfoCheckFields= {
                 firstName: false,
                 lastName: false,
@@ -792,6 +814,23 @@ export default defineComponent({
                 email: false,
             } as USER_LIST_FORM_CHECK,
             this.qualificationList = []
+            this.studentAcademicList = []
+            this.fatherInfo= {
+                firstName: '',
+                lastName: '',
+                job: '',
+                phone: '',
+                gender: 'M',
+                address: ''
+            } as PARENT_LIST,
+            this.motherInfo= {
+                firstName: '',
+                lastName: '',
+                job: '',
+                phone: '',
+                gender: 'F',
+                address: ''
+            } as PARENT_LIST
         },
 
         resetQualificationForm() {

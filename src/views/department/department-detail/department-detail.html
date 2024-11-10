@@ -1,7 +1,7 @@
 <div class="popup">
     <div class="popWrap w70p">
         <div class="pop_head">
-            <h1 class="text-center text-primary">{{ $t('department.detail') }}</h1>
+            <h1 class="text-center text-dark">{{ $t('department.detail') }}</h1>
         </div>
         <div class="pop_cont">
             <div class="cont">
@@ -25,17 +25,17 @@
                                 <dt>{{ $t('department.depManager') }}</dt>
                                 <dd>{{ departmentInfo.firstName }}-{{ departmentInfo.lastName}}</dd>
                             </dl>
-                            <dl>
+                            <!-- <dl>
                                 <dt>{{ $t('department.statusCode') }}</dt>
                                 <dd>{{ $codeConverter.codeToString(statusCodeList,departmentInfo.statusCode, 'statusCode') }}</dd>
-                            </dl>
+                            </dl> -->
                             <dl>
                                 <dt>{{ $t('department.firstRegisterDate') }}</dt>
-                                <dd>{{ $format.formatDateTime(department.firstRegisterDate,'yyyy-mm-dd') }}</dd>
+                                <dd>{{ $format.formatDateTime(department.firstRegisterDate,'yyyy-mm-dd','Slash','FullMonth') }}</dd>
                             </dl>
                             <dl>
                                 <dt>{{ $t('department.lastChangeDate') }}</dt>
-                                <dd>{{ $format.formatDateTime(department.lastChangeDate,'yyyy-mm-dd') }}</dd>
+                                <dd>{{ $format.formatDateTime(department.lastChangeDate,'yyyy-mm-dd','Slash','FullMonth') }}</dd>
                             </dl>
                         </div>
                         <table v-else>
@@ -56,6 +56,11 @@
                             <Column field="fullName" :header="$t('user.name')" />
                             <Column field="gender" :header="$t('user.gender')" />
                             <Column field="roleID" :header="$t('user.role')" />
+                            <Column :header="$t('user.phone')">
+                                <template #body="{ data }">
+                                    <span>{{ $phoneNumberFormater.formatPhoneNumber(data.phone) }}</span>
+                                </template>
+                            </Column>
                             <Column :header="$t('action.action')">
                                 <template #body="{ data }">
                                     <div class="d-flex justify-content-center">
@@ -65,7 +70,9 @@
                             </Column>
                         </DataTable>
                         <table v-else>
-                            <tr> <th>{{ $t('common.noData') }}</th> </tr>
+                            <tr>
+                                <th class="text-danger">{{ $t('common.noData') }}</th>
+                            </tr>
                         </table>
                     </TabPanel>
                 </TabView>

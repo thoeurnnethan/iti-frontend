@@ -1,4 +1,3 @@
-<MyLoading v-if="Loading" />
 <Toast />
 <ConfirmDialog></ConfirmDialog>
 <div class="container-fluid d-flex flex-column we_box" style="overflow: hidden;">
@@ -20,7 +19,7 @@
     </div>
     <div class="my-3"></div>
     <div class="float-end my-2">
-        <button type="button" class="rad_right btn btn-dark p-2 px-2 float-end font_15">{{ $t('common.search') }}</button>
+        <button type="button" class="rad_right btn btn-dark p-2 px-2 float-end font_15" @click="getDepartmentList()">{{ $t('common.search') }}</button>
         <InputGroup class="float-end w-25">
             <InputText class="p-1 font_15 rad_left c_input b_shadow" 
             @keyup.enter="getDepartmentList()"
@@ -37,6 +36,9 @@
             tableStyle="min-width: 50rem"
             selectionMode="single" 
             scrollable
+            resizableColumns 
+            columnResizeMode="fit" 
+            showGridlines
             :value="departmentList" 
             :metaKeySelection="true" 
             :rows="pageSize"
@@ -45,21 +47,27 @@
             :totalRecords="totalCount"
             :rowsPerPageOptions="[10, 20, 50]" 
             @page="onPage"
-            :rowClass="rowClass">
+            :rowClass="rowClass1">
             <Column field="no" :header="$t('common.no')" :class="['text-center']"></Column>
             <Column field="departmentID" :header="$t('department.depID')"></Column>
             <Column field="departmentName" :header="$t('department.depName')"></Column>
             <Column field="departmentDesc" :header="$t('department.depDesc')"></Column>
-            <Column field="statusCode" :header="$t('department.statusCode')">
+            <!-- <Column field="statusCode" :header="$t('department.statusCode')">
                 <template #body="{ data }">
                     {{ $codeConverter.codeToString(statusCodeList, data.statusCode, 'statusCode') }}
+                </template>
+            </Column> -->
+            <Column :header="$t('action.function')">
+                <template #body="{ data }">
+                    <button v-if="data.statusCode === '01'" class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addMember') }}</button>
+                    <button v-else disabled class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addMember') }}</button>
                 </template>
             </Column>
             <Column :header="$t('action.action')">
                 <template #body="{ data }">
                     <div v-if="data.statusCode === '01'" class="d-flex justify-content-center align-item-center">
-                        <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-white" :title="$t('action.edit')" />
-                        <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '09')" :icon="['fas', 'fa-box-archive']" class="text-white mx-2" :title="$t('action.inactive')" />
+                        <font-awesome-icon style="background-color: #272727;padding: 4px;border-radius: 8px;margin-right: 8px;" @click="onClickEdit(data)" :icon="['fas', 'fa-pencil']" class="text-white" :title="$t('action.edit')" />
+                        <!-- <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '09')" :icon="['fas', 'fa-box-archive']" class="text-white mx-2" :title="$t('action.inactive')" /> -->
                         <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" :icon="['fas', 'fa-trash']" class="text-white" :title="$t('action.delete')" />
                     </div>
                     <div v-else class="d-flex justify-content-center align-item-center">
@@ -67,11 +75,6 @@
                         <font-awesome-icon style="background-color: #0079FF;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '01')" :icon="['fas', 'fa-rotate-back']" class="text-white mx-2" :title="$t('action.active')" />
                         <font-awesome-icon style="background-color: #dc3545;padding: 4px;border-radius: 8px;" @click="onClickAction(data, '02')" icon="fa-solid fa-trash" class="text-white" :title="$t('action.delete')" />
                     </div>
-                </template>
-            </Column>
-            <Column :header="$t('department.teacher')">
-                <template #body="{ data }">
-                    <button class="btn btn-info p-0" @click="onClickInsertTeacher(data)">{{ $t('department.addTeacher') }}</button>
                 </template>
             </Column>
         </DataTable>

@@ -1,6 +1,7 @@
 {
     "common": {
-        "itiName": "Industrial Technecal Institute",
+        "searchForUpgradeClass": "Search by ID for upgrade Class...",
+        "itiName": "Industrial Technical Institute",
         "Home": "Home",
         "no": "No",
         "search": "Search",
@@ -16,6 +17,7 @@
         "username": "Username",
         "password": "Password",
         "login": "Login",
+        "logout": "Logout",
         "goodMorning": "Good Morning",
         "goodAfternoon": "Good Afternoon",
         "goodEvening": "Good Evening",
@@ -42,7 +44,9 @@
         "active": "Set to active",
         "inactive": "Set to inactive",
         "delete": "Delete",
-        "action": "Action"
+        "action": "Action",
+        "function": "Function"
+        
     },
     "department": {
         "title": "Department list",
@@ -57,7 +61,7 @@
         "firstRegisterDate": "First Register Date",
         "lastChangeDate": "Last Change Date",
         "detail": "Department Detail Information",
-        "addTeacher": "Add Teacher",
+        "addMember": "Add Member",
         "teacherList": "Teacher List In Department",
         "teacher": "Teacher",
         "addTeacherToDepartment": "Add Teacher To Department",
@@ -83,6 +87,7 @@
     },
     "user": {
         "ID": "User ID",
+        "userID": "User ID",
         "role": "Role",
         "title": "Student list",
         "studentID": "Student ID",
@@ -99,6 +104,8 @@
         "email": "Email",
         "password": "Password",
         "imageUrl": "Image URL",
+        "male": "Male",
+        "female": "Female",
         "userList": "User List",
         "studentDetail": "Student Information Detail",
         "teacherDetail": "Teacher Information Detail",
@@ -144,7 +151,7 @@
         "selectSemester": "Select Semester",
         "selectClass": "Select Class",
         "selectDepartment": "Select Department",
-        "upgrade": "Upgrade",
+        "upgradeClass": "Upgrade Class",
         "newYear": "New Year",
         "newSemester": "New Semester",
         "from": "FROM",
@@ -156,7 +163,8 @@
         "classDetail": "Class Information Detail",
         "subjectList": "Subjects List",
         "studentList": "Students List",
-        "addStudentToClass": "Add Student To Class"
+        "addStudentToClass": "Add Student To Class",
+        "addSubject": "Add Subject"
     },
     "room": {
         "title": "Room List",

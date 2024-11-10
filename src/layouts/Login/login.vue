@@ -40,15 +40,14 @@ export default defineComponent({
                 const reqBody = {
                     ...this.userLogin
                 }
-                const res = (await requestService.request(API_PATH.USER_LOGIN, reqBody, false, true)) as userLoginRes
+                const res = (await requestService.request(API_PATH.USER_LOGIN, reqBody, false)) as userLoginRes
                 if(res.header.result){
-                    this.userResInfo = res.body
-                    this.userResInfo ={
-                        ...this.userResInfo,
+                    this.userResInfo = {
+                        ...res.body,
                         loginSessionID: res.header.login_session_id
                     }
-                    this.$util.setDataStorage('userInfo', this.userResInfo,true)
-                    this.$util.setDataStorage('isAuthenticated',true , true)
+                    this.$util.setDataStorage('userInfo', this.userResInfo, true)
+                    this.$util.setDataStorage('isAuthenticated', true, true)
                     if(this.userResInfo.loginByUserYn === 'Y'){
                         this.$router.push('/admin-dashboard')
                     }else{

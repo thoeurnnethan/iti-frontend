@@ -72,18 +72,18 @@ export default defineComponent({
 
     watch:{
         '$i18n.locale'(){
-            this.updateTranslatedSemesterList()
-            this.updateTranslatedYearList()
-            this.updateTranslatedClassTypeList()
+            this.semesterList = this.$codeUtil.translateSemesterlist()
+            this.yearList = this.$codeUtil.translateYearlist()
+            this.classTypeList = this.$codeUtil.translateClassTypelist()
         }
     },
 
     mounted() {
         this.onDataLoad();
         this.getDepartmentList();
-        this.updateTranslatedSemesterList()
-        this.updateTranslatedYearList()
-        this.updateTranslatedClassTypeList()
+        this.semesterList = this.$codeUtil.translateSemesterlist()
+        this.yearList = this.$codeUtil.translateYearlist()
+        this.classTypeList = this.$codeUtil.translateClassTypelist()
     },
 
     methods: {
@@ -101,10 +101,11 @@ export default defineComponent({
                 generation: this.classInfo.generation + ''
             }
 
-            const res = await requestService.request(API_PATH.CLASS_REGISTER, reqBody, true) as CLASS_LIST;
+            const res = await requestService.request(API_PATH.CLASS_REGISTER, reqBody, false) as CLASS_LIST;
             this.classInfo = res;
             if (res) {
                 modalController.dismiss();
+                this.$toast.add({ summary: 'Confirmed', detail: 'The information has been inserted.', life: 1500 });
             }
         },
 
@@ -115,10 +116,11 @@ export default defineComponent({
                 generation: this.classInfo.generation + ''
             };
 
-            const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, true) as CLASS_LIST;
+            const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false) as CLASS_LIST;
             this.classInfo = res;
             if (res) {
                 modalController.dismiss();
+                this.$toast.add({ summary: 'Confirmed', detail: 'The information has been updated.', life: 1500 });
             }
         },
 
@@ -135,29 +137,7 @@ export default defineComponent({
             }
             const response = (await requestService.request(API_PATH.DEPARTMENT_LIST, reqBody, false)) as DEPARTMENT_LIST_RES;
             this.departmentList = response.body?.departmentList;
-        },
-
-        updateTranslatedSemesterList() {
-            this.semesterList = this.semesterList.map(item => ({
-                codeValue: item.codeValue,
-                codeValueDesc: this.$codeConverter.codeToString(this.semesterList, String(item.codeValue), 'semesterCode')
-            }));
-        },
-
-        updateTranslatedYearList() {
-            this.yearList = this.yearList.map(item => ({
-                codeValue: item.codeValue,
-                codeValueDesc: this.$codeConverter.codeToString(this.yearList, String(item.codeValue), 'yearCode')
-            }));
-        },
-
-        updateTranslatedClassTypeList() {
-            this.classTypeList = this.classTypeList.map(item => ({
-                codeValue: item.codeValue,
-                codeValueDesc: this.$codeConverter.codeToString(this.classTypeList, String(item.codeValue), 'classType')
-            }));
-        },
-
+        }
     }
 });
 </script>

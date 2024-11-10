@@ -1,5 +1,5 @@
 <Toast />
-<ConfirmationDialog />
+<ConfirmDialog />
 <div class="popup">
     <div class="popWrap w90p">
         <div class="pop_head">
@@ -19,7 +19,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mt-4">
+                <div class="row">
                     <div class="col-12">
                         <div class="container-fluid d-flex justify-content-start p-0 mb-3">
                             <div class="w-25">
@@ -32,9 +32,8 @@
                                 <div class="we_shadow">
                                     <DataTable v-model:selection="selectedStudent" 
                                         :value="studentsNotInClass"
-                                        dataKey="specificID" 
-                                        :rowClass="rowClass" 
-                                        scrollable scrollHeight="400px">
+                                        dataKey="specificID"
+                                        scrollable scrollHeight="350px">
                                         <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
                                         <Column field="fullName" :header="$t('user.name')"></Column>
                                         <Column field="gender" :header="$t('user.gender')"></Column>
@@ -50,14 +49,11 @@
                                         </Column>
                                     </DataTable>
                                 </div>
-                                <div class="container-fluid w-100 mt-3 d-flex justify-content-end p-0">
-                                    <button class="btn01" style="width:185px" @click="saveData()">{{ $t('common.save') }}</button>
-                                </div>
                             </div>
                             <div class="col-4" v-if="studentList.length > 0">
                                 <label class="form-label font_15 alert alert-info p-1">{{ $t('class.studentListInClass') }}</label>
                                 <div class="we_shadow">
-                                    <DataTable :value="classList" scrollable scrollHeight="400px">
+                                    <DataTable :value="studentClassList" scrollable scrollHeight="350px">
                                         <Column field="fullName" :header="$t('user.name')"></Column>
                                         <Column field="gender" :header="$t('user.gender')"></Column>
                                         <Column field="dateOfBirth" :header="$t('user.dateOfBirth')">
@@ -78,7 +74,7 @@
                                             <th>{{ $t('user.dateOfBirth') }}</th>
                                         </tr>
                                         <tr>
-                                            <td colspan="2">{{ $t('common.noData') }}</td>
+                                            <td colspan="2" class="text-danger">{{ $t('common.noData') }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -88,10 +84,11 @@
                 </div>
             </div>
         </div>
-        <div class="pop_foot">
+        <div class="pop_foot" style="padding: 20px 20px 20px !important;">
             <div class="footer_btn">
                 <div class="right_side">
-                    <button class="btn03 mx-2" style="width:185px" @click="onClose">{{ $t('common.close') }}</button>
+                    <button class="btn03 mx-2 bg-danger text-white" style="width:185px" @click="onClose">{{ $t('common.close') }}</button>
+                    <button :class="checkSelectedStudent ? 'btn01' : 'btn03'" style="width:185px" @click="onAddStudentToClass()" :disabled="!checkSelectedStudent">{{ $t('common.save') }}</button>
                 </div>
             </div>
         </div>

@@ -2,8 +2,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { TEACHER_DEPARTMENT_LIST } from '@/shared/types/teacherDepartment-list';
-import { TEACHER_RES } from '@/shared/types/user-list';
+import { TEACHER_DEPARTMENT_LIST, TEACHER_DEPARTMENT_LIST_RES } from '@/shared/types/teacherDepartment-list';
+import { TEACHER_RES, USER_LIST } from '@/shared/types/user-list';
 import { DEPARTMENT_LIST } from '@/shared/types/department-list';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
@@ -35,7 +35,7 @@ export default defineComponent({
             } as TEACHER_DEPARTMENT_LIST,
             subjectInfoUpdate: {} as TEACHER_DEPARTMENT_LIST,
             subjectList: [] as TEACHER_DEPARTMENT_LIST[],
-            departmentList: [] as DEPARTMENT_LIST[],
+            teacherDepList: [] as TEACHER_DEPARTMENT_LIST[],
             genderCodeList: GenderCodeList,
             statusCodeList: globalStatusCodeList,
             userRoleList: UserRoleList,
@@ -44,37 +44,42 @@ export default defineComponent({
             totalCount: 0,
             pageSize: 10,
             pageNumber: 0,
-            teacherList: [] as TEACHER_RES[],
-            selectedTeacher: [],
+            teacherList: [] as USER_LIST[],
+            selectedTeacher: [] as USER_LIST[],
             searchQuery: '',
             tempSearchQuery: '',
         };
     },
-    computed: {
-    filteredTeacherList() {
-        if (!this.searchQuery) {
-            return this.teacherList;
-        }
 
-        const query = this.searchQuery.toLowerCase();
-        return this.teacherList.filter(teacher =>
-            teacher.fullName.toLowerCase().includes(query) ||
-            teacher.gender.toLowerCase().includes(query) ||
-            teacher.dateOfBirth.toLowerCase().includes(query) ||
-            teacher.phone.toLowerCase().includes(query) ||
-            teacher.roleID.toLowerCase().includes(query)
-        );
+    computed: {
+        filteredTeacherList() {
+            if (!this.searchQuery) {
+                return this.teacherList;
+            }
+            const query = this.searchQuery.toLowerCase();
+            return this.teacherList.filter(teacher =>
+                teacher.firstName.toLowerCase().includes(query) ||
+                teacher.lastName.toLowerCase().includes(query) ||
+                teacher.gender.toLowerCase().includes(query) ||
+                teacher.dateOfBirth.toLowerCase().includes(query) ||
+                teacher.phone.toLowerCase().includes(query) ||
+                teacher.roleID.toLowerCase().includes(query)
+            );
+        },
+        teachersInDepartment() {
+            const departmentTeacherIDs = new Set(this.teacherDepList.map(teacher => teacher.teacherID));
+            return this.filteredTeacherList.filter(teacher => !departmentTeacherIDs.has(teacher.specificID));
+        },
+        checkSelectedTeacher(): boolean{
+            return this.selectedTeacher.length > 0;
+        }
     },
-    teachersInDepartment() {
-        const departmentTeacherIDs = new Set(this.departmentList.map(teacher => teacher.teacherID));
-        return this.filteredTeacherList.filter(teacher => !departmentTeacherIDs.has(teacher.specificID));
-    }
-}
-,
+
     mounted() {
         this.onGetTeacherList();
-        this.getTeacherInfoData();
+        this.getTeacherDataInDept();
     },
+
     methods: {
         async onGetTeacherList() {
             const reqBody = {
@@ -83,41 +88,34 @@ export default defineComponent({
                 pageSize: 1000,
                 pageNumber: 1
             };
-            try {
-                const response = await requestService.request(API_PATH.USER_LIST, reqBody, false) as TEACHER_RES;
-                const filteredResponse = Array.isArray(response.body.userList) ? response.body.userList.filter(teacher => teacher.roleID !== '04' && teacher.roleID !== '01') : [];
-                if (filteredResponse.length > 0) {
-                    this.teacherList = filteredResponse.map(teacher => ({
-                        ...teacher,
-                        fullName: `${teacher.firstName} ${teacher.lastName}`,
-                        gender: this.$codeConverter.codeToString(this.genderCodeList, teacher.gender),
-                        roleID: this.$codeConverter.codeToString(this.userRoleList, teacher.roleID),
-                        originalRoleID: teacher.roleID
-                    }));
-                }
-            } catch (error) {
-                console.error('Error fetching teacher list:', error);
-            }
-        },
-
-        async getTeacherInfoData() {
-            const reqBody = {
-                teacherID: '',
-                departmentID: this.teacherInfoData.departmentID,
-            };
-            try {
-                const response = await requestService.request(API_PATH.TEACHER_DEPARTMENT_LIST, reqBody, false) as TEACHER_DEPARTMENT_LIST_RES;
-                this.departmentList = response.body.departmentList.map((teacher: { firstName: any; lastName: any; }) => ({
+            const response = await requestService.request(API_PATH.USER_LIST, reqBody, false) as TEACHER_RES;
+            const filteredResponse = Array.isArray(response.body.userList) ? response.body.userList.filter(teacher => teacher.roleID !== '04' && teacher.roleID !== '01') : [];
+            if (filteredResponse.length > 0) {
+                this.teacherList = filteredResponse.map(teacher => ({
                     ...teacher,
-                    fullName: `${teacher.firstName} ${teacher.lastName}`,
-                    roleID: this.$codeConverter.codeToString(this.userRoleList, teacher.roleID),
+                    fullName: `${teacher.specificID}-${teacher.firstName} ${teacher.lastName}`,
+                    gender: this.$codeConverter.codeToString(this.genderCodeList, teacher.gender,'genderCode'),
+                    roleID: this.$codeConverter.codeToString(this.userRoleList, teacher.roleID, 'userRoleCode'),
+                    originalRoleID: teacher.roleID
                 }));
-            } catch (error) {
-                console.error('Error fetching department list:', error);
             }
         },
 
-        async saveData() {
+        async getTeacherDataInDept() {
+            const reqBody = {
+                departmentID: this.teacherInfoData.departmentID,
+                teacherID: '',
+            };
+            const response = await requestService.request(API_PATH.TEACHER_DEPARTMENT_LIST, reqBody, false) as any;
+            this.teacherDepList = response.body.departmentList.map((teacher) => ({
+                ...teacher,
+                fullName: `${teacher.firstName} ${teacher.lastName}`,
+                gender: this.$codeConverter.codeToString(this.genderCodeList,teacher.gender,'genderCode'),
+                roleID: this.$codeConverter.codeToString(this.userRoleList, teacher.roleID, 'userRoleCode'),
+            }));
+        },
+
+        async onAddTeacherToDept() {
             const teacherList = this.selectedTeacher.map(teacher => ({
                 teacherID: teacher.specificID,
                 roleCode: teacher.originalRoleID,
@@ -128,12 +126,16 @@ export default defineComponent({
                 teacherList: teacherList
             };
 
-            try {
-                await requestService.request(API_PATH.TEACHER_DEPARTMENT_REGISTER, requestBody, true);
-                this.onClose();
-            } catch (error) {
-                console.error('Error saving teacher data:', error);
+            const res = await requestService.request(API_PATH.TEACHER_DEPARTMENT_REGISTER, requestBody, true) as any;
+            if(res.header.result){
+                this.selectedTeacher = [] as USER_LIST[]
             }
+            this.teacherDepList = res.body.teacherList.map((teacher) => ({
+                ...teacher,
+                fullName: `${teacher.teacherID}-${teacher.firstName} ${teacher.lastName}`,
+                gender: this.$codeConverter.codeToString(this.genderCodeList,teacher.gender,'genderCode'),
+                roleID: this.$codeConverter.codeToString(this.userRoleList, teacher.roleID || ''),
+            }));
         },
 
         onSearch() {

@@ -1,4 +1,7 @@
+import Utils from '@/shared/util';
 import { createRouter, createWebHistory } from 'vue-router'
+
+const util = new Utils();
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,11 +47,6 @@ const router = createRouter({
                     component: () => import("@/views/class/class-list/class-list.vue")
                 },
                 {
-                    path: "/class-register",
-                    name: "class-register",
-                    component: () => import("@/views/class/class-insert/class-insert.vue")
-                },
-                {
                     path: "/room-list",
                     name: "room-list",
                     component: () => import("@/views/room/room-list/room-list.vue")
@@ -57,11 +55,6 @@ const router = createRouter({
                     path: "/department-list",
                     name: "department-list",
                     component: () => import("@/views/department/department-list/department-list.vue")
-                },
-                {
-                    path: "/department-insert",
-                    name: "department-insert",
-                    component: () => import("@/views/department/department-insert/department-insert.vue")
                 },
                 {
                     path: "/score-list",
@@ -91,6 +84,13 @@ const router = createRouter({
             ]
         },
     ]
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.path !== '/') {
+        util.setDataStorage('lastRoute', to.fullPath,true)
+    }
+    next();
 });
 
 export default router

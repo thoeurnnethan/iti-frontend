@@ -19,7 +19,7 @@ export default defineComponent({
             required: true
         },
         studentDetails: {
-            type: Array as PropType<STUDENT_CLASS_LIST>,
+            type: Array as PropType<STUDENT_CLASS_LIST[]>,
             required: true
         }
     },
@@ -28,7 +28,7 @@ export default defineComponent({
         return {
             classInfo: {} as CLASS_LIST,
             statusCodeList: globalStatusCodeList,
-            GenderCodeList: GenderCodeList,
+            genderCodeList: GenderCodeList,
             studentInfo: [] as Array<any>,
         }
     },
@@ -38,14 +38,14 @@ export default defineComponent({
             ...item,
             no: index + 1
         }));
-
-        this.studentInfo = this.studentDetails.map((student: { firstName: any; lastName: any, statusCode: any, gender: any }, index: number) => ({
-            ...student,
-            no: index + 1,
-            fullName: `${student.firstName} ${student.lastName}`,
-            status: this.$codeConverter.codeToString(this.statusCodeList, student.statusCode, 'statusCode'),
-            gender: this.$codeConverter.codeToString(this.GenderCodeList, student.gender, 'genderCode'),
-        }));
+        this.studentInfo = this.studentDetails.map((data,index) =>{
+            return {
+                no: index + 1,
+                fullName: `${data.firstName} ${data.lastName}`,
+                status: this.$codeConverter.codeToString(this.statusCodeList, data.statusCode || '', 'statusCode'),
+                ...data
+            }
+        })
     },
 
 
@@ -77,6 +77,7 @@ export default defineComponent({
                 rejectClass: 'btn btn-secondary',                
 
                 accept: async () => {
+                    console.log(item);
                     const reqBody = {
                         classInfoID: item.classID + item.classYear + item.semester,
                         studentList: [{
@@ -84,9 +85,15 @@ export default defineComponent({
                             statusCode: '02'
                         }],
                     };
-
-                    await requestService.request(API_PATH.STUDENT_CLASS_UPDATE, reqBody, false) as STUDENT_CLASS_LIST;
-                    // this.studentInfo
+                    const res = await requestService.request(API_PATH.STUDENT_CLASS_UPDATE, reqBody, false);
+                    this.studentInfo = res.body.studentList.map((data,index) =>{
+                        return {
+                            no: index + 1,
+                            fullName: `${data.firstName} ${data.lastName}`,
+                            status: this.$codeConverter.codeToString(this.statusCodeList, data.statusCode || '', 'statusCode'), 
+                            ...data
+                        }
+                    })
                     this.$toast.add({ summary: 'Confirmed', detail: messageAcceptDetail, life: 1000 });
                     // modalController.dismiss();
                 },

@@ -1,7 +1,9 @@
 interface USER_LIST {
     userID?: string
     specID?: string
+    specificID?: string
     roleID: string
+    originalRoleID?: string
     classInfoID?: string,
     departmentID?: string,
     firstName: string

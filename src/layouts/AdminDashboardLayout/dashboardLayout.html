@@ -4,7 +4,7 @@
         <div :class="['sidebar d-flex flex-column', isCollapse ? 'collapse' : '']">
             <div class="logo-box bg_black d-flex flex-row justify-content-around"
                 @click="$router.push('/admin-dashboard')">
-                <img src="iti-logo.svg">
+                <img src="@/assets/icons/iti-logo.svg">
                 <div class="logo-name">{{ $t('common.itiName') }}</div>
             </div>
             <ul class="sidebar-list nav d-flex flex-column b_shadow p-0 cursor-pointer">
@@ -58,14 +58,16 @@
             <div class="sticky_head d-flex justify-content-evenly px-3 flex-row bg_black">
                 <div class="wrap row">
                     <div class="col-md-10 d-flex">
-                        <p class="text text-light neonText">{{ $t(greeting) }} <span class="username">: {{ userInfo.firstName }} {{ userInfo.lastName }}</span></p>
+                        <!-- <p class="text text-light neonText">{{ $t(greeting) }} 
+                            <span class="username">: {{ userInfo.firstName }} {{ userInfo.lastName }} - {{ $codeConverter.codeToString(userRoleList,userInfo.roleID,'userRoleCode') }}</span>
+                        </p> -->
                     </div>
                     <div class="col-md-2">
                         <SelectButton class="float-end" style="margin-right: 24px;" v-model="currentLanguage"
                             :options="languageList" aria-labelledby="basic" />
                     </div>
                 </div>
-                <button class="btn btn-warning p-2" @click="onClickLogout">Logout</button>
+                <button class="btn btn-warning p-2" @click="onClickLogout" style="width: 80px;">{{ $t('common.logout') }}</button>
             </div>
             <div class="main_content m-3">
                 <router-view></router-view>

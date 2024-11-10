@@ -5,6 +5,7 @@ import { defineComponent, ref } from 'vue';
 import { API_PATH } from '@/shared/common/api-path';
 import { RequestService } from '@/shared/services/request-service';
 import { CLASS_LIST, CLASS_LIST_REQ, CLASS_LIST_RES } from '@/shared/types/class-list';
+import subject_action from '../../subject/subject-action/subject-action.vue';
 import { ExportExcel } from '@/shared/services/export-excel-class';
 import class_edit from '../class-edit/class-edit.vue';
 import { YearList, SemesterList, globalStatusCodeList, ClassTypeList } from '@/shared/common/common';
@@ -61,16 +62,16 @@ export default defineComponent({
 
     watch:{
         '$i18n.locale'(){
-            this.updateTranslatedSemesterList()
-            this.updateTranslatedYearList()
+            this.semesterList = this.$codeUtil.translateSemesterlist()
+            this.yearList = this.$codeUtil.translateYearlist()
         }
     },
 
     mounted() {
         this.getClassList()
         this.getDepartmentList()
-        this.updateTranslatedSemesterList()
-        this.updateTranslatedYearList()
+        this.semesterList = this.$codeUtil.translateSemesterlist()
+        this.yearList = this.$codeUtil.translateYearlist()
     },
 
     methods: {
@@ -89,7 +90,7 @@ export default defineComponent({
             this.classList = response.body?.classList.map((data,index) =>{
                 return {
                     ...data,
-                    no: index + 1
+                    no: index + 1 + (this.pageSize) * this.pageNumber
                 }
             })
             // Check isLast only when search by ClassID, So default will be false
@@ -131,30 +132,37 @@ export default defineComponent({
             this.departmentList = response.body?.departmentList
         },
 
-        rowClass(data: { statusCode: string; }) {
+        rowClass(data: { statusCode: string; }): string {
             return data.statusCode === '09' ? 'we_bg_row' : '';
         },
 
         async onClickRow() {
             const body_1 = {
                 classID: this.classInfo?.classID,
-                classYear: this.classInfo?.year,
-                semester: this.classInfo?.semester,
-            };
+                classYear: this.classInfo?.year, 
+                semester: this.classInfo?.semester, 
+            }; 
             const responseSubject = await requestService.request(API_PATH.SUBJECT_LIST, body_1, false);
 
             const body_2 = {
                 classInfoID: this.classInfo?.classInfoID
             };
             const responseStudent = await requestService.request(API_PATH.STUDENT_CLASS_LIST, body_2, false);
+            const formattedStudentList = responseStudent.body.studentList.map(student => {
+                return {
+                    ...student,
+                    dateOfBirth: this.$format.formatDateTime(student.dateOfBirth,'yyyy-mm-dd','Slash','FullMonth')
+                };
+            });
 
             this.$popupService.onOpen({
                 component: class_detail,
                 dataProp: {
                     subjectDetails: responseSubject.body.subjectList,
-                    studentDetails: responseStudent.body.studentList
-                }
-            })
+                    studentDetails: formattedStudentList
+                } 
+            });
+            
         },
 
         onPage(event: { page: number; rows: number; }) {
@@ -194,14 +202,14 @@ export default defineComponent({
                         cyear: item.year,
                         statusCode: statusCode
                     }
-                    const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, true);
+                    const res = await requestService.request(API_PATH.CLASS_UPDATE, reqBody, false);
                     if (res.header.result) {
                         this.getClassList();
-                        this.$toast.add({ summary: 'Confirmed', detail: messageAcceptDetail, life: 1000 });
+                        this.$toast.add({ summary: 'Confirmed', detail: messageAcceptDetail, life: 1500 });
                     }
                 },
                 reject: () => {
-                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: messageRejectDetail, life: 1000 });
+                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: messageRejectDetail, life: 1500 });
                 }
             });
         },
@@ -222,8 +230,7 @@ export default defineComponent({
             })
         },
 
-        async onClickInsertStudent(item: CLASS_LIST) {
-
+        onClickInsertStudent(item: CLASS_LIST) {
             this.$popupService.onOpen({
                 component: studentClass_action,
                 dataProp: {
@@ -236,6 +243,20 @@ export default defineComponent({
                     this.getClassList();
                 }
             });
+        },
+
+        onClickInsertSubject(item: CLASS_LIST) {
+            console.log(item);
+
+            this.$popupService.onOpen({
+                component: subject_action,                
+                dataProp: {
+                    subjectInfoData: item,
+                    isInsert: true,
+                    isAdd: true,
+                    isClassList: true
+                }
+            })
         },
 
         async onClickEdit(item: CLASS_LIST) {
@@ -279,9 +300,9 @@ export default defineComponent({
                     "ឆមាស": data.semester,
                     "ជ៉នាន់": data.generation,
                     "លម្អិតអំពីថ្នាក់រៀន": data.classDesc,
-                    "ប្រភេទថ្នាក់រៀន": this.$codeConverter.codeToString(this.classTypeList, data.classType),
+                    "ប្រភេទថ្នាក់រៀន": this.$codeConverter.codeToString(this.classTypeList, data.classType,'classType'),
                     "ឈ្មោះដេប៉ាតឺម៉ង់": data.departmentName,
-                    "ស្ថានភាព": this.$codeConverter.codeToString(this.statusCodeList, data.statusCode),
+                    "ស្ថានភាព": this.$codeConverter.codeToString(this.statusCodeList, data.statusCode,'statusCode'),
                     "ថ្ងៃចុះបញ្ជីដំបូង": this.$format.formatDateTime(data.firstRegisterDate ? data.firstRegisterDate : '', 'yyyy-mm-dd'),
                     "ថ្ងៃផ្លាស់ប្តូរចុងក្រោយ": this.$format.formatDateTime(data.lastChangeDate ? data.lastChangeDate : '', 'yyyy-mm-dd')
                 };
@@ -307,25 +328,83 @@ export default defineComponent({
                     this.getClassList();
                 }
             })
-        },
-
-        updateTranslatedSemesterList() {
-            this.semesterList = this.semesterList.map(item => ({
-                codeValue: item.codeValue,
-                codeValueDesc: this.$codeConverter.codeToString(this.semesterList, String(item.codeValue), 'semesterCode')
-            }));
-        },
-
-        updateTranslatedYearList() {
-            this.yearList = this.yearList.map(item => ({
-                codeValue: item.codeValue,
-                codeValueDesc: this.$codeConverter.codeToString(this.yearList, String(item.codeValue), 'yearCode')
-            }));
-        },
+        }
     },
 })
 </script>
 
 <style scoped>
 @import url('./class-list.scss');
+
+.not_allow{
+    cursor: not-allowed !important;
+}
+.btn_success {
+    display: inline-block;
+    font-weight: 400;
+    color: #fff; /* Default text color */
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    user-select: none;
+    padding: 0.375rem 0.75rem; /* Vertical | Horizontal Padding */
+    border: 1px solid transparent; /* Border */
+    border-radius: 0.25rem; /* Rounded corners */
+    transition: all 0.15s ease-in-out; /* Transition effects */
+    background-color: #198754 !important;
+}
+
+.btn_success:disabled {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529 !important; /* Default text color */
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    user-select: none;
+    padding: 0.375rem 0.75rem; /* Vertical | Horizontal Padding */
+    border: 1px solid transparent; /* Border */
+    border-radius: 0.25rem; /* Rounded corners */
+    transition: all 0.15s ease-in-out; /* Transition effects */
+    background-color: #a0eac8 !important;
+}
+
+.btn_success:hover {
+    text-decoration: none; /* No underline on hover */
+}
+
+.btn_primary {
+    display: inline-block;
+    font-weight: 400;
+    color: #fff; /* Default text color */
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    user-select: none;
+    padding: 0.375rem 0.75rem; /* Vertical | Horizontal Padding */
+    border: 1px solid transparent; /* Border */
+    border-radius: 0.25rem; /* Rounded corners */
+    transition: all 0.15s ease-in-out; /* Transition effects */
+    background-color: #007bff !important; /* Bootstrap primary color */
+}
+
+.btn_primary:disabled {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529 !important; /* Default text color */
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    user-select: none;
+    padding: 0.375rem 0.75rem; /* Vertical | Horizontal Padding */
+    border: 1px solid transparent; /* Border */
+    border-radius: 0.25rem; /* Rounded corners */
+    transition: all 0.15s ease-in-out; /* Transition effects */
+    background-color: #80bdff !important; /* Light blue for disabled state */
+}
+
+.btn_primary:hover {
+    text-decoration: none; /* No underline on hover */
+}
+
 </style>

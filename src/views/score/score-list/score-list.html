@@ -45,7 +45,7 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label font_14">{{ $t('class.selectClass') }}</label>
-                <select :class="['form-select', isSelectedClassID ? '': 'selectBorder']" v-model="classInfo" @change="setData()">
+                <select :class="['form-select', isSelectedClassID ? '': 'selectBorder']" v-model="classInfo" @change="setData">
                     <option v-for="classInfo in classList" :value="classInfo">
                         <p class="m-0 p-0">{{ classInfo.className }}</p>
                         <p class="m-0 p-0">-{{ $t('schedule.classYear') }} {{ classInfo.year }}</p>
@@ -56,41 +56,53 @@
         </div>
         <div class="py-2"></div>
         <div class="d-flex justify-content-between">
-            <button class="btn btn-info p-2 px-4 mx-1 float-end font_15" :disabled="!isValidFilterInfo" @click="onClearFilterInfo">{{ $t('common.clearFilter') }}</button>
+            <button class="btn btn-info p-2 px-4 mx-1 float-end font_15" :disabled="!isValidFilterInfo" @click="onClearFilterInfo(true)">{{ $t('common.clearFilter') }}</button>
             <button class="btn btn-dark p-2 px-4 mx-1 float-end font_15" :disabled="isDisableSearchBtn" @click="onGetStudentScoreList">{{ $t('common.search') }}</button>
         </div>
     </div>
 </div>
-
 <div class="we_box mt-3">
     <div class="b_shadow">
         <div class="my-5"></div>
-        <DataTable 
-            :value="studentScoreList" 
-            responsiveLayout="scroll"
-            editMode="cell" 
-            @cell-edit-complete="onCellEditComplete">
-            <Column field="seqNo" :header="$t('common.no')" class="text-center" style="min-width: 80px;"></Column>
-            <Column field="studentID" :header="$t('user.studentID')" style="min-width: 150px;"></Column>
-            <Column field="fullName" :header="$t('user.name')" style="min-width: 200px;"></Column>
-            <Column field="gender" :header="$t('user.gender')" style="min-width: 80px;"></Column>
-            <Column field="phoneNumber" :header="$t('user.phone')" style="min-width: 150px;"></Column>
-            <Column v-for="subject in subjectList" 
-                :key="subject.subjectID" 
-                :field="subject.subjectName" 
-                :header="subject.subjectName"
-                style="min-width: 200px;">
-                <template #editor="{ data, field, key }">
-                    <InputNumber v-model="data[field]" autofocus :min="0" :max="100"/>
-                </template>
-            </Column> 
-            <Column field="totalScore" :header="$t('score.totalScore')" class="text-danger text-center" style="min-width: 150px;"></Column>
-            <Column field="average" :header="$t('score.average')" class=" text-center text-danger" style="min-width: 150px;"></Column>
-            <Column field="grade" :header="$t('score.grade')" class="text-center text-danger" style="min-width: 150px;"></Column>
-        </DataTable>
-    </div>
-    <div class="container d-flex justify-content-end my-4">
-        <button class="btn btn-info px-5" @click="onClickSave">{{ $t('common.save') }}</button>
+        <div class="container-fluid px-0 pt-0 pb-2" v-if="studentScoreList.length > 0">
+            <DataTable
+                removableSort
+                :value="studentScoreList" 
+                responsiveLayout="scroll"
+                editMode="cell" 
+                @cell-edit-complete="onCellEditComplete">
+                <Column field="seqNo" :header="$t('common.no')" class="text-center" style="min-width: 80px;"></Column>
+                <Column sortable field="studentID" :header="$t('user.studentID')" style="min-width: 180px;"></Column>
+                <Column sortable field="fullName" :header="$t('user.name')" style="min-width: 200px;"></Column>
+                <Column :header="$t('user.gender')" style="min-width: 80px;">
+                    <template #body="{ data }">
+                        <span>{{ $codeConverter.codeToString(genderCodeList,data.gender, 'genderCode') }}</span>
+                    </template>
+                </Column>
+                <Column :header="$t('user.phone')" style="min-width: 150px;">
+                    <template #body="{ data }">
+                        <span>{{ $phoneNumberFormater.formatPhoneNumber(data.phoneNumber) }}</span>
+                    </template>
+                </Column>
+                <Column v-for="subject in subjectList" 
+                    sortable
+                    :key="subject.subjectID" 
+                    :field="subject.subjectName" 
+                    :header="subject.subjectName"
+                    style="min-width: 200px;">
+                    <template #editor="{ data, field, key }">
+                        <InputNumber v-model="data[field]" autofocus :min="0" :max="100"/>
+                    </template>
+                </Column> 
+                <Column sortable field="totalScore" :header="$t('score.totalScore')" class="text-danger text-center" style="min-width: 150px;"></Column>
+                <Column sortable field="average" :header="$t('score.average')" class=" text-center text-danger" style="min-width: 150px;"></Column>
+                <Column sortable field="grade" :header="$t('score.grade')" class="text-center text-danger" style="min-width: 150px;"></Column>
+            </DataTable>
+            <div class="container-fluid d-flex justify-content-end my-4">
+                <button class="btn btn-info px-5" @click="onClickSave">{{ $t('common.save') }}</button>
+            </div>
+        </div>
+        <span class="d-flex justify-content-center p-3 text-center text-danger" v-else>{{ $t('common.noData') }}</span>
     </div>
     <div class="p-3"></div>
 </div>

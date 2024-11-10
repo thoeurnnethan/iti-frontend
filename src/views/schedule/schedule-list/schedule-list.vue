@@ -59,7 +59,12 @@ export default defineComponent({
             if (this.isValidFilter) {
                 this.onGetScheduleListDynamicColumn()
             }
-        }
+        },
+        '$i18n.locale'(){
+            this.yearList = this.$codeUtil.translateYearlist()
+            this.semesterList = this.$codeUtil.translateSemesterlist()
+            this.statusCodeList = this.$codeUtil.translateStatusCodelist()
+        },
     },
 
     computed: {
@@ -89,28 +94,24 @@ export default defineComponent({
     mounted() {
         this.getDepartmentList()
         this.generateYears()
+        this.yearList = this.$codeUtil.translateYearlist()
+        this.semesterList = this.$codeUtil.translateSemesterlist()
+        this.statusCodeList = this.$codeUtil.translateStatusCodelist()
     },
 
     methods: {
-        formatSchedule(schedule: { firstName?: any; lastName?: any; subjectName?: any; roomName?: any; building?: any; startTime?: any; endTime?: any; }) {
-            if (!schedule || Object.keys(schedule).length === 0) return '';
-            return `Time: ${this.formatTime(schedule.startTime)} - ${this.formatTime(schedule.endTime)}\nSubject: ${schedule.subjectName}\nTeacher: ${schedule.firstName} ${schedule.lastName}\nRoom: ${schedule.roomName}\nBuilding: ${schedule.building}`;
-        },
-
-        formatTime(time: string | any[]) {
-            return `${time.slice(0, 2)}:${time.slice(2)}`;
-        },
-
         async onGetScheduleListDynamicColumn() {
             const reqBody = this.filterInfo
-            const response = (await requestService.request(API_PATH.SCHEDULE_LIST, reqBody, false)) as SCHEDULE_LIST_RES;
-            this.scheduleHeader = response.body
-            this.columns = Object.keys(response.body.scheduleList[0]).map(day => ({
-                field: day,
-                header: day
-            })) as ScheduleColumn[];
-            this.rows = response.body.scheduleList
-            this.dataTable = response.body.scheduleList
+            const response = await requestService.request(API_PATH.SCHEDULE_LIST, reqBody, false) as SCHEDULE_LIST_RES;
+            if(response.body.scheduleList.length > 0){
+                this.scheduleHeader = response.body
+                this.columns = Object.keys(response.body.scheduleList[0]).map(day => ({
+                    field: day,
+                    header: day
+                })) as ScheduleColumn[];
+                this.rows = response.body.scheduleList
+                this.dataTable = response.body.scheduleList
+            }
         },
 
         async getDepartmentList() {
@@ -149,7 +150,7 @@ export default defineComponent({
                 classID: '',
                 searchKey: ''
             },
-                this.resetTable
+            this.resetTable
             this.classList = []
         },
 
@@ -163,14 +164,23 @@ export default defineComponent({
         },
 
         generateYears() {
-            const currentYear = new Date().getFullYear();
+            const currentYear = new Date().getFullYear() + 1;
             const startYear = 2020;
-            const years = [];
-
+            const years = [] as any[];
             for (let year = currentYear; year >= startYear; year--) {
                 years.push({ codeValue: year.toString(), codeValueDesc: year });
             }
             return years;
+
+        },
+
+        formatSchedule(schedule: { firstName?: any; lastName?: any; subjectName?: any; roomName?: any; building?: any; startTime?: any; endTime?: any; }) {
+            if (!schedule || Object.keys(schedule).length === 0) return '';
+            return `Time: ${this.formatTime(schedule.startTime)} - ${this.formatTime(schedule.endTime)}\nSubject: ${schedule.subjectName}\nTeacher: ${schedule.firstName} ${schedule.lastName}\nRoom: ${schedule.roomName}\nBuilding: ${schedule.building}`;
+        },
+
+        formatTime(time: string | any[]) {
+            return `${time.slice(0, 2)}:${time.slice(2)}`;
         },
 
         exportToExcel() {
@@ -180,9 +190,8 @@ export default defineComponent({
                     data: excelData
                 },
             ];
-            exportExcel.exportSheet(exportExcelData, 'Schedule')
+            exportExcel.exportSheet(exportExcelData, 'Schedule Info')
         }
-
     },
 })
 </script>

@@ -34,6 +34,10 @@
         <!-- User Information -->
         <div class="container-fluid">
             <div class="row mt-4">
+                <div :class="customRowClass" v-if="!isRegisterRoute">
+                    <label :class="customFormClass">{{ $t('user.userID') }}</label>
+                    <InputText class="text-info" v-model="userInfo.userID" disabled/>
+                </div>
                 <div :class="customRowClass">
                     <label :class="customFormClass">{{ $t('user.firstName') }}</label>
                     <InputText :invalid="userInfoCheckFields.firstName" v-model="userInfo.firstName" @keyup="checkUserRequireFields" />
@@ -48,8 +52,16 @@
                 </div>
                 <div :class="customRowClass">
                     <label :class="customFormClass">{{ $t('user.gender') }}</label><br>
-                    <input type="radio" v-model="userInfo.gender" class="form-check-input" value="M"> Male
-                    <input type="radio" v-model="userInfo.gender" class="form-check-input" value="F"> Female
+                    <input type="radio" v-model="userInfo.gender" class="form-check-input" value="M"> {{ $t('user.male') }}
+                    <input type="radio" v-model="userInfo.gender" class="form-check-input" value="F"> {{ $t('user.female') }}
+                </div>
+                <div :class="customRowClass" v-if="!isRegisterRoute">
+                    <label :class="customFormClass">{{ $t('user.role') }}</label>
+                    <select class="form-select text-info" v-model="userInfo.roleID" disabled>
+                        <option v-for="uRole in userRoleList" :key="uRole.codeValue" :value="uRole.codeValue">
+                            <span>{{ uRole.codeValueDesc }}</span>
+                        </option>
+                    </select>
                 </div>
                 <div :class="customRowClass">
                     <label :class="customFormClass">{{ $t('user.dateOfBirth') }}</label>
@@ -71,22 +83,24 @@
                     <label :class="customFormClass">{{ $t('user.address') }}</label>
                     <Textarea :invalid="userInfoCheckFields.address" v-model="userInfo.address" rows="5" cols="30" @keyup="checkUserRequireFields" />
                 </div>
-                <div :class="customRowClass" v-if="isRegisterStudent">
+                <div :class="customRowClass" v-if="isRegisterStudent && isRegisterRoute">
                     <label :class="customFormClass">{{ $t('class.selectClass') }}</label>
                     <select class="form-select" v-model="userInfo.classInfoID" >
                         <option v-for="classInfo in classList" :key="classInfo.classInfoID" :value="classInfo.classInfoID">
-                            {{ classInfo.className }} ឆ្នាំទី​ {{ classInfo.year }} ឆមាសទី {{ classInfo.semester }}
+                            <p class="m-0 p-0">{{ classInfo.className }}</p>
+                            <p class="m-0 p-0">-{{ $t('schedule.classYear') }} {{ classInfo.year }}</p>
+                            <p class="m-0 p-0">-{{ $t('schedule.semester') }} {{ classInfo.semester }}</p>
                         </option>
                     </select>
                 </div>
-                <div :class="customRowClass" v-else>
+                <!-- <div :class="customRowClass" v-else-if="!isRegisterStudent && isRegisterRoute">
                     <label :class="customFormClass">{{ $t('class.selectDepartment') }}</label>
                     <select class="form-select" v-model="userInfo.departmentID" >
                         <option v-for="department in departmentList" :key="department.departmentID" :value="department.departmentID">
                             {{ department.departmentName }}
                         </option>
                     </select>
-                </div>
+                </div> -->
             </div>
         </div>
 
@@ -136,15 +150,27 @@
                                 <Column field="seqNo" :header="$t('common.no')" :class="customNoClass"></Column>
                                 <Column field="qualificationName" :header="$t('user.qualName')"></Column>
                                 <Column field="qualificationDesc" :header="$t('user.qualDesc')"></Column>
-                                <Column field="startDate" :header="$t('user.startDate')"></Column>
-                                <Column field="endDate" :header="$t('user.endDate')"></Column>
-                                <Column field="certificatedDate" :header="$t('user.certificatedDate')"></Column>
+                                <Column :header="$t('user.startDate')">
+                                    <template #body="{ data }">
+                                        <span>{{ $format.formatDateTime(data.startDate, 'yyyy-mm-dd','Slash','FullMonth') }}</span>
+                                    </template>
+                                </Column>
+                                <Column :header="$t('user.endDate')">
+                                    <template #body="{ data }">
+                                        <span>{{ $format.formatDateTime(data.endDate, 'yyyy-mm-dd','Slash','FullMonth') }}</span>
+                                    </template>
+                                </Column>
+                                <Column :header="$t('user.certificatedDate')">
+                                    <template #body="{ data }">
+                                        <span>{{ $format.formatDateTime(data.certificatedDate, 'yyyy-mm-dd','Slash','FullMonth') }}</span>
+                                    </template>
+                                </Column>
                                 <Column :header="$t('action.edit')" class="text-center">
                                     <template #body="{ data }">
                                         <font-awesome-icon style="cursor: pointer;" @click="onClickEditQualification(data)"
-                                            icon="fas fa-pencil" class="text-primary" title="Edit" />&nbsp;
+                                            icon="fas fa-pencil" class="btn btn-secondary text-white p-1" title="Edit" />&nbsp;
                                         <font-awesome-icon style="cursor: pointer;" @click="onClickDeleteQualification(data)"
-                                            icon="fa-solid fa-trash" class=" text-danger" title="Delete" />
+                                            icon="fa-solid fa-trash" class="btn btn-danger text-white p-1" title="Delete" />
                                     </template>
                                 </Column>
                             </DataTable>
@@ -273,9 +299,21 @@
                                     <Column field="seqNo" :header="$t('common.no')" :class="customNoClass"></Column>
                                     <Column field="academicName" :header="$t('user.academicName')"></Column>
                                     <Column field="academicDesc" :header="$t('user.academicDesc')"></Column>
-                                    <Column field="startDate" :header="$t('user.startDate')"></Column>
-                                    <Column field="endDate" :header="$t('user.endDate')"></Column>
-                                    <Column field="certificatedDate" :header="$t('user.certificatedDate')"></Column>
+                                    <Column :header="$t('user.startDate')">
+                                        <template #body="{ data }">
+                                            <span>{{ $format.formatDateTime(data.startDate, 'yyyy-mm-dd','Slash','FullMonth') }}</span>
+                                        </template>
+                                    </Column>
+                                    <Column :header="$t('user.endDate')">
+                                        <template #body="{ data }">
+                                            <span>{{ $format.formatDateTime(data.endDate, 'yyyy-mm-dd','Slash','FullMonth') }}</span>
+                                        </template>
+                                    </Column>
+                                    <Column :header="$t('user.certificatedDate')">
+                                        <template #body="{ data }">
+                                            <span>{{ $format.formatDateTime(data.certificatedDate, 'yyyy-mm-dd','Slash','FullMonth') }}</span>
+                                        </template>
+                                    </Column>
                                     <Column :header="$t('action.edit')" class="text-center">
                                         <template #body="{ data }">
                                             <font-awesome-icon style="cursor: pointer;" @click="onClickEditAcademic(data)"

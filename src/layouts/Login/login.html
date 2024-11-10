@@ -1,6 +1,6 @@
 <div class="container-fluid d-flex justify-content-center align-items-center position-relative" style="height: 100vh;background-color: rgb(78, 78, 78);">
     <div class="container-fluid position-absolute" style="height: 100vh;">
-        <img src="school-bg.jpg" class="w-100 h-100" alt="" style="object-fit: cover;">
+        <img src="@/assets/images/school-bg.jpg" class="w-100 h-100" alt="" style="object-fit: cover;">
     </div>
     <div class="container-fluid w-100 h-100 position-absolute" style="background-color: #0000005d;"></div>
     <div class="container shadow p-4 py-5 mb-5 bg-body rounded position-absolute" style="width: 500px;">
@@ -11,7 +11,7 @@
         </div>
         <div class="d-flex flex-column gap-2 mt-3">
             <label>{{ $t('common.password') }}</label>
-            <Password :feedback="false" v-model="userLogin.password" @keyup.enter="onClickLoginServer"/>
+            <Password :feedback="false" v-model="userLogin.password" @keyup.enter="onClickLoginServer" toggleMask/>
         </div>
         <button class="btn btn-primary mt-4 float-end" :disabled="!isValidForm" @click="onClickLoginServer">{{ $t('common.login') }}</button>
     </div>

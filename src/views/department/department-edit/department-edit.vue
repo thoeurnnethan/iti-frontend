@@ -42,6 +42,12 @@ export default defineComponent({
         };
     },
 
+    watch: {
+        '$i18n.locale'(){
+            this.statusCodeList = this.$codeUtil.translateStatusCodelist()
+        }
+    },
+
     computed: {
         isValidRegister(): boolean {
             return this.departmentInfo.departmentName !== '' &&
@@ -58,6 +64,7 @@ export default defineComponent({
 
     mounted() {
         this.onInitData();
+        this.statusCodeList = this.$codeUtil.translateStatusCodelist()
     },
 
     methods: {
@@ -74,10 +81,11 @@ export default defineComponent({
             const reqBody = {
                 ...this.departmentInfo,
             }
-            const res = await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, true) as DEPARTMENT_LIST;
+            const res = await requestService.request(API_PATH.DEPARTMENT_UPDATE, reqBody, false) as DEPARTMENT_LIST;
             this.departmentInfo = res;
             if (res) {
                 modalController.dismiss();
+                this.$toast.add({ summary: 'Confirmed', detail: 'The record has been updated.', life: 1000 });
             }
         },
 
@@ -85,10 +93,11 @@ export default defineComponent({
             const reqBody = {
                 ...this.departmentInfo,
             }
-            const res = await requestService.request(API_PATH.DEPARTMENT_REGISTER, reqBody, true) as DEPARTMENT_LIST;
+            const res = await requestService.request(API_PATH.DEPARTMENT_REGISTER, reqBody, false) as DEPARTMENT_LIST;
             this.departmentInfo = res;
             if (res) {
                 modalController.dismiss();
+                this.$toast.add({ summary: 'Confirmed', detail: 'The record has been inserted.', life: 1000 });
             }
         },
 
@@ -106,13 +115,6 @@ export default defineComponent({
                     fullName: data.firstName.concat(' - ', data.lastName)
                 }
             })
-        },
-
-        updateTranslatedStatusCodes() {
-            this.statusCodeList = this.statusCodeList.map(item => ({
-                codeValue: item.codeValue,
-                codeValueDesc: this.$codeConverter.codeToString(this.statusCodeList, String(item.codeValue), 'statusCode')
-            }));
         },
 
         handleClose() {

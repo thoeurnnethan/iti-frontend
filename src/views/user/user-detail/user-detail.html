@@ -16,12 +16,16 @@
                             <dd>{{ userInfo.nickName }}</dd>
                         </dl>
                         <dl>
+                            <dt class="text-capitalize">{{ $t('user.role') }}</dt>
+                            <dd>{{ $codeConverter.codeToString(userRoleList,userInfo.roleID,'userRoleCode')}}</dd>
+                        </dl>
+                        <dl>
                             <dt class="text-capitalize">{{ $t('user.gender') }}</dt>
-                            <dd>{{ $codeConverter.codeToString(genderCodeList,userInfo.gender)}}</dd>
+                            <dd>{{ $codeConverter.codeToString(genderCodeList,userInfo.gender,'genderCode')}}</dd>
                         </dl>
                         <dl>
                             <dt class="text-capitalize">{{ $t('user.dateOfBirth') }}</dt>
-                            <dd>{{ userInfo.formatDOB }}</dd>
+                            <dd>{{ userInfo.dateOfBirth }}</dd>
                         </dl>
                         <dl>
                             <dt class="text-capitalize">{{ $t('user.placeOfBirth') }}</dt>
@@ -40,8 +44,12 @@
                             <dd>{{ userInfo.email }}</dd>
                         </dl>
                         <dl>
+                            <dt class="text-capitalize">{{ $t('user.userID') }}</dt>
+                            <dd>{{ userInfo.userID }}</dd>
+                        </dl>
+                        <dl>
                             <dt class="text-capitalize">{{ $t('user.password') }}</dt>
-                            <dd>{{ userInfo.password }}</dd>
+                            <dd>{{ userInfo.passwd }}</dd>
                         </dl>
                     </div>
                 </div>
@@ -65,7 +73,7 @@
                                 <tr v-for="parentInfo in userInfo?.studentInfo?.parentList" :key="parentInfo.seqNo">
                                     <td class="text-center">{{ parentInfo.seqNo }}</td>
                                     <td>{{ parentInfo.firstName }} {{ parentInfo.lastName }}</td>
-                                    <td>{{ $codeConverter.codeToString(genderCodeList, parentInfo.gender) }}</td>
+                                    <td>{{ $codeConverter.codeToString(genderCodeList, parentInfo.gender,'genderCode') }}</td>
                                     <td>{{ parentInfo.job }}</td>
                                     <td>{{ parentInfo.address }}</td>
                                     <td>{{ $phoneNumberFormater.formatPhoneNumber(parentInfo.phone) }}</td>

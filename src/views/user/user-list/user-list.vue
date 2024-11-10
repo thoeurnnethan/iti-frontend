@@ -41,13 +41,13 @@ export default defineComponent({
 
     watch:{
         '$i18n.locale'(){
-            this.updateTranslatedUserroleList()
+            this.userRoleList = this.$codeUtil.translateUserRoleList()
         }
     },
 
     mounted() {
         this.getUserList()
-        this.updateTranslatedUserroleList()
+        this.userRoleList = this.$codeUtil.translateUserRoleList()
     },
 
     methods: {
@@ -86,10 +86,16 @@ export default defineComponent({
             })
         },
 
+        onClickAddNew() {
+            this.$router.push('/user-register');
+        },
+
         async deleteUser(_item: USER_LIST) {
             this.$confirm.require({
-                message: 'Do you want to hide this record?',
-                header: 'Danger Zone',
+                message: 'Do you want to delete this record?',
+                header: 'Please Comfirm',
+                acceptClass: 'btn btn-danger',
+                rejectClass: 'btn btn-secondary',
                 accept: async () => {
                     const reqBody = {
                         userID: _item.userID,
@@ -119,15 +125,27 @@ export default defineComponent({
         },
 
         //download excel
-        exportToExcel() {
+        async exportToExcel() {
+            const body = {
+                searchKey: this.searchKey,
+                roleID: this.roleID === 'all' ? '' : this.roleID,
+                statusCode: "",
+                pageSize: this.pageSize,
+                pageNumber: this.pageNumber + 1
+            }
+            const response = (await requestService.request(API_PATH.USER_LIST_DOWNLOAD, body, false)) as USER_LIST_RES;
+            this.dataTable = response.body.userList
             const excelData = this.dataTable.map((data, index) => {
                 return {
                     "No": index + 1,
+                    "System User ID": data.userID,
+                    "User ID": data.specificID,
                     "First Name": data.firstName,
                     "Last Name": data.lastName,
                     "Nickname": data.nickName,
-                    "Gender": data.gender,
-                    "Date of birth": data.dateOfBirth,
+                    "User Role": this.$codeConverter.codeToString(this.userRoleList, data.roleID),
+                    "Gender": this.$codeConverter.codeToString(this.genderCodeList, data.gender),
+                    "Date of birth": this.$format.formatDateTime(data.dateOfBirth ,'yyyy-mm-dd','Slash','FullMonth'),
                     "Place of birth": data.placeOfBirth,
                     "Address": data.address,
                     "Phone": data.phone,
@@ -141,13 +159,6 @@ export default defineComponent({
                 },
             ];
             exportExcel.exportSheet(exportExcelData, 'User info')
-        },
-
-        updateTranslatedUserroleList() {
-            this.userRoleList = this.userRoleList.map(item => ({
-                codeValue: item.codeValue,
-                codeValueDesc: this.$codeConverter.codeToString(this.userRoleList, String(item.codeValue), 'userRoleCode')
-            }));
         },
 
     },

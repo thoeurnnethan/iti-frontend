@@ -1,5 +1,3 @@
-import { jsPDF } from 'jspdf';
-import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx-js-style';
 // import '../../../public/fonts/NotoSansKhmer-VariableFont_wdth,wght-normal.js'
 export const exportExcel = (exportData: any) => {
@@ -78,43 +76,43 @@ export const exportExcel = (exportData: any) => {
     XLSX.writeFile(workBook, `${exportData.fileName || 'default-book'}.xlsx`);
 };
 
-export const exportPDF = ({ format = 'a4', title = '', setUnderLineTitle = false, headerList, list, footerText = '', fileName, orientation = 'p', fontSizeTable = 10 }) => {
-    let doc = new jsPDF({orientation: 'p',unit : 'cm',format : format});
-    if (orientation === 'l') {
-        doc = new jsPDF({orientation: 'l',unit : 'cm',format : format});
-    }
+// export const exportPDF = ({ format = 'a4', title = '', setUnderLineTitle = false, headerList, list, footerText = '', fileName, orientation = 'p', fontSizeTable = 10 }) => {
+//     let doc = new jsPDF({orientation: 'p',unit : 'cm',format : format});
+//     if (orientation === 'l') {
+//         doc = new jsPDF({orientation: 'l',unit : 'cm',format : format});
+//     }
 
-    console.log('doc.getFontList()', doc.getFontList());
+//     console.log('doc.getFontList()', doc.getFontList());
 
-    // font khmer is not working with jsPDF UTF-8
+//     // font khmer is not working with jsPDF UTF-8
 
-    // const font = "NotoSansKhmer-VariableFont_wdth,wght"
-    const font = ""
-    doc.setFont(font, 'normal')
-    // text is placed using x, y coordinates
-    doc.setFontSize(16).text(title, 0.5, 1.0);
-    // create a line under heading
-    if (setUnderLineTitle) {
-        doc.setLineWidth(0.01).line(0.5, 1.1, 8.0, 1.1);
-    }
+//     // const font = "NotoSansKhmer-VariableFont_wdth,wght"
+//     const font = ""
+//     doc.setFont(font, 'normal')
+//     // text is placed using x, y coordinates
+//     doc.setFontSize(16).text(title, 0.5, 1.0);
+//     // create a line under heading
+//     if (setUnderLineTitle) {
+//         doc.setLineWidth(0.01).line(0.5, 1.1, 8.0, 1.1);
+//     }
 
-    autoTable(doc, {
-        columns: headerList,
-        body: list,
-        startY: 1.2,
-        styles: {
-            overflow: 'linebreak',
-            fontSize: fontSizeTable,
-            font: font,
-            fontStyle: 'normal'
-        },
-    });
+//     autoTable(doc, {
+//         columns: headerList,
+//         body: list,
+//         startY: 1.2,
+//         styles: {
+//             overflow: 'linebreak',
+//             fontSize: fontSizeTable,
+//             font: font,
+//             fontStyle: 'normal'
+//         },
+//     });
 
-    if (footerText) {
-        doc.setFontSize(11)
-            .setTextColor(0, 0, 255)
-            .text(footerText, 0.5, doc.internal.pageSize.height - 0.5);
-    }
+//     if (footerText) {
+//         doc.setFontSize(11)
+//             .setTextColor(0, 0, 255)
+//             .text(footerText, 0.5, doc.internal.pageSize.height - 0.5);
+//     }
 
-    doc.save(`${fileName}.pdf`);
-};
+//     doc.save(`${fileName}.pdf`);
+// };
